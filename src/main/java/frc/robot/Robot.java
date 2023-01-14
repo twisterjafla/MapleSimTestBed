@@ -22,8 +22,8 @@ public class Robot extends TimedRobot {
   private DifferentialDrive m_myRobot;
   private XboxController controler1;
 
-  private CANSparkMax m_leftMotor = new CANparkMax(0);
-  private CANSparkMax m_rightMotor= new CANSparkMax(1);
+  private CANSparkMax m_leftMotor = new CANSparkMax(0,MotorType.kBrushless);
+  private CANSparkMax m_rightMotor= new CANSparkMax(1,MotorType.kBrushless);
 
   @Override
   public void robotInit() {
