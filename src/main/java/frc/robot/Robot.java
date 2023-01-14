@@ -7,9 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import edu.wpi.first.wpilibj.XboxController.Axis;
+//import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+//import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+//import edu.wpi.first.wpilibj.XboxController.Axis;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -22,8 +22,8 @@ public class Robot extends TimedRobot {
   private DifferentialDrive m_myRobot;
   private XboxController controler1;
 
-  private CANSparkMax m_leftMotor = new CANparkMax(0);
-  private CANSparkMax m_rightMotor= new CANSparkMax(1);
+  private CANSparkMax m_leftMotor = new CANSparkMax(0,MotorType.kBrushless);
+  private CANSparkMax m_rightMotor= new CANSparkMax(1,MotorType.kBrushless);
 
   @Override
   // @overide doesn't define me, I can stop any time I want
