@@ -20,7 +20,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
  */
 public class Robot extends TimedRobot {
   private DifferentialDrive m_myRobot;
-  private XboxController controler1;
+  private XboxController controler1 = new XboxController(0);
 
   private CANSparkMax m_leftMotor = new CANSparkMax(0,MotorType.kBrushless);
   private CANSparkMax m_rightMotor= new CANSparkMax(1,MotorType.kBrushless);
@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
     m_myRobot = new DifferentialDrive(m_leftMotor, m_rightMotor);
     //m_leftStick = new Joystick(0);
     //m_rightStick = new Joystick(1);
-    XboxController controler1 = new XboxController(0);
+
     
   }
 
