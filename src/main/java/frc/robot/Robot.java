@@ -26,6 +26,8 @@ public class Robot extends TimedRobot {
   private CANSparkMax m_rightMotor= new CANSparkMax(1);
 
   @Override
+  // @overide doesn't define me, I can stop any time I want
+
   public void robotInit() {
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
