@@ -13,18 +13,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
-
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class DriveSubsystem extends SubsystemBase {
   
-  private final WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(Constants.FRONT_LEFT_MOTOR);
-  private final WPI_TalonSRX rearLeftMotor = new WPI_TalonSRX(Constants.REAR_LEFT_MOTOR);
+  private final CANSparkMax frontLeftMotor = new CANSparkMax(Constants.FRONT_LEFT_MOTOR,MotorType.kBrushless);
+  private final CANSparkMax rearLeftMotor = new CANSparkMax(Constants.REAR_LEFT_MOTOR,MotorType.kBrushless);
 
-  private final WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(Constants.FRONT_RIGHT_MOTOR);
-  private final WPI_TalonSRX rearRightMotor = new WPI_TalonSRX(Constants.REAR_RIGHT_MOTOR);
+  private final CANSparkMax frontRightMotor = new CANSparkMax(Constants.FRONT_RIGHT_MOTOR, MotorType.kBrushless);
+  private final CANSparkMax rearRightMotor = new CANSparkMax(Constants.REAR_RIGHT_MOTOR, MotorType.kBrushless);
 
-  private final WPI_TalonSRX hDriveMotor1 = new WPI_TalonSRX(Constants.H_DRIVE_MOTOR_1);
-  private final WPI_TalonSRX hDriveMotor2 = new WPI_TalonSRX(Constants.H_DRIVE_MOTOR_2);
+  private final CANSparkMax hDriveMotor1 = new CANSparkMax(Constants.H_DRIVE_MOTOR_1,MotorType.kBrushless);
+  private final CANSparkMax hDriveMotor2 = new CANSparkMax(Constants.H_DRIVE_MOTOR_2, MotorType.kBrushless);
 
   MotorControllerGroup m_LeftMotorGroup = new MotorControllerGroup(frontLeftMotor, rearLeftMotor);
   MotorControllerGroup m_RightMotorGroup = new MotorControllerGroup(frontRightMotor, rearRightMotor);
