@@ -16,14 +16,14 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+
 public class DriveSubsystem extends SubsystemBase {
   
   private final CANSparkMax frontLeftMotor = new CANSparkMax(Constants.FRONT_LEFT_MOTOR,MotorType.kBrushless);
   private final CANSparkMax rearLeftMotor = new CANSparkMax(Constants.REAR_LEFT_MOTOR,MotorType.kBrushless);
-
   private final CANSparkMax frontRightMotor = new CANSparkMax(Constants.FRONT_RIGHT_MOTOR, MotorType.kBrushless);
-  private final CANSparkMax rearRightMotor = new CANSparkMax(Constants.REAR_RIGHT_MOTOR, MotorType.kBrushless);
 
+  private final CANSparkMax rearRightMotor = new CANSparkMax(Constants.REAR_RIGHT_MOTOR, MotorType.kBrushless);
   private final CANSparkMax hDriveMotor1 = new CANSparkMax(Constants.H_DRIVE_MOTOR_1,MotorType.kBrushless);
   private final CANSparkMax hDriveMotor2 = new CANSparkMax(Constants.H_DRIVE_MOTOR_2, MotorType.kBrushless);
 
