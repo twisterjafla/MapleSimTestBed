@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -17,11 +18,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class IntakeSubsystem extends SubsystemBase {
   
   private final CANSparkMax intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR,MotorType.kBrushless);
+  private final CANSparkMax indexerMotor = new CANSparkMax(Constants.INTAKE_MOTOR,MotorType.kBrushless);
 
   public IntakeSubsystem() {
     super();
-    addChild("Intake", intakeMotor);
-    addChild("Indexer", indexerMotor);
+    addChild("Intake", (Sendable) intakeMotor);
+    addChild("Indexer", (Sendable) indexerMotor);
     intakeMotor.setInverted(true);
   }
 
