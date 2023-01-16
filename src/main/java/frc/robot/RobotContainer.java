@@ -8,20 +8,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonomousCommand;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.ReverseIntakeCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj.XboxController.Axis;
-import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
+
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -34,7 +27,6 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
 
   private final CommandBase m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem);
-  private NetworkTableEntry cameraSelection;
 
   XboxController movementJoystick = new XboxController(Constants.MOVEMENT_JOYSTICK);
   XboxController manipulatorJoystick = new XboxController(Constants.MANIPULATOR_JOYSTICK);
@@ -61,6 +53,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    /*
+    
     final JoystickButton manipulator_l1 = new JoystickButton(manipulatorJoystick, Button.kLeftBumper.value);
     final JoystickButton manipulator_l2 = new JoystickButton(manipulatorJoystick, Axis.kLeftTrigger.value);
     final JoystickButton manipulator_r1 = new JoystickButton(manipulatorJoystick, Button.kRightBumper.value);
@@ -75,6 +69,7 @@ public class RobotContainer {
     final JoystickButton movement_a = new JoystickButton(movementJoystick, Button.kA.value);
     final JoystickButton movement_b = new JoystickButton(movementJoystick, Button.kB.value);
     final JoystickButton movement_y = new JoystickButton(movementJoystick, Button.kY.value);
+     */
     
     // movement_a.toggleWhenPressed(new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED));
     // movement_b.whileHeld(new ReverseIntake(m_intakeSubsystem, Constants.OUTTAKE_SPEED));
