@@ -48,7 +48,7 @@ public class RobotContainer {
       new ArcadeDrive(
             m_driveSubsystem,
             () -> -((-movementJoystick.getRawAxis(Axis.kLeftTrigger.value) + movementJoystick.getRawAxis(Axis.kRightTrigger.value))),
-            () -> (-movementJoystick.getRawAxis(Axis.kLeftX.value) * 0.75),
+            () -> (-movementJoystick.getRawAxis(Axis.kLeftX.value) * 0.75)
       ));
 
     m_driveSubsystem.log();
