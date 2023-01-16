@@ -12,7 +12,7 @@ import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
   
-  private final WPI_TalonSRX intakeMotor = new WPI_TalonSRX(Constants.INTAKE_MOTOR);
+  private final CANSparkMax intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR);
 
   public IntakeSubsystem() {
     super();
