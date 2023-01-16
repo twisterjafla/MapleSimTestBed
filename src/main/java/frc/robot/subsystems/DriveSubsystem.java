@@ -7,7 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Encoder;
+//import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
@@ -24,12 +24,12 @@ public class DriveSubsystem extends SubsystemBase {
   private final CANSparkMax leftbottomleft = new CANSparkMax(Constants.LEFT_BOTTOM_LEFT, MotorType.kBrushless);
 
   //left motors
-  private final CANSparkMax r = new CANSparkMax(Constants.RIGHT_TOP, MotorType.kBrushless);
-  private final CANSparkMax hDriveMotor1 = new CANSparkMax(Constants.RIGHT_BOTTOM_RIGHT,MotorType.kBrushless);
-  private final CANSparkMax hDriveMotor2 = new CANSparkMax(Constants.RIGHT_BOTTOM_RIGHT, MotorType.kBrushless);
+  private final CANSparkMax righttop = new CANSparkMax(Constants.RIGHT_TOP, MotorType.kBrushless);
+  private final CANSparkMax rightbottomright = new CANSparkMax(Constants.RIGHT_BOTTOM_RIGHT,MotorType.kBrushless);
+  private final CANSparkMax rightbottomleft = new CANSparkMax(Constants.RIGHT_BOTTOM_LEFT, MotorType.kBrushless);
 
-  MotorControllerGroup m_LeftMotorGroup = new MotorControllerGroup(frontLeftMotor, rearLeftMotor);
-  MotorControllerGroup m_RightMotorGroup = new MotorControllerGroup(frontRightMotor, rearRightMotor);
+  MotorControllerGroup m_LeftMotorGroup = new MotorControllerGroup(lefttop, leftbottomright,leftbottomleft);
+  MotorControllerGroup m_RightMotorGroup = new MotorControllerGroup(righttop, rightbottomright,rightbottomleft);
   //MotorControllerGroup m_hDriveMotorGroup = new MotorControllerGroup(hDriveMotor1, hDriveMotor2);
   
   private final DifferentialDrive m_RobotDrive = new DifferentialDrive(m_LeftMotorGroup, m_RightMotorGroup);
@@ -50,19 +50,7 @@ public class DriveSubsystem extends SubsystemBase {
     // m_leftEncoder.setDistancePerPulse((Math.PI * 6) / 360.0);
     // m_rightEncoder.setDistancePerPulse((Math.PI * 6) / 360.0);
 
-    frontLeftMotor.setSafetyEnabled(false);
-    rearLeftMotor.setSafetyEnabled(false);
-    frontRightMotor.setSafetyEnabled(false);
-    rearLeftMotor.setSafetyEnabled(false);
-    frontLeftMotor.configOpenloopRamp(0.5);
-    rearLeftMotor.configOpenloopRamp(0.5);
-    frontRightMotor.configOpenloopRamp(0.5);
-    rearRightMotor.configOpenloopRamp(0.5);
-    hDriveMotor1.setSafetyEnabled(false);
-    hDriveMotor2.setSafetyEnabled(false);
-
     m_RightMotorGroup.setInverted(true);
-    m_hDriveMotorGroup.setInverted(true);
 
     reset();
   }
@@ -73,7 +61,6 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void drive(final double ySpeed, final double rotateValue, final double hDriveMotorSpeed) {
     m_RobotDrive.arcadeDrive(ySpeed, rotateValue);
-    m_hDriveMotorGroup.set(hDriveMotorSpeed);
   }
 
   public void reset() {
