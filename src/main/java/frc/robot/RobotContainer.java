@@ -33,7 +33,7 @@ public class RobotContainer {
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
 
-  private final CommandBase m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem, m_shooterSubsystem);
+  private final CommandBase m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem);
   private NetworkTableEntry cameraSelection;
 
   XboxController movementJoystick = new XboxController(Constants.MOVEMENT_JOYSTICK);
