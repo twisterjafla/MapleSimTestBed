@@ -15,14 +15,16 @@ package frc.robot;
 public final class Constants {
 
     // Motor Constants
+
     //right motors
-    public static final int FRONT_LEFT_MOTOR = 1;
-    public static final int REAR_LEFT_MOTOR = 2;
-    public static final int FRONT_RIGHT_MOTOR = 6;
+    public static final int LEFT_TOP = 1;
+    public static final int LEFT_BOTTOM_LEFT= 2;
+    public static final int LEFT_BOTTOM_RIGHT = 6;
 
     //left motors
-    public static final int REAR_RIGHT_MOTOR = 5;
-    public static final int idk=10;
+    public static final int RIGHT_TOP = 5;
+    public static final int RIGHT_BOTTOM_LEFT=10;
+    public static final int RIGHT_BOTTOM_RIGHT=11;
 
     public static final int INTAKE_MOTOR = 1;
     public static final int INDEXER_MOTOR = 0;
