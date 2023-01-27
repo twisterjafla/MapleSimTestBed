@@ -19,12 +19,12 @@ public final class Constants {
     //right motors
     public static final int LEFT_TOP = 2;
     public static final int LEFT_FRONT= 1;
-    public static final int LEFT_BACK = 6;
+    public static final int LEFT_BACK = 3;
 
     //left motors
-    public static final int RIGHT_TOP = 5;
-    public static final int RIGHT_FRONT=10;
-    public static final int RIGHT_BOTTOM_RIGHT=11;
+    public static final int RIGHT_TOP = 4;
+    public static final int RIGHT_FRONT=5;
+    public static final int RIGHT_BOTTOM_RIGHT=6;
 
     public static final int INTAKE_MOTOR = 1;
     public static final int INDEXER_MOTOR = 0;
