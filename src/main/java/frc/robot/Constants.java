@@ -17,13 +17,13 @@ public final class Constants {
     // Motor Constants
 
     //right motors
-    public static final int LEFT_TOP = 1;
-    public static final int LEFT_BOTTOM_LEFT= 2;
-    public static final int LEFT_BOTTOM_RIGHT = 6;
+    public static final int LEFT_TOP = 2;
+    public static final int LEFT_FRONT= 1;
+    public static final int LEFT_BACK = 6;
 
     //left motors
     public static final int RIGHT_TOP = 5;
-    public static final int RIGHT_BOTTOM_LEFT=10;
+    public static final int RIGHT_FRONT=10;
     public static final int RIGHT_BOTTOM_RIGHT=11;
 
     public static final int INTAKE_MOTOR = 1;

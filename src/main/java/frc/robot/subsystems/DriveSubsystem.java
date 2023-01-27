@@ -20,13 +20,13 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class DriveSubsystem extends SubsystemBase {
   //right motors
   private final CANSparkMax lefttop = new CANSparkMax(Constants.LEFT_TOP,MotorType.kBrushless);
-  private final CANSparkMax leftbottomright = new CANSparkMax(Constants.LEFT_BOTTOM_RIGHT,MotorType.kBrushless);
-  private final CANSparkMax leftbottomleft = new CANSparkMax(Constants.LEFT_BOTTOM_LEFT, MotorType.kBrushless);
+  private final CANSparkMax leftbottomright = new CANSparkMax(Constants.LEFT_BACK,MotorType.kBrushless);
+  private final CANSparkMax leftbottomleft = new CANSparkMax(Constants.LEFT_FRONT, MotorType.kBrushless);
 
   //left motors
   private final CANSparkMax righttop = new CANSparkMax(Constants.RIGHT_TOP, MotorType.kBrushless);
   private final CANSparkMax rightbottomright = new CANSparkMax(Constants.RIGHT_BOTTOM_RIGHT,MotorType.kBrushless);
-  private final CANSparkMax rightbottomleft = new CANSparkMax(Constants.RIGHT_BOTTOM_LEFT, MotorType.kBrushless);
+  private final CANSparkMax rightbottomleft = new CANSparkMax(Constants.RIGHT_FRONT, MotorType.kBrushless);
 
   MotorControllerGroup m_LeftMotorGroup = new MotorControllerGroup(lefttop, leftbottomright,leftbottomleft);
   MotorControllerGroup m_RightMotorGroup = new MotorControllerGroup(righttop, rightbottomright,rightbottomleft);
