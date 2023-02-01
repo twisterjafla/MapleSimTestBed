@@ -17,22 +17,22 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class IntakeSubsystem extends SubsystemBase {
   
-  private final CANSparkMax intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR,MotorType.kBrushless);
-  private final CANSparkMax indexerMotor = new CANSparkMax(Constants.INTAKE_MOTOR,MotorType.kBrushless);
+  //private final CANSparkMax intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR,MotorType.kBrushless);
+  //private final CANSparkMax indexerMotor = new CANSparkMax(Constants.INTAKE_MOTOR,MotorType.kBrushless);
 
   public IntakeSubsystem() {
     super();
-    addChild("Intake", (Sendable) intakeMotor);
-    addChild("Indexer", (Sendable) indexerMotor);
-    intakeMotor.setInverted(true);
+    //addChild("Intake", (Sendable) intakeMotor);
+    //addChild("Indexer", (Sendable) indexerMotor);
+    //intakeMotor.setInverted(true);
   }
 
   public void intakeCargo(double speed) {
-    intakeMotor.set(speed);
+    //intakeMotor.set(speed);
   }
 
   public void indexCargo(double speed) {
-    indexerMotor.set(speed);
+    //indexerMotor.set(speed);
   }
 
 }
