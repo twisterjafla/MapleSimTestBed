@@ -25,7 +25,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   //left motors
   private final CANSparkMax righttop = new CANSparkMax(Constants.RIGHT_TOP, MotorType.kBrushless);
-  private final CANSparkMax rightbottomright = new CANSparkMax(Constants.RIGHT_BOTTOM_RIGHT,MotorType.kBrushless);
+  private final CANSparkMax rightbottomright = new CANSparkMax(Constants.RIGHT_BACK,MotorType.kBrushless);
   private final CANSparkMax rightbottomleft = new CANSparkMax(Constants.RIGHT_FRONT, MotorType.kBrushless);
 
   MotorControllerGroup m_LeftMotorGroup = new MotorControllerGroup(lefttop, leftbottomright,leftbottomleft);
