@@ -50,7 +50,7 @@ public class DriveSubsystem extends SubsystemBase {
     // m_leftEncoder.setDistancePerPulse((Math.PI * 6) / 360.0);
     // m_rightEncoder.setDistancePerPulse((Math.PI * 6) / 360.0);
 
-    m_RightMotorGroup.setInverted(true);
+    m_LeftMotorGroup.setInverted(true);
 
     reset();
   }
