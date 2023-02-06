@@ -6,12 +6,17 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+//import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.ReverseIntakeCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+//import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 
 
@@ -70,7 +75,11 @@ public class RobotContainer {
     final JoystickButton movement_b = new JoystickButton(movementJoystick, Button.kB.value);
     final JoystickButton movement_y = new JoystickButton(movementJoystick, Button.kY.value);
      */
-    
+    final JoystickButton manipulator_l1 = new JoystickButton(manipulatorJoystick, XboxController.Button.kLeftBumper.value);//intake
+    final JoystickButton manipulator_r1 = new JoystickButton(manipulatorJoystick, XboxController.Button.kRightBumper.value);//outake
+
+    //final POVButton manipulator_dpad_up = new POVButton(manipulatorJoystick, Constants.DPAD_UP);
+    //final POVButton manipulator_dpad_down = new POVButton(manipulatorJoystick, Constants.DPAD_DOWN);
     // movement_a.toggleWhenPressed(new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED));
     // movement_b.whileHeld(new ReverseIntake(m_intakeSubsystem, Constants.OUTTAKE_SPEED));
     
@@ -78,11 +87,11 @@ public class RobotContainer {
     // manipulator_x.toggleWhenPressed(new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED));
     // manipulator_y.whileHeld(new OuttakeCargoToFloor(m_intakeSubsystem, m_shooterSubsystem));
     // manipulator_a.whileHeld(new IntakeCargoCommandGroup(m_intakeSubsystem));
-    // manipulator_dpad_up.whileHeld(new RunWinch(m_climberSubsystem, Constants.WINCH_IN_SPEED));
-    // manipulator_dpad_down.whileHeld(new RunWinch(m_climberSubsystem, Constants.WINCH_OUT_SPEED));
+    //manipulator_dpad_up.whileHeld(new RunWinch(m_climberSubsystem, Constants.WINCH_IN_SPEED));
+    //manipulator_dpad_down.whileHeld(new RunWinch(m_climberSubsystem, Constants.WINCH_OUT_SPEED));
 
-    // manipulator_l2.whileHeld(new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED));
-    // manipulator_r2.whileHeld(new ReverseIntake(m_intakeSubsystem, Constants.OUTTAKE_SPEED));
+    manipulator_l1.toggleOnTrue(new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED));
+    manipulator_r1.toggleOnTrue(new ReverseIntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED));
     // movement_y.toggleWhenPressed(new SwitchCamera(cameraSelection, camera1.getName(), camera2.getName()));
   }
   /**

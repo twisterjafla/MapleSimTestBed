@@ -26,11 +26,18 @@ public final class Constants {
     public static final int RIGHT_TOP = 5;
     public static final int RIGHT_BACK=6;
 
-    //public static final int INTAKE_MOTOR = 1;
-    //public static final int INDEXER_MOTOR = 0;
-    //public static final int CLIMBER_MOTOR = 21;
-    //public static final int WINCH_MOTOR = 8;
-    //public static final int SHOOTER_MOTOR = 9;
+    //Uncoment when adding bucket subsystem
+    //public static final int BUCKET_SOLENOID1=
+    //public static final int BUCKET_SOLENOID2=
+    
+    // public static final int INTAKE_SOLENOID1=
+    // public static final int INTAKE_SOLENOID2=
+
+    public static final int INTAKE_MOTOR1=;
+    public static final int INTAKE_MOTOR2=;
+
+
+
 
     // Motor speed constants
     public static final double INTAKE_SPEED = 1;
