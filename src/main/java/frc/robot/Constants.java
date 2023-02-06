@@ -33,6 +33,8 @@ public final class Constants {
     // public static final int INTAKE_SOLENOID1=
     // public static final int INTAKE_SOLENOID2=
 
+
+    //TODO: Add motor contants from tuner
     public static final int INTAKE_MOTOR1=;
     public static final int INTAKE_MOTOR2=;
 
