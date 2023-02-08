@@ -7,17 +7,22 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 //import edu.wpi.first.wpilibj.PS4Controller.Button;
+//import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ReverseIntakeCommand;
+import frc.robot.commands.ToggleBucketCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj.XboxController.Axis;
+//import frc.robot.commands.ToggleBucketCommand;
+import frc.robot.subsystems.BucketSubsystem;
+
 
 
 /**
@@ -30,6 +35,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  private final BucketSubsystem m_bucketSubsystem = new BucketSubsystem();
 
   private final CommandBase m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem);
 
@@ -78,6 +84,8 @@ public class RobotContainer {
     final JoystickButton manipulator_l1 = new JoystickButton(manipulatorJoystick, XboxController.Button.kLeftBumper.value);//intake
     final JoystickButton manipulator_r1 = new JoystickButton(manipulatorJoystick, XboxController.Button.kRightBumper.value);//outake
 
+    final JoystickButton manipulator_x = new JoystickButton(manipulatorJoystick, XboxController.Button.kX.value); 
+
     //final POVButton manipulator_dpad_up = new POVButton(manipulatorJoystick, Constants.DPAD_UP);
     //final POVButton manipulator_dpad_down = new POVButton(manipulatorJoystick, Constants.DPAD_DOWN);
     // movement_a.toggleWhenPressed(new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED));
@@ -92,6 +100,8 @@ public class RobotContainer {
 
     manipulator_l1.toggleOnTrue(new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED));
     manipulator_r1.toggleOnTrue(new ReverseIntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED));
+
+    manipulator_x.toggleOnTrue(new ToggleBucketCommand(m_bucketSubsystem));
     // movement_y.toggleWhenPressed(new SwitchCamera(cameraSelection, camera1.getName(), camera2.getName()));
   }
   /**
