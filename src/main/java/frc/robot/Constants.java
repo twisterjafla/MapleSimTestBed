@@ -27,8 +27,8 @@ public final class Constants {
     public static final int RIGHT_BACK=6;
 
     //Uncoment when adding bucket subsystem
-    public static final int BUCKET_SOLENOID_1=;
-    public static final int BUCKET_SOLENOID_2=;
+    //public static final int BUCKET_SOLENOID1=
+    //public static final int BUCKET_SOLENOID2=
     
     // public static final int INTAKE_SOLENOID1=
     // public static final int INTAKE_SOLENOID2=
