@@ -22,6 +22,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 //import frc.robot.commands.ToggleBucketCommand;
 import frc.robot.subsystems.BucketSubsystem;
+import frc.robot.commands.IntakeToggleCommand;
+//import frc.robot.subsystems.IntakeSubsystem;
+
 
 
 
@@ -85,6 +88,7 @@ public class RobotContainer {
     final JoystickButton manipulator_r1 = new JoystickButton(manipulatorJoystick, XboxController.Button.kRightBumper.value);//outake
 
     final JoystickButton manipulator_x = new JoystickButton(manipulatorJoystick, XboxController.Button.kX.value); 
+    final JoystickButton manipulator_a = new JoystickButton(manipulatorJoystick, XboxController.Button.kA.value);
 
     //final POVButton manipulator_dpad_up = new POVButton(manipulatorJoystick, Constants.DPAD_UP);
     //final POVButton manipulator_dpad_down = new POVButton(manipulatorJoystick, Constants.DPAD_DOWN);
@@ -102,6 +106,7 @@ public class RobotContainer {
     manipulator_r1.toggleOnTrue(new ReverseIntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED));
 
     manipulator_x.toggleOnTrue(new ToggleBucketCommand(m_bucketSubsystem));
+    manipulator_a.toggleOnTrue(new IntakeToggleCommand(m_intakeSubsystem));
     // movement_y.toggleWhenPressed(new SwitchCamera(cameraSelection, camera1.getName(), camera2.getName()));
   }
   /**
