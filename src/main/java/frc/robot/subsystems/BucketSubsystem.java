@@ -10,14 +10,14 @@ import frc.robot.Constants;
 public class BucketSubsystem extends SubsystemBase {
 
   // no need to set this to null, bozo
-  DoubleSolenoid BucketSolenoid = null;
+  DoubleSolenoid BucketSolenoid;
 
   /** Creates a new pnumatics. */
   public BucketSubsystem() {
     //you don't need a super constructor
     super();
     //follow naming conventions please
-    BucketSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.BUCKET_SOLENOID_1, Constants.BUCKET_SOLENOID_2);
+    BucketSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.BUCKET_SOLENOID_1, Constants.BUCKET_SOLENOID_2);
     
     // I think I need to set an initial position idk if this is the right place
     BucketSolenoid.set(kReverse);

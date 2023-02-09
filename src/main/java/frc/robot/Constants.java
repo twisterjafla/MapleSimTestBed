@@ -26,12 +26,12 @@ public final class Constants {
     public static final int RIGHT_TOP = 5;
     public static final int RIGHT_BACK=6;
 
-    //Uncoment when adding bucket subsystem
+    //TODO:Change solenoits to port on PCH
     public static final int BUCKET_SOLENOID_1=1;
     public static final int BUCKET_SOLENOID_2=2;
     
-    // public static final int INTAKE_SOLENOID1=
-    // public static final int INTAKE_SOLENOID2=
+    public static final int INTAKE_SOLENOID_1=3;
+    public static final int INTAKE_SOLENOID_2=4;
 
 
     //TODO: Add motor contants from tuner
