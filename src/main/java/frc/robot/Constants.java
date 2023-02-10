@@ -27,11 +27,11 @@ public final class Constants {
     public static final int RIGHT_BACK=6;
 
     //TODO:Change solenoits to port on PCH
-    public static final int BUCKET_SOLENOID_1=1;
-    public static final int BUCKET_SOLENOID_2=2;
+    public static final int BUCKET_SOLENOID_1=0;
+    public static final int BUCKET_SOLENOID_2=1;
     
-    public static final int INTAKE_SOLENOID_1=3;
-    public static final int INTAKE_SOLENOID_2=4;
+    public static final int INTAKE_SOLENOID_1=2;
+    public static final int INTAKE_SOLENOID_2=3;
 
 
     //TODO: Add motor contants from tuner
