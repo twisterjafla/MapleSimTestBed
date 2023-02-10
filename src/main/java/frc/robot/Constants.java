@@ -35,8 +35,8 @@ public final class Constants {
 
 
     //TODO: Add motor contants from tuner
-    public static final int INTAKE_MOTOR1=3;
-    public static final int INTAKE_MOTOR2=4;
+    public static final int INTAKE_MOTOR1=7;
+    public static final int INTAKE_MOTOR2=8;
 
 
 
