@@ -32,8 +32,6 @@ public class IntakeSubsystem extends SubsystemBase {
   DoubleSolenoid intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_SOLENOID_1, Constants.INTAKE_SOLENOID_2);
   //MotorControllerGroup m_LeftMotorGroup = new MotorControllerGroup(intakeMotor1, intakeMotor2);
   
-
-
   public IntakeSubsystem() {
  
     //super();

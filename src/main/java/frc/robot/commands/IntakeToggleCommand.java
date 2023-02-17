@@ -31,7 +31,7 @@ public class IntakeToggleCommand extends CommandBase {
     // Called once after isFinished returns true
     @Override
     public void end(boolean interrupted) {
-      m_intakeSubsystem.toggleIntakepiston();
+
     }
 
 }

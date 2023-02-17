@@ -15,7 +15,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 //import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 //import frc.robot.commands.ToggleBucketCommand;
@@ -40,8 +41,8 @@ public class RobotContainer {
 
   private final CommandBase m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem);
 
-  XboxController movementJoystick = new XboxController(Constants.MOVEMENT_JOYSTICK);
-  XboxController manipulatorJoystick = new XboxController(Constants.MANIPULATOR_JOYSTICK);
+  CommandXboxController movementJoystick = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
+  CommandXboxController manipulatorJoystick = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -82,11 +83,11 @@ public class RobotContainer {
     final JoystickButton movement_b = new JoystickButton(movementJoystick, Button.kB.value);
     final JoystickButton movement_y = new JoystickButton(movementJoystick, Button.kY.value);
      */
-    final JoystickButton manipulator_l1 = new JoystickButton(manipulatorJoystick, XboxController.Button.kLeftBumper.value);//intake
-    final JoystickButton manipulator_r1 = new JoystickButton(manipulatorJoystick, XboxController.Button.kRightBumper.value);//outake
+    final Trigger manipulator_l1 = manipulatorJoystick.leftBumper();//intake
+    final Trigger manipulator_r1 = manipulatorJoystick.rightBumper();//outake
 
-    final JoystickButton manipulator_x = new JoystickButton(manipulatorJoystick, XboxController.Button.kX.value); 
-    final JoystickButton manipulator_a = new JoystickButton(manipulatorJoystick, XboxController.Button.kA.value);
+    final Trigger manipulator_x = manipulatorJoystick.x();
+    final Trigger manipulator_a = manipulatorJoystick.a();
 
     //final POVButton manipulator_dpad_up = new POVButton(manipulatorJoystick, Constants.DPAD_UP);
     //final POVButton manipulator_dpad_down = new POVButton(manipulatorJoystick, Constants.DPAD_DOWN);
@@ -104,7 +105,7 @@ public class RobotContainer {
     manipulator_r1.whileTrue(new ReverseIntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED));
 
     manipulator_x.onTrue(new ToggleBucketCommand(m_bucketSubsystem));
-    manipulator_a.toggleOnTrue(new IntakeToggleCommand(m_intakeSubsystem));
+    manipulator_a.onTrue(new IntakeToggleCommand(m_intakeSubsystem));
     // movement_y.toggleWhenPressed(new SwitchCamera(cameraSelection, camera1.getName(), camera2.getName()));
   }
   /**
