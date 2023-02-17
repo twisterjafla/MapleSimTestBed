@@ -102,8 +102,8 @@ public class RobotContainer {
     //manipulator_dpad_up.whileHeld(new RunWinch(m_climberSubsystem, Constants.WINCH_IN_SPEED));
     //manipulator_dpad_down.whileHeld(new RunWinch(m_climberSubsystem, Constants.WINCH_OUT_SPEED));
 
-    manipulator_l1.toggleOnTrue(new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED));
-    manipulator_r1.toggleOnTrue(new ReverseIntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED));
+    manipulator_l1.whileTrue(new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED));
+    manipulator_r1.whileTrue(new ReverseIntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED));
 
     manipulator_x.toggleOnTrue(new ToggleBucketCommand(m_bucketSubsystem));
     manipulator_a.toggleOnTrue(new IntakeToggleCommand(m_intakeSubsystem));
