@@ -12,9 +12,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.ReverseIntakeCommand;
-import frc.robot.commands.ToggleBucketCommand;
+import frc.robot.commands.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -105,7 +103,7 @@ public class RobotContainer {
     manipulator_l1.whileTrue(new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED));
     manipulator_r1.whileTrue(new ReverseIntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED));
 
-    manipulator_x.toggleOnTrue(new ToggleBucketCommand(m_bucketSubsystem));
+    manipulator_x.onTrue(new ToggleBucketCommand(m_bucketSubsystem));
     manipulator_a.toggleOnTrue(new IntakeToggleCommand(m_intakeSubsystem));
     // movement_y.toggleWhenPressed(new SwitchCamera(cameraSelection, camera1.getName(), camera2.getName()));
   }
