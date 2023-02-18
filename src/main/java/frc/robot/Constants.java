@@ -17,14 +17,14 @@ public final class Constants {
     // Motor Constants
 
     //right motors
-    public static final int LEFT_FRONT= 1;
-    public static final int LEFT_TOP = 2;
-    public static final int LEFT_BACK = 3;
+    public static final int LEFT_FRONT= 2;
+    public static final int LEFT_TOP = 3;
+    public static final int LEFT_BACK = 4;
 
     //left motors
-    public static final int RIGHT_FRONT=4;
-    public static final int RIGHT_TOP = 5;
-    public static final int RIGHT_BACK=6;
+    public static final int RIGHT_FRONT=5;
+    public static final int RIGHT_TOP = 6;
+    public static final int RIGHT_BACK=7;
 
     //TODO:Change solenoits to port on PCH
     public static final int BUCKET_SOLENOID_1=0;
@@ -35,14 +35,14 @@ public final class Constants {
 
 
     //TODO: Add motor contants from tuner
-    public static final int INTAKE_MOTOR1=7;
-    public static final int INTAKE_MOTOR2=8;
+    public static final int INTAKE_MOTOR1=8;
+    public static final int INTAKE_MOTOR2=9;
 
 
 
 
     // Motor speed constants
-    public static final double INTAKE_SPEED = 1;
+    public static final double INTAKE_SPEED = 0.4;
     public static final double OUTTAKE_SPEED = -0.4;
     public static final double INDEXER_SPEED = 1;
     public static final double REVERSE_INDEXER_SPEED = -1;
