@@ -21,21 +21,21 @@ public class DriveSubsystem extends SubsystemBase {
   private final CANSparkMax rightbottomright = new CANSparkMax(Constants.RIGHT_BACK, MotorType.kBrushless);
   private final CANSparkMax rightbottomleft = new CANSparkMax(Constants.RIGHT_FRONT, MotorType.kBrushless);
 
-  MotorControllerGroup m_LeftMotorGroup = new MotorControllerGroup(lefttop, leftbottomright, leftbottomleft);
-  MotorControllerGroup m_RightMotorGroup = new MotorControllerGroup(righttop, rightbottomright, rightbottomleft);
+  final MotorControllerGroup m_LeftMotorGroup = new MotorControllerGroup(lefttop, leftbottomright, leftbottomleft);
+  final MotorControllerGroup m_RightMotorGroup = new MotorControllerGroup(righttop, rightbottomright, rightbottomleft);
 
-  private final DifferentialDrive m_RobotDrive = new DifferentialDrive(m_LeftMotorGroup, m_RightMotorGroup);
+  private final DifferentialDrive m_RobotDrive;
 
   private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
 
   public DriveSubsystem() {
+    m_LeftMotorGroup.setInverted(true);
+    m_RobotDrive = new DifferentialDrive(m_LeftMotorGroup, m_RightMotorGroup);
 
     addChild("Drive", m_RobotDrive);
-
     addChild("Gyro", m_gyro);
-    m_gyro.calibrate();
 
-    m_LeftMotorGroup.setInverted(true);
+    m_gyro.calibrate();
 
     reset();
   }
