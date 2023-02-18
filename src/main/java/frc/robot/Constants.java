@@ -42,7 +42,7 @@ public final class Constants {
 
 
     // Motor speed constants
-    public static final double INTAKE_SPEED = 1;
+    public static final double INTAKE_SPEED = 0.4;
     public static final double OUTTAKE_SPEED = -0.4;
     public static final double INDEXER_SPEED = 1;
     public static final double REVERSE_INDEXER_SPEED = -1;
