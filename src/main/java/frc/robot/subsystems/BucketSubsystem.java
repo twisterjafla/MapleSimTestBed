@@ -16,7 +16,7 @@ public class BucketSubsystem extends SubsystemBase {
   public BucketSubsystem() {
 
     // I think I need to set an initial position idk if this is the right place
-    BucketSolenoid.set(DoubleSolenoid.Value.kReverse);
+    BucketSolenoid.set(DoubleSolenoid.Value.kForward);
 
     addChild("BucketDump", BucketSolenoid);
   }
