@@ -13,9 +13,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.BucketSubsystem;
 import frc.robot.commands.IntakeToggleCommand;
 
@@ -31,10 +29,15 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final BucketSubsystem m_bucketSubsystem = new BucketSubsystem();
 
-  private final CommandBase m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem);
+  final AutonomousCommand m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem);
 
-  CommandXboxController movementJoystick = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
-  CommandXboxController manipulatorJoystick = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
+  final IntakeCommand runIntake = new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED);
+  final IntakeCommand runIntakeBackward = new IntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED);
+  final ToggleBucketCommand toggleBucket = new ToggleBucketCommand(m_bucketSubsystem);
+  final IntakeToggleCommand toggleIntake = new IntakeToggleCommand(m_intakeSubsystem);
+
+  final CommandXboxController movementJoystick = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
+  final CommandXboxController manipulatorJoystick = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -42,7 +45,7 @@ public class RobotContainer {
     configureButtonBindings();
     
     m_driveSubsystem.setDefaultCommand(
-      new ArcadeDrive(
+      new ArcadeDrive( 
         m_driveSubsystem,
         -((-movementJoystick.getLeftTriggerAxis() + movementJoystick.getRightTriggerAxis())),
         (-movementJoystick.getLeftX() * 0.75)
@@ -53,19 +56,17 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
+    manipulatorJoystick.leftBumper() //intake
+    .whileTrue(runIntake);
 
-    final Trigger manipulator_l1 = manipulatorJoystick.leftBumper();//intake
-    final Trigger manipulator_r1 = manipulatorJoystick.rightBumper();//outake
+    manipulatorJoystick.rightBumper()//outake
+    .whileTrue(runIntakeBackward);
 
-    final Trigger manipulator_x = manipulatorJoystick.x();
-    final Trigger manipulator_a = manipulatorJoystick.a();
+    manipulatorJoystick.x()
+    .onTrue(toggleBucket);
 
-    manipulator_l1.whileTrue(new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED));
-    manipulator_r1.whileTrue(new IntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED));
-
-    manipulator_x.onTrue(new ToggleBucketCommand(m_bucketSubsystem));
-    manipulator_a.onTrue(new IntakeToggleCommand(m_intakeSubsystem));
-
+    manipulatorJoystick.a()
+    .onTrue(new IntakeToggleCommand(m_intakeSubsystem));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
