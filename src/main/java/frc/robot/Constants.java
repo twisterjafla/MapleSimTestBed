@@ -14,17 +14,25 @@ package frc.robot;
  */
 public final class Constants {
 
-    // Motor Constants
+    // drive Constants
 
-    //right motors
-    public static final int LEFT_FRONT= 2;
-    public static final int LEFT_TOP = 3;
-    public static final int LEFT_BACK = 4;
+    public static final class drive{
 
-    //left motors
-    public static final int RIGHT_FRONT=5;
-    public static final int RIGHT_TOP = 6;
-    public static final int RIGHT_BACK=7;
+        //f: front
+        //t: top
+        //r: rear
+
+        //left
+        public static final int lf= 2;
+        public static final int lt = 3;
+        public static final int lr = 4;
+        
+        //right
+        public static final int rf=5;
+        public static final int rt = 6;
+        public static final int rr=7;
+    }
+
 
     //TODO:Change solenoits to port on PCH
     public static final int BUCKET_SOLENOID_1=0;
