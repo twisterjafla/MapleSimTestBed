@@ -31,8 +31,8 @@ public class RobotContainer {
 
   final AutonomousCommand m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem);
 
-  final IntakeCommand runIntake = new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED);
-  final IntakeCommand runIntakeBackward = new IntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED);
+  final IntakeCommand runIntake = new IntakeCommand(m_intakeSubsystem, Constants.intake.fwdSpeed);
+  final IntakeCommand runIntakeBackward = new IntakeCommand(m_intakeSubsystem, Constants.intake.revSpeed);
   final ToggleBucketCommand toggleBucket = new ToggleBucketCommand(m_bucketSubsystem);
   final IntakeToggleCommand toggleIntake = new IntakeToggleCommand(m_intakeSubsystem);
 

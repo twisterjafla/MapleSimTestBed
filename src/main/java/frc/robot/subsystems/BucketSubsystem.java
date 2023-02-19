@@ -9,7 +9,11 @@ import frc.robot.Constants;
 
 public class BucketSubsystem extends SubsystemBase {
 
-  DoubleSolenoid BucketSolenoid= new DoubleSolenoid(PneumaticsModuleType.REVPH,Constants.BUCKET_SOLENOID_1,Constants.BUCKET_SOLENOID_2);
+  DoubleSolenoid BucketSolenoid= new DoubleSolenoid(
+    PneumaticsModuleType.REVPH,
+    Constants.bucket.solenoid.fwdPort,
+    Constants.bucket.solenoid.revPort
+  );
   
 
   /** Creates a new pnumatics. */
