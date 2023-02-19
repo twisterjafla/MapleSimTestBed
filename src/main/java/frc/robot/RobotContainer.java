@@ -39,6 +39,7 @@ public class RobotContainer {
   IntakeCommand runIntakeBackward = new IntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED);
   ToggleBucketCommand toggleBucket = new ToggleBucketCommand(m_bucketSubsystem);
   IntakeToggleCommand toggleIntake = new IntakeToggleCommand(m_intakeSubsystem);
+  ToggleCompressor toggleCompressor = new ToggleCompressor(pneumatics);
 
   CommandXboxController movementJoystick = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
   CommandXboxController manipulatorJoystick = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
@@ -70,7 +71,10 @@ public class RobotContainer {
     .onTrue(toggleBucket);
 
     manipulatorJoystick.a()
-    .onTrue(new IntakeToggleCommand(m_intakeSubsystem));
+    .onTrue(toggleIntake);
+
+    manipulatorJoystick.y()
+    .onTrue(toggleCompressor);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
