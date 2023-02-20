@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
-//Code credit bakedpotatoelord
+/**
+ * @author: @bakedPotatoLord
+ * this code was blatantly stolen from team 7243. no apologies.
+ */
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -7,14 +10,21 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimelightSubsystem extends SubsystemBase {
-    public NetworkTable table =NetworkTableInstance.getDefault().getTable("limelight");
-	public NetworkTableEntry txN = table.getEntry("tx");
-	public NetworkTableEntry tyN = table.getEntry("ty");
-	public NetworkTableEntry taN = table.getEntry("ta");
-    
-    public LimelightSubsystem(){}
+    NetworkTable table =NetworkTableInstance.getDefault().getTable("limelight");
+	NetworkTableEntry tx = table.getEntry("tx");
+	NetworkTableEntry ty = table.getEntry("ty");
+	NetworkTableEntry ta = table.getEntry("ta");
 
-    public double tx = txN.getDouble(0);
-    public double ty = tyN.getDouble(0);
-    public double ta = taN.getDouble(0);
+    public double getX(){
+        return tx.getDouble(0);
+    }
+
+    public double getY(){
+        return ty.getDouble(0);
+    }
+
+    public double getA(){
+        return ta.getDouble(0);
+    }
+
 }
