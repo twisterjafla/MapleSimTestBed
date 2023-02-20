@@ -3,13 +3,13 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class IntakeSubsystem extends SubsystemBase {
   
+
   CANSparkMax intakeMotor1 = new CANSparkMax(Constants.intake.motor1,MotorType.kBrushless);
   CANSparkMax intakeMotor2 = new CANSparkMax(Constants.intake.motor2, MotorType.kBrushless);
   DoubleSolenoid intakeSolenoid = new DoubleSolenoid(
@@ -17,9 +17,16 @@ public class IntakeSubsystem extends SubsystemBase {
     Constants.intake.solenoid.fwdPort, 
     Constants.intake.solenoid.revPort
   );
+
   MotorControllerGroup intakeMotors;
   
-  public IntakeSubsystem() {
+  public IntakeSubsystem(Pneumatics pneumatics) {
+
+    intakeSolenoid = pneumatics.makeDoubleSolenoid(
+      Constants.INTAKE_SOLENOID_1, 
+      Constants.INTAKE_SOLENOID_2
+    );
+
     intakeMotor1.setInverted(true);
     intakeMotors = new MotorControllerGroup(intakeMotor1, intakeMotor2);
 
