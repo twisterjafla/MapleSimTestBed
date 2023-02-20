@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.Constants;
 
 public class BucketSubsystem extends SubsystemBase {
@@ -18,20 +19,20 @@ public class BucketSubsystem extends SubsystemBase {
   
   /** Creates a new pnumatics. */
   public BucketSubsystem(Pneumatics pneumatics) {
-    bucketSolenoid = pneumatics.makeDoubleSolenoid(
-      Constants.BUCKET_SOLENOID_1, 
-      Constants.BUCKET_SOLENOID_2
+    BucketSolenoid = pneumatics.makeDoubleSolenoid(
+      Constants.bucket.solenoid.fwdPort, 
+      Constants.bucket.solenoid.revPort
     );
 
-    bucketSolenoid.set(DoubleSolenoid.Value.kForward);
-    addChild("BucketDump", bucketSolenoid);
+    BucketSolenoid.set(DoubleSolenoid.Value.kForward);
+    addChild("BucketDump", BucketSolenoid);
   }
 
   public void bucketToggle(){
-    bucketSolenoid.toggle();
+    BucketSolenoid.toggle();
   }
 
   public void set(DoubleSolenoid.Value val){
-    bucketSolenoid.set(val);
+    BucketSolenoid.set(val);
   }
 }
