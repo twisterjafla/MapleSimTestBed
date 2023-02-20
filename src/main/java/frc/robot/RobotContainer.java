@@ -33,6 +33,7 @@ public class RobotContainer {
 
   final AutonomousCommand m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem);
 
+  final LimelightCommand limelightCommand= new LimelightCommand(limeLight);
   final IntakeCommand runIntake = new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED);
   final IntakeCommand runIntakeBackward = new IntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED);
   final ToggleBucketCommand toggleBucket = new ToggleBucketCommand(m_bucketSubsystem);
@@ -53,6 +54,8 @@ public class RobotContainer {
         (-movementJoystick.getLeftX() * 0.75)
       )
     );
+
+    limeLight.setDefaultCommand(limelightCommand);
 
     m_driveSubsystem.log();
   }
