@@ -31,27 +31,15 @@ import frc.robot.commands.IntakeToggleCommand;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-  private final BucketSubsystem m_bucketSubsystem = new BucketSubsystem();
-  private final LimelightSubsystem limeLight = new LimelightSubsystem();
-
-
+  LimelightSubsystem limeLight = new LimelightSubsystem();
   Pneumatics pneumatics = new Pneumatics();
-
-
-  final LimelightCommand limelightCommand= new LimelightCommand(limeLight);
-  final IntakeCommand runIntake = new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED);
-  final IntakeCommand runIntakeBackward = new IntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED);
-  final ToggleBucketCommand toggleBucket = new ToggleBucketCommand(m_bucketSubsystem);
-  final IntakeToggleCommand toggleIntake = new IntakeToggleCommand(m_intakeSubsystem);
-
   DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(pneumatics);
   BucketSubsystem m_bucketSubsystem = new BucketSubsystem(pneumatics);
-
+  
   AutonomousCommand m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem);
-
+  
+  LimelightCommand limelightCommand= new LimelightCommand(limeLight);
   IntakeCommand runIntake = new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED);
   IntakeCommand runIntakeBackward = new IntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED);
   ToggleBucketCommand toggleBucket = new ToggleBucketCommand(m_bucketSubsystem);
