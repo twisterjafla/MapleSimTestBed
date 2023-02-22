@@ -32,14 +32,14 @@ public class RobotContainer {
   DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(pneumatics);
   BucketSubsystem m_bucketSubsystem = new BucketSubsystem(pneumatics);
+  final ToggleCompressor toggleCompressor = new ToggleCompressor(pneumatics);
+
+  final IntakeCommand runIntake = new IntakeCommand(m_intakeSubsystem, Constants.intake.fwdSpeed);
+  final IntakeCommand runIntakeBackward = new IntakeCommand(m_intakeSubsystem, Constants.intake.revSpeed);
+  final ToggleBucketCommand toggleBucket = new ToggleBucketCommand(m_bucketSubsystem);
+  final IntakeToggleCommand toggleIntake = new IntakeToggleCommand(m_intakeSubsystem);
 
   AutonomousCommand m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem);
-
-  IntakeCommand runIntake = new IntakeCommand(m_intakeSubsystem, Constants.INTAKE_SPEED);
-  IntakeCommand runIntakeBackward = new IntakeCommand(m_intakeSubsystem, Constants.OUTTAKE_SPEED);
-  ToggleBucketCommand toggleBucket = new ToggleBucketCommand(m_bucketSubsystem);
-  IntakeToggleCommand toggleIntake = new IntakeToggleCommand(m_intakeSubsystem);
-  ToggleCompressor toggleCompressor = new ToggleCompressor(pneumatics);
 
   CommandXboxController movementJoystick = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
   CommandXboxController manipulatorJoystick = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
