@@ -11,7 +11,11 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+
+import frc.robot.subsystems.LimelightSubsystem;
+
 import frc.robot.subsystems.Pneumatics;
+
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -27,22 +31,23 @@ import frc.robot.commands.IntakeToggleCommand;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  Pneumatics pneumatics = new Pneumatics();
-
-  DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-  IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(pneumatics);
-  BucketSubsystem m_bucketSubsystem = new BucketSubsystem(pneumatics);
+  final LimelightSubsystem limeLight = new LimelightSubsystem();
+  final Pneumatics pneumatics = new Pneumatics();
+  final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(pneumatics);
+  final BucketSubsystem m_bucketSubsystem = new BucketSubsystem(pneumatics);
   final ToggleCompressor toggleCompressor = new ToggleCompressor(pneumatics);
 
+  final LimelightCommand limelightCommand = new LimelightCommand(limeLight);
   final IntakeCommand runIntake = new IntakeCommand(m_intakeSubsystem, Constants.intake.fwdSpeed);
   final IntakeCommand runIntakeBackward = new IntakeCommand(m_intakeSubsystem, Constants.intake.revSpeed);
   final ToggleBucketCommand toggleBucket = new ToggleBucketCommand(m_bucketSubsystem);
   final IntakeToggleCommand toggleIntake = new IntakeToggleCommand(m_intakeSubsystem);
 
-  AutonomousCommand m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem);
+  final AutonomousCommand m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem);
 
-  CommandXboxController movementJoystick = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
-  CommandXboxController manipulatorJoystick = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
+  final CommandXboxController movementJoystick = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
+  final CommandXboxController manipulatorJoystick = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -56,6 +61,8 @@ public class RobotContainer {
         (-movementJoystick.getLeftX() * 0.75)
       )
     );
+
+    limeLight.setDefaultCommand(limelightCommand);
 
     m_driveSubsystem.log();
   }
