@@ -10,6 +10,7 @@ package frc.robot;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.IntakeSubsystem;
 
 import frc.robot.subsystems.LimelightSubsystem;
@@ -36,6 +37,7 @@ public class RobotContainer {
   DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(pneumatics);
   BucketSubsystem m_bucketSubsystem = new BucketSubsystem(pneumatics);
+  Gyro gyro = new Gyro();
   
   AutonomousCommand m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem);
   
@@ -64,7 +66,7 @@ public class RobotContainer {
 
     limeLight.setDefaultCommand(limelightCommand);
 
-    m_driveSubsystem.log();
+    gyro.log();
   }
 
   private void configureButtonBindings() {
