@@ -18,6 +18,11 @@ public class DriveStraightCommand extends WaitCommand {
   @Override
   public void execute() {
       super.execute();
-      driveSubsystem.drive(Constants.AUTONOMOUS_FORWARD_SPEED, 0);
+      driveSubsystem.drive(Constants.auto.fwdSpeed, 0);
+  }
+
+  @Override
+  public void end(boolean interupted){
+    driveSubsystem.drive(0,0);
   }
 }
