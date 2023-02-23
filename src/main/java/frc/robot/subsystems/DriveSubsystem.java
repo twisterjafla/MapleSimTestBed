@@ -33,19 +33,4 @@ public class DriveSubsystem extends SubsystemBase {
   public void drive(final double ySpeed, final double rotateValue) {
     m_RobotDrive.arcadeDrive(ySpeed, rotateValue);
   }
-
-
-  public void reset() {
-    m_gyro.reset();
-  }
-
-  public void log() {
-    SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
-  }
-
-  public double getHeading() {
-    return m_gyro.getAngle();
-  }
-
-
 }
