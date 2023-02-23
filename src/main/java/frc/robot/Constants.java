@@ -26,14 +26,14 @@ public final class Constants {
         // r: rear
 
         // left
-        public static final int lf = 2;
-        public static final int lt = 3;
-        public static final int lr = 4;
+        public static final int lf = 3;
+        public static final int lt = 4;
+        public static final int lr = 9;
 
         // right
-        public static final int rf = 5;
-        public static final int rt = 6;
-        public static final int rr = 7;
+        public static final int rf = 7;
+        public static final int rt = 5;
+        public static final int rr = 8;
     }
 
     public static final class bucket {
@@ -50,8 +50,8 @@ public final class Constants {
             public static final int revPort = 3;
 
         }
-        public static final int motor1 = 8;
-        public static final int motor2 = 9;
+        public static final int motor1 = 2;
+        public static final int motor2 = 6;
 
         public static final double fwdSpeed = 0.4;
         public static final double revSpeed = -0.4;

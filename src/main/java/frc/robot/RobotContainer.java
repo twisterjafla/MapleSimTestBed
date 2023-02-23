@@ -15,9 +15,10 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 import frc.robot.subsystems.LimelightSubsystem;
 
-import frc.robot.subsystems.Pneumatics;
+import frc.robot.subsystems.PneumaticsSubsytem;
 
 import frc.robot.commands.*;
+import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.BucketSubsystem;
@@ -34,7 +35,7 @@ public class RobotContainer {
 
 
   final LimelightSubsystem limeLight = new LimelightSubsystem();
-  final Pneumatics pneumatics = new Pneumatics();
+  final PneumaticsSubsytem pneumatics = new PneumaticsSubsytem();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(pneumatics);
   final BucketSubsystem m_bucketSubsystem = new BucketSubsystem(pneumatics);
@@ -58,12 +59,12 @@ public class RobotContainer {
     configureButtonBindings();
     
     m_driveSubsystem.setDefaultCommand(
-      new ArcadeDrive( 
-        m_driveSubsystem,
-        -((-movementJoystick.getLeftTriggerAxis() + movementJoystick.getRightTriggerAxis())),
-        (-movementJoystick.getLeftX() * 0.75)
-      )
-    );
+      new ArcadeDrive(
+            m_driveSubsystem,
+            () -> -((-movementJoystick.getRawAxis(Axis.kLeftTrigger.value) + movementJoystick.getRawAxis(Axis.kRightTrigger.value))),
+            () -> (-movementJoystick.getRawAxis(Axis.kLeftX.value) * 0.75)
+      ));
+
 
     limeLight.setDefaultCommand(limelightCommand);
 
