@@ -11,19 +11,16 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class DriveSubsystem extends SubsystemBase {
-  // right motors
-  final MotorControllerGroup leftMotors = new MotorControllerGroup(
-    new CANSparkMax(Constants.drive.lt, MotorType.kBrushless),
-    new CANSparkMax(Constants.drive.lr, MotorType.kBrushless),
-    new CANSparkMax(Constants.drive.lf, MotorType.kBrushless)
-  );
 
-  // left motors
+  final MotorControllerGroup leftMotors = new MotorControllerGroup(
+      new CANSparkMax(Constants.drive.lt, MotorType.kBrushless),
+      new CANSparkMax(Constants.drive.lr, MotorType.kBrushless),
+      new CANSparkMax(Constants.drive.lf, MotorType.kBrushless));
+
   final MotorControllerGroup rightMotors = new MotorControllerGroup(
-    new CANSparkMax(Constants.drive.rt, MotorType.kBrushless),
-    new CANSparkMax(Constants.drive.rr, MotorType.kBrushless),
-    new CANSparkMax(Constants.drive.rf, MotorType.kBrushless)
-  );
+      new CANSparkMax(Constants.drive.rt, MotorType.kBrushless),
+      new CANSparkMax(Constants.drive.rr, MotorType.kBrushless),
+      new CANSparkMax(Constants.drive.rf, MotorType.kBrushless));
 
   private final DifferentialDrive m_RobotDrive;
 
@@ -31,7 +28,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   public DriveSubsystem() {
     leftMotors.setInverted(true);
-    m_RobotDrive = new DifferentialDrive(leftMotors,rightMotors);
+    m_RobotDrive = new DifferentialDrive(leftMotors, rightMotors);
 
     addChild("Drive", m_RobotDrive);
     addChild("Gyro", m_gyro);
@@ -42,10 +39,6 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void drive(final double ySpeed, final double rotateValue) {
-    m_RobotDrive.arcadeDrive(ySpeed, rotateValue);
-  }
-
-  public void drive(final double ySpeed, final double rotateValue, final double hDriveMotorSpeed) {
     m_RobotDrive.arcadeDrive(ySpeed, rotateValue);
   }
 

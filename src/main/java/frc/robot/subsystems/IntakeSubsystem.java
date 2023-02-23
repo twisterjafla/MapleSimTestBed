@@ -13,15 +13,11 @@ public class IntakeSubsystem extends SubsystemBase {
 
   CANSparkMax intakeMotor1 = new CANSparkMax(Constants.intake.motor1,MotorType.kBrushless);
   CANSparkMax intakeMotor2 = new CANSparkMax(Constants.intake.motor2, MotorType.kBrushless);
-  DoubleSolenoid intakeSolenoid = new DoubleSolenoid(
-    PneumaticsModuleType.REVPH, 
-    Constants.intake.solenoid.fwdPort, 
-    Constants.intake.solenoid.revPort
-  );
+  DoubleSolenoid intakeSolenoid;
 
   MotorControllerGroup intakeMotors;
   
-  public IntakeSubsystem(Pneumatics pneumatics) {
+  public IntakeSubsystem(PneumaticsSubsytem pneumatics) {
 
     intakeSolenoid = pneumatics.makeDoubleSolenoid(
       Constants.intake.solenoid.fwdPort, 

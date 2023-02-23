@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Pneumatics extends SubsystemBase{
+public class PneumaticsSubsytem extends SubsystemBase{
   
   PneumaticHub hub = new PneumaticHub();
 
   Compressor compressor = hub.makeCompressor();
 
-  public Pneumatics(){
+  public PneumaticsSubsytem(){
     compressor.enableDigital();
   }
 

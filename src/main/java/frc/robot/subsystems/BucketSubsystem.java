@@ -4,21 +4,15 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.Constants;
 
 public class BucketSubsystem extends SubsystemBase {
 
 
-  DoubleSolenoid BucketSolenoid= new DoubleSolenoid(
-    PneumaticsModuleType.REVPH,
-    Constants.bucket.solenoid.fwdPort,
-    Constants.bucket.solenoid.revPort
-  );
-
+  DoubleSolenoid BucketSolenoid;
   
   /** Creates a new pnumatics. */
-  public BucketSubsystem(Pneumatics pneumatics) {
+  public BucketSubsystem(PneumaticsSubsytem pneumatics) {
     BucketSolenoid = pneumatics.makeDoubleSolenoid(
       Constants.bucket.solenoid.fwdPort, 
       Constants.bucket.solenoid.revPort
