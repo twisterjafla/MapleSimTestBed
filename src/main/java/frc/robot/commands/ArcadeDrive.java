@@ -11,6 +11,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 
 /**
@@ -41,8 +42,10 @@ public class ArcadeDrive extends CommandBase {
     SmartDashboard.putString("On", "true");
     Double driveMotorSpeed = Math.abs(m_speed.getAsDouble()) > 0.1 ? m_speed.getAsDouble() : 0;
     Double rotationMotorSpeed = Math.abs(m_rotation.getAsDouble()) > 0.1 ? m_rotation.getAsDouble() : 0;
-     m_driveSubsystem.drive(driveMotorSpeed, rotationMotorSpeed);
-    //m_driveSubsystem.drive(0.4, rotationMotorSpeed); // delete me
+     m_driveSubsystem.drive(
+      driveMotorSpeed*Constants.drive.driveSpeedRatio,
+      rotationMotorSpeed*Constants.drive.rotationSpeedRatio
+    );
   }
   
 
