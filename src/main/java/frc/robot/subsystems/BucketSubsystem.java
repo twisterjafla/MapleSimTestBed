@@ -9,24 +9,24 @@ import frc.robot.Constants;
 public class BucketSubsystem extends SubsystemBase {
 
 
-  DoubleSolenoid BucketSolenoid;
+  DoubleSolenoid bucketSolenoid;
   
   /** Creates a new pnumatics. */
   public BucketSubsystem(PneumaticsSubsytem pneumatics) {
-    BucketSolenoid = pneumatics.makeDoubleSolenoid(
+    bucketSolenoid = pneumatics.makeDoubleSolenoid(
       Constants.bucket.solenoid.fwdPort, 
       Constants.bucket.solenoid.revPort
     );
 
-    BucketSolenoid.set(DoubleSolenoid.Value.kForward);
-    addChild("BucketDump", BucketSolenoid);
+    bucketSolenoid.set(DoubleSolenoid.Value.kReverse);
+    addChild("BucketDump", bucketSolenoid);
   }
 
   public void bucketToggle(){
-    BucketSolenoid.toggle();
+    bucketSolenoid.toggle();
   }
 
   public void set(DoubleSolenoid.Value val){
-    BucketSolenoid.set(val);
+    bucketSolenoid.set(val);
   }
 }
