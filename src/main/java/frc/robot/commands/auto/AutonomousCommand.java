@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.ToggleBucketCommand;
+import frc.robot.Constants;
 import frc.robot.subsystems.BucketSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -42,13 +42,18 @@ public class AutonomousCommand extends SequentialCommandGroup {
     SmartDashboard.getNumber("Auto Selector", 0);
 
     addCommands(
+      new WaitCommand(2),
       new InstantCommand(
         ()->{this.bucket.set(DoubleSolenoid.Value.kForward);},
         this.bucket
       ),
-      new DriveStraightCommand(drive, 2.5),
-      new ToggleBucketCommand(this.bucket),
-      new WaitCommand(1)
+      new WaitCommand(1),
+      new InstantCommand(
+        ()->{this.bucket.set(DoubleSolenoid.Value.kReverse);},
+        this.bucket
+      ),
+      new DriveStraightCommand(drive, 2.5,Constants.auto.fwdSpeed),
+      new DriveStraightCommand(drive, 1.5,Constants.auto.revSpeed)
     );
   }
 }
