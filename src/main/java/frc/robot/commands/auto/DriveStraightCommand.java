@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -18,7 +18,7 @@ public class DriveStraightCommand extends WaitCommand {
   @Override
   public void execute() {
       super.execute();
-      driveSubsystem.drive(Constants.auto.fwdSpeed, 0);
+      driveSubsystem.drive(-Constants.auto.fwdSpeed, 0);
   }
 
   @Override
