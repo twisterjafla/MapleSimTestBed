@@ -5,10 +5,6 @@
 package frc.robot;
 
 
-//import edu.wpi.first.wpilibj.PS4Controller.Button;
-//import edu.wpi.first.wpilibj.PS4Controller.Button;
-import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.AutonomousCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -16,13 +12,14 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 
 import frc.robot.subsystems.PneumaticsSubsytem;
-
+//import edu.wpi.first.wpilibj.PS4Controller.Button;
+//import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.commands.*;
+import frc.robot.commands.auto.AutonomousCommand;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.BucketSubsystem;
-import frc.robot.commands.IntakeToggleCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -48,7 +45,7 @@ public class RobotContainer {
   final ToggleBucketCommand toggleBucket = new ToggleBucketCommand(m_bucketSubsystem);
   final IntakeToggleCommand toggleIntake = new IntakeToggleCommand(m_intakeSubsystem);
 
-  final AutonomousCommand m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem);
+  final AutonomousCommand m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem,m_bucketSubsystem);
 
   final CommandXboxController movementJoystick = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
   final CommandXboxController manipulatorJoystick = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
