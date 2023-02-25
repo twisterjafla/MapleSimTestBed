@@ -34,6 +34,11 @@ public final class Constants {
         public static final int rf = 7;
         public static final int rt = 5;
         public static final int rr = 8;
+        
+        public static final double rotationSpeedRatio= 0.6;
+        public static final double driveSpeedRatio= 0.6;
+
+        
     }
 
     public static final class bucket {
