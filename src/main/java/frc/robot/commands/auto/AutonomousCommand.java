@@ -53,7 +53,7 @@ public class AutonomousCommand extends SequentialCommandGroup {
         this.bucket
       ),
       new DriveStraightCommand(drive, 2.5,Constants.auto.fwdSpeed),
-      new DriveStraightCommand(drive, 1.5,Constants.auto.revSpeed)
+      new DriveStraightCommand(drive, 2,Constants.auto.revSpeed)  
     );
   }
 }
