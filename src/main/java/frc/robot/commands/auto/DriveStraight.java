@@ -6,12 +6,12 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.DriveSubsystem;
 
 
-public class DriveStraightCommand extends WaitCommand {
+public class DriveStraight extends WaitCommand {
   private final DriveSubsystem driveSubsystem;
 
   double speed = 0;
 
-  public DriveStraightCommand(DriveSubsystem driveSubsystem, double time, double speed) {
+  public DriveStraight(DriveSubsystem driveSubsystem, double time, double speed) {
     super(time);
     this.driveSubsystem = driveSubsystem;
     this.speed = MathUtil.clamp(speed, -1, 1);

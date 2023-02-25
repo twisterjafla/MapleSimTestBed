@@ -52,8 +52,8 @@ public class AutonomousCommand extends SequentialCommandGroup {
         ()->{this.bucket.set(DoubleSolenoid.Value.kReverse);},
         this.bucket
       ),
-      new DriveStraightCommand(drive, 2.5,Constants.auto.fwdSpeed),
-      new DriveStraightCommand(drive, 2,Constants.auto.revSpeed)  
+      new DriveStraight(drive, 2.5,Constants.auto.fwdSpeed),
+      new DriveStraight(drive, 2,Constants.auto.revSpeed)  
     );
   }
 }
