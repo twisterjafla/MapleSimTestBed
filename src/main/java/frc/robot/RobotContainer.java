@@ -12,11 +12,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 
 import frc.robot.subsystems.PneumaticsSubsytem;
-//import edu.wpi.first.wpilibj.PS4Controller.Button;
-//import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.commands.*;
 import frc.robot.commands.auto.AutonomousCommand;
-import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.BucketSubsystem;
@@ -58,8 +55,8 @@ public class RobotContainer {
     m_driveSubsystem.setDefaultCommand(
       new ArcadeDrive(
             m_driveSubsystem,
-            () -> -((-movementJoystick.getRawAxis(Axis.kLeftTrigger.value) + movementJoystick.getRawAxis(Axis.kRightTrigger.value))),
-            () -> (-movementJoystick.getRawAxis(Axis.kLeftX.value) * 0.75)
+            () -> -((-movementJoystick.getLeftTriggerAxis() + movementJoystick.getRightTriggerAxis())),
+            () -> (movementJoystick.getLeftX() )
       ));
 
 
