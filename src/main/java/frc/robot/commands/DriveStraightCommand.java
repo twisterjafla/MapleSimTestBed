@@ -23,6 +23,7 @@ public class DriveStraightCommand extends WaitCommand {
 
   @Override
   public void end(boolean interupted){
+    super.end(interupted);
     driveSubsystem.drive(0,0);
   }
 }
