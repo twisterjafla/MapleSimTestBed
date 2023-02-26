@@ -4,19 +4,11 @@
 
 package frc.robot;
 
-
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.Gyro;
-import frc.robot.subsystems.IntakeSubsystem;
-
-import frc.robot.subsystems.LimelightSubsystem;
-
-import frc.robot.subsystems.PneumaticsSubsytem;
 import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 import frc.robot.commands.auto.AutonomousCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.BucketSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -32,7 +24,7 @@ public class RobotContainer {
   final PneumaticsSubsytem pneumatics = new PneumaticsSubsytem();
   final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(pneumatics);
-  final BucketSubsystem m_bucketSubsystem = new BucketSubsystem(pneumatics);
+  final Bucket m_bucketSubsystem = new Bucket(pneumatics);
   final ToggleCompressor toggleCompressor = new ToggleCompressor(pneumatics);
   final Gyro gyro = new Gyro();
 

@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.robot.Constants;
 
-public class BucketSubsystem extends SubsystemBase {
+public class Bucket extends SubsystemBase {
 
 
   DoubleSolenoid bucketSolenoid;
   
   /** Creates a new pnumatics. */
-  public BucketSubsystem(PneumaticsSubsytem pneumatics) {
+  public Bucket(PneumaticsSubsytem pneumatics) {
     bucketSolenoid = pneumatics.makeDoubleSolenoid(
       Constants.bucket.solenoid.fwdPort, 
       Constants.bucket.solenoid.revPort

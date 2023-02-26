@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.BucketSubsystem;
+import frc.robot.subsystems.Bucket;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -19,7 +19,7 @@ public class AutonomousCommand extends SequentialCommandGroup {
   /** Creates a new AutonomousCommand. */
   DriveSubsystem drive;
   IntakeSubsystem intake;
-  BucketSubsystem bucket;
+  Bucket bucket;
 
   /*
    * pseudoCode:
@@ -33,7 +33,7 @@ public class AutonomousCommand extends SequentialCommandGroup {
    * 
    */
 
-  public AutonomousCommand(DriveSubsystem drive, IntakeSubsystem intake,BucketSubsystem bucket) {
+  public AutonomousCommand(DriveSubsystem drive, IntakeSubsystem intake,Bucket bucket) {
     this.drive = drive;
     this.intake = intake;
     this.bucket = bucket;
