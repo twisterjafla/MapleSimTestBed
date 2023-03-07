@@ -55,8 +55,8 @@ public final class Constants {
             public static final int revPort = 3;
 
         }
-        public static final int motor1 = 2;
-        public static final int motor2 = 6;
+        public static final int motor1 = 18;
+        public static final int motor2 = 11;
 
         public static final double fwdSpeed = 0.4;
         public static final double revSpeed = -0.4;
