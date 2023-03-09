@@ -9,20 +9,23 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class DriveSubsystem extends SubsystemBase {
 
+  //lf, and lr are correct go with them
   final MotorControllerGroup leftMotors = new MotorControllerGroup(
       new CANSparkMax(Constants.drive.lt, MotorType.kBrushless),
       new CANSparkMax(Constants.drive.lr, MotorType.kBrushless),
-      new CANSparkMax(Constants.drive.lf, MotorType.kBrushless));
+      new CANSparkMax(Constants.drive.lf, MotorType.kBrushless)
+      );
 
   final MotorControllerGroup rightMotors = new MotorControllerGroup(
       new CANSparkMax(Constants.drive.rt, MotorType.kBrushless),
       new CANSparkMax(Constants.drive.rr, MotorType.kBrushless),
-      new CANSparkMax(Constants.drive.rf, MotorType.kBrushless));
+      new CANSparkMax(Constants.drive.rf, MotorType.kBrushless)
+      );
 
   final DifferentialDrive m_RobotDrive;
 
   public DriveSubsystem() {
-    leftMotors.setInverted(true);
+    //leftMotors.setInverted(true);
     //m_RobotDrive = new DifferentialDrive(rightMotors, leftMotors)
     m_RobotDrive = new DifferentialDrive(leftMotors, rightMotors);
 
