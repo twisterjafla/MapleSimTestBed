@@ -9,7 +9,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class DriveSubsystem extends SubsystemBase {
 
-  //lf, and lr are correct go with them
   final MotorControllerGroup leftMotors = new MotorControllerGroup(
       new CANSparkMax(Constants.drive.lt, MotorType.kBrushless),
       new CANSparkMax(Constants.drive.lr, MotorType.kBrushless),
