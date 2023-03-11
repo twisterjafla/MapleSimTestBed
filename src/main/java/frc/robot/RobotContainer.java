@@ -45,7 +45,8 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     //start cameraServer
-    CameraServer.startAutomaticCapture();
+    //TODO: uncoment when camera attached
+    //CameraServer.startAutomaticCapture();
     
     m_driveSubsystem.setDefaultCommand(
       new ArcadeDrive(
