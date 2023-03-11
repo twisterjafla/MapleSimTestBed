@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.commands.auto.AutonomousCommand;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -43,6 +44,9 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    //start cameraServer
+    //TODO: uncoment when camera attached
+    //CameraServer.startAutomaticCapture();
     
     m_driveSubsystem.setDefaultCommand(
       new ArcadeDrive(
