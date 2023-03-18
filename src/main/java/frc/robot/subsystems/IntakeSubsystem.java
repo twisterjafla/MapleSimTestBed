@@ -14,6 +14,7 @@ public class IntakeSubsystem extends SubsystemBase {
   CANSparkMax intakeMotor2 = new CANSparkMax(Constants.intake.motor2, MotorType.kBrushless);
   DoubleSolenoid intakeSolenoid;
 
+
   MotorControllerGroup intakeMotors;
   
   public IntakeSubsystem(PneumaticsSubsytem pneumatics) {
@@ -26,7 +27,7 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor1.setInverted(true);
     intakeMotors = new MotorControllerGroup(intakeMotor1, intakeMotor2);
 
-    intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
+    intakeSolenoid.set(DoubleSolenoid.Value.kForward);
   }
 
   public void toggleIntakepiston(){

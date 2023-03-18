@@ -18,7 +18,7 @@ public class Bucket extends SubsystemBase {
       Constants.bucket.solenoid.revPort
     );
 
-    bucketSolenoid.set(DoubleSolenoid.Value.kReverse);
+    bucketSolenoid.set(DoubleSolenoid.Value.kForward);
     addChild("BucketDump", bucketSolenoid);
   }
 
