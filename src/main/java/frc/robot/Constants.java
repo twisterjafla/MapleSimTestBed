@@ -35,8 +35,8 @@ public final class Constants {
         public static final int rt = 5;
         public static final int rr = 8;
         
-        public static final double rotationSpeedRatio= 0.6;
-        public static final double driveSpeedRatio= 0.6;
+        public static double rotationSpeedRatio= 0.6;
+        public static final double driveSpeedRatio= 1;
 
         
     }
@@ -57,9 +57,10 @@ public final class Constants {
         }
         public static final int motor1 = 6;
         public static final int motor2 = 11;
-
+        
+        //reversed
         public static final double fwdSpeed = 0.4;
-        public static final double revSpeed = -0.4;
+        public static final double revSpeed = -1;
     }
 
     public static final class auto{
@@ -69,5 +70,6 @@ public final class Constants {
 
     public static final int MOVEMENT_JOYSTICK = 0;
     public static final int MANIPULATOR_JOYSTICK = 1;
+    public static double driveSpeedRatio;
 
 }

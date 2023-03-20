@@ -35,7 +35,9 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void intakeCargo(double speed) {
-    intakeMotors.set(speed);
+    //intakeMotors.set(speed);
+    intakeMotor1.set(speed);
+    intakeMotor2.set(-speed);
   }
 
   public void stopMotors(){
