@@ -7,7 +7,11 @@ package frc.robot;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.commands.auto.AutonomousCommand;
+import frc.robot.commands.auto.AutonomousCommand2;
+import frc.robot.commands.auto.DriveStraight;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -78,13 +82,33 @@ public class RobotContainer {
     manipulatorJoystick.y()
     .onTrue(toggleCompressor);
   }
+
+  // Auto Stuff
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
+  private final Command m_simpleAuto =
+  new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem);
+
+// A complex auto routine that drives forward, drops a hatch, and then drives backward.
+private final Command m_complexAuto =
+ new AutonomousCommand2(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem);
+
+// A simple auto routine that drives forward a specified distance, and then stops.
+SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+
+
   public Command getAutonomousCommand() {
+    m_chooser.setDefaultOption("Simple Auto", m_simpleAuto);
+    m_chooser.addOption("Complex Auto", m_complexAuto);
+
+    SmartDashboard.putData(m_chooser);
+    
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    //return m_autoCommand;
+    return m_chooser.getSelected();
   }
 }
