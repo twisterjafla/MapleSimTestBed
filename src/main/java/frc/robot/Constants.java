@@ -64,8 +64,8 @@ public final class Constants {
     }
 
     public static final class auto{
-        public static final double fwdSpeed = 0.6;
-        public static final double revSpeed = -0.4;
+        public static final double fwdSpeed = -0.6;
+        public static final double revSpeed = 0.4;
     }
 
     public static final int MOVEMENT_JOYSTICK = 0;
