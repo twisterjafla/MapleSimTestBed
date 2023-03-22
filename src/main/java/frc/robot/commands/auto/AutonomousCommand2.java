@@ -6,14 +6,11 @@ package frc.robot.commands.auto;
 
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Bucket;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class AutonomousCommand2 extends SequentialCommandGroup {
   /** Creates a new AutonomousCommand. */

@@ -8,7 +8,6 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.commands.auto.AutonomousCommand;
 import frc.robot.commands.auto.AutonomousCommand2;
-import frc.robot.commands.auto.DriveStraight;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -106,7 +105,7 @@ SendableChooser<Command> m_chooser = new SendableChooser<>();
     m_chooser.addOption("Complex Auto", m_complexAuto);
 
     SmartDashboard.putData(m_chooser);
-    
+
     // An ExampleCommand will run in autonomous
     //return m_autoCommand;
     return m_chooser.getSelected();
