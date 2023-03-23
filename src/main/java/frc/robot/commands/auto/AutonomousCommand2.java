@@ -5,7 +5,11 @@
 package frc.robot.commands.auto;
 
 
+import java.sql.Time;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.subsystems.Bucket;
@@ -34,22 +38,30 @@ public class AutonomousCommand2 extends SequentialCommandGroup {
     this.drive = drive;
     this.intake = intake;
     this.bucket = bucket;
+    this.intake = intake;
 
     // Use addRequirements() here to declare subsystem dependencies.
     SmartDashboard.getNumber("Auto Selector", 0);
 
     addCommands(
     //   new WaitCommand(2),
-    //    new InstantCommand(
-    //      ()->{this.bucket.set(DoubleSolenoid.Value.kForward);},
-    //      this.bucket
-    //    ),
     //    new WaitCommand(1),
     //    new InstantCommand(
     //      ()->{this.bucket.set(DoubleSolenoid.Value.kReverse);},
     //      this.bucket
     //    ),
       new DriveStraight(drive, 2.5,Constants.auto.fwdSpeed),
+
+      new InstantCommand(
+        ()->{this.intake.set(DoubleSolenoid.Value.kForward);},
+        this.intake
+      ),
+      new InstantCommand(()->{
+        this.intake.intakeCargo(Constants.intake.fwdSpeed);
+        new DriveStraight(drive, 2.7, Constants.auto.fwdSpeed);
+
+      }),
+
       new DriveStraight(drive, 2.7,Constants.auto.revSpeed)  
     );
   }
