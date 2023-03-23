@@ -55,8 +55,10 @@ public class AutonomousBalance extends SequentialCommandGroup {
          ()->{this.bucket.set(DoubleSolenoid.Value.kReverse);},
          this.bucket
        ),
-      new DriveStraight(drive, 2.5,Constants.auto.fwdSpeed),
-      new DriveStraight(drive, 2.7,Constants.auto.revSpeed)  
+       new WaitCommand(1),
+      new DriveStraight(drive, 2.7,Constants.auto.fwdSpeed),
+      new WaitCommand(1),
+      new DriveStraight(drive, 3,Constants.auto.revSpeed)  
     );
   }
 }

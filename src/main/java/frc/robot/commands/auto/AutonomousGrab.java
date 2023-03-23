@@ -71,7 +71,7 @@ public class AutonomousGrab extends SequentialCommandGroup {
       ),
       new InstantCommand(()->{
         this.intake.intakeCargo(Constants.intake.fwdSpeed);
-        new DriveStraight(drive, 2.7, Constants.auto.fwdSpeed);
+        new DriveStraight(drive, 2.8, Constants.auto.fwdSpeed);
 
       }),
 
