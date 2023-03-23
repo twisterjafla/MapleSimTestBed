@@ -9,7 +9,6 @@ import frc.robot.subsystems.*;
 import frc.robot.commands.auto.AutonomousCommand;
 import frc.robot.commands.auto.AutonomousCommand2;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;

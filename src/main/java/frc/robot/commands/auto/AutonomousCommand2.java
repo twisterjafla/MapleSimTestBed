@@ -46,14 +46,16 @@ public class AutonomousCommand2 extends SequentialCommandGroup {
     addCommands(
     //   new WaitCommand(2),
     //    new WaitCommand(1),
-    //    new InstantCommand(
-    //      ()->{this.bucket.set(DoubleSolenoid.Value.kReverse);},
-    //      this.bucket
-    //    ),
+    
+        new InstantCommand(
+         ()->{this.bucket.set(DoubleSolenoid.Value.kReverse);},
+         this.bucket
+       ),
+
       new DriveStraight(drive, 2.5,Constants.auto.fwdSpeed),
 
       new InstantCommand(
-        ()->{this.intake.set(DoubleSolenoid.Value.kForward);},
+        ()->{this.intake.set(DoubleSolenoid.Value.kReverse);},
         this.intake
       ),
       new InstantCommand(()->{

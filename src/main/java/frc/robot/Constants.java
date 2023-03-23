@@ -41,7 +41,7 @@ public final class Constants {
         
     }
 
-    // Changing Solenoid Values
+    // Changing Solenoid Values idk 50/50 this'll work
     public static final class bucket {
         public static final class solenoid {
             public static final int fwdPort = 2;

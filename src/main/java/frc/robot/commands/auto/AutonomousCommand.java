@@ -33,6 +33,9 @@ public class AutonomousCommand extends SequentialCommandGroup {
    * 
    */
 
+   // Subsystem to Dump Cargo then go forward over charge station
+   // and then back up onto charge system to attempt balance
+
   public AutonomousCommand(DriveSubsystem drive, IntakeSubsystem intake,Bucket bucket) {
     this.drive = drive;
     this.intake = intake;

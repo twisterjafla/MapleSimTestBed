@@ -44,4 +44,8 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotors.stopMotor();
   }
 
+  public void set(DoubleSolenoid.Value val){
+    intakeSolenoid.set(val);
+  }
+
 }
