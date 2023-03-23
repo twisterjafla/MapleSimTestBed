@@ -6,8 +6,8 @@ package frc.robot;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import frc.robot.commands.auto.AutonomousCommand;
-import frc.robot.commands.auto.AutonomousCommand2;
+import frc.robot.commands.auto.AutonomousBalance;
+import frc.robot.commands.auto.AutonomousGrab;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,7 +38,7 @@ public class RobotContainer {
   final ToggleBucketCommand toggleBucket = new ToggleBucketCommand(m_bucketSubsystem);
   final IntakeToggleCommand toggleIntake = new IntakeToggleCommand(m_intakeSubsystem);
 
-  final AutonomousCommand m_autoCommand = new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem,m_bucketSubsystem);
+  final AutonomousBalance m_autoCommand = new AutonomousBalance(m_driveSubsystem, m_intakeSubsystem,m_bucketSubsystem);
 
   final CommandXboxController movementJoystick = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
   final CommandXboxController manipulatorJoystick = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
@@ -63,6 +63,11 @@ public class RobotContainer {
     limeLight.setDefaultCommand(limelightCommand);
 
     gyro.log();
+
+    m_chooser.setDefaultOption("Simple Auto", m_simpleAuto);
+    m_chooser.addOption("Complex Auto", m_complexAuto);
+
+    SmartDashboard.putData("autos: ", m_chooser);
   }
 
   private void configureButtonBindings() {
@@ -89,11 +94,11 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   private final Command m_simpleAuto =
-  new AutonomousCommand(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem);
+  new AutonomousBalance(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem);
 
 // A complex auto routine that drives forward, drops a hatch, and then drives backward.
 private final Command m_complexAuto =
- new AutonomousCommand2(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem);
+ new AutonomousGrab(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem);
 
 // A simple auto routine that drives forward a specified distance, and then stops.
 SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -101,10 +106,6 @@ SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
   public Command getAutonomousCommand() {
-    m_chooser.setDefaultOption("Simple Auto", m_simpleAuto);
-    m_chooser.addOption("Complex Auto", m_complexAuto);
-
-    SmartDashboard.putData(m_chooser);
 
     // An ExampleCommand will run in autonomous
     //return m_autoCommand;
