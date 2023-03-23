@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Bucket;
 import frc.robot.subsystems.DriveSubsystem;
@@ -51,6 +52,13 @@ public class AutonomousCommand2 extends SequentialCommandGroup {
          ()->{this.bucket.set(DoubleSolenoid.Value.kReverse);},
          this.bucket
        ),
+       
+       new WaitCommand(1),
+
+       new InstantCommand(
+        ()->{this.bucket.set(DoubleSolenoid.Value.kForward);},
+        this.bucket
+      ),
 
       new DriveStraight(drive, 2.5,Constants.auto.fwdSpeed),
 
