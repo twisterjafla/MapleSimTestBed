@@ -12,8 +12,10 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Bucket;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+
 
 public class AutonomousBalanceMobile extends SequentialCommandGroup {
   /** Creates a new AutonomousCommand. */
@@ -58,7 +60,8 @@ public class AutonomousBalanceMobile extends SequentialCommandGroup {
        new WaitCommand(1),
       new DriveStraight(drive, 2.7,Constants.auto.fwdSpeed),
       new WaitCommand(1),
-      new DriveStraight(drive, 3,Constants.auto.revSpeed)  
+      new DriveStraight(drive, 3,Constants.auto.revSpeed),
+      new Balance(drive, Gyro),  
     );
   }
 }
