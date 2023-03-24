@@ -39,7 +39,7 @@ public class RobotContainer {
   final ToggleBucketCommand toggleBucket = new ToggleBucketCommand(m_bucketSubsystem);
   final IntakeToggleCommand toggleIntake = new IntakeToggleCommand(m_intakeSubsystem);
 
-  final AutonomousBalanceMobile m_autoCommand = new AutonomousBalanceMobile(m_driveSubsystem, m_intakeSubsystem,m_bucketSubsystem);
+  final AutonomousBalanceMobile m_autoCommand = new AutonomousBalanceMobile(m_driveSubsystem, m_intakeSubsystem,m_bucketSubsystem, gyro);
 
   final CommandXboxController movementJoystick = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
   final CommandXboxController manipulatorJoystick = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
@@ -96,14 +96,14 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   private final Command m_autoBalancemobile =
-  new AutonomousBalanceMobile(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem);
+  new AutonomousBalanceMobile(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro);
 
 // A complex auto routine that drives forward, drops a hatch, and then drives backward.
 private final Command m_complexAuto =
  new AutonomousGrab(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem);
 
  private final Command m_autoNoMobile= 
- new AutonomousBalanceNoMobile(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem);
+ new AutonomousBalanceNoMobile(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro);
 
 // A simple auto routine that drives forward a specified distance, and then stops.
 SendableChooser<Command> m_chooser = new SendableChooser<>();

@@ -17,11 +17,14 @@ import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 
+
+
 public class AutonomousBalanceMobile extends SequentialCommandGroup {
   /** Creates a new AutonomousCommand. */
   DriveSubsystem drive;
   IntakeSubsystem intake;
   Bucket bucket;
+  Gyro gyro;
 
   /*
    * pseudoCode:
@@ -38,10 +41,11 @@ public class AutonomousBalanceMobile extends SequentialCommandGroup {
    // Subsystem to Dump Cargo then go forward over charge station
    // and then back up onto charge system to attempt balance
 
-  public AutonomousBalanceMobile(DriveSubsystem drive, IntakeSubsystem intake,Bucket bucket) {
+  public AutonomousBalanceMobile(DriveSubsystem drive, IntakeSubsystem intake, Bucket bucket, Gyro gyro) {
     this.drive = drive;
     this.intake = intake;
     this.bucket = bucket;
+    this.gyro = gyro;
 
     // Use addRequirements() here to declare subsystem dependencies.
     SmartDashboard.getNumber("Auto Selector", 0);
@@ -61,7 +65,7 @@ public class AutonomousBalanceMobile extends SequentialCommandGroup {
       new DriveStraight(drive, 2.7,Constants.auto.fwdSpeed),
       new WaitCommand(1),
       new DriveStraight(drive, 3,Constants.auto.revSpeed),
-      new Balance(drive, Gyro),  
+      new Balance(drive, gyro)
     );
   }
 }
