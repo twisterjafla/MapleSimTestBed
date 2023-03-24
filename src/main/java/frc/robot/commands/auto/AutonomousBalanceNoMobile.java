@@ -15,7 +15,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
-public class AutonomousBalance extends SequentialCommandGroup {
+public class AutonomousBalanceNoMobile extends SequentialCommandGroup {
   /** Creates a new AutonomousCommand. */
   DriveSubsystem drive;
   IntakeSubsystem intake;
@@ -36,7 +36,7 @@ public class AutonomousBalance extends SequentialCommandGroup {
    // Subsystem to Dump Cargo then go forward over charge station
    // and then back up onto charge system to attempt balance
 
-  public AutonomousBalance(DriveSubsystem drive, IntakeSubsystem intake,Bucket bucket) {
+  public AutonomousBalanceNoMobile(DriveSubsystem drive, IntakeSubsystem intake,Bucket bucket) {
     this.drive = drive;
     this.intake = intake;
     this.bucket = bucket;
@@ -56,9 +56,7 @@ public class AutonomousBalance extends SequentialCommandGroup {
          this.bucket
        ),
        new WaitCommand(1),
-      new DriveStraight(drive, 2.7,Constants.auto.fwdSpeed),
-      new WaitCommand(1),
-      new DriveStraight(drive, 3,Constants.auto.revSpeed)  
+      new DriveStraight(drive, 2,Constants.auto.fwdSpeed)
     );
   }
 }
