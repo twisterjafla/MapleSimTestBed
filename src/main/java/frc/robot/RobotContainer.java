@@ -65,7 +65,7 @@ public class RobotContainer {
 
     gyro.log();
 
-    m_chooser.setDefaultOption("Simple Auto", m_simpleAuto);
+    m_chooser.setDefaultOption("Simple Auto", m_autoBalancemobile);
     m_chooser.addOption("Complex Auto", m_complexAuto);
     m_chooser.addOption("Auto No Mobile", m_autoNoMobile);
 
@@ -95,7 +95,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  private final Command m_simpleAuto =
+  private final Command m_autoBalancemobile =
   new AutonomousBalanceMobile(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem);
 
 // A complex auto routine that drives forward, drops a hatch, and then drives backward.
