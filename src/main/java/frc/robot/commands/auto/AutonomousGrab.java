@@ -5,8 +5,6 @@
 package frc.robot.commands.auto;
 
 
-import java.sql.Time;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -73,7 +71,7 @@ public class AutonomousGrab extends SequentialCommandGroup {
         this.intake.intakeCargo(Constants.intake.fwdSpeed);
         new DriveStraight(drive, 2.8, Constants.auto.fwdSpeed);
 
-      }),
+      }) 
 
       //new WaitCommand(1),
 
@@ -81,7 +79,7 @@ public class AutonomousGrab extends SequentialCommandGroup {
       //   this.intake.intakeCargo(0);
       // }),
 
-      new DriveStraight(drive, 2.7,Constants.auto.revSpeed)  
+      //new DriveStraight(drive, 2.7,Constants.auto.revSpeed)  
     );
   }
 }
