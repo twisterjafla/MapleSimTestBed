@@ -25,7 +25,9 @@ public class IntakeSubsystem extends SubsystemBase {
     );
 
     intakeMotor1.setInverted(true);
-    //intakeMotors = new MotorControllerGroup(intakeMotor1, intakeMotor2);
+    intakeMotor1.setSmartCurrentLimit(40, 25);
+    //intakeMotor2.setSmartCurrentLimit(40, 25);
+    intakeMotors = new MotorControllerGroup(intakeMotor1);
 
     intakeSolenoid.set(DoubleSolenoid.Value.kForward);
   }
