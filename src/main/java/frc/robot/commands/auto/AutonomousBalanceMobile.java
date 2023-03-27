@@ -45,6 +45,7 @@ public class AutonomousBalanceMobile extends SequentialCommandGroup {
       new WaitCommand(1),
       //go back
       new DriveStraight(drive, 3,Constants.auto.revSpeed),
+      // balance
       new Balance(drive, gyro)
     );
   }
