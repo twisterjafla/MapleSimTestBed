@@ -4,11 +4,7 @@
 
 package frc.robot.commands.auto;
 
-
-import java.sql.Time;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -18,70 +14,42 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class AutonomousGrab extends SequentialCommandGroup {
-  /** Creates a new AutonomousCommand. */
-  DriveSubsystem drive;
-  IntakeSubsystem intake;
-  Bucket bucket;
 
-  /*
+  /**
    * pseudoCode:
-   * 
    * humans will position robot
-   * 
    * milk crate will tip, releasing cube into lowest zone
-   * 
    * robot drives forward, getting more auto points
-   * 
-   * 
    */
-
-  public AutonomousGrab(DriveSubsystem drive, IntakeSubsystem intake,Bucket bucket) {
-    this.drive = drive;
-    this.intake = intake;
-    this.bucket = bucket;
-    this.intake = intake;
-
-    // Use addRequirements() here to declare subsystem dependencies.
-    SmartDashboard.getNumber("Auto Selector", 0);
-
-    addCommands(
-    //   new WaitCommand(2),
-    //    new WaitCommand(1),
-
+  public AutonomousGrab(DriveSubsystem drive, IntakeSubsystem intake, Bucket bucket) {
+    super(
+        // dump milk crate
         new InstantCommand(
-         ()->{this.bucket.set(DoubleSolenoid.Value.kReverse);},
-         this.bucket
-       ),
-       
-       new WaitCommand(.5),
-
-       new InstantCommand(
-        ()->{this.bucket.set(DoubleSolenoid.Value.kForward);},
-        this.bucket
-      ),
-
-      new WaitCommand(.5),
-      
-
-      new DriveStraight(drive, 2.7,Constants.auto.fwdSpeed),
-
-      new InstantCommand(
-        ()->{this.intake.set(DoubleSolenoid.Value.kReverse);},
-        this.intake
-      ),
-      new InstantCommand(()->{
-        this.intake.intakeCargo(Constants.intake.fwdSpeed);
-        new DriveStraight(drive, 2.8, Constants.auto.fwdSpeed);
-
-      }),
-
-      //new WaitCommand(1),
-
-      // new InstantCommand(()->{
-      //   this.intake.intakeCargo(0);
-      // }),
-
-      new DriveStraight(drive, 2.7,Constants.auto.revSpeed)  
-    );
+          () ->bucket.set(DoubleSolenoid.Value.kReverse),
+          bucket
+        ),
+        new WaitCommand(.5),
+        //bring milk crate back up
+        new InstantCommand(
+          () -> bucket.set(DoubleSolenoid.Value.kForward),
+          bucket
+        ),
+        new WaitCommand(.5),
+        //go forward
+        new DriveStraight(drive, 2.7, Constants.auto.fwdSpeed),
+        //drop intake
+        new InstantCommand(
+          () -> intake.set(DoubleSolenoid.Value.kReverse),
+          intake
+        ),
+        // start intake spinning
+        new InstantCommand(
+          () -> intake.intakeCargo(Constants.intake.fwdSpeed),
+          intake
+        ),
+        // drive forward into game piece
+        new DriveStraight(drive, 2.8, Constants.auto.fwdSpeed),
+        //reverse back into community
+        new DriveStraight(drive, 2.7, Constants.auto.revSpeed));
   }
 }
