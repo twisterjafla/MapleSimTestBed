@@ -74,6 +74,9 @@ public final class Constants {
             public static final double kD = 0.1;
             public static final double outputMax = 1;
             public static final double outputMin = -1;
+
+            public static final double positionTolerance = 2;
+            public static final double velocityTolerance = 2;
         }
     }
 
