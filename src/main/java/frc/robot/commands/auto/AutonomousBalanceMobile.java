@@ -4,8 +4,6 @@
 
 package frc.robot.commands.auto;
 
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -16,51 +14,38 @@ import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
-
-
-
 public class AutonomousBalanceMobile extends SequentialCommandGroup {
-  /** Creates a new AutonomousCommand. */
-  DriveSubsystem drive;
-  IntakeSubsystem intake;
-  Bucket bucket;
-  Gyro gyro;
-
-  /**
+  /*
    * pseudoCode:
-   * 
    * humans will position robot
-   * 
    * milk crate will tip, releasing cube into lowest zone
-   * 
    * robot drives forward, getting more auto points
-   * 
-  */
-  
+   */
+
+   // Subsystem to Dump Cargo then go forward over charge station
+   // and then back up onto charge system to attempt balance
+
   public AutonomousBalanceMobile(DriveSubsystem drive, IntakeSubsystem intake, Bucket bucket, Gyro gyro) {
-    this.drive = drive;
-    this.intake = intake;
-    this.bucket = bucket;
-    this.gyro = gyro;
-
-    // Use addRequirements() here to declare subsystem dependencies.
-    SmartDashboard.getNumber("Auto Selector", 0);
-
-    addCommands(
+    super(
       new WaitCommand(2),
-       new InstantCommand(
-         ()->{this.bucket.set(DoubleSolenoid.Value.kForward);},
-         this.bucket
-       ),
-       new WaitCommand(1),
-       new InstantCommand(
-         ()->{this.bucket.set(DoubleSolenoid.Value.kReverse);},
-         this.bucket
-       ),
-       new WaitCommand(1),
+      //dump game piece
+      new InstantCommand(
+        ()->bucket.set(DoubleSolenoid.Value.kForward),
+        bucket
+      ),
+      new WaitCommand(1),
+      //pick up milk crate
+      new InstantCommand(
+        ()->bucket.set(DoubleSolenoid.Value.kReverse),
+        bucket
+      ),
+      new WaitCommand(1),
+      //go forward
       new DriveStraight(drive, 2.7,Constants.auto.fwdSpeed),
       new WaitCommand(1),
+      //go back
       new DriveStraight(drive, 3,Constants.auto.revSpeed),
+      // balance
       new Balance(drive, gyro)
     );
   }
