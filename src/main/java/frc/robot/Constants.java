@@ -67,6 +67,17 @@ public final class Constants {
     public static final class auto{
         public static final double fwdSpeed = -0.6;
         public static final double revSpeed = 0.4;
+
+        public static final class balancePID{
+            public static final double kP = 0.12;
+            public static final double kI = 0;
+            public static final double kD = 0.1;
+            public static final double outputMax = 1;
+            public static final double outputMin = -1;
+
+            public static final double positionTolerance = 2;
+            public static final double velocityTolerance = 2;
+        }
     }
 
     public static final int MOVEMENT_JOYSTICK = 0;
