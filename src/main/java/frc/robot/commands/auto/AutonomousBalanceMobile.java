@@ -26,7 +26,7 @@ public class AutonomousBalanceMobile extends SequentialCommandGroup {
   Bucket bucket;
   Gyro gyro;
 
-  /*
+  /**
    * pseudoCode:
    * 
    * humans will position robot
@@ -35,12 +35,8 @@ public class AutonomousBalanceMobile extends SequentialCommandGroup {
    * 
    * robot drives forward, getting more auto points
    * 
-   * 
-   */
-
-   // Subsystem to Dump Cargo then go forward over charge station
-   // and then back up onto charge system to attempt balance
-
+  */
+  
   public AutonomousBalanceMobile(DriveSubsystem drive, IntakeSubsystem intake, Bucket bucket, Gyro gyro) {
     this.drive = drive;
     this.intake = intake;
