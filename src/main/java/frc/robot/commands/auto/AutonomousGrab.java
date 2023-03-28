@@ -49,7 +49,8 @@ public class AutonomousGrab extends SequentialCommandGroup {
       ),
       // drive forward into game piece
       new DriveStraight(drive, 2.8, Constants.auto.fwdSpeed),
-      //reverse back into community
-      new DriveStraight(drive, 2.7, Constants.auto.revSpeed));
+      //drive back into community
+      new DriveStraight(drive, 2.7, Constants.auto.revSpeed)
+    );
   }
 }
