@@ -32,7 +32,7 @@ public class RobotContainer {
   final LimelightCommand limelightCommand = new LimelightCommand(limeLight);
   final RunIntake runIntake = new RunIntake(m_intakeSubsystem, Constants.intake.fwdSpeed);
   final RunIntake runIntakeBackward = new RunIntake(m_intakeSubsystem, Constants.intake.revSpeed);
-  final ToggleBucke toggleBucket = new ToggleBucke(m_bucketSubsystem);
+  final ToggleBucket toggleBucket = new ToggleBucket(m_bucketSubsystem);
   final IntakeToggle toggleIntake = new IntakeToggle(m_intakeSubsystem);
 
   final AutoSelector selector = new AutoSelector(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro);
