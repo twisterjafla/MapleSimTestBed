@@ -9,7 +9,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Gyro;
 
 public class Balance extends RunCommand {
@@ -21,7 +21,7 @@ public class Balance extends RunCommand {
 	);
 
 	/** Creates a new BalanceRobot. */
-	public Balance(DriveSubsystem drive, Gyro gyro) {
+	public Balance(DriveBase drive, Gyro gyro) {
 		super(
 			//drive on execute of command
 			()->drive.drive(

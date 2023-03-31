@@ -1,10 +1,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.PneumaticsSubsytem;
+import frc.robot.subsystems.Pneumatics;
 
 public class ToggleCompressor extends InstantCommand {
-  public ToggleCompressor(PneumaticsSubsytem pneumatics) {
+  public ToggleCompressor(Pneumatics pneumatics) {
     super(
       ()->{
         pneumatics.toggleCompressor();

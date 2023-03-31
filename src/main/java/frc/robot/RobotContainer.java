@@ -21,19 +21,19 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
 
-  final LimelightSubsystem limeLight = new LimelightSubsystem();
-  final PneumaticsSubsytem pneumatics = new PneumaticsSubsytem();
-  final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-  final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(pneumatics);
+  final Limelight limeLight = new Limelight();
+  final Pneumatics pneumatics = new Pneumatics();
+  final DriveBase m_driveSubsystem = new DriveBase();
+  final Intake m_intakeSubsystem = new Intake(pneumatics);
   final Bucket m_bucketSubsystem = new Bucket(pneumatics);
   final ToggleCompressor toggleCompressor = new ToggleCompressor(pneumatics);
   final Gyro gyro = new Gyro();
 
   final LimelightCommand limelightCommand = new LimelightCommand(limeLight);
-  final IntakeCommand runIntake = new IntakeCommand(m_intakeSubsystem, Constants.intake.fwdSpeed);
-  final IntakeCommand runIntakeBackward = new IntakeCommand(m_intakeSubsystem, Constants.intake.revSpeed);
-  final ToggleBucketCommand toggleBucket = new ToggleBucketCommand(m_bucketSubsystem);
-  final IntakeToggleCommand toggleIntake = new IntakeToggleCommand(m_intakeSubsystem);
+  final RunIntake runIntake = new RunIntake(m_intakeSubsystem, Constants.intake.fwdSpeed);
+  final RunIntake runIntakeBackward = new RunIntake(m_intakeSubsystem, Constants.intake.revSpeed);
+  final ToggleBucke toggleBucket = new ToggleBucke(m_bucketSubsystem);
+  final IntakeToggle toggleIntake = new IntakeToggle(m_intakeSubsystem);
 
   final AutoSelector selector = new AutoSelector(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro);
 

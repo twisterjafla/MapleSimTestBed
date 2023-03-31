@@ -3,15 +3,15 @@ package frc.robot.commands.auto;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.DriveBase;
 
 
 public class DriveStraight extends WaitCommand {
-  private final DriveSubsystem driveSubsystem;
+  private final DriveBase driveSubsystem;
 
   double speed = 0;
 
-  public DriveStraight(DriveSubsystem driveSubsystem, double time, double speed) {
+  public DriveStraight(DriveBase driveSubsystem, double time, double speed) {
     super(time);
     this.driveSubsystem = driveSubsystem;
     this.speed = MathUtil.clamp(speed, -1, 1);

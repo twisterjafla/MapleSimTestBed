@@ -2,10 +2,10 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.Limelight;
 
 public class LimelightCommand extends RunCommand {
-  public LimelightCommand(LimelightSubsystem limelight) {
+  public LimelightCommand(Limelight limelight) {
     super(
       () -> {
         SmartDashboard.putNumber("x", limelight.getX());

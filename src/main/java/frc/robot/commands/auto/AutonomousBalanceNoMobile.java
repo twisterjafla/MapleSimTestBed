@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Bucket;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
@@ -24,7 +24,7 @@ public class AutonomousBalanceNoMobile extends SequentialCommandGroup {
 
   // Subsystem to Dump Cargo then go forward over charge station
   // and then back up onto charge system to attempt balance
-  public AutonomousBalanceNoMobile(DriveSubsystem drive, IntakeSubsystem intake, Bucket bucket, Gyro gyro) {
+  public AutonomousBalanceNoMobile(DriveBase drive, Intake intake, Bucket bucket, Gyro gyro) {
     super(
       new WaitCommand(2),
       //dump game piece

@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Bucket;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Intake;
 
 public class AutonomousGrab extends SequentialCommandGroup {
 
@@ -21,7 +21,7 @@ public class AutonomousGrab extends SequentialCommandGroup {
    * milk crate will tip, releasing cube into lowest zone
    * robot drives forward, getting more auto points
    */
-  public AutonomousGrab(DriveSubsystem drive, IntakeSubsystem intake, Bucket bucket) {
+  public AutonomousGrab(DriveBase drive, Intake intake, Bucket bucket) {
     super(
       // dump milk crate
       new InstantCommand(

@@ -7,13 +7,13 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class PneumaticsSubsytem extends SubsystemBase{
+public class Pneumatics extends SubsystemBase{
   
   PneumaticHub hub = new PneumaticHub();
 
   Compressor compressor = hub.makeCompressor();
 
-  public PneumaticsSubsytem(){
+  public Pneumatics(){
     compressor.enableDigital();
   }
 
