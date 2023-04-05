@@ -38,7 +38,6 @@ public class AutoSelector extends InstantCommand {
   public Command getSelected(){
     return m_chooser.getSelected();
   }
-<<<<<<< HEAD
 
  
 
@@ -51,6 +50,4 @@ PathPlannerState exampleState = (PathPlannerState) AutonomousBalanceMobile.sampl
 // Print the velocity at the sampled time
 
 
-=======
->>>>>>> 8da32c88092e31219142cdf36e9f0cb38307258b
 }
