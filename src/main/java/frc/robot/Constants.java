@@ -44,16 +44,16 @@ public final class Constants {
     // Changing Solenoid Values idk 50/50 this'll work
     public static final class bucket {
         public static final class solenoid {
-            public static final int fwdPort = 2;
-            public static final int revPort = 3;
+            public static final int fwdPort = 6;
+            public static final int revPort = 7;
 
         }
     }
 
     public static final class intake{
         public static final class solenoid {
-            public static final int fwdPort = 0;
-            public static final int revPort = 1;
+            public static final int fwdPort = 3;
+            public static final int revPort = 5;
 
         }
         public static final int motor1 = 6;

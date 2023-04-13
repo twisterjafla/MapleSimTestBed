@@ -3,18 +3,15 @@ package frc.robot.commands.auto;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Bucket;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.Intake;
 
-public class AutoSelector extends InstantCommand {
+public class AutoSelector {
 
-  CommandScheduler scheduler = CommandScheduler.getInstance();
-
-  final SendableChooser<Command> m_chooser = new SendableChooser<Command>();
+  SendableChooser<Command> m_chooser = new SendableChooser<Command>();
 
   public AutoSelector(DriveBase drive,Intake intake,Bucket bucket,Gyro gyro){
 
@@ -29,4 +26,6 @@ public class AutoSelector extends InstantCommand {
   public Command getSelected(){
     return m_chooser.getSelected();
   }
+
+
 }
