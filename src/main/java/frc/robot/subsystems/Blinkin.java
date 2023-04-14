@@ -8,11 +8,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
 
-public class blinkin extends SubsystemBase {
+public class Blinkin extends SubsystemBase {
 
   /* Rev Robotics Blinkin takes a PWM signal from 1000-2000us
    * This is identical to a SparkMax motor. 
@@ -27,9 +26,9 @@ public class blinkin extends SubsystemBase {
    * 
    * @param pwmPort  The PWM port the Blinkin is connected to.
    */
-  public blinkin(int pwmPort) {
+  public Blinkin(int pwmPort) {
     m_blinkin = new Spark(pwmPort);
-    solid_orange();
+    //solid_orange();
   }
 
   /*
@@ -53,14 +52,16 @@ public class blinkin extends SubsystemBase {
   public void Purple() {
     set(0.91);
   }
+  
   public void allianceColor() {
     boolean isRed = NetworkTableInstance.getDefault().getTable("FMSInfo").getEntry("IsRedAlliance").getBoolean(true);
     if (isRed == true){
-      RobotContainer.m_blinkin.set(-0.01);
+      m_blinkin.set(-0.01);
       System.out.println("led RED");
     } else {
-      RobotContainer.m_blinkin.set(0.19);
+      m_blinkin.set(0.19);
       System.out.println("led BLUE");
     }
   }
+
 }

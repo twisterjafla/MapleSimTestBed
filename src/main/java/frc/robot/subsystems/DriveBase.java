@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-public class DriveSubsystem extends SubsystemBase {
+public class DriveBase extends SubsystemBase {
 
   final MotorControllerGroup leftMotors = new MotorControllerGroup(
       new CANSparkMax(Constants.drive.lt, MotorType.kBrushless),
@@ -23,7 +23,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   final DifferentialDrive m_RobotDrive;
 
-  public DriveSubsystem() {
+  public DriveBase() {
     //leftMotors.setInverted(true);
     //m_RobotDrive = new DifferentialDrive(rightMotors, leftMotors)
     m_RobotDrive = new DifferentialDrive(leftMotors, rightMotors);

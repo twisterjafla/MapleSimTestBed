@@ -5,15 +5,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Bucket;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Gyro;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.Intake;
 
 public class AutoSelector {
 
   SendableChooser<Command> m_chooser = new SendableChooser<Command>();
 
-  public AutoSelector(DriveSubsystem drive,IntakeSubsystem intake,Bucket bucket,Gyro gyro){
+  public AutoSelector(DriveBase drive,Intake intake,Bucket bucket,Gyro gyro){
 
     m_chooser.setDefaultOption("Simple Auto", new AutonomousBalanceMobile(drive, intake, bucket, gyro));
     m_chooser.addOption("Complex Auto", new AutonomousGrab(drive, intake, bucket));

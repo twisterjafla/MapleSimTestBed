@@ -13,7 +13,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.DriveBase;
 
 /**
  * Have the robot drive tank style.
@@ -26,7 +26,7 @@ public class ArcadeDrive extends RunCommand {
    * @param right      The control input for the right sight of the drive
    * @param driveSubsystem The driveSubsystem subsystem to drive
    */
-  public ArcadeDrive(DriveSubsystem drive, DoubleSupplier speed, DoubleSupplier rotation) {
+  public ArcadeDrive(DriveBase drive, DoubleSupplier speed, DoubleSupplier rotation) {
     super(
       ()->{
         SmartDashboard.putString("On", "true");
