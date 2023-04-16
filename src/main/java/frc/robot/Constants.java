@@ -35,8 +35,8 @@ public final class Constants {
         public static final int rt = 5;
         public static final int rr = 8;
         
-        public static double rotationSpeedRatio= 0.6;
-        public static final double driveSpeedRatio= 1;
+        public static double rotationSpeedRatio= .2;
+        public static final double driveSpeedRatio= -1;
 
         
     }
@@ -60,8 +60,8 @@ public final class Constants {
         public static final int motor2 = 11;
         
         //reversed
-        public static final double fwdSpeed = 0.8;
-        public static final double revSpeed = -1;
+        public static final double fwdSpeed = 1;
+        public static final double revSpeed = -.5;
     }
 
     public static final class auto{
