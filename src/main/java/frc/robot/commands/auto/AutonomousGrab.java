@@ -44,7 +44,7 @@ public class AutonomousGrab extends SequentialCommandGroup {
       ),
       // start intake spinning
       new InstantCommand(
-        () -> intake.intakeCargo(Constants.intake.fwdSpeed),
+        () -> intake.intakeCargo(Constants.intake.revSpeed),
         intake
       ),
       // drive forward into game piece

@@ -38,7 +38,7 @@ public final class Constants {
         public static double rotationSpeedRatio= .6;
         public static final double driveSpeedRatio= 1;
 
-        
+        public static double rampspeed= .25;
     }
 
     // Changing Solenoid Values idk 50/50 this'll work
