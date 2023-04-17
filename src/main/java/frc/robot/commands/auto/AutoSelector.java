@@ -15,10 +15,11 @@ public class AutoSelector {
 
   public AutoSelector(DriveBase drive,Intake intake,Bucket bucket,Gyro gyro){
 
-    m_chooser.setDefaultOption("Simple Auto", new AutonomousBalanceMobile(drive, intake, bucket, gyro));
-    m_chooser.addOption("Complex Auto", new AutonomousGrab(drive, intake, bucket));
+    m_chooser.setDefaultOption("Auto Balance Mobile", new AutonomousBalanceMobile(drive, intake, bucket, gyro));
+    m_chooser.addOption("Auto Grab", new AutonomousGrab(drive, intake, bucket));
     m_chooser.addOption("Auto No Mobile", new AutonomousBalanceNoMobile(drive, intake, bucket, gyro));
     m_chooser.addOption("doNothing", new InstantCommand());
+    m_chooser.addOption("Dump Do Nothing", new AutonomousDumpDoNothing(drive, intake, bucket));
 
     SmartDashboard.putData("autos: ", m_chooser);
   }
