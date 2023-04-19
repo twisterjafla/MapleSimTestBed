@@ -11,7 +11,7 @@ public class Intake extends SubsystemBase {
   
 
   CANSparkMax intakeMotor1 = new CANSparkMax(Constants.intake.motor1,MotorType.kBrushless);
-  //CANSparkMax intakeMotor2 = new CANSparkMax(Constants.intake.motor2, MotorType.kBrushless);
+  CANSparkMax intakeMotor2 = new CANSparkMax(Constants.intake.motor2, MotorType.kBrushless);
   DoubleSolenoid intakeSolenoid;
 
 
@@ -26,7 +26,7 @@ public class Intake extends SubsystemBase {
 
     intakeMotor1.setInverted(true);
     intakeMotor1.setSmartCurrentLimit(40, 25);
-    //intakeMotor2.setSmartCurrentLimit(40, 25);
+    intakeMotor2.setSmartCurrentLimit(40, 25);
     intakeMotors = new MotorControllerGroup(intakeMotor1);
 
     intakeSolenoid.set(DoubleSolenoid.Value.kForward);
@@ -39,7 +39,7 @@ public class Intake extends SubsystemBase {
   public void intakeCargo(double speed) {
     //intakeMotors.set(speed);
     intakeMotor1.set(speed);
-    //intakeMotor2.set(-speed);
+    intakeMotor2.set(-speed);
   }
 
   public void stopMotors(){
