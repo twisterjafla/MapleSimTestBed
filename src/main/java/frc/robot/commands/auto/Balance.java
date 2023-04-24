@@ -29,9 +29,10 @@ public class Balance extends RunCommand {
 					pid.calculate(gyro.getRoll()), 
 					Constants.auto.balancePID.outputMin,
 					Constants.auto.balancePID.outputMax
-				),
+				)/3.5,
 				0
 			)
+		
 		);
 
 		pid.setTolerance(

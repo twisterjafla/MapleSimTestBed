@@ -35,8 +35,6 @@ public class AutonomousGrab extends SequentialCommandGroup {
         bucket
       ),
       new WaitCommand(.5),
-      //go forward
-      new DriveStraight(drive, 2.7, Constants.auto.fwdSpeed),
       //drop intake
       new InstantCommand(
         () -> intake.set(DoubleSolenoid.Value.kReverse),
@@ -48,9 +46,17 @@ public class AutonomousGrab extends SequentialCommandGroup {
         intake
       ),
       // drive forward into game piece
-      new DriveStraight(drive, 2.8, Constants.auto.fwdSpeed),
+      new DriveStraight(drive, 2.6, Constants.auto.fwdSpeed),
       //drive back into community
-      new DriveStraight(drive, 2.7, Constants.auto.revSpeed)
+      
+      new WaitCommand(0.5),
+
+      new InstantCommand(
+        () -> intake.intakeCargo(0),
+        intake
+      ),
+
+      new DriveStraight(drive, 1.75, Constants.auto.revSpeed)
     );
   }
 }

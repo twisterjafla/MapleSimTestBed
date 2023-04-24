@@ -26,7 +26,7 @@ public class AutonomousBalanceNoMobile extends SequentialCommandGroup {
   // and then back up onto charge system to attempt balance
   public AutonomousBalanceNoMobile(DriveBase drive, Intake intake, Bucket bucket, Gyro gyro) {
     super(
-      new WaitCommand(2),
+      //new WaitCommand(2),
       //dump game piece
       new InstantCommand(
         ()->bucket.set(DoubleSolenoid.Value.kForward),

@@ -61,7 +61,7 @@ public final class Constants {
         
         //reversed
         public static final double fwdSpeed = 1;
-        public static final double revSpeed = -.5;
+        public static final double revSpeed = -.2;
     }
 
     public static final class auto{
@@ -69,9 +69,9 @@ public final class Constants {
         public static final double revSpeed = 0.4;
 
         public static final class balancePID{
-            public static final double kP = 0.12;
+            public static final double kP = 0.06;
             public static final double kI = 0;
-            public static final double kD = 0.1;
+            public static final double kD = 0.05;
             public static final double outputMax = 1;
             public static final double outputMin = -1;
 
