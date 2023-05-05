@@ -52,7 +52,7 @@ public final class Constants {
 
     public static final class intake{
         public static final class solenoid {
-            public static final int fwdPort = 3;
+            public static final int fwdPort = 4;
             public static final int revPort = 5;
 
         }
