@@ -1,4 +1,4 @@
-package frc.robot.commands.auto;
+package frc.robot.commands.auto.AutoFunctions;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
