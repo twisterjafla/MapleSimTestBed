@@ -1,12 +1,17 @@
 package frc.robot.commands.auto.AutoFunctions;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import frc.robot.subsystems.DriveBase;
 
 
 public class DriveStraight extends WaitCommand {
+  // Encoder leftEncoder = new Encoder(4,5); 
+  // Encoder rightEncoder = new Encoder(5);
+
+
   private final DriveBase driveSubsystem;
 
   double speed = 0;

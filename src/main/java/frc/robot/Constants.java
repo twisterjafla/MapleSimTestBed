@@ -35,7 +35,7 @@ public final class Constants {
         public static final int rt = 5;
         public static final int rr = 8;
         
-        public static double rotationSpeedRatio= .6;
+        public static double rotationSpeedRatio= 0.6;
         public static final double driveSpeedRatio= 1;
 
         public static double rampspeed= .25;
