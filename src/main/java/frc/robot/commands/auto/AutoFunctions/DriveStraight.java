@@ -2,12 +2,14 @@ package frc.robot.commands.auto.AutoFunctions;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveBase;
 
 
-public class DriveStraight extends WaitCommand {
+public class DriveStraight extends RunCommand {
   // Encoder leftEncoder = new Encoder(4,5); 
   // Encoder rightEncoder = new Encoder(5);
 
@@ -16,11 +18,12 @@ public class DriveStraight extends WaitCommand {
 
   double speed = 0;
 
-  public DriveStraight(DriveBase driveSubsystem, double time, double speed) {
-    super(time);
-    this.driveSubsystem = driveSubsystem;
-    this.speed = MathUtil.clamp(speed, -1, 1);
-    addRequirements(this.driveSubsystem);
+  public DriveStraight(DriveBase driveSubsystem, double feet, double speed) {
+    double distance= feet/Constants.auto.wheelRadius*Constants.auto.wheelRadius*3.14;
+    while (driveSubsystem.getEncoder()< distance){
+      execute();
+    }
+    end(false);
 
   }
 

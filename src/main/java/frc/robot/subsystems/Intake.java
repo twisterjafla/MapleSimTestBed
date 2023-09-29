@@ -27,8 +27,8 @@ public class Intake extends SubsystemBase {
     intakeMotor1.setInverted(true);
     intakeMotor1.setSmartCurrentLimit(40, 25);
     intakeMotor2.setSmartCurrentLimit(40, 25);
-    intakeMotors = new MotorControllerGroup(intakeMotor1);
-
+    intakeMotors = new MotorControllerGroup(intakeMotor1, intakeMotor2);
+    
     intakeSolenoid.set(DoubleSolenoid.Value.kForward);
   }
 
@@ -37,9 +37,8 @@ public class Intake extends SubsystemBase {
   }
 
   public void intakeCargo(double speed) {
-    //intakeMotors.set(speed);
-    intakeMotor1.set(speed);
-    intakeMotor2.set(-speed);
+    intakeMotors.set(speed);
+
   }
 
   public void stopMotors(){

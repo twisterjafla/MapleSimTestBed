@@ -67,6 +67,7 @@ public final class Constants {
     public static final class auto{
         public static final double fwdSpeed = -0.6;
         public static final double revSpeed = 0.4;
+        public static final double wheelRadius=.5;
 
         public static final class balancePID{
             public static final double kP = 0.06;
