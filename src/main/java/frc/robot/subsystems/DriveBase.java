@@ -70,7 +70,6 @@ public final RelativeEncoder encoderL;
     return (encoderL.getPosition()+encoderR.getPosition())/2;
   }
   public void resetEncoder(){
-    
   }
 
 

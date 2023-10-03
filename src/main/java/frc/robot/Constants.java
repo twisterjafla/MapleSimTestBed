@@ -60,7 +60,7 @@ public final class Constants {
         public static final int motor2 = 11;
         
         //reversed
-        public static final double fwdSpeed = 1;
+        public static final double fwdSpeed = .5;
         public static final double revSpeed = -.2;
     }
 
