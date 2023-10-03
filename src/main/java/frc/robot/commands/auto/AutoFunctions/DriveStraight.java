@@ -21,7 +21,7 @@ public class DriveStraight extends CommandBase {
 
   public DriveStraight(DriveBase driveSubsystem, double feet, double speed) {
     driveBase = driveSubsystem;
-    encoderValue= feet;
+    encoderValue= feet*Constants.auto.wheelRadius*Constants.auto.wheelRadius*3.14;
 
 
     // lowPass = LinearFilter.movingAverage(3);
@@ -39,7 +39,6 @@ public void execute() {
     
 
     if (driveBase.getEncoder() != encoderValue ) {
-
         driveBase.drive(Constants.auto.fwdSpeed, 0);
     }
 

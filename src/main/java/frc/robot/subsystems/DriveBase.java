@@ -8,7 +8,6 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -44,6 +43,7 @@ public final RelativeEncoder encoderL;
 
   public DriveBase() {
 
+
     //left voltage ramping
     encoderR=sparkMaxrt.getEncoder();
     encoderL= sparkMaxlt.getEncoder();
@@ -60,6 +60,7 @@ public final RelativeEncoder encoderL;
     //leftMotors.setInverted(true);
     //m_RobotDrive = new DifferentialDrive(rightMotors, leftMotors)
     m_RobotDrive = new DifferentialDrive(leftMotors, rightMotors);
+    resetEncoder();
 
     addChild("Drive", m_RobotDrive);
     
@@ -70,6 +71,8 @@ public final RelativeEncoder encoderL;
     return (encoderL.getPosition()+encoderR.getPosition())/2;
   }
   public void resetEncoder(){
+    encoderL.setPosition(0);
+    encoderR.setPosition(0);
   }
 
 
