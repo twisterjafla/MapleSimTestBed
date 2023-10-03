@@ -8,6 +8,7 @@ import frc.robot.subsystems.Bucket;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.Intake;
+import frc.robot.commands.auto.AutoRoutines.*;
 
 public class AutoSelector {
 
