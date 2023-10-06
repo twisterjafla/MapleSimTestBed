@@ -47,6 +47,7 @@ public final RelativeEncoder encoderL;
     //left voltage ramping
     encoderR=sparkMaxrt.getEncoder();
     encoderL= sparkMaxlt.getEncoder();
+    Constants.auto.TicksPerRotation=encoderL.getCountsPerRevolution();
     sparkMaxlt.setOpenLoopRampRate(Constants.drive.rampspeed);
     sparkMaxlr.setOpenLoopRampRate(Constants.drive.rampspeed);
     sparkMaxlf.setOpenLoopRampRate(Constants.drive.rampspeed);
@@ -70,6 +71,7 @@ public final RelativeEncoder encoderL;
     SmartDashboard.putNumber("encoder", (encoderL.getPosition()+encoderR.getPosition())/2);
     return (encoderL.getPosition()+encoderR.getPosition())/2;
   }
+
   public void resetEncoder(){
     encoderL.setPosition(0);
     encoderR.setPosition(0);

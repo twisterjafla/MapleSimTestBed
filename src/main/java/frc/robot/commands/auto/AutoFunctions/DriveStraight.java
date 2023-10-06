@@ -16,15 +16,21 @@ public class DriveStraight extends CommandBase {
 
     private final DriveBase driveBase;
 
-    double speed = 0;
     double encoderValue;
 
-    public DriveStraight(DriveBase driveSubsystem, double feet, double speed) {
+    public DriveStraight(DriveBase driveSubsystem, double feet) {
       driveBase = driveSubsystem;
-      encoderValue= feet*Constants.auto.wheelRadius*Constants.auto.wheelRadius*3.14;
+      double inches= 3*12;
+      double wheelRotations=inches*(Constants.auto.wheelRadius*3.14*2);
+      double motorRotations=wheelRotations*Constants.drive.gearRatio;
+      encoderValue=motorRotations*Constants.auto.TicksPerRotation;
+    //   encoderValue = ((((3*12)//converts feet to inches
+    //   /((Constants.auto.wheelRadius*3.14*2))//converts inches to wheel rotations
+    //   *Constants.drive.gearRatio)// converts wheel rotations to motor rotations
+    //   *Constants.auto.TicksPerRotation)//converts motor rotations to encoder ticks
+    //   );
     
 
-      // lowPass = LinearFilter.movingAverage(3);
     }
 
     // Called when the command is initially scheduled.
@@ -36,8 +42,8 @@ public class DriveStraight extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-
-        if (driveBase.getEncoder() > encoderValue ) {
+        
+        while (driveBase.getEncoder() < encoderValue ) {
             driveBase.drive(Constants.auto.fwdSpeed, 0);
         }
 
