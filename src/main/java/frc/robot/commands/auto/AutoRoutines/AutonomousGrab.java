@@ -57,7 +57,7 @@ public class AutonomousGrab extends SequentialCommandGroup {
         intake
       ),
 
-      new DriveStraight(drive, 16, Constants.auto.revSpeed)
+      new DriveStraight(drive, 18, Constants.auto.revSpeed)
     );
   }
 }

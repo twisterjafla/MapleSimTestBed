@@ -77,7 +77,6 @@ public final RelativeEncoder encoderL;
 
 
   public void drive(final double ySpeed, final double rotateValue) {
-    getEncoder();
     m_RobotDrive.arcadeDrive(ySpeed, rotateValue);
   }
 }
