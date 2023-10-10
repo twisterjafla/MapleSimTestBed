@@ -29,7 +29,7 @@ public class AutonomousGrab extends SequentialCommandGroup {
         () ->bucket.set(DoubleSolenoid.Value.kReverse),
         bucket
       ),
-      new WaitCommand(.5),
+      new WaitCommand(1),
       //bring milk crate back up
       new InstantCommand(
         () -> bucket.set(DoubleSolenoid.Value.kForward),

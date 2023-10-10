@@ -34,7 +34,7 @@ public final class Constants {
         public static final int rf = 7;
         public static final int rt = 5;
         public static final int rr = 8;
-        public static final double gearRatio=8.45;
+        public static final double gearRatio=12;
         
         public static double rotationSpeedRatio= 0.6;
         public static final double driveSpeedRatio= 1;
@@ -69,7 +69,7 @@ public final class Constants {
         public static final double fwdSpeed = 0.5;
         public static final double revSpeed = -0.4;
         public static final double wheelRadius=3;
-        public static double TicksPerRotation;
+        public static final double TicksPerRotation= 4096;
 
         public static final class balancePID{
             public static final double kP = 0.06;

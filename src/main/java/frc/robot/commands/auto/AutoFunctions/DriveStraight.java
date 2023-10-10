@@ -1,7 +1,10 @@
 package frc.robot.commands.auto.AutoFunctions;
 
+import com.fasterxml.jackson.annotation.JsonFormat.Feature;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -20,10 +23,14 @@ public class DriveStraight extends CommandBase {
 
     public DriveStraight(DriveBase driveSubsystem, double feet) {
       driveBase = driveSubsystem;
-      double inches= 3*12;
-      double wheelRotations=inches*(Constants.auto.wheelRadius*3.14*2);
+      double inches= feet*12;
+      double wheeldistance=Constants.auto.wheelRadius*3.14*2;
+      double wheelRotations=inches/wheeldistance;
       double motorRotations=wheelRotations*Constants.drive.gearRatio;
-      encoderValue=motorRotations*Constants.auto.TicksPerRotation;
+    //   /double encoderTicks = motorRotations*Constants.auto.TicksPerRotation;
+      encoderValue=motorRotations;
+      SmartDashboard.putNumber("ticks", encoderValue);
+
     //   encoderValue = ((((3*12)//converts feet to inches
     //   /((Constants.auto.wheelRadius*3.14*2))//converts inches to wheel rotations
     //   *Constants.drive.gearRatio)// converts wheel rotations to motor rotations

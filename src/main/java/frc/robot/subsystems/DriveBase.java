@@ -47,7 +47,6 @@ public final RelativeEncoder encoderL;
     //left voltage ramping
     encoderR=sparkMaxrt.getEncoder();
     encoderL= sparkMaxlt.getEncoder();
-    Constants.auto.TicksPerRotation=encoderL.getCountsPerRevolution();
     sparkMaxlt.setOpenLoopRampRate(Constants.drive.rampspeed);
     sparkMaxlr.setOpenLoopRampRate(Constants.drive.rampspeed);
     sparkMaxlf.setOpenLoopRampRate(Constants.drive.rampspeed);
