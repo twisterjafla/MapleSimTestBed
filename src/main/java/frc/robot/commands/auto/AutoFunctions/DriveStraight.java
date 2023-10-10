@@ -46,13 +46,14 @@ public class DriveStraight extends CommandBase {
         driveBase.resetEncoder();
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
+    // Called every time the scheduler runs while the command is scheduled.S
     @Override
     public void execute() {
         
-        while (driveBase.getEncoder() < encoderValue ) {
+        while(driveBase.getEncoder() < encoderValue ) {
             driveBase.drive(Constants.auto.fwdSpeed, 0);
         }
+        end(false);
 
     }
 
