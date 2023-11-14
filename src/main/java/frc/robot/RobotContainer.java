@@ -39,7 +39,7 @@ public class RobotContainer {
 
   final CommandXboxController movementJoystick = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
   final CommandXboxController manipulatorJoystick = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
-
+  final CommandXboxController oneJoystick = new CommandXboxController(Constants.OneJoystick);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -53,10 +53,10 @@ public class RobotContainer {
     m_driveSubsystem.setDefaultCommand(
       new ArcadeDrive(
             m_driveSubsystem,
-            () -> ((-movementJoystick.getLeftTriggerAxis() + movementJoystick.getRightTriggerAxis())),
-            () -> (-movementJoystick.getLeftX() )
+            () -> ((-movementJoystick.getLeftTriggerAxis() + movementJoystick.getRightTriggerAxis())-oneJoystick.getLeftTriggerAxis() + oneJoystick.getRightTriggerAxis()),
+            () -> (-movementJoystick.getLeftX() - oneJoystick.getLeftX())
       ));
-
+    
 
     limeLight.setDefaultCommand(limelightCommand);
 
@@ -78,6 +78,21 @@ public class RobotContainer {
     .onTrue(toggleIntake);
 
     manipulatorJoystick.y()
+    .onTrue(toggleCompressor);
+
+    oneJoystick.leftBumper() //intake
+    .whileTrue(runIntake);
+
+    oneJoystick.rightBumper()//outake
+    .whileTrue(runIntakeBackward);
+
+    oneJoystick.x()
+    .onTrue(toggleBucket);
+
+    oneJoystick.a()
+    .onTrue(toggleIntake);
+
+    oneJoystick.y()
     .onTrue(toggleCompressor);
   }
 
