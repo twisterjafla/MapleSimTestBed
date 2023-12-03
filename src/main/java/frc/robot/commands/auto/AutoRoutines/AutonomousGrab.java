@@ -29,7 +29,7 @@ public class AutonomousGrab extends SequentialCommandGroup {
         () ->bucket.set(DoubleSolenoid.Value.kReverse),
         bucket
       ),
-      new WaitCommand(1),
+      new WaitCommand(.5),
       //bring milk crate back up
       new InstantCommand(
         () -> bucket.set(DoubleSolenoid.Value.kForward),
@@ -47,7 +47,7 @@ public class AutonomousGrab extends SequentialCommandGroup {
         intake
       ),
       // drive forward into game piece
-      new DriveStraight(drive, 13),
+      new DriveStraight(drive, 2.6, Constants.auto.fwdSpeed),
       //drive back into community
       
       new WaitCommand(0.5),
@@ -57,7 +57,7 @@ public class AutonomousGrab extends SequentialCommandGroup {
         intake
       ),
 
-      new DriveStraight(drive, 18)
+      new DriveStraight(drive, 1.75, Constants.auto.revSpeed)
     );
   }
 }
