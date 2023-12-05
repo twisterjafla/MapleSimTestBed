@@ -1,10 +1,7 @@
 package frc.robot.commands.auto.AutoFunctions;
 
-
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -16,23 +13,18 @@ public class DriveStraight extends CommandBase {
     // Encoder leftEncoder = new Encoder(4,5); 
     // Encoder rightEncoder = new Encoder(5);
 
-    private final PIDController pid = new PIDController(0.012, 0, 0.01);
-    private final DriveBase driveBase;
 
-    private double encoderValue;
+    private final DriveBase driveBase;
+    private final PIDController pid = new PIDController(0.12, 0, 0.01);
+
+    double encoderValue;
 
     public DriveStraight(DriveBase driveSubsystem, double feet) {
-    pid.setTolerance(0.1);
-
-
-    driveBase = driveSubsystem;
-    double inches= feet*12; //GOOD
-    double wheeldistance=Constants.auto.wheelRadius*3.14*2;//
-    double wheelRotations=inches/wheeldistance;//GOOD
-    double motorRotations=wheelRotations*Constants.drive.gearRatio;
-    //   /double encoderTicks = motorRotations*Constants.auto.TicksPerRotation;
-    encoderValue=1*Constants.drive.gearRatio;
-      
+      driveBase = driveSubsystem;
+      double inches= 3*12;
+      double wheelRotations=inches*(Constants.auto.wheelRadius*3.14*2);
+      double motorRotations=wheelRotations*Constants.drive.gearRatio;
+      setpoint=motorRotations*Constants.auto.TicksPerRotation;
 
     //   encoderValue = ((((3*12)//converts feet to inches
     //   /((Constants.auto.wheelRadius*3.14*2))//converts inches to wheel rotations
@@ -47,24 +39,17 @@ public class DriveStraight extends CommandBase {
     @Override
     public void initialize() {
         driveBase.resetEncoder();
-        pid.setSetpoint(encoderValue);
-        SmartDashboard.putNumber("ticks", encoderValue);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         
+        pid.setSetpoint(0);
 
-        // if (driveBase.getEncoder() < encoderValue ) {
-        //     driveBase.drive(0.5, 0);
-        // }
-
-        while(driveBase.getEncoder() < encoderValue ) {
-            var controllerOutput = pid.calculate(encoderValue-driveBase.getEncoder());
-
-            driveBase.drive(controllerOutput, 0);        }
-        end(false);
+        if (driveBase.getEncoder() < setpoint ) {
+            driveBase.drive(pid.calculate(driveBase.getDistance(), setpoint));
+        }
 
     }
 
