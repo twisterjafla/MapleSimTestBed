@@ -1,6 +1,7 @@
 package frc.robot.commands.auto.AutoFunctions;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -17,7 +18,7 @@ public class DriveStraight extends CommandBase {
     private final DriveBase driveBase;
     private final PIDController pid = new PIDController(0.12, 0, 0.01);
 
-    double encoderValue;
+    double setpoint;
 
     public DriveStraight(DriveBase driveSubsystem, double feet) {
       driveBase = driveSubsystem;
@@ -48,7 +49,7 @@ public class DriveStraight extends CommandBase {
         pid.setSetpoint(0);
 
         if (driveBase.getEncoder() < setpoint ) {
-            driveBase.drive(pid.calculate(driveBase.getDistance(), setpoint));
+            driveBase.drive(pid.calculate(driveBase.getEncoder()), setpoint);
         }
 
     }
