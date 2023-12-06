@@ -3,6 +3,7 @@ package frc.robot.commands.auto.AutoFunctions;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -16,7 +17,7 @@ public class DriveStraight extends CommandBase {
 
 
     private final DriveBase driveBase;
-    private final PIDController pid = new PIDController(0.12, 0, 0.01);
+    private final PIDController pid = new PIDController(0.50, 0, 0.10);
 
     double setpoint;
 
@@ -26,12 +27,16 @@ public class DriveStraight extends CommandBase {
       double wheelRotations=inches*(Constants.auto.wheelRadius*3.14*2);
       double motorRotations=wheelRotations*Constants.drive.gearRatio;
       setpoint=motorRotations*Constants.auto.TicksPerRotation;
+      SmartDashboard.getNumber("setpoint", setpoint);
+
+
 
     //   encoderValue = ((((3*12)//converts feet to inches
     //   /((Constants.auto.wheelRadius*3.14*2))//converts inches to wheel rotations
     //   *Constants.drive.gearRatio)// converts wheel rotations to motor rotations
     //   *Constants.auto.TicksPerRotation)//converts motor rotations to encoder ticks
     //   );
+
     
 
     }
@@ -40,18 +45,20 @@ public class DriveStraight extends CommandBase {
     @Override
     public void initialize() {
         driveBase.resetEncoder();
+        SmartDashboard.getNumber("setpoint", setpoint);
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        
+        SmartDashboard.getNumber("setpoint", setpoint);
+
         pid.setSetpoint(0);
 
         if (driveBase.getEncoder() < setpoint ) {
-            driveBase.drive(pid.calculate(driveBase.getEncoder()), setpoint);
+            driveBase.drive(pid.calculate(driveBase.getEncoder()), 0);
         }
-
     }
 
     // Called once the command ends or is interrupted.
@@ -63,6 +70,7 @@ public class DriveStraight extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
+        SmartDashboard.getNumber("setpoint-encoder", setpoint-driveBase.getEncoder());
         return false;
     }
 

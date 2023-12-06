@@ -63,6 +63,7 @@ public final RelativeEncoder encoderL;
     resetEncoder();
 
     addChild("Drive", m_RobotDrive);
+    SmartDashboard.putString("test", "test");
     SmartDashboard.putNumber("encoder", (encoderL.getPosition()+encoderR.getPosition())/2);
 
   }
