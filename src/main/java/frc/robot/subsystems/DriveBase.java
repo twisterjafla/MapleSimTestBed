@@ -45,8 +45,11 @@ public final RelativeEncoder encoderL;
 
 
     //left voltage ramping
-    encoderR=sparkMaxrt.getEncoder();
+    encoderR=sparkMaxrt.getEncoder();    
     encoderL= sparkMaxlt.getEncoder();
+
+
+
     sparkMaxlt.setOpenLoopRampRate(Constants.drive.rampspeed);
     sparkMaxlr.setOpenLoopRampRate(Constants.drive.rampspeed);
     sparkMaxlf.setOpenLoopRampRate(Constants.drive.rampspeed);
@@ -61,6 +64,7 @@ public final RelativeEncoder encoderL;
     //m_RobotDrive = new DifferentialDrive(rightMotors, leftMotors)
     m_RobotDrive = new DifferentialDrive(leftMotors, rightMotors);
     resetEncoder();
+    
 
     addChild("Drive", m_RobotDrive);
     SmartDashboard.putString("test", "test");

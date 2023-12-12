@@ -30,7 +30,7 @@ public class DriveStraight extends CommandBase {
       SmartDashboard.getNumber("setpoint", setpoint);
 
 
-
+    
     //   encoderValue = ((((3*12)//converts feet to inches
     //   /((Constants.auto.wheelRadius*3.14*2))//converts inches to wheel rotations
     //   *Constants.drive.gearRatio)// converts wheel rotations to motor rotations
@@ -45,6 +45,7 @@ public class DriveStraight extends CommandBase {
     @Override
     public void initialize() {
         driveBase.resetEncoder();
+        pid.setSetpoint(0);
         SmartDashboard.getNumber("setpoint", setpoint);
 
     }
@@ -54,7 +55,6 @@ public class DriveStraight extends CommandBase {
     public void execute() {
         SmartDashboard.getNumber("setpoint", setpoint);
 
-        pid.setSetpoint(0);
 
         if (driveBase.getEncoder() < setpoint ) {
             driveBase.drive(pid.calculate(driveBase.getEncoder()), 0);
