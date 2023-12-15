@@ -9,8 +9,11 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.IntakeToggle;
@@ -18,7 +21,10 @@ import frc.robot.commands.LimelightCommand;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.ToggleBucket;
 import frc.robot.commands.ToggleCompressor;
-import frc.robot.commands.auto.AutoSelector;
+import frc.robot.commands.auto.AutoRoutines.AutonomousBalanceMobile;
+import frc.robot.commands.auto.AutoRoutines.AutonomousBalanceNoMobile;
+import frc.robot.commands.auto.AutoRoutines.AutonomousDumpDoNothing;
+import frc.robot.commands.auto.AutoRoutines.AutonomousGrab;
 import frc.robot.subsystems.Bucket;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Gyro;
@@ -51,7 +57,12 @@ public class Robot extends TimedRobot {
   final ToggleBucket toggleBucket = new ToggleBucket(m_bucketSubsystem);
   final IntakeToggle toggleIntake = new IntakeToggle(m_intakeSubsystem);
 
-  final AutoSelector selector = new AutoSelector(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro);
+ 
+  SendableChooser<Command> m_chooser = new SendableChooser<Command>();
+
+
+
+
 
   final CommandXboxController movementJoystick = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
   final CommandXboxController manipulatorJoystick = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
@@ -66,6 +77,18 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     configureButtonBindings();
     
+    // starts the auto selector
+    m_chooser.setDefaultOption("Auto Balance Mobile", new AutonomousBalanceMobile(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro));
+    m_chooser.addOption("Auto Grab", new AutonomousGrab(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem));
+    m_chooser.addOption("Auto No Mobile", new AutonomousBalanceNoMobile(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro));
+    m_chooser.addOption("doNothing", new InstantCommand());
+    m_chooser.addOption("Dump Do Nothing", new AutonomousDumpDoNothing(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem));
+  
+    SmartDashboard.putData("autos: ", m_chooser);
+
+
+
+
     //start cameraServer
     CameraServer.startAutomaticCapture();
     CameraServer.startAutomaticCapture();
@@ -135,7 +158,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = selector.getSelected();
+    m_autonomousCommand = m_chooser.getSelected();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -180,4 +203,6 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
+
+  
 }
