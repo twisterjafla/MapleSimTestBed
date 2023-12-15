@@ -1,5 +1,5 @@
 
-package frc.robot.auto;
+package frc.robot.autoRoutines;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
