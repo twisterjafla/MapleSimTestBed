@@ -7,9 +7,24 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.IntakeToggle;
+import frc.robot.commands.LimelightCommand;
+import frc.robot.commands.RunIntake;
+import frc.robot.commands.ToggleBucket;
+import frc.robot.commands.ToggleCompressor;
+import frc.robot.commands.auto.AutoSelector;
+import frc.robot.subsystems.Bucket;
+import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Gyro;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Pneumatics;
 
 
 /**
@@ -21,7 +36,25 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+
+  final Limelight limeLight = new Limelight();
+  final Pneumatics pneumatics = new Pneumatics();
+  final DriveBase m_driveSubsystem = new DriveBase();
+  final Intake m_intakeSubsystem = new Intake(pneumatics);
+  final Bucket m_bucketSubsystem = new Bucket(pneumatics);
+  final ToggleCompressor toggleCompressor = new ToggleCompressor(pneumatics);
+  final Gyro gyro = new Gyro();
+
+  final LimelightCommand limelightCommand = new LimelightCommand(limeLight);
+  final RunIntake runIntake = new RunIntake(m_intakeSubsystem, Constants.intake.fwdSpeed);
+  final RunIntake runIntakeBackward = new RunIntake(m_intakeSubsystem, Constants.intake.revSpeed);
+  final ToggleBucket toggleBucket = new ToggleBucket(m_bucketSubsystem);
+  final IntakeToggle toggleIntake = new IntakeToggle(m_intakeSubsystem);
+
+  final AutoSelector selector = new AutoSelector(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro);
+
+  final CommandXboxController movementJoystick = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
+  final CommandXboxController manipulatorJoystick = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -31,9 +64,44 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    configureButtonBindings();
     
+    //start cameraServer
+    CameraServer.startAutomaticCapture();
+    CameraServer.startAutomaticCapture();
+    
+    m_driveSubsystem.setDefaultCommand(
+      new ArcadeDrive(
+            m_driveSubsystem,
+            () -> ((-movementJoystick.getLeftTriggerAxis() + movementJoystick.getRightTriggerAxis())),
+            () -> (-movementJoystick.getLeftX() )
+      ));
+
+
+    limeLight.setDefaultCommand(limelightCommand);
+
+    gyro.log();
+
   }
+
+  private void configureButtonBindings() {
+    manipulatorJoystick.leftBumper() //intake
+    .whileTrue(runIntake);
+
+    manipulatorJoystick.rightBumper()//outake
+    .whileTrue(runIntakeBackward);
+
+    manipulatorJoystick.x()
+    .onTrue(toggleBucket);
+
+    manipulatorJoystick.a()
+    .onTrue(toggleIntake);
+
+    manipulatorJoystick.y()
+    .onTrue(toggleCompressor);
+  }
+    
+  
 
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
@@ -67,7 +135,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = selector.getSelected();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
