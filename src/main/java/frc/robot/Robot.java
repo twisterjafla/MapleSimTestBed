@@ -15,22 +15,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.autoRoutines.AutonomousBalanceMobile;
-import frc.robot.autoRoutines.AutonomousBalanceNoMobile;
-import frc.robot.autoRoutines.AutonomousDumpDoNothing;
-import frc.robot.autoRoutines.AutonomousGrab;
-import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.IntakeToggle;
-import frc.robot.commands.LimelightCommand;
-import frc.robot.commands.RunIntake;
-import frc.robot.commands.ToggleBucket;
-import frc.robot.commands.ToggleCompressor;
-import frc.robot.subsystems.Bucket;
-import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.Gyro;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Pneumatics;
+import frc.robot.autoRoutines.*;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 
 /**
