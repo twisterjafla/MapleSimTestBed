@@ -46,14 +46,15 @@ public class Robot extends TimedRobot {
 
  
   SendableChooser<Command> autoChooser = new SendableChooser<Command>();
+  SendableChooser<Integer> controlChooser = new SendableChooser<Integer>();
 
 
 
 
 
-  final CommandXboxController movementJoystick = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
-  final CommandXboxController manipulatorJoystick = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
-
+  final CommandXboxController movementController = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
+  final CommandXboxController manipulatorController = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
+  final CommandXboxController oneController = new CommandXboxController(0);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -62,7 +63,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    configureButtonBindings();
+    configureControls();
     
     // starts the auto selector
     autoChooser.setDefaultOption("Auto Balance Mobile", new AutonomousBalanceMobile(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro));
@@ -75,18 +76,19 @@ public class Robot extends TimedRobot {
 
 
 
+    //starts the control type chooser
+    controlChooser.setDefaultOption("Two Controler", 0);
+    controlChooser.addOption("One controler", 1);
+
+    SmartDashboard.putData("control type", controlChooser);
+
 
     //start cameraServer
     CameraServer.startAutomaticCapture();
     CameraServer.startAutomaticCapture();
     
-    m_driveSubsystem.setDefaultCommand(
-      new ArcadeDrive(
-            m_driveSubsystem,
-            () -> ((-movementJoystick.getLeftTriggerAxis() + movementJoystick.getRightTriggerAxis())),
-            () -> (-movementJoystick.getLeftX() )
-      ));
 
+    configureControls();
 
     limeLight.setDefaultCommand(limelightCommand);
 
@@ -94,21 +96,59 @@ public class Robot extends TimedRobot {
 
   }
 
-  private void configureButtonBindings() {
-    manipulatorJoystick.leftBumper() //intake
-    .whileTrue(runIntake);
+  private void configureControls() {
+    if (controlChooser.getSelected()==0){
+      m_driveSubsystem.setDefaultCommand(
+        new ArcadeDrive(
+              m_driveSubsystem,
+              () -> ((-movementController.getLeftTriggerAxis() + movementController.getRightTriggerAxis())),
+              () -> (-movementController.getLeftX() )
+        ));
 
-    manipulatorJoystick.rightBumper()//outake
-    .whileTrue(runIntakeBackward);
 
-    manipulatorJoystick.x()
-    .onTrue(toggleBucket);
 
-    manipulatorJoystick.a()
-    .onTrue(toggleIntake);
 
-    manipulatorJoystick.y()
-    .onTrue(toggleCompressor);
+      manipulatorController.leftBumper() //intake
+      .whileTrue(runIntake);
+
+      manipulatorController.rightBumper()//outake
+      .whileTrue(runIntakeBackward);
+
+      manipulatorController.x()
+      .onTrue(toggleBucket);
+
+      manipulatorController.a()
+      .onTrue(toggleIntake);
+
+      manipulatorController.y()
+      .onTrue(toggleCompressor);
+    }
+    else if (controlChooser.getSelected()==1){
+      m_driveSubsystem.setDefaultCommand(
+        new ArcadeDrive(
+              m_driveSubsystem,
+              () -> ((-oneController.getLeftTriggerAxis() + oneController.getRightTriggerAxis())),
+              () -> (-oneController.getLeftX() )
+        ));
+
+
+
+
+        oneController.leftBumper() //intake
+      .whileTrue(runIntake);
+
+      oneController.rightBumper()//outake
+      .whileTrue(runIntakeBackward);
+
+      oneController.x()
+      .onTrue(toggleBucket);
+
+      oneController.a()
+      .onTrue(toggleIntake);
+
+      oneController.y()
+      .onTrue(toggleCompressor);
+    }
   }
     
   
