@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
   final IntakeToggle toggleIntake = new IntakeToggle(m_intakeSubsystem);
 
  
-  SendableChooser<Command> m_chooser = new SendableChooser<Command>();
+  SendableChooser<Command> autoChooser = new SendableChooser<Command>();
 
 
 
@@ -65,13 +65,13 @@ public class Robot extends TimedRobot {
     configureButtonBindings();
     
     // starts the auto selector
-    m_chooser.setDefaultOption("Auto Balance Mobile", new AutonomousBalanceMobile(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro));
-    m_chooser.addOption("Auto Grab", new AutonomousGrab(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem));
-    m_chooser.addOption("Auto No Mobile", new AutonomousBalanceNoMobile(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro));
-    m_chooser.addOption("doNothing", new InstantCommand());
-    m_chooser.addOption("Dump Do Nothing", new AutonomousDumpDoNothing(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem));
+    autoChooser.setDefaultOption("Auto Balance Mobile", new AutonomousBalanceMobile(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro));
+    autoChooser.addOption("Auto Grab", new AutonomousGrab(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem));
+    autoChooser.addOption("Auto No Mobile", new AutonomousBalanceNoMobile(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro));
+    autoChooser.addOption("doNothing", new InstantCommand());
+    autoChooser.addOption("Dump Do Nothing", new AutonomousDumpDoNothing(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem));
   
-    SmartDashboard.putData("autos: ", m_chooser);
+    SmartDashboard.putData("autos: ", autoChooser);
 
 
 
@@ -145,7 +145,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
+    m_autonomousCommand = autoChooser.getSelected();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
