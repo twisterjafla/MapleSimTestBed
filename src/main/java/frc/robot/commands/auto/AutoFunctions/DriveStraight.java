@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveBase;
+import java.lang.Math;
 
 
 public class DriveStraight extends CommandBase {
@@ -57,6 +58,7 @@ public class DriveStraight extends CommandBase {
 
 
         if (driveBase.getEncoder() < setpoint ) {
+            SmartDashboard.putNumber("pid output", pid.calculate(driveBase.getEncoder()));
             driveBase.drive(pid.calculate(driveBase.getEncoder()), 0);
         }
     }
@@ -71,7 +73,7 @@ public class DriveStraight extends CommandBase {
     @Override
     public boolean isFinished() {
         SmartDashboard.getNumber("setpoint-encoder", setpoint-driveBase.getEncoder());
-        return false;
+        return Math.abs(driveBase.getEncoder()-setpoint)<=0.5;
     }
 
       // Called repeatedly when this Command is scheduled to run
