@@ -1,21 +1,17 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.auto.AutoRoutines;
+package frc.robot.autoRoutines;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Constants;
-import frc.robot.commands.auto.AutoFunctions.*;
+//import frc.robot.Constants;
 import frc.robot.subsystems.Bucket;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Gyro;
+//simport frc.robot.subsystems.Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
-public class AutonomousBalanceNoMobile extends SequentialCommandGroup {
+public class AutonomousDumpDoNothing extends SequentialCommandGroup {
   /*
    * pseudoCode:
    * humans will position robot
@@ -25,25 +21,25 @@ public class AutonomousBalanceNoMobile extends SequentialCommandGroup {
 
   // Subsystem to Dump Cargo then go forward over charge station
   // and then back up onto charge system to attempt balance
-  public AutonomousBalanceNoMobile(DriveBase drive, Intake intake, Bucket bucket, Gyro gyro) {
+  public AutonomousDumpDoNothing(DriveBase drive, Intake intake, Bucket bucket) {
     super(
-      //new WaitCommand(2),
+      new WaitCommand(1),
       //dump game piece
       new InstantCommand(
         ()->bucket.set(DoubleSolenoid.Value.kForward),
         bucket
       ),
-      new WaitCommand(1),
+      new WaitCommand(.7),
       //pick up milk crate
       new InstantCommand(
         ()->bucket.set(DoubleSolenoid.Value.kReverse),
         bucket
       ),
-      new WaitCommand(1),
-      //go forward onto charge station
-      new DriveStraight(drive, 10),
-      // begin balancing
-      new Balance(drive, gyro)
+      new WaitCommand(.7),
+      new InstantCommand(
+        ()->bucket.set(DoubleSolenoid.Value.kForward),
+        bucket
+      )
     );
   }
 }
