@@ -97,7 +97,8 @@ public class Robot extends TimedRobot {
   }
 
   private void configureControls() {
-    if (controlChooser.getSelected()==0){
+    if (controlChooser.getSelected()==null){}
+    else if (controlChooser.getSelected()==0){
       m_driveSubsystem.setDefaultCommand(
         new ArcadeDrive(
               m_driveSubsystem,
@@ -211,6 +212,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       CommandScheduler.getInstance().cancelAll();
     }
+    configureControls();
     
   }
 
