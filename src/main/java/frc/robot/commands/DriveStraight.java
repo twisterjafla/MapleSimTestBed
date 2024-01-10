@@ -19,8 +19,8 @@ public class DriveStraight extends CommandBase {
 
     private final DriveBase driveBase;
     private final PIDController pid = new PIDController(0.50, 0, 0.10);
-
     double setpoint;
+    int count=0;
 
     public DriveStraight(DriveBase driveSubsystem, double feet) {
       driveBase = driveSubsystem;
@@ -28,7 +28,6 @@ public class DriveStraight extends CommandBase {
       double wheelRotations=inches*(Constants.auto.wheelRadius*3.14*2);
       double motorRotations=wheelRotations*Constants.drive.gearRatio;
       setpoint=motorRotations*Constants.auto.TicksPerRotation;
-      SmartDashboard.getNumber("setpoint", setpoint);
 
 
     
@@ -46,34 +45,37 @@ public class DriveStraight extends CommandBase {
     @Override
     public void initialize() {
         driveBase.resetEncoder();
-        pid.setSetpoint(0);
-        SmartDashboard.getNumber("setpoint", setpoint);
+        pid.setSetpoint(setpoint);
+        SmartDashboard.putBoolean("has ended", false);
+
 
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        SmartDashboard.getNumber("setpoint", setpoint);
+        SmartDashboard.putNumber("goal", setpoint);
+        SmartDashboard.putNumber("count", count);
+        count++;
 
-
-        if (driveBase.getEncoder() < setpoint ) {
-            SmartDashboard.putNumber("pid output", pid.calculate(driveBase.getEncoder()));
-            driveBase.drive(pid.calculate(driveBase.getEncoder()), 0);
-        }
+        SmartDashboard.putNumber("pid output", pid.calculate(driveBase.getEncoder()));
+        driveBase.drive(1, 0);
+        
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         driveBase.drive(0, 0);
+        SmartDashboard.putBoolean("has ended", true);
+
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        SmartDashboard.getNumber("setpoint-encoder", setpoint-driveBase.getEncoder());
-        return Math.abs(driveBase.getEncoder()-setpoint)<=0.5;
+        SmartDashboard.putNumber("setpoint-encoder", setpoint-driveBase.getEncoder());
+        return Math.abs(setpoint-driveBase.getEncoder())<=0.5;
     }
 
       // Called repeatedly when this Command is scheduled to run
