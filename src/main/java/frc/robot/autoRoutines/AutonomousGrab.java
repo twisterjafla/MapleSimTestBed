@@ -2,14 +2,15 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.auto.AutoRoutines;
+package frc.robot.autoRoutines;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.auto.AutoFunctions.*;
+import frc.robot.commands.DriveStraight;
 import frc.robot.Constants;
+import frc.robot.commands.*;
 import frc.robot.subsystems.Bucket;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Intake;
@@ -47,7 +48,7 @@ public class AutonomousGrab extends SequentialCommandGroup {
         intake
       ),
       // drive forward into game piece
-      new DriveStraight(drive, 3),//18.66
+      new DriveStraight(drive, 90),//18.66
       //drive back into community
       
       new WaitCommand(0.5),
@@ -55,9 +56,9 @@ public class AutonomousGrab extends SequentialCommandGroup {
       new InstantCommand(
         () -> intake.intakeCargo(0),
         intake
-      ),
+      )
 
-      new DriveStraight(drive, 2)
+      //new DriveStraight(drive, 2)
     );
   }
 }
