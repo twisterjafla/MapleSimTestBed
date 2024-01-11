@@ -38,5 +38,7 @@ public class ArcadeDrive extends RunCommand {
       },
       drive
     );
+    addRequirements(drive);
+
   }
 }

@@ -34,6 +34,8 @@ public final class Constants {
         public static final int rf = 7;
         public static final int rt = 5;
         public static final int rr = 8;
+        public static final double gearRatio=8.5;
+        
         
         public static double rotationSpeedRatio= 0.6;
         public static final double driveSpeedRatio= 1;
@@ -60,13 +62,15 @@ public final class Constants {
         public static final int motor2 = 11;
         
         //reversed
-        public static final double fwdSpeed = 1;
+        public static final double fwdSpeed = .5;
         public static final double revSpeed = -.2;
     }
 
     public static final class auto{
-        public static final double fwdSpeed = -0.6;
-        public static final double revSpeed = 0.4;
+        public static final double fwdSpeed = 0.5;
+        public static final double revSpeed = -0.4;
+        public static final double wheelRadius=3;
+        public static final double TicksPerRotation= 4096;
 
         public static final class balancePID{
             public static final double kP = 0.06;
@@ -82,6 +86,7 @@ public final class Constants {
 
     public static final int MOVEMENT_JOYSTICK = 0;
     public static final int MANIPULATOR_JOYSTICK = 1;
+    public static final int OneJoystick=2;
     public static double driveSpeedRatio;
 
 }
