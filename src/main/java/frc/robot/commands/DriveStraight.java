@@ -18,18 +18,22 @@ public class DriveStraight extends CommandBase {
 
 
     private final DriveBase driveBase;
-    private final PIDController pid = new PIDController(0.50, 0, 0.10);
+    private final PIDController pid = new PIDController(0.09, 0, 0.10);
     double setpoint;
     int count=0;
 
     public DriveStraight(DriveBase driveSubsystem, double feet) {
       driveBase = driveSubsystem;
-      double inches= 3*12;
-      double wheelRotations=inches*(Constants.auto.wheelRadius*3.14*2);
+
+      addRequirements(driveBase);
+      pid.setTolerance(0.1);
+
+      double inches= feet*12;
+      double wheelRotations=inches/(Constants.auto.wheelRadius*3.14*2);
       double motorRotations=wheelRotations*Constants.drive.gearRatio;
-      setpoint=motorRotations*Constants.auto.TicksPerRotation;
+      setpoint=motorRotations;
 
-
+        //50=12*10/(6*3.14)*X
     
     //   encoderValue = ((((3*12)//converts feet to inches
     //   /((Constants.auto.wheelRadius*3.14*2))//converts inches to wheel rotations
@@ -57,10 +61,11 @@ public class DriveStraight extends CommandBase {
         SmartDashboard.putNumber("goal", setpoint);
         SmartDashboard.putNumber("count", count);
         count++;
-
+        SmartDashboard.putNumber("encoder", (driveBase.getEncoder()));
         SmartDashboard.putNumber("pid output", pid.calculate(driveBase.getEncoder()));
-        driveBase.drive(1, 0);
-        
+
+        driveBase.drive(pid.calculate(driveBase.getEncoder()), 0);
+    
     }
 
     // Called once the command ends or is interrupted.
@@ -75,7 +80,7 @@ public class DriveStraight extends CommandBase {
     @Override
     public boolean isFinished() {
         SmartDashboard.putNumber("setpoint-encoder", setpoint-driveBase.getEncoder());
-        return Math.abs(setpoint-driveBase.getEncoder())<=0.5;
+        return pid.atSetpoint();
     }
 
       // Called repeatedly when this Command is scheduled to run

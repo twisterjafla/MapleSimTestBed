@@ -34,7 +34,8 @@ public final class Constants {
         public static final int rf = 7;
         public static final int rt = 5;
         public static final int rr = 8;
-        public static final double gearRatio=10.75;
+        public static final double gearRatio=8.5;
+        
         
         public static double rotationSpeedRatio= 0.6;
         public static final double driveSpeedRatio= 1;

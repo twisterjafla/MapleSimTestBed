@@ -48,7 +48,8 @@ public class AutonomousGrab extends SequentialCommandGroup {
         intake
       ),
       // drive forward into game piece
-      new DriveStraight(drive, 90),//18.66
+      new DriveStraight(drive, 10),//18.66
+      
       //drive back into community
       
       new WaitCommand(0.5),

@@ -94,6 +94,7 @@ public class Robot extends TimedRobot {
 
     gyro.log();
 
+    m_driveSubsystem.resetEncoder();
   }
 
   private void configureControls() {
