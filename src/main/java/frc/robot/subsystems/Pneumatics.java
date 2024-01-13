@@ -25,11 +25,8 @@ public class Pneumatics extends SubsystemBase{
     if(compressor.isEnabled()){
       compressor.disable();
       // display Compressor Data
-      SmartDashboard.putData(compressor);
-
     }else{
       compressor.enableDigital();
-      SmartDashboard.putData(compressor);
     }
   }
 
