@@ -54,7 +54,6 @@ public class Robot extends TimedRobot {
 
   final CommandXboxController movementController = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
   final CommandXboxController manipulatorController = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
-  final CommandXboxController oneController = new CommandXboxController(0);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -99,6 +98,7 @@ public class Robot extends TimedRobot {
 
   private void configureControls() {
     if (controlChooser.getSelected()==null){}
+
     else if (controlChooser.getSelected()==0){
       m_driveSubsystem.setDefaultCommand(
         new ArcadeDrive(
@@ -129,26 +129,26 @@ public class Robot extends TimedRobot {
       m_driveSubsystem.setDefaultCommand(
         new ArcadeDrive(
               m_driveSubsystem,
-              () -> ((-oneController.getLeftTriggerAxis() + oneController.getRightTriggerAxis())),
-              () -> (-oneController.getLeftX() )
+              () -> ((-movementController.getLeftTriggerAxis() + movementController.getRightTriggerAxis())),
+              () -> (-movementController.getLeftX() )
         ));
 
 
 
 
-        oneController.leftBumper() //intake
+        movementController.leftBumper() //intake
       .whileTrue(runIntake);
 
-      oneController.rightBumper()//outake
+      movementController.rightBumper()//outake
       .whileTrue(runIntakeBackward);
 
-      oneController.x()
+      movementController.x()
       .onTrue(toggleBucket);
 
-      oneController.a()
+      movementController.a()
       .onTrue(toggleIntake);
 
-      oneController.y()
+      movementController.y()
       .onTrue(toggleCompressor);
     }
   }
