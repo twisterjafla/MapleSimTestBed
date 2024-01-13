@@ -78,6 +78,7 @@ public class Robot extends TimedRobot {
     //starts the control type chooser
     controlChooser.setDefaultOption("Two Controler", 0);
     controlChooser.addOption("One controler", 1);
+    controlChooser.addOption("jace control", 3);
 
     SmartDashboard.putData("control type", controlChooser);
 
@@ -125,6 +126,11 @@ public class Robot extends TimedRobot {
       manipulatorController.y()
       .onTrue(toggleCompressor);
     }
+
+
+
+
+
     else if (controlChooser.getSelected()==1){
       m_driveSubsystem.setDefaultCommand(
         new ArcadeDrive(
@@ -151,6 +157,34 @@ public class Robot extends TimedRobot {
       movementController.y()
       .onTrue(toggleCompressor);
     }
+
+    else if (controlChooser.getSelected()==3){
+      m_driveSubsystem.setDefaultCommand(
+        new ArcadeDrive(
+              m_driveSubsystem,
+              () -> ( movementController.getLeftY()),
+              () -> (-movementController.getLeftX())
+        ));
+
+
+
+
+        movementController.leftBumper() //intake
+      .whileTrue(runIntake);
+
+      movementController.rightBumper()//outake
+      .whileTrue(runIntakeBackward);
+
+      movementController.x()
+      .onTrue(toggleBucket);
+
+      movementController.a()
+      .onTrue(toggleIntake);
+
+      movementController.y()
+      .onTrue(toggleCompressor);
+    }
+
   }
     
   
@@ -196,6 +230,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    
     
   }
 
