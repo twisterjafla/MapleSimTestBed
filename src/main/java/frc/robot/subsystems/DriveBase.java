@@ -61,8 +61,7 @@ public final RelativeEncoder encoderL;
     
 
     addChild("Drive", m_RobotDrive);
-    SmartDashboard.putString("test", "test");
-    SmartDashboard.putNumber("encoder", (encoderL.getPosition()+encoderR.getPosition())/2);
+    SmartDashboard.putNumber("encoder", (getEncoder()));
 
   }
   //returns average of encoder values. 
@@ -78,7 +77,7 @@ public final RelativeEncoder encoderL;
 
 
   public void drive(final double ySpeed, final double rotateValue) {
-    SmartDashboard.putNumber("encoder", (encoderL.getPosition()+encoderR.getPosition())/2);
+    SmartDashboard.putNumber("encoder", getEncoder());
     m_RobotDrive.arcadeDrive(ySpeed, rotateValue);
 
   }
