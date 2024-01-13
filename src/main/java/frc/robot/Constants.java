@@ -82,6 +82,13 @@ public final class Constants {
             public static final double positionTolerance = 2;
             public static final double velocityTolerance = 2;
         }
+        public static final class straightPID{
+            public static final double kp = 0.09;
+            public static final double ki = 0;
+            public static final double kd = 0.1;
+
+            public static final double positionTolerance = 1;
+        }
     }
 
     public static final int MOVEMENT_JOYSTICK = 0;

@@ -30,7 +30,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
 
-  final Limelight limeLight = new Limelight();
   final Pneumatics pneumatics = new Pneumatics();
   final DriveBase m_driveSubsystem = new DriveBase();
   final Intake m_intakeSubsystem = new Intake(pneumatics);
@@ -38,7 +37,6 @@ public class Robot extends TimedRobot {
   final ToggleCompressor toggleCompressor = new ToggleCompressor(pneumatics);
   final Gyro gyro = new Gyro();
 
-  final LimelightCommand limelightCommand = new LimelightCommand(limeLight);
   final RunIntake runIntake = new RunIntake(m_intakeSubsystem, Constants.intake.fwdSpeed);
   final RunIntake runIntakeBackward = new RunIntake(m_intakeSubsystem, Constants.intake.revSpeed);
   final ToggleBucket toggleBucket = new ToggleBucket(m_bucketSubsystem);
@@ -89,7 +87,6 @@ public class Robot extends TimedRobot {
 
     configureControls();
 
-    limeLight.setDefaultCommand(limelightCommand);
 
     gyro.log();
 

@@ -18,20 +18,20 @@ public class DriveStraight extends CommandBase {
 
 
     private final DriveBase driveBase;
-    private final PIDController pid = new PIDController(0.09, 0, 0.10);
+    private final PIDController pid = new PIDController(
+        Constants.auto.straightPID.kp,
+        Constants.auto.straightPID.ki,
+        Constants.auto.straightPID.kd
+    );
     double setpoint;
-    int count=0;
 
     public DriveStraight(DriveBase driveSubsystem, double feet) {
       driveBase = driveSubsystem;
 
       addRequirements(driveBase);
-      pid.setTolerance(0.1);
+      pid.setTolerance(Constants.auto.straightPID.positionTolerance);
 
-      double inches= feet*12;
-      double wheelRotations=inches/(Constants.auto.wheelRadius*3.14*2);
-      double motorRotations=wheelRotations*Constants.drive.gearRatio;
-      setpoint=motorRotations;
+      setpoint=feet*12/(Constants.auto.wheelRadius*Math.PI*2)*Constants.drive.gearRatio;
 
         //50=12*10/(6*3.14)*X
     
@@ -50,7 +50,6 @@ public class DriveStraight extends CommandBase {
     public void initialize() {
         driveBase.resetEncoder();
         pid.setSetpoint(setpoint);
-        SmartDashboard.putBoolean("has ended", false);
 
 
     }
@@ -59,10 +58,7 @@ public class DriveStraight extends CommandBase {
     @Override
     public void execute() {
         SmartDashboard.putNumber("goal", setpoint);
-        SmartDashboard.putNumber("count", count);
-        count++;
         SmartDashboard.putNumber("encoder", (driveBase.getEncoder()));
-        SmartDashboard.putNumber("pid output", pid.calculate(driveBase.getEncoder()));
 
         driveBase.drive(pid.calculate(driveBase.getEncoder()), 0);
     
@@ -72,14 +68,12 @@ public class DriveStraight extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         driveBase.drive(0, 0);
-        SmartDashboard.putBoolean("has ended", true);
 
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        SmartDashboard.putNumber("setpoint-encoder", setpoint-driveBase.getEncoder());
         return pid.atSetpoint();
     }
 
