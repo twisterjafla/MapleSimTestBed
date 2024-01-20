@@ -44,8 +44,8 @@ public final class Constants {
     }
 
     public static final class elevator {
-        public static final int motorLeft = 0;
-        public static final int motorRight = 1;
+        public static final int motorPortLeft = 0;
+        public static final int motorPortRight = 1;
 
         public static final int topLimitSwitch = 0;
         public static final int bottomLimitSwitch = 1;
