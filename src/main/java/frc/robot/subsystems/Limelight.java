@@ -32,18 +32,26 @@ public class Limelight extends SubsystemBase{
 
     // SmartDashboard.putNumber("blueX", table.getEntry("botpose_wpilib."));
    }
-
-
-
+   public double getCoords(){
+    DriverStation.Alliance color;
+	color = DriverStation.getAlliance();
+        if (table.getEntry("tid").getDouble(-1)){
+           return null;
+        }
+        else if(table.getEntry("tid").getDouble(-1)){
+            
+        }
+        
+   }
 }
 
-class Cords {
+class Coords {
 
     double X;
     double Y;
     double Z;
 
-    public Cords(double X, double Y, double Z){
+    public Coords(double X, double Y, double Z){
         this.X=X;
         this.Y=Y;
         this.Z=Z;
