@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.autoRoutines.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -28,25 +27,14 @@ import frc.robot.subsystems.*;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
-
-
   final DriveBase m_driveSubsystem = new DriveBase();
-
-  final Gyro gyro = new Gyro();
-
-
-
  
   SendableChooser<Command> autoChooser = new SendableChooser<Command>();
   SendableChooser<Integer> controlChooser = new SendableChooser<Integer>();
 
-
-
-
-
   final CommandXboxController movementController = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
   final CommandXboxController manipulatorController = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -75,12 +63,8 @@ public class Robot extends TimedRobot {
     //start cameraServer
     CameraServer.startAutomaticCapture();
     CameraServer.startAutomaticCapture();
-    
 
     configureControls();
-
-
-    gyro.log();
 
     m_driveSubsystem.resetEncoder();
   }
