@@ -4,15 +4,13 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveBase;
 import java.lang.Math;
 
 
-public class DriveStraight extends CommandBase {
+public class DriveStraight extends Command {
     // Encoder leftEncoder = new Encoder(4,5); 
     // Encoder rightEncoder = new Encoder(5);
 
