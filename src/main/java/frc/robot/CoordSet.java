@@ -3,19 +3,24 @@ package frc.robot;
 import frc.robot.subsystems.Coords;
 
 public class CoordSet {
-    Coords[100] list;
+
     int currentID=0;
+    Coords Coordlist[] = new Coords[4];
 
 
     public CoordSet(){}
 
-    public addNewCoord(Coord tooAdd){
+    public void addNewCoord(Coords tooAdd){
         currentID++;
         if (currentID==100){
-            currentID==0;
+            currentID=0;
         }
-        list[currentID]=tooAdd;
-
+        Coordlist[currentID]=tooAdd;
     }
+    public Coords GetCurrent(){
+        return Coordlist[currentID];
+    }
+
+
 
 } 

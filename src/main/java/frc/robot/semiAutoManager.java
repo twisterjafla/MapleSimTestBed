@@ -13,7 +13,7 @@ public class semiAutoManager{
     Gyro gyro;
     Limelight limelight;
     boolean isGoodToRun;
-    CoordSet set();
+    CoordSet set;
 
 
     public semiAutoManager(DriveBase drive, Gyro gyro, Limelight limelight ){
