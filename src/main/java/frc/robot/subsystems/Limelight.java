@@ -10,10 +10,10 @@ import frc.robot.subsystems.Coords;
 public class Limelight extends SubsystemBase{
 boolean isBlue;
 NetworkTable table;
-Coords coordBox;
+Coords limeCoords;
 //post to smart dashboard periodically
     public Limelight(Coords coordBox){
-        this.coordBox=coordBox;
+        this.limeCoords=coordBox;
         isBlue=(DriverStation.getAlliance() == DriverStation.Alliance.Blue);
         table = NetworkTableInstance.getDefault().getTable("limelight");
     }
@@ -23,18 +23,18 @@ Coords coordBox;
     
 //read values periodically
     
-    UpdateCoords(coordBox);
+    limeCoords = getCoords();
     
-    SmartDashboard.putNumber("LimelightX", coordBox.getX());
-    SmartDashboard.putNumber("LimelightY", coordBox.getY());
-    SmartDashboard.putNumber("LimelightArea", coordBox.getZ());
+    SmartDashboard.putNumber("LimelightX", limeCoords.getX());
+    SmartDashboard.putNumber("LimelightY", limeCoords.getY());
+    SmartDashboard.putNumber("LimelightArea", limeCoords.getZ());
 
     // SmartDashboard.putNumber("blueX", table.getEntry("botpose_wpilib."));
    }
-   public void UpdateCoords(Coords coords){
+   public Coords getCoords(){
+    Coords coords = new Coords();
 
     if (table.getEntry("tid").getDouble(-1)==-1){
-        
     }
     else if(isBlue){
             
@@ -46,7 +46,13 @@ Coords coordBox;
         double[] coordsList = table.getEntry("botpose_wpired").getDoubleArray(new double[6]);;
         coords.setCoords(coordsList[0], coordsList[1], coordsList[2]); 
     }
+    return coords;
         
+   }
+   public Coords updateCoords(Coords coordToUpdate){
+    Coords newCoords=getCoords();
+    coordToUpdate.setCoords(newCoords.getX(), newCoords.getY(), newCoords.getX());
+    return coordToUpdate;
    }
 }
 

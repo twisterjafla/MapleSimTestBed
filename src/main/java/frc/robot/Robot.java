@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
   final RunIntake runIntakeBackward = new RunIntake(m_intakeSubsystem, Constants.intake.revSpeed);
   final ToggleBucket toggleBucket = new ToggleBucket(m_bucketSubsystem);
   final IntakeToggle toggleIntake = new IntakeToggle(m_intakeSubsystem);
-
+  final semiAutoManager manager = new semiAutoManager(m_driveSubsystem, gyro, lime);
  
   SendableChooser<Command> autoChooser = new SendableChooser<Command>();
   SendableChooser<Integer> controlChooser = new SendableChooser<Integer>();
@@ -169,6 +169,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    manager.periodic();
 
   }
 
