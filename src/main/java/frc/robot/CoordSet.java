@@ -1,5 +1,7 @@
 package frc.robot;
 
+import frc.robot.subsystems.Coords;
+
 public class CoordSet {
     Coords[100] list;
     int currentID=0;

@@ -38,12 +38,12 @@ Coords limeCoords;
     }
     else if(isBlue){
             
-        double[] coordsList = table.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);;
+        double[] coordsList = table.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
         coords.setCoords(coordsList[0], coordsList[1], coordsList[2]); 
         
     }
     else{
-        double[] coordsList = table.getEntry("botpose_wpired").getDoubleArray(new double[6]);;
+        double[] coordsList = table.getEntry("botpose_wpired").getDoubleArray(new double[6]);
         coords.setCoords(coordsList[0], coordsList[1], coordsList[2]); 
     }
     return coords;
