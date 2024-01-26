@@ -25,7 +25,6 @@ public final RelativeEncoder encoderR;
 public final RelativeEncoder encoderL;
 
 
-public double encoderAvrgLastTimeChecked;
 
 
   final MotorControllerGroup leftMotors = new MotorControllerGroup(
@@ -71,7 +70,7 @@ public double encoderAvrgLastTimeChecked;
 
   public double getEncoderAvrg(){
     // SmartDashboard.putNumber("encoder", (encoderL.getPosition()+encoderR.getPosition())/2);
-    return (getLeftEncoder()+getRightEncoder())/2;
+    return encoderToMeters((getLeftEncoder()+getRightEncoder())/2);
   }
 
   public double getLeftEncoder(){
@@ -92,5 +91,9 @@ public double encoderAvrgLastTimeChecked;
     SmartDashboard.putNumber("encoder", getEncoderAvrg());
     m_RobotDrive.arcadeDrive(ySpeed, rotateValue);
 
+  }
+
+  public double encoderToMeters(double encoderValue){
+    return (encoderValue/Constants.drive.gearRatio)*(Constants.auto.wheelRadius*Math.PI*2);
   }
 }

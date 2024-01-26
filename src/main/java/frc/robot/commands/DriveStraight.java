@@ -25,13 +25,13 @@ public class DriveStraight extends CommandBase {
     );
     double setpoint;
 
-    public DriveStraight(DriveBase driveSubsystem, double feet) {
+    public DriveStraight(DriveBase driveSubsystem, double Meters) {
       driveBase = driveSubsystem;
-
+      this.setpoint = Meters;
       addRequirements(driveBase);
       pid.setTolerance(Constants.auto.straightPID.positionTolerance);
 
-      setpoint=feet*12/(Constants.auto.wheelRadius*Math.PI*2)*Constants.drive.gearRatio;
+      
 
         //50=12*10/(6*3.14)*X
     

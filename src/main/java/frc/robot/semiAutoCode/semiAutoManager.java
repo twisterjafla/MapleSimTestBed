@@ -1,13 +1,9 @@
 package frc.robot.semiAutoCode;
 
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.util.Units;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.drive;
+
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.Limelight;
@@ -20,7 +16,7 @@ public class semiAutoManager{
     diffObj accessPoint=null;
 
 
-    
+
     double Xchange=0;
     double Ychange=0;
     double Zchange=0;
@@ -64,6 +60,9 @@ public class semiAutoManager{
     private Coords getNewCoords(Coords lastCoords){
         return new Coords(limelight, gyro, drive, timer, this, lastCoords); 
         }
+
+
+
     public Coords getCoords(){
         return current;
     }
