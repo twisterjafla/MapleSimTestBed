@@ -1,4 +1,4 @@
-package frc.robot.semiAutoRoutines;
+package frc.robot.semiAutoCode.semiAutoRoutines;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 

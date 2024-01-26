@@ -1,6 +1,6 @@
 package frc.robot;
 
-import frc.robot.subsystems.Coords;
+import frc.robot.semiAutoCode.Coords;
 
 public class CoordSet {
 
