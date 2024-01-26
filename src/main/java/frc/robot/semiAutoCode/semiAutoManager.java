@@ -34,12 +34,7 @@ public class semiAutoManager{
         return null;
     }
     public void periodic(){
-        if (accessPoint!=null){
-            accessPoint.makeNewDiffObj((int)timer.get()*1000);
-        }
-        else{
-            accessPoint=new diffObj((int)timer.get()*1000, null);
-        }
+        accessPoint=new diffObj((int)timer.get()*1000, accessPoint);
 
         double Xchange = Math.sin(gyro.getRoll())*drive.getEncoderAvrg();
         double Ychange = math.cos(gyro.getRoll())*
