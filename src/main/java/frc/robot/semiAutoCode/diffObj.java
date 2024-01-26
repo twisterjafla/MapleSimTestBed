@@ -4,36 +4,33 @@ package frc.robot.semiAutoCode;
 
 //linked list object 
 public class diffObj {
-    int startTime;
-    diffObj leadIn=null;
+    double startTime;
+
     diffObj leadOut;
-    boolean isFirst=false;
-    
     double XChange=0;
     double YChange=0;
+    double Zchange=0;
 
-    public diffObj(int time, diffObj leadOut){
+    public diffObj(Double time, diffObj leadOut){
         startTime=time;
         if (leadOut!=null){
-            this.leadOut=null;
+            this.leadOut=leadOut;
         }
-        else{
-            leadOut.leadIn=this;
-        }
-        
+
         
     }
 
-    public void passItOn(double XChangeChange, double YChangeChange){
+    public void passItOn(double XChangeChange, double YChangeChange, double ZchangeChange){
         XChange+=XChangeChange;
         YChange+=YChangeChange;
+        Zchange+=ZchangeChange;
         if (leadOut!=null){
-            leadOut.passItOn(XChangeChange, YChangeChange);
+            leadOut.passItOn(XChangeChange, YChangeChange, ZchangeChange);
         }
     }
 
-    public diffObj findTheDiffObj(int time){
-        if (startTime-time<2){
+    public diffObj findTheDiffObj(Double time){
+        if (Math.abs(startTime-time)<9){
             return this;
         }
         if (leadOut==null){
@@ -42,28 +39,16 @@ public class diffObj {
         return leadOut.findTheDiffObj(time);
     }
 
-    public void removeDiffObj(diffObj objToDie){
+    
+    public boolean shouldRemoveDiffObj(diffObj objToDie){
         if (this==objToDie){
-            if (leadIn!=null){
-                leadIn.leadOut=leadOut;
-            }
-            
-            if (leadOut!=null){
-                leadOut.leadIn=leadIn;
-            }
+            return true;
         }
-        if (leadOut!=null){
-            leadOut.removeDiffObj(objToDie);
+        if (leadOut.shouldRemoveDiffObj(objToDie)){
+            leadOut=null;
         }
+        return false;
     }
-
-    // public void makeNewDiffObj(int time){
-    //     if (leadOut==null){
-    //         this.leadOut=new diffObj(time, this);
-    //     }
-    //     else{
-    //         leadOut.makeNewDiffObj(time);
-    //     }
-    // }
+        
 
 }

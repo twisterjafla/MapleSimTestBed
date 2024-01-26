@@ -18,10 +18,11 @@ NetworkTable table;
         table = NetworkTableInstance.getDefault().getTable("limelight");
     }
 
-   public Coords updateCoords(Coords coordToUpdate){
+   public boolean updateCoords(Coords coordToUpdate){
 
 
     if (table.getEntry("tid").getDouble(-1)==-1){
+        return false;
     }
     else if(isBlue){
             
@@ -33,7 +34,7 @@ NetworkTable table;
         double[] coordsList = table.getEntry("botpose_wpired").getDoubleArray(new double[6]);
         coordToUpdate.setCoords(coordsList[0], coordsList[1], coordsList[2]);
     }
-    return coordToUpdate;
+    return true;
     
    }
 

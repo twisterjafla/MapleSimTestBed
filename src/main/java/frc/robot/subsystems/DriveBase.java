@@ -25,6 +25,9 @@ public final RelativeEncoder encoderR;
 public final RelativeEncoder encoderL;
 
 
+public double encoderAvrgLastTimeChecked;
+
+
   final MotorControllerGroup leftMotors = new MotorControllerGroup(
     sparkMaxlf
       );
@@ -64,7 +67,8 @@ public final RelativeEncoder encoderL;
     SmartDashboard.putNumber("encoder", (getEncoderAvrg()));
 
   }
-  //returns average of encoder values. 
+  //returns average of encoder values.
+
   public double getEncoderAvrg(){
     // SmartDashboard.putNumber("encoder", (encoderL.getPosition()+encoderR.getPosition())/2);
     return (getLeftEncoder()+getRightEncoder())/2;

@@ -10,18 +10,24 @@ public class Coords {
     private double X;
     private double Y;
     private double Z;
-    private double leftEncoder;
-    private double rightEncoder;
-    private double timeAtAsign; 
 
-    public Coords(Limelight limelight, Gyro gyro, DriveBase drive, Timer timer){
-        limelight.updateCoords(this);
+    private diffObj diff;
 
-        leftEncoder=drive.getLeftEncoder();
-        rightEncoder=drive.getRightEncoder();
 
-        timeAtAsign=timer.get();
+    public Coords(Limelight limelight, Gyro gyro, DriveBase drive, Timer timer, semiAutoManager manager, Coords lastCoords){
         
+        if (!limelight.updateCoords(this)){
+            this.X=lastCoords.X+manager.Xchange;
+            this.Y=lastCoords.Y+manager.Ychange;
+            this.Z=lastCoords.Z+manager.Zchange;
+        }
+        
+        diff=manager.getDiffObj(limelight.getDelayInMs());
+        if (diff!=null){
+            X+=diff.XChange;
+            Y+=diff.YChange;
+            Z+=diff.Zchange;
+        }
     }
 
     public void setCoords(double X, double Y, double Z){

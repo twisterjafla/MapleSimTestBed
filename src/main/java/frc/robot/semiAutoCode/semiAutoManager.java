@@ -16,9 +16,15 @@ public class semiAutoManager{
     DriveBase drive;
     Gyro gyro;
     Limelight limelight;
-    boolean isGoodToRun;
     Timer timer;
     diffObj accessPoint=null;
+
+
+    
+    double Xchange=0;
+    double Ychange=0;
+    double Zchange=0;
+    Coords current;
 
 
     public semiAutoManager(DriveBase drive, Gyro gyro, Limelight limelight, Timer timer){
@@ -34,17 +40,15 @@ public class semiAutoManager{
         return null;
     }
     public void periodic(){
-        accessPoint=new diffObj((int)timer.get()*1000, accessPoint);
+        accessPoint=new diffObj(timer.get()*1000, accessPoint);
 
-        double Xchange = Math.sin(gyro.getRoll())*drive.getEncoderAvrg();
-        double Ychange = math.cos(gyro.getRoll())*
+        Xchange = Math.sin(gyro.getRoll())*(drive.getEncoderAvrg()-Xchange);
+        Ychange = Math.cos(gyro.getRoll())*(drive.getEncoderAvrg()-Ychange);
+        Zchange = gyro.getRoll()-Zchange;
 
-        accessPoint.passItOn(0, 0);
-
-
-
-
-
+        accessPoint.passItOn(Xchange, Ychange, Zchange);
+        
+        current=getNewCoords(current);
         // private final DifferentialDrivePoseEstimator m_poseEstimator =
         // new DifferentialDrivePoseEstimator(
         //     m_kinematics,
@@ -57,12 +61,17 @@ public class semiAutoManager{
         
     }
 
-    public Coords getCoords(Coords lastCoords){
-        Coords working = limelight.updateCoords(lastCoords);
-
-        working.setEncoders(drive);
-        return working; 
+    private Coords getNewCoords(Coords lastCoords){
+        return new Coords(limelight, gyro, drive, timer, this, lastCoords); 
         }
+    public Coords getCoords(){
+        return current;
+    }
+
+
+    public diffObj getDiffObj(Double delay){
+        return accessPoint.findTheDiffObj(timer.get()*1000-delay);
+    }
 
 
 }
