@@ -25,13 +25,13 @@ public class DriveStraight extends CommandBase {
     );
     double setpoint;
 
-    public DriveStraight(DriveBase driveSubsystem, double feet) {
+    public DriveStraight(DriveBase driveSubsystem, double Meters) {
       driveBase = driveSubsystem;
-
+      this.setpoint = Meters;
       addRequirements(driveBase);
       pid.setTolerance(Constants.auto.straightPID.positionTolerance);
 
-      setpoint=feet*12/(Constants.auto.wheelRadius*Math.PI*2)*Constants.drive.gearRatio;
+      
 
         //50=12*10/(6*3.14)*X
     
@@ -58,9 +58,9 @@ public class DriveStraight extends CommandBase {
     @Override
     public void execute() {
         SmartDashboard.putNumber("goal", setpoint);
-        SmartDashboard.putNumber("encoder", (driveBase.getEncoder()));
+        SmartDashboard.putNumber("encoder", (driveBase.getEncoderAvrg()));
 
-        driveBase.drive(pid.calculate(driveBase.getEncoder()), 0);
+        driveBase.drive(pid.calculate(driveBase.getEncoderAvrg()), 0);
     
     }
 
