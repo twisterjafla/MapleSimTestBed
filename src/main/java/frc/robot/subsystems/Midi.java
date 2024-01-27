@@ -11,20 +11,14 @@ import frc.robot.Constants;
 
 public class Midi {
     // Get the default table
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("datatable");
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("MidiTable");
 
 
     
     Dictionary<String, Double> values = new Hashtable<>();
     Dictionary<String, MidiButton> buttons = new Hashtable<>();
 
-    // Retrieve the entries from the table
-    NetworkTableEntry entry1 = table.getEntry("key1");
-    NetworkTableEntry entry2 = table.getEntry("key2");
 
-    // Get the values of the entries as an Object
-    Object value1 = entry1.getValue();
-    Object value2 = entry2.getValue();
 
     // Cast the values to their respective types
     //dict.put();
@@ -36,9 +30,10 @@ public class Midi {
         }
     }
 
-    public void initalizeMidiControll(){
-        
-        buttons.get("button1").buttonTrigger.onFalse(null);
+    public void readInputs(){
+        for (String name: Constants.Midi.buttonNames){
+            values.put(name, table.getEntry(name).getDouble(0));
+        }
     }
     
    
