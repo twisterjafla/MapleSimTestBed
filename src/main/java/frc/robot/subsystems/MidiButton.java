@@ -10,6 +10,7 @@ public class MidiButton {
     public Trigger diffTrigger;
     public double TrueVal=127;
     public boolean diffIsGreater=true;
+    public double Offset=0;
     
 
     public MidiButton(String key, Midi parentBoard){
@@ -27,7 +28,10 @@ public class MidiButton {
     }
 
     public double getValue(){
-        return parentBoard.getValFromDict(key);
+        return parentBoard.getValFromDict(key)+Offset;
+    }
+    public void setOffset(double Offset){
+        this.Offset=Offset;
     }
 
     public boolean getIsTrue(){

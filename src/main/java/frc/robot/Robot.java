@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
   final Bucket m_bucketSubsystem = new Bucket(pneumatics);
   final ToggleCompressor toggleCompressor = new ToggleCompressor(pneumatics);
   final Gyro gyro = new Gyro();
+  final Midi midi = new Midi();
 
   final RunIntake runIntake = new RunIntake(m_intakeSubsystem, Constants.intake.fwdSpeed);
   final RunIntake runIntakeBackward = new RunIntake(m_intakeSubsystem, Constants.intake.revSpeed);
@@ -75,6 +76,8 @@ public class Robot extends TimedRobot {
     controlChooser.setDefaultOption("Two Controler", 0);
     controlChooser.addOption("One controler", 1);
     controlChooser.addOption("jace control", 2);
+    controlChooser.addOption("MidiControl alone", 3);
+
 
     SmartDashboard.putData("control type", controlChooser);
 
@@ -106,6 +109,9 @@ public class Robot extends TimedRobot {
 
     else if (controlChooser.getSelected()==2){
       controlInitalizer.initalizeJaceControllWithSecondController(controller1, controller2);
+    }
+    else if (controlChooser.getSelected()==3){
+      controlInitalizer.initalizeMIDIControl(midi);
     }
      
 

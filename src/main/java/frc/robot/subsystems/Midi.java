@@ -43,4 +43,8 @@ public class Midi {
         return values.get(key);
     }
 
+    public MidiButton getButtonFromDict(String key){
+        return buttons.get(key);
+    }
+
 }
