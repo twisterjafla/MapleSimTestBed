@@ -43,17 +43,6 @@ public final class Constants {
         public static double rampspeed= .25;
     }
 
-    public static final class elevator {
-        public static final int motorPortLeft = 0;
-        public static final int motorPortRight = 1;
-
-        public static final int topLimitSwitch = 0;
-        public static final int bottomLimitSwitch = 1;
-
-        public static final int elevatorUp = 1;
-        public static final int elevatorDown = -1;
-    }
-
     // Changing Solenoid Values idk 50/50 this'll work
     public static final class bucket {
         public static final class solenoid {
