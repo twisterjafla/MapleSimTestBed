@@ -17,7 +17,6 @@ public class semiAutoManager{
     Gyro gyro;
     Limelight limelight;
     Timer timer;
-    diffObj accessPoint=null;
     DifferentialDrivePoseEstimator poseEstimator;
 
 
