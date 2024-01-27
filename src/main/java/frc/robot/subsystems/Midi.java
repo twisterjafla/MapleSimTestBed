@@ -24,4 +24,9 @@ public class Midi {
     // Cast the values to their respective types
     //dict.put();
 
+
+    public void initalizeMidiControll(){
+        
+    }
+
 }
