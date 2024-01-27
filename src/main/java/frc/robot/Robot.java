@@ -47,11 +47,11 @@ public class Robot extends TimedRobot {
   SendableChooser<Integer> controlChooser = new SendableChooser<Integer>();
 
 
+  controlInitalizer controlInitalizer = new controlInitalizer(toggleCompressor, runIntake, runIntakeBackward, toggleBucket, toggleIntake, m_driveSubsystem);
 
 
-
-  final CommandXboxController movementController = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
-  final CommandXboxController manipulatorController = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
+  final CommandXboxController controller1 = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
+  final CommandXboxController controller2 = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -74,6 +74,7 @@ public class Robot extends TimedRobot {
     //starts the control type chooser
     controlChooser.setDefaultOption("Two Controler", 0);
     controlChooser.addOption("One controler", 1);
+    controlChooser.addOption("jace control", 2);
 
     SmartDashboard.putData("control type", controlChooser);
 
@@ -95,57 +96,19 @@ public class Robot extends TimedRobot {
     if (controlChooser.getSelected()==null){}
 
     else if (controlChooser.getSelected()==0){
-      m_driveSubsystem.setDefaultCommand(
-        new ArcadeDrive(
-              m_driveSubsystem,
-              () -> ((-movementController.getLeftTriggerAxis() + movementController.getRightTriggerAxis())),
-              () -> (-movementController.getLeftX() )
-        ));
-
-
-
-
-      manipulatorController.leftBumper() //intake
-      .whileTrue(runIntake);
-
-      manipulatorController.rightBumper()//outake
-      .whileTrue(runIntakeBackward);
-
-      manipulatorController.x()
-      .onTrue(toggleBucket);
-
-      manipulatorController.a()
-      .onTrue(toggleIntake);
-
-      manipulatorController.y()
-      .onTrue(toggleCompressor);
+      controlInitalizer.configureTwoControllersBasic(controller1, controller2);
     }
+
     else if (controlChooser.getSelected()==1){
-      m_driveSubsystem.setDefaultCommand(
-        new ArcadeDrive(
-              m_driveSubsystem,
-              () -> ((-movementController.getLeftTriggerAxis() + movementController.getRightTriggerAxis())),
-              () -> (-movementController.getLeftX() )
-        ));
-
-
-
-
-        movementController.leftBumper() //intake
-      .whileTrue(runIntake);
-
-      movementController.rightBumper()//outake
-      .whileTrue(runIntakeBackward);
-
-      movementController.x()
-      .onTrue(toggleBucket);
-
-      movementController.a()
-      .onTrue(toggleIntake);
-
-      movementController.y()
-      .onTrue(toggleCompressor);
+      controlInitalizer.configureOneControllersBasic(controller1);
     }
+
+
+    else if (controlChooser.getSelected()==2){
+      controlInitalizer.initalizeJaceControllWithSecondController(controller1, controller2);
+    }
+     
+
   }
     
   
@@ -191,6 +154,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    
     
   }
 
