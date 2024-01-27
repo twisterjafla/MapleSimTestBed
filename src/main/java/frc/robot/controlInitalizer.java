@@ -4,32 +4,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.ShiftableGearbox;
 
 //object to deal with all ofthe dirty work of multiple control schemes
 public class controlInitalizer {
 
-    final ToggleCompressor toggleCompressor;
-
   
-    final RunIntake runIntake;
-    final RunIntake runIntakeBackward;
-    final ToggleBucket toggleBucket;
-    final IntakeToggle toggleIntake;
     final DriveBase m_driveSubsystem;
 
-    public controlInitalizer(
-        ToggleCompressor toggleCompressor,
-        RunIntake runIntake,
-        RunIntake runIntakeBackward,
-        ToggleBucket toggleBucket,
-        IntakeToggle toggleIntake,
-        DriveBase m_driveSubsystem){
+    final ShiftableGearbox gearBox;
 
-        this.toggleCompressor=toggleCompressor;
-        this.runIntake=runIntake;
-        this.runIntakeBackward=runIntakeBackward;
-        this.toggleBucket=toggleBucket;
-        this.toggleIntake=toggleIntake;
+    public controlInitalizer(
+        DriveBase m_driveSubsystem, ShiftableGearbox gearBox){
+        this.gearBox=gearBox;
         this.m_driveSubsystem=m_driveSubsystem;
 
 
@@ -43,22 +30,9 @@ public class controlInitalizer {
               () -> ((-movementController.getLeftTriggerAxis() + movementController.getRightTriggerAxis())),
               () -> (-movementController.getLeftX() )
         ));
+        movementController.rightTrigger().onTrue(new shiftGears(true, gearBox)).onFalse(new shiftGears(false, gearBox));
 
 
-      manipulatorController.leftBumper() //intake
-      .whileTrue(runIntake);
-
-      manipulatorController.rightBumper()//outake
-      .whileTrue(runIntakeBackward);
-
-      manipulatorController.x()
-      .onTrue(toggleBucket);
-
-      manipulatorController.a()
-      .onTrue(toggleIntake);
-
-      manipulatorController.y()
-      .onTrue(toggleCompressor);
     }
 
     public final void configureOneControllersBasic(CommandXboxController controller){
@@ -68,24 +42,7 @@ public class controlInitalizer {
                   () -> ((-controller.getLeftTriggerAxis() + controller.getRightTriggerAxis())),
                   () -> (-controller.getLeftX() )
             ));
-    
-    
-    
-    
-            controller.leftBumper() //intake
-          .whileTrue(runIntake);
-    
-          controller.rightBumper()//outake
-          .whileTrue(runIntakeBackward);
-    
-          controller.x()
-          .onTrue(toggleBucket);
-    
-          controller.a()
-          .onTrue(toggleIntake);
-    
-          controller.y()
-          .onTrue(toggleCompressor);
+
         
     }
 
@@ -96,24 +53,6 @@ public class controlInitalizer {
                   () -> ( movementController.getLeftY()),
                   () -> (-movementController.getLeftX())
             ));
-    
-    
-    
-    
-            movementController.leftBumper() //intake
-          .whileTrue(runIntake);
-    
-          movementController.rightBumper()//outake
-          .whileTrue(runIntakeBackward);
-    
-          movementController.x()
-          .onTrue(toggleBucket);
-    
-          movementController.a()
-          .onTrue(toggleIntake);
-    
-          movementController.y()
-          .onTrue(toggleCompressor);
         
     }
 
