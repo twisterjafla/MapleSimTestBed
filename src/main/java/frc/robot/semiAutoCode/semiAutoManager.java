@@ -42,10 +42,7 @@ public class semiAutoManager{
         
     }
 
-    public Command getBoardControls(){
-        //Code that returns an in integer value that relates to the routine to be run
-        return null;
-    }
+
     public void periodic(){
         poseEstimator.update(gyro.getRoll(), drive.getLeftEncoderInMeters(), drive.getRightEncoderInMeters());
 
