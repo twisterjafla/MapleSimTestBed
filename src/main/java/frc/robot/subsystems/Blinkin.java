@@ -18,7 +18,6 @@ public class Blinkin extends SubsystemBase {
    */
   public Blinkin() {
     m_blinkin = new Spark(Constants.blinkinPort);
-    //solid_orange();
   }
 
   /*
