@@ -11,8 +11,6 @@ public class ElevatorToggle extends CommandBase {
   // setActive setActive;
   Elevator elevator;
   Boolean hasHitTop = false;
-  limitSwitch topSwitch = new limitSwitch(Constants.elevator.topLimitSwitch);
-  limitSwitch bottomSwitch = new limitSwitch(Constants.elevator.bottomLimitSwitch);
   limitSwitch activeSwitch;
   double speed;
 
@@ -38,11 +36,11 @@ public class ElevatorToggle extends CommandBase {
     @Override
     public void initialize(){
       if (elevator.isUp){
-        activeSwitch=bottomSwitch;
+        activeSwitch=elevator.bottomSwitch;
         speed=Constants.elevator.elevatorDown;
       }
       else{
-        activeSwitch=topSwitch;
+        activeSwitch=elevator.topSwitch;
         speed=Constants.elevator.elevatorUp;
       }
 

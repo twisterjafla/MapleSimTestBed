@@ -12,9 +12,14 @@ public class Elevator extends SubsystemBase {
 	public final MotorControllerGroup armMotors = new MotorControllerGroup(motorLeft, motorRight);
 	public boolean isUp = false;
 
+	public final limitSwitch topSwitch = new limitSwitch(Constants.elevator.topLimitSwitch);
+	public final limitSwitch bottomSwitch = new limitSwitch(Constants.elevator.bottomLimitSwitch);
+	
+
+
 	public void moveElevator(double speed){
-    armMotors.set(speed);
-  }
+    	armMotors.set(speed);
+  	}
 
 }
 
