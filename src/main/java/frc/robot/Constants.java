@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -34,7 +37,7 @@ public final class Constants {
         public static final int rf = 7;
         public static final int rt = 5;
         public static final int rr = 8;
-        public static final double gearRatio=8.5;
+        
         
         
         public static double rotationSpeedRatio= 0.6;
@@ -50,6 +53,12 @@ public final class Constants {
             public static final int revPort = 7;
 
         }
+    }
+
+    public static final class robotStats{
+        public static final double trackWidth=0.3937;
+        public static final double wheelRadius=0.0762;
+        public static final double gearRatio=8.5;
     }
 
     public static final class intake{
@@ -69,8 +78,8 @@ public final class Constants {
     public static final class auto{
         public static final double fwdSpeed = 0.5;
         public static final double revSpeed = -0.4;
-        public static final double wheelRadius=0.0762;
-        public static final double TicksPerRotation= 4096;
+       
+     
 
         public static final class balancePID{
             public static final double kP = 0.06;
@@ -95,5 +104,9 @@ public final class Constants {
     public static final int MANIPULATOR_JOYSTICK = 1;
     public static final int OneJoystick=2;
     public static double driveSpeedRatio;
+
+    public static final class fieldPosits{
+        public static final Pose2d leftStart = new Pose2d(7.1, 0.0, new Rotation2d(0.0));
+    }
 
 }

@@ -94,6 +94,14 @@ public final RelativeEncoder encoderL;
   }
 
   public double encoderToMeters(double encoderValue){
-    return (encoderValue/Constants.drive.gearRatio)*(Constants.auto.wheelRadius*Math.PI*2);
+    return (encoderValue/Constants.robotStats.gearRatio)*(Constants.robotStats.gearRatio*Math.PI*2);
+  }
+
+  public double getRightEncoderInMeters(){
+    return encoderToMeters(getRightEncoder());
+  }
+
+  public double getLeftEncoderInMeters(){
+    return encoderToMeters(getLeftEncoder());
   }
 }
