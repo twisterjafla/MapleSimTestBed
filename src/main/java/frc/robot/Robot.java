@@ -27,25 +27,15 @@ import frc.robot.subsystems.*;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
-
-
   final DriveBase m_driveSubsystem = new DriveBase();
-
   final Gyro gyro = new Gyro();
-
-
-
  
   SendableChooser<Command> autoChooser = new SendableChooser<Command>();
   SendableChooser<Integer> controlChooser = new SendableChooser<Integer>();
 
-
-
-
-
   final CommandXboxController movementController = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
   final CommandXboxController manipulatorController = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -54,15 +44,11 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    configureControls();
     
     // starts the auto selector
     autoChooser.setDefaultOption("doNothing", new InstantCommand());
-
   
     SmartDashboard.putData("autos: ", autoChooser);
-
-
 
     //starts the control type chooser
     controlChooser.setDefaultOption("Two Controler", 0);
@@ -70,14 +56,11 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putData("control type", controlChooser);
 
-
     //start cameraServer
     CameraServer.startAutomaticCapture();
     CameraServer.startAutomaticCapture();
-    
 
     configureControls();
-
 
     gyro.log();
 
@@ -94,9 +77,6 @@ public class Robot extends TimedRobot {
               () -> ((-movementController.getLeftTriggerAxis() + movementController.getRightTriggerAxis())),
               () -> (-movementController.getLeftX() )
         ));
-
-
-
    }
     else if (controlChooser.getSelected()==1){
       m_driveSubsystem.setDefaultCommand(
@@ -105,7 +85,6 @@ public class Robot extends TimedRobot {
               () -> ((-movementController.getLeftTriggerAxis() + movementController.getRightTriggerAxis())),
               () -> (-movementController.getLeftX() )
         ));
-
     }
   }
     
