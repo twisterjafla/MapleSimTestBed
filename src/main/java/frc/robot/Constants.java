@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -44,6 +45,13 @@ public final class Constants {
         public static final double driveSpeedRatio= 1;
 
         public static double rampspeed= .25;
+
+        public static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.robotStats.trackWidth);
+        public static final double ksVolts = 0;
+        public static final double kvVoltSecondsPerMeter = 0;
+        public static final double kaVoltSecondsSquaredPerMeter = 0;
+        public static final double kPDriveVel = 0;
+
     }
 
     // Changing Solenoid Values idk 50/50 this'll work
@@ -78,6 +86,8 @@ public final class Constants {
     public static final class auto{
         public static final double fwdSpeed = 0.5;
         public static final double revSpeed = -0.4;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 0;
+        public static final double kMaxSpeedMetersPerSecond = 0;
        
      
 
