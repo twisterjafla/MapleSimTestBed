@@ -121,8 +121,8 @@ public class controlInitalizer {
         m_driveSubsystem.setDefaultCommand(
             new ArcadeDrive(
                   m_driveSubsystem,
-                  () -> ((midi.getValFromDict("sliderAB")-64)/64),
-                  () -> ((midi.getValFromDict("slider1")-64)/64)
+                  () -> (midi.getButtonFromDict("slider1").getValAsOneToNegOne()),
+                  () -> (midi.getButtonFromDict("sliderAB").getValAsOneToNegOne())
                   ));
 
        midi.getButtonFromDict("button1").buttonTrigger.whileTrue(runIntake);

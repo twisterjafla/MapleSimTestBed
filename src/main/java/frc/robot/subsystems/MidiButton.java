@@ -28,8 +28,13 @@ public class MidiButton {
     }
 
     public double getValue(){
-        return parentBoard.getValFromDict(key)+Offset;
+        return parentBoard.getValFromDict(key);
     }
+
+    public double getValAsOneToNegOne(){
+        return ((getValue()/64)-1);
+    }
+
     public void setOffset(double Offset){
         this.Offset=Offset;
     }
