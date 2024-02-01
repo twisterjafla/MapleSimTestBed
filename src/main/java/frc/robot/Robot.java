@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.autoRoutines.*;
 import frc.robot.commands.*;
+import frc.robot.semiAutoCode.semiAutoManager;
 import frc.robot.subsystems.*;
 
 
@@ -36,12 +38,17 @@ public class Robot extends TimedRobot {
   final Bucket m_bucketSubsystem = new Bucket(pneumatics);
   final ToggleCompressor toggleCompressor = new ToggleCompressor(pneumatics);
   final Gyro gyro = new Gyro();
+  final Timer timer = new Timer();
+  final Limelight lime = new Limelight();
+
+
+ 
 
   final RunIntake runIntake = new RunIntake(m_intakeSubsystem, Constants.intake.fwdSpeed);
   final RunIntake runIntakeBackward = new RunIntake(m_intakeSubsystem, Constants.intake.revSpeed);
   final ToggleBucket toggleBucket = new ToggleBucket(m_bucketSubsystem);
   final IntakeToggle toggleIntake = new IntakeToggle(m_intakeSubsystem);
-
+  final semiAutoManager manager = new semiAutoManager(m_driveSubsystem, gyro, lime, timer);
  
   SendableChooser<Command> autoChooser = new SendableChooser<Command>();
   SendableChooser<Integer> controlChooser = new SendableChooser<Integer>();
@@ -63,9 +70,7 @@ public class Robot extends TimedRobot {
     configureControls();
     
     // starts the auto selector
-    autoChooser.setDefaultOption("Auto Balance Mobile", new AutonomousBalanceMobile(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro));
     autoChooser.addOption("Auto Grab", new AutonomousGrab(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem));
-    autoChooser.addOption("Auto No Mobile", new AutonomousBalanceNoMobile(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem, gyro));
     autoChooser.addOption("doNothing", new InstantCommand());
     autoChooser.addOption("Dump Do Nothing", new AutonomousDumpDoNothing(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem));
   
@@ -200,6 +205,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    manager.periodic();
 
   }
 
@@ -248,6 +254,7 @@ public class Robot extends TimedRobot {
       CommandScheduler.getInstance().cancelAll();
     }
     configureControls();
+
     
   }
 
