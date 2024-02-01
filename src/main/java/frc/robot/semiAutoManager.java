@@ -1,15 +1,20 @@
 package frc.robot;
 
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.Limelight;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.trajectory.Trajectory;
 
 public  class semiAutoManager{
     public static DriveBase drive;
@@ -51,6 +56,26 @@ public  class semiAutoManager{
         return poseEstimator.getEstimatedPosition();
     }
 
+
+
+    public static RamseteCommand getRamseteCommand(Trajectory trajectory) {
+        
+        return new RamseteCommand(
+            trajectory,
+            semiAutoManager :: getCoords,
+            new RamseteController(),
+            new SimpleMotorFeedforward(
+                Constants.drive.ksVolts,
+                Constants.drive.kvVoltSecondsPerMeter,
+                Constants.drive.kaVoltSecondsSquaredPerMeter),
+            Constants.drive.kinematics,
+            drive::getWheelSpeeds,
+            new PIDController(Constants.drive.kPDriveVel, 0, 0),
+            new PIDController(Constants.drive.kPDriveVel, 0, 0),
+            // RamseteCommand passes volts to the callback
+            drive::tankDriveVolts,
+            drive);
+    }
 
 
 }
