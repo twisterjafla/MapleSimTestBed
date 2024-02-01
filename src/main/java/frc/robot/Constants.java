@@ -88,14 +88,17 @@ public final class Constants {
         }
     }
 
-    public static final class intakeElbow {
-        public static final class intakeCherrio {
+    public static final class intake {
+        public static final class intakeNote {
             public static final int intakeMotorPortLeft = 1;
             public static final int intakeMotorPortRight = 2;
         }
         
         public static final class raisingIntake {
             public static final int raisingMotorPort = 3;
+
+            public static final int topLimitSwitch = 3;
+            public static final int bottomLimitSwitch = 3;
         }
 
         
