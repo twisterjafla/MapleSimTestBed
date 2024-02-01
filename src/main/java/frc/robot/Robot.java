@@ -54,6 +54,7 @@ public class Robot extends TimedRobot {
 
   controlInitalizer controlInitalizer = new controlInitalizer(toggleCompressor, runIntake, runIntakeBackward, toggleBucket, toggleIntake, m_driveSubsystem);
 
+  final Midi midi = new Midi();
 
   final CommandXboxController controller1 = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
   final CommandXboxController controller2 = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
@@ -118,7 +119,7 @@ public class Robot extends TimedRobot {
       controlInitalizer.initalizeJaceControllWithSecondController(controller1, controller2);
     }
     else if (controlChooser.getSelected()==3){
-      controlInitalizer.initalizeMIDIControl(midi);
+      controlInitalizer.initalizeMIDIAloneControl(midi);
     }
      
 

@@ -117,7 +117,7 @@ public class controlInitalizer {
           .onTrue(toggleCompressor);
         
     }
-    public final void initalizeMIDIControl(Midi midi){
+    public final void initalizeMIDIAloneControl(Midi midi){
         m_driveSubsystem.setDefaultCommand(
             new ArcadeDrive(
                   m_driveSubsystem,
@@ -126,6 +126,17 @@ public class controlInitalizer {
                   ));
 
        midi.getButtonFromDict("button1").buttonTrigger.whileTrue(runIntake);
+    }
+
+    public final void jaceControllWithMidi(CommandXboxController movementController, Midi midi){
+        m_driveSubsystem.setDefaultCommand(
+            new ArcadeDrive(
+                  m_driveSubsystem,
+                  () -> ( movementController.getLeftY()),
+                  () -> (-movementController.getLeftX())
+            ));
+
+        
     }
 
 
