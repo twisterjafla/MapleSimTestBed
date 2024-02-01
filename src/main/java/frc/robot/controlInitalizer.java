@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Midi;
 
 //object to deal with all ofthe dirty work of multiple control schemes
 public class controlInitalizer {
@@ -115,6 +116,16 @@ public class controlInitalizer {
           movementController.y()
           .onTrue(toggleCompressor);
         
+    }
+    public final void initalizeMIDIControl(Midi midi){
+        m_driveSubsystem.setDefaultCommand(
+            new ArcadeDrive(
+                  m_driveSubsystem,
+                  () -> (midi.getButtonFromDict("slider1").getValAsOneToNegOne()),
+                  () -> (midi.getButtonFromDict("sliderAB").getValAsOneToNegOne())
+                  ));
+
+       midi.getButtonFromDict("button1").buttonTrigger.whileTrue(runIntake);
     }
 
 

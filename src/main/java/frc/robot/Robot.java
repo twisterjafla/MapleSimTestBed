@@ -66,6 +66,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     configureControls();
+    midi.InitButtons();
     
     // starts the auto selector
 
@@ -82,6 +83,8 @@ public class Robot extends TimedRobot {
     controlChooser.setDefaultOption("Two Controler", 0);
     controlChooser.addOption("One controler", 1);
     controlChooser.addOption("jace control", 2);
+    controlChooser.addOption("MidiControl alone", 3);
+
 
     SmartDashboard.putData("control type", controlChooser);
 
@@ -113,6 +116,9 @@ public class Robot extends TimedRobot {
 
     else if (controlChooser.getSelected()==2){
       controlInitalizer.initalizeJaceControllWithSecondController(controller1, controller2);
+    }
+    else if (controlChooser.getSelected()==3){
+      controlInitalizer.initalizeMIDIControl(midi);
     }
      
 
