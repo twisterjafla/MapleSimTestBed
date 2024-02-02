@@ -28,18 +28,16 @@ public class Blinkin extends SubsystemBase {
    * @param val The LED blink color and patern value [-1,1]
    * 
    */ 
-  public void set(double val) {
-    if ((val >= -1.0) && (val <= 1.0)) {
-      m_blinkin.set(val);
-    }
+
+  public void SetRed() {
+    m_blinkin.set(0.61);
   }
 
-  public void Red() {
-    set(0.61);
+  public void SetGreen() {
+    m_blinkin.set(0.71);
   }
-
-  public void Gold() {
-    set(0.67);
+  public void setYellow() {
+    m_blinkin.set(0.69);
   }
 
   
