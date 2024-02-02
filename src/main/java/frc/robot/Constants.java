@@ -162,7 +162,7 @@ public final class Constants {
     public static final int MOVEMENT_JOYSTICK = 0;
     public static final int MANIPULATOR_JOYSTICK = 1;
     public static final int OneJoystick=2;
-    public static double driveSpeedRatio;
+    public static int blinkinPort=0;
 
     public static final class fieldPosits{
         public static final Pose2d leftStart = new Pose2d(7.1, 0.0, new Rotation2d(0.0));
