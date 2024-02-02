@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import frc.robot.semiAutoCommands.CancelCurrentRoutine;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.Limelight;
@@ -22,7 +23,8 @@ public  class semiAutoManager{
     public static Limelight limelight;
     public static Timer timer;
     public static DifferentialDrivePoseEstimator poseEstimator;
-
+    private static Command current;
+    public static CancelCurrentRoutine cancel= new CancelCurrentRoutine();
 
 
     public static void semiAutoManagerCompiler(DriveBase Drive, Gyro Gyro, Limelight Limelight, Timer Timer){
@@ -38,6 +40,7 @@ public  class semiAutoManager{
             0,
             0, 
             Constants.fieldPosits.leftStart);
+        controlInitalizer.controlInitalizerFromSemiAutoManager(cancel);
         
     }
 
@@ -76,6 +79,15 @@ public  class semiAutoManager{
             drive::tankDriveVolts,
             drive);
     }
+
+    public static Command getCurrent(){
+        return current;
+    }
+    public static void setCurrent(Command newCommand){
+        current = newCommand;
+    }
+
+
 
 
 }

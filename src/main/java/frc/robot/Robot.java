@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
   SendableChooser<Integer> controlChooser = new SendableChooser<Integer>();
 
 
-  controlInitalizer controlInitalizer = new controlInitalizer(toggleCompressor, runIntake, runIntakeBackward, toggleBucket, toggleIntake, m_driveSubsystem);
+  
 
   final Midi midi = new Midi();
 

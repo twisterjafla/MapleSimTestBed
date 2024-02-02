@@ -3,44 +3,62 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.*;
+import frc.robot.semiAutoCommands.CancelCurrentRoutine;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Midi;
 
 //object to deal with all ofthe dirty work of multiple control schemes
 public class controlInitalizer {
 
-    final ToggleCompressor toggleCompressor;
+    public static ToggleCompressor toggleCompressor=null;
 
   
-    final RunIntake runIntake;
-    final RunIntake runIntakeBackward;
-    final ToggleBucket toggleBucket;
-    final IntakeToggle toggleIntake;
-    final DriveBase m_driveSubsystem;
+    public static RunIntake runIntake=null;
+    public static RunIntake runIntakeBackward=null;
+    public static ToggleBucket toggleBucket=null;
+    public static IntakeToggle toggleIntake=null;
+    public static DriveBase driveSubsystem=null;
+    public static CancelCurrentRoutine cancel;
+    public static Boolean hasBeenInitalizedFromRobot = false;
+    public static Boolean hasBeenInitalizedFromSemiAutoManager = false;
 
-    public controlInitalizer(
-        ToggleCompressor toggleCompressor,
-        RunIntake runIntake,
-        RunIntake runIntakeBackward,
-        ToggleBucket toggleBucket,
-        IntakeToggle toggleIntake,
-        DriveBase m_driveSubsystem){
-
-        this.toggleCompressor=toggleCompressor;
-        this.runIntake=runIntake;
-        this.runIntakeBackward=runIntakeBackward;
-        this.toggleBucket=toggleBucket;
-        this.toggleIntake=toggleIntake;
-        this.m_driveSubsystem=m_driveSubsystem;
+    public static void controlInitalizerFromRobot(
+        ToggleCompressor ToggleCompressor,
+        RunIntake RunIntake,
+        RunIntake RunIntakeBackward,
+        ToggleBucket ToggleBucket,
+        IntakeToggle ToggleIntake,
+        DriveBase DriveSubsystem){
+        
+        hasBeenInitalizedFromRobot=true;
+        toggleCompressor=ToggleCompressor;
+        runIntake=RunIntake;
+        runIntakeBackward=RunIntakeBackward;
+        toggleBucket=ToggleBucket;
+        toggleIntake=ToggleIntake;
+        driveSubsystem=DriveSubsystem;
 
 
     }
 
+    public static void controlInitalizerFromSemiAutoManager(CancelCurrentRoutine Cancel){
+        hasBeenInitalizedFromSemiAutoManager=true;
+        cancel = Cancel;
+    }
 
-    public final void configureTwoControllersBasic( CommandXboxController movementController, CommandXboxController manipulatorController){
-        m_driveSubsystem.setDefaultCommand(
+
+    public static void checkInit(){
+        if (! hasBeenInitalizedFromSemiAutoManager || ! hasBeenInitalizedFromRobot){
+            throw new Error("control initalizer was not properly initalized!");
+        }
+    }
+
+    public static final void configureTwoControllersBasic( CommandXboxController movementController, CommandXboxController manipulatorController){
+        checkInit();
+
+        driveSubsystem.setDefaultCommand(
         new ArcadeDrive(
-              m_driveSubsystem,
+              driveSubsystem,
               () -> ((-movementController.getLeftTriggerAxis() + movementController.getRightTriggerAxis())),
               () -> (-movementController.getLeftX() )
         ));
@@ -62,10 +80,12 @@ public class controlInitalizer {
       .onTrue(toggleCompressor);
     }
 
-    public final void configureOneControllersBasic(CommandXboxController controller){
-        m_driveSubsystem.setDefaultCommand(
+    public static final void configureOneControllersBasic(CommandXboxController controller){
+        checkInit();
+
+        driveSubsystem.setDefaultCommand(
             new ArcadeDrive(
-                  m_driveSubsystem,
+                  driveSubsystem,
                   () -> ((-controller.getLeftTriggerAxis() + controller.getRightTriggerAxis())),
                   () -> (-controller.getLeftX() )
             ));
@@ -90,10 +110,12 @@ public class controlInitalizer {
         
     }
 
-    public final void initalizeJaceControllWithSecondController(CommandXboxController movementController, CommandXboxController manipulatorController){
-        m_driveSubsystem.setDefaultCommand(
+    public static final void initalizeJaceControllWithSecondController(CommandXboxController movementController, CommandXboxController manipulatorController){
+        checkInit();
+
+        driveSubsystem.setDefaultCommand(
             new ArcadeDrive(
-                  m_driveSubsystem,
+                  driveSubsystem,
                   () -> ( movementController.getLeftY()),
                   () -> (-movementController.getLeftX())
             ));
@@ -117,10 +139,12 @@ public class controlInitalizer {
           .onTrue(toggleCompressor);
         
     }
-    public final void initalizeMIDIAloneControl(Midi midi){
-        m_driveSubsystem.setDefaultCommand(
+    public static final void initalizeMIDIAloneControl(Midi midi){
+        checkInit();
+
+        driveSubsystem.setDefaultCommand(
             new ArcadeDrive(
-                  m_driveSubsystem,
+                  driveSubsystem,
                   () -> (midi.getButtonFromDict("slider1").getValAsOneToNegOne()),
                   () -> (midi.getButtonFromDict("sliderAB").getValAsOneToNegOne())
                   ));
@@ -128,15 +152,17 @@ public class controlInitalizer {
        midi.getButtonFromDict("button1").buttonTrigger.whileTrue(runIntake);
     }
 
-    public final void jaceControllWithMidi(CommandXboxController movementController, Midi midi){
-        m_driveSubsystem.setDefaultCommand(
+    public static final void jaceControllWithMidi(CommandXboxController movementController, Midi midi){
+        checkInit();
+
+        driveSubsystem.setDefaultCommand(
             new ArcadeDrive(
-                  m_driveSubsystem,
+                  driveSubsystem,
                   () -> ( movementController.getLeftY()),
                   () -> (-movementController.getLeftX())
             ));
 
-        
+        midi.getButtonFromDict("button9").buttonTrigger.onFalse(cancel);
     }
 
 
