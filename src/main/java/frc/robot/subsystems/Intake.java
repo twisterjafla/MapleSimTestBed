@@ -14,17 +14,25 @@ public class Intake extends SubsystemBase {
 
     public final CANSparkMax raiseMotor = new CANSparkMax(Constants.intake.raisingIntake.raisingMotorPort, MotorType.kBrushless);
 
-	public final limitSwitch topSwitch = new limitSwitch(Constants.intake.raisingIntake.topLimitSwitch);
-	public final limitSwitch bottomSwitch = new limitSwitch(Constants.intake.raisingIntake.bottomLimitSwitch);
+	public final limitSwitch topSwitch = new limitSwitch(Constants.intake.raisingIntake.topLimitSwitchPort);
+	public final limitSwitch bottomSwitch = new limitSwitch(Constants.intake.raisingIntake.bottomLimitSwitchPort);
+
+	public final limitSwitch beamBreak = new limitSwitch(Constants.intake.raisingIntake.beamBreakPort);
+
+	public boolean isUp = false;
 	
 
 
-	public void intake(double speed){
-    	intakeMotors.set(speed);
+	public void intake(){
+    	intakeMotors.set(Constants.intake.intakeSpeeds.intakeSpeed);
   	}
 
-    public void raiseIntake(double speed){
-		raiseMotor.set(speed);
+	public void outake(){
+    	intakeMotors.set(Constants.intake.intakeSpeeds.outakeSpeed);
+  	}
+
+    public void raiseIntake(){
+		raiseMotor.set(Constants.intake.intakeSpeeds.intakeRaiseSpeed);
     }
 
 }
