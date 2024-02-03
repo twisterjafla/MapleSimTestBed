@@ -10,7 +10,9 @@ public class CancelCurrentRoutine extends InstantCommand{
     public void execute(){
     if (semiAutoManager.getCurrent()!=null){
         CommandScheduler.getInstance().cancel(semiAutoManager.getCurrent());
-        semiAutoManager.setCurrent(null);    
+        semiAutoManager.setCurrent(null); 
+        new BlinkinGreen().schedule(); 
+
     }
     }
 }

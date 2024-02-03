@@ -6,18 +6,20 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Blinkin extends SubsystemBase {
+public class Blinkin{
 
 
    
   private static Spark m_blinkin;
+  private static boolean hasBeenInitalized = false;
 
   /**
    * Creates a new Blinkin LED controller.
    * 
    */
-  public Blinkin() {
+  public static void BlinkinInit() {
     m_blinkin = new Spark(Constants.blinkinPort);
+    hasBeenInitalized=true;
   }
 
   /*
@@ -29,15 +31,24 @@ public class Blinkin extends SubsystemBase {
    * 
    */ 
 
-  public void SetRed() {
+  public static void setRed() {
+    checkIfInit();
     m_blinkin.set(0.61);
   }
 
-  public void SetGreen() {
+  public static void setGreen() {
+    checkIfInit();
     m_blinkin.set(0.71);
   }
-  public void setYellow() {
+  public static void setYellow() {
+    checkIfInit();
     m_blinkin.set(0.69);
+  }
+
+  private static void checkIfInit(){
+    if (!hasBeenInitalized){
+      BlinkinInit();
+    }
   }
 
   

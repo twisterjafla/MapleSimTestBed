@@ -75,6 +75,7 @@ public final class Constants {
         public static final double trackWidth=0.3937;
         public static final double wheelRadius=0.0762;
         public static final double gearRatio=8.5;
+        public static final double SemiAutoRoutineWaitTimes = 0.25;
     }
 
     public static final class intake{
@@ -166,10 +167,11 @@ public final class Constants {
 
     public static final class fieldPosits{
         public static final Pose2d leftStart = new Pose2d(7.1, 0.0, new Rotation2d(0.0));
+        public static final Pose2d ampScore = null;
     }
 
 
-    private static final class TrajectoryGeneratorObjects{
+    public static final class TrajectoryGeneratorObjects{
         public static final DifferentialDriveVoltageConstraint TrajectoryVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
             new SimpleMotorFeedforward(
@@ -180,7 +182,7 @@ public final class Constants {
             10);
 
 
-        public static TrajectoryConfig trajectoryConfigurer =
+        public static final TrajectoryConfig trajectoryConfigurer =
         new TrajectoryConfig(
                 Constants.auto.kMaxSpeedMetersPerSecond,
                 Constants.auto.kMaxAccelerationMetersPerSecondSquared)
