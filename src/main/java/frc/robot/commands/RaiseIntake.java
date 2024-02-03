@@ -6,9 +6,9 @@ import frc.robot.subsystems.limitSwitch;
 
 public class RaiseIntake extends Command {
   // setActive setActive;
-  limitSwitch topSwitch;
-  limitSwitch bottomSwitch;
   Intake m_intake;
+  Boolean hasHitTop = false;
+  limitSwitch activeSwitch;
   double speed;
 
   /**
@@ -18,30 +18,37 @@ public class RaiseIntake extends Command {
    * @param right      The control input for the right sight of the drive
    * @param driveSubsystem The driveSubsystem subsystem to drive
    */
-  public RaiseIntake(Intake importedIntake, double importedSpeed) {
-    m_intake = importedIntake;
-    speed = importedSpeed;
+  public RaiseIntake(final Intake elevator) {
+    this.m_intake = elevator;
   }
 
 
   @Override
   public void execute() {
-    m_intake.intake(speed);
+    m_intake.raiseIntake();
+    
 
   }
 
   @Override
   public void initialize(){
-    
+    if (m_intake.isUp) {
+      activeSwitch=m_intake.bottomSwitch;
+    }
+    else {
+      activeSwitch=m_intake.topSwitch;
+    }
+
   }
 
   @Override
   public void end(boolean wasInterupted){
+    m_intake.isUp=!m_intake.isUp;
   }
 
   @Override
   public boolean isFinished() { 
-    return true;
+    return activeSwitch.getVal(); 
 
   } 
       

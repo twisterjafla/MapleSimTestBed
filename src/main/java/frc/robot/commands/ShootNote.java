@@ -26,7 +26,7 @@ public class ShootNote extends Command {
 
   @Override
   public void execute() {
-    m_intake.intake(-speed);
+    m_intake.intake();
       
 
   }
