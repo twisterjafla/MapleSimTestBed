@@ -1,15 +1,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.limitSwitch;
 
-public class IntakeNote extends Command {
+public class RepetitiveIntake extends Command {
   // setActive setActive;
-  limitSwitch topSwitch;
-  limitSwitch bottomSwitch;
   Intake m_intake;
   double speed;
+  int counter;
+  boolean noteInIntake;
 
   /**
    * Creates a new ArcadeDrive command.
@@ -17,32 +18,43 @@ public class IntakeNote extends Command {
    * @param left       The control input for the left side of the drive
    * @param right      The control input for the right sight of the drive
    * @param driveSubsystem The driveSubsystem subsystem to drive
-   */
-  public IntakeNote(Intake importedIntake) {
+   */ 
+  
+  public RepetitiveIntake(Intake importedIntake) {
     m_intake = importedIntake;
-  }
-
-
-  @Override
-  public void execute() {
-    m_intake.intake();
-      
   }
 
   @Override
   public void initialize(){
+    if (!m_intake.topSwitch.isOk()||!m_intake.bottomSwitch.isOk()){
+      CommandScheduler.getInstance().cancel(this);
+    }
 
+    counter = 0;
   }
+
+  @Override
+  public void execute() {
+    m_intake.intake();
+  }
+
+  @Override
+  public boolean isFinished() { 
+    if (m_intake.beamBreak.getVal()){
+      counter++;
+    }
+
+    else{
+      counter=0;
+    }
+
+    return counter > Constants.intake.counterCap;
+
+  } 
 
   @Override
   public void end(boolean wasInterupted){
   
   }
-
-  @Override
-  public boolean isFinished() { 
-    return true;
-
-  } 
-      
+   
 }
