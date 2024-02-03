@@ -12,24 +12,24 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 public class DriveBase extends SubsystemBase {
 
 // left side
- public final CANSparkMax sparkMaxlr = new CANSparkMax(Constants.drive.lr, MotorType.kBrushless);
- public final CANSparkMax sparkMaxlf = new CANSparkMax(Constants.drive.lf, MotorType.kBrushless);
+ public final CANSparkMax sparkMaxLeftBack = new CANSparkMax(Constants.drive.leftBackMotor, MotorType.kBrushless);
+ public final CANSparkMax sparkMaxLeftFront = new CANSparkMax(Constants.drive.leftFrontMotor, MotorType.kBrushless);
 
 //right side
-public final CANSparkMax sparkMaxrr = new CANSparkMax(Constants.drive.rr, MotorType.kBrushless);
-public final CANSparkMax sparkMaxrf = new CANSparkMax(Constants.drive.rf, MotorType.kBrushless);
+public final CANSparkMax sparkMaxRightBack = new CANSparkMax(Constants.drive.rightBackMotor, MotorType.kBrushless);
+public final CANSparkMax sparkMaxRightFront = new CANSparkMax(Constants.drive.rightFrontMotor, MotorType.kBrushless);
 public final RelativeEncoder encoderR;
 public final RelativeEncoder encoderL;
 
 
   final MotorControllerGroup leftMotors = new MotorControllerGroup(
-    sparkMaxlf
+    sparkMaxLeftFront
       );
 
   final MotorControllerGroup rightMotors = new MotorControllerGroup(
     
     
-    sparkMaxrf
+    sparkMaxRightFront
       );
 
   final DifferentialDrive m_RobotDrive;
@@ -38,17 +38,17 @@ public final RelativeEncoder encoderL;
 
 
     //left voltage ramping
-    encoderR=sparkMaxrf.getEncoder();    
-    encoderL= sparkMaxlf.getEncoder();
+    encoderR=sparkMaxRightFront.getEncoder();    
+    encoderL= sparkMaxLeftFront.getEncoder();
 
 
 
-    sparkMaxlr.setOpenLoopRampRate(Constants.drive.rampspeed);
-    sparkMaxlf.setOpenLoopRampRate(Constants.drive.rampspeed);
+    sparkMaxLeftBack.setOpenLoopRampRate(Constants.drive.rampspeed);
+    sparkMaxLeftFront.setOpenLoopRampRate(Constants.drive.rampspeed);
 
     //right voltage ramping
-    sparkMaxrr.setOpenLoopRampRate(Constants.drive.rampspeed);
-    sparkMaxrf.setOpenLoopRampRate(Constants.drive.rampspeed);
+    sparkMaxRightBack.setOpenLoopRampRate(Constants.drive.rampspeed);
+    sparkMaxRightFront.setOpenLoopRampRate(Constants.drive.rampspeed);
 
 
     //leftMotors.setInverted(true);

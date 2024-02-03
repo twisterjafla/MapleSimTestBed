@@ -26,14 +26,12 @@ public final class Constants {
         // r: rear
 
         // left
-        public static final int lf = 3;
-        public static final int lt = 4;
-        public static final int lr = 9;
+        public static final int leftFrontMotor = 3;
+        public static final int leftBackMotor = 9;
 
         // right
-        public static final int rf = 7;
-        public static final int rt = 5;
-        public static final int rr = 8;
+        public static final int rightFrontMotor = 7;
+        public static final int rightBackMotor = 8;
         public static final double gearRatio=8.5;
         
         
@@ -52,15 +50,6 @@ public final class Constants {
 
         public static final int elevatorUp = 1;
         public static final int elevatorDown = -1;
-    }
-
-    // Changing Solenoid Values idk 50/50 this'll work
-    public static final class bucket {
-        public static final class solenoid {
-            public static final int fwdPort = 6;
-            public static final int revPort = 7;
-
-        }
     }
 
     public static final class auto{
