@@ -28,22 +28,6 @@ public class limitSwitch extends SubsystemBase{
         new SequentialCommandGroup(new WaitUntilCommand(valSupplier), runner);
     }
 
-    public boolean getMultipleVals(limitSwitch... limitSwitches) {
-        int counterTrues = 0;
-        int overallCounter = 0;
-        for (limitSwitch limitSwitch : limitSwitches) {
-            overallCounter++;
-            if (limitSwitch.getVal()){
-                counterTrues++;
-            }
-        }
-
-        if (counterTrues == overallCounter){
-            return true;
-        } 
-        else {
-            return false;
-        }
-    }
+    
 
 }

@@ -25,10 +25,7 @@ public class RepetitiveOutake extends Command {
 
   @Override
   public void initialize(){
-    if (!m_intake.topSwitch.isOk()){
-      CommandScheduler.getInstance().cancel(this);
-    }
-    if (!m_intake.bottomSwitch.isOk()){
+    if (!m_intake.bottomSwitch.isOk()||!m_intake.topSwitch.isOk()){
       CommandScheduler.getInstance().cancel(this);
     }
     counter = 0;
