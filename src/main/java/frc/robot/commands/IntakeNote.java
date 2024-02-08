@@ -20,6 +20,7 @@ public class IntakeNote extends Command {
    */
   public IntakeNote(Intake importedIntake) {
     m_intake = importedIntake;
+    addRequirement(m_intake);
   }
 
 

@@ -7,7 +7,7 @@ import frc.robot.subsystems.Intake;
 
 public class RepetitiveIntake extends Command {
   // setActive setActive;
-  Intake m_intake;
+  Intake intake;
   double speed;
   int counter;
   boolean noteInIntake;
@@ -20,13 +20,14 @@ public class RepetitiveIntake extends Command {
    * @param driveSubsystem The driveSubsystem subsystem to drive
    */ 
   
-  public RepetitiveIntake(Intake importedIntake) {
-    m_intake = importedIntake;
+  public RepetitiveIntake(Intake intake) {
+    this.intake = intake;
+    addRequirement(intake);
   }
 
   @Override
   public void initialize(){
-    if (!m_intake.topSwitch.isOk()||!m_intake.bottomSwitch.isOk()){
+    if (!this.intake.topSwitch.isOk()||!this.intake.bottomSwitch.isOk()){
       CommandScheduler.getInstance().cancel(this);
     }
 
@@ -35,12 +36,12 @@ public class RepetitiveIntake extends Command {
 
   @Override
   public void execute() {
-    m_intake.intake();
+    this.intake.intake();
   }
 
   @Override
   public boolean isFinished() { 
-    if (m_intake.beamBreak.getVal()){
+    if (this.intake.beamBreak.getVal()){
       counter++;
     }
 
@@ -49,7 +50,6 @@ public class RepetitiveIntake extends Command {
     }
 
     return counter > Constants.intake.counterCap;
-
   } 
 
   @Override

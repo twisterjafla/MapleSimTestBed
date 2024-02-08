@@ -21,6 +21,8 @@ public class ElevatorToggle extends Command {
    */
   public ElevatorToggle(final Elevator elevator) {
     this.elevator = elevator;
+
+    addRequirement(this.elevator);
 		}
 
 

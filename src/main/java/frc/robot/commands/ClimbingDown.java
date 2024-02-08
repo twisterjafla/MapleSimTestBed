@@ -17,6 +17,7 @@ public class ClimbingDown extends Command {
    */
   public ClimbingDown(ClimbingArm importedClimbingArm) {
     m_climbArm = importedClimbingArm;
+    addRequirement(m_climbArm);
   }
 
 

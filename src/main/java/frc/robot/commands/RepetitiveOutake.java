@@ -7,7 +7,7 @@ import frc.robot.subsystems.Intake;
 
 public class RepetitiveOutake extends Command {
   // setActive setActive;
-  Intake m_intake;
+  Intake intake;
   double speed;
   int counter;
   boolean noteInIntake;
@@ -19,13 +19,13 @@ public class RepetitiveOutake extends Command {
    * @param right      The control input for the right sight of the drive
    * @param driveSubsystem The driveSubsystem subsystem to drive
    */
-  public RepetitiveOutake(Intake importedIntake) {
-    m_intake = importedIntake;
+  public RepetitiveOutake(Intake intake) {
+    this.intake = intake;
   }
 
   @Override
   public void initialize(){
-    if (!m_intake.bottomSwitch.isOk()||!m_intake.topSwitch.isOk()){
+    if (!this.intake.bottomSwitch.isOk()||!this.intake.topSwitch.isOk()){
       CommandScheduler.getInstance().cancel(this);
     }
     counter = 0;
@@ -34,14 +34,14 @@ public class RepetitiveOutake extends Command {
 
   @Override
   public void execute() {
-    noteInIntake = m_intake.beamBreak.getVal();
+    noteInIntake = this.intake.beamBreak.getVal();
 
     if (noteInIntake){
-      m_intake.outake();
+      this.intake.outake();
     }
 
     else if (counter <= Constants.intake.counterCap) {
-      m_intake.outake();
+      this.intake.outake();
       counter++;
     } 
   }
@@ -56,7 +56,7 @@ public class RepetitiveOutake extends Command {
   public void end(boolean wasInterupted){
     while (counter <= Constants.intake.counterCap){
         counter++;
-        m_intake.outake();
+        this.intake.outake();
     }
   
   }
