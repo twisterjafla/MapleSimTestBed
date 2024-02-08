@@ -21,6 +21,7 @@ public class ShootNote extends Command {
   public ShootNote(Intake importedIntake, double importedSpeed) {
     m_intake = importedIntake;
     speed = importedSpeed;
+    
   }
 
 

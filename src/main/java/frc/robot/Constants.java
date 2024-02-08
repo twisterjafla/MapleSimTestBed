@@ -113,6 +113,21 @@ public final class Constants {
         
     }
 
+    public static final class speakerShooter {
+        public static int RevTimeCountInTicks = 0;
+
+        public static final class ports {
+            public static final int topMotorPort = 0;
+            public static final int bottomMotorPort = 0;
+            public static final int beamBreakPort = 0;
+        }
+
+        public static final class motorSpeeds {
+            public static final int topMotorSpeed = 0;
+            public static final int bottomMotorSpeed = 0; // slower than top speed
+        }
+    }
+
     public static final int MOVEMENT_JOYSTICK = 0;
     public static final int MANIPULATOR_JOYSTICK = 1;
     public static final int OneJoystick=2;
