@@ -63,6 +63,15 @@ public final class Constants {
         }
     }
 
+    public static final class climbingArm{
+        public static final int motorPort = 0;
+
+        public static final int limitSwitchRight = 0;
+        public static final int limitSwitchLeft = 0;
+
+        public static final int armDownSpeed = 0;
+    }
+
     public static final class auto{
         public static final double fwdSpeed = 0.5;
         public static final double revSpeed = -0.4;
@@ -98,20 +107,18 @@ public final class Constants {
         }
 
         public static final class intakeNote {
-            public static final int intakeMotorPortLeft = 1;
-            public static final int intakeMotorPortRight = 2;
+            public static final int intakeMotorPortLeft = 0;
+            public static final int intakeMotorPortRight = 0;
         }
         
         public static final class raisingIntake {
-            public static final int raisingMotorPort = 3;
+            public static final int raisingMotorPort = 0;
 
-            public static final int topLimitSwitchPort = 4;
-            public static final int bottomLimitSwitchPort = 5;
-            public static final int beamBreakPort = 6;
+            public static final int topLimitSwitchPort = 0;
+            public static final int bottomLimitSwitchPort = 0;
+            public static final int beamBreakPort = 0;
         }
 
-        
-    }
 
     public static final class speakerShooter {
         public static int RevTimeCountInTicks = 0;
@@ -132,5 +139,4 @@ public final class Constants {
     public static final int MANIPULATOR_JOYSTICK = 1;
     public static final int OneJoystick=2;
     public static double driveSpeedRatio;
-
 }
