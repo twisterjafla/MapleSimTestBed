@@ -13,13 +13,6 @@ public class RevSpeaker extends Command {
     int count=0;
 
 
-    /**
-     * Creates a new ArcadeDrive command.
-     *
-     * @param left       The control input for the left side of the drive
-     * @param right      The control input for the right sight of the drive
-     * @param driveSubsystem The driveSubsystem subsystem to drive
-     */
     public RevSpeaker(SpeakerShooter importedShooter, BooleanSupplier endTrigger) {
         m_shooter = importedShooter;
         this.endTrigger=endTrigger;
