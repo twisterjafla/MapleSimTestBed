@@ -21,11 +21,12 @@ public class RepetitiveOutake extends Command {
    */
   public RepetitiveOutake(Intake intake) {
     this.intake = intake;
+    addRequirements(intake);
   }
 
   @Override
   public void initialize(){
-    if (!this.intake.bottomSwitch.isOk()||!this.intake.topSwitch.isOk()){
+    if (!intake.bottomSwitch.isOk()||!intake.topSwitch.isOk()){
       CommandScheduler.getInstance().cancel(this);
     }
     counter = 0;
@@ -34,14 +35,14 @@ public class RepetitiveOutake extends Command {
 
   @Override
   public void execute() {
-    noteInIntake = this.intake.beamBreak.getVal();
+    noteInIntake = intake.beamBreak.getVal();
 
     if (noteInIntake){
-      this.intake.outake();
+      intake.outake();
     }
 
     else if (counter <= Constants.intake.counterCap) {
-      this.intake.outake();
+      intake.outake();
       counter++;
     } 
   }
@@ -56,7 +57,7 @@ public class RepetitiveOutake extends Command {
   public void end(boolean wasInterupted){
     while (counter <= Constants.intake.counterCap){
         counter++;
-        this.intake.outake();
+        intake.outake();
     }
   
   }

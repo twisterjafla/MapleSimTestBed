@@ -7,15 +7,15 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.SpeakerShooter;
 
 public class SpeakerSaftey extends RunCommand {
-  public SpeakerSaftey(SpeakerShooter importedShooter, DoubleSupplier flySpeed, DoubleSupplier indexSpeed) {
+  public SpeakerSaftey(SpeakerShooter shooter, DoubleSupplier flySpeed, DoubleSupplier indexSpeed) {
     super(
         ()->{
-            importedShooter.SafteyFunction(
+            shooter.SafteyFunction(
                 MathUtil.applyDeadband(indexSpeed.getAsDouble(),0.1),
                 MathUtil.applyDeadband(flySpeed.getAsDouble(), 0.1));
         },
-        importedShooter
+        shooter
     );
-    addRequirements(importedShooter);
+    addRequirements(shooter);
   }      
 }

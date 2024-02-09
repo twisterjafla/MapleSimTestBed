@@ -2,14 +2,10 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.limitSwitch;
 
 public class IntakeNote extends Command {
   // setActive setActive;
-  limitSwitch topSwitch;
-  limitSwitch bottomSwitch;
-  Intake m_intake;
-  double speed;
+  Intake intake;
 
   /**
    * Creates a new ArcadeDrive command.
@@ -18,32 +14,15 @@ public class IntakeNote extends Command {
    * @param right      The control input for the right sight of the drive
    * @param driveSubsystem The driveSubsystem subsystem to drive
    */
-  public IntakeNote(Intake importedIntake) {
-    m_intake = importedIntake;
-    addRequirement(m_intake);
+  public IntakeNote(Intake intake) {
+    this.intake = intake;
+    addRequirements(intake);
   }
 
 
   @Override
   public void execute() {
-    m_intake.intake();
+    intake.intake();
       
   }
-
-  @Override
-  public void initialize(){
-
-  }
-
-  @Override
-  public void end(boolean wasInterupted){
-  
-  }
-
-  @Override
-  public boolean isFinished() { 
-    return true;
-
-  } 
-      
 }

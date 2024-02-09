@@ -20,31 +20,29 @@ public class RaiseIntake extends Command {
    */
   public RaiseIntake(Intake intake) {
     this.intake = intake;
-    addRequirement(this.intake);
+    addRequirements(intake);
   }
 
 
   @Override
   public void execute() {
-    this.intake.raiseIntake();
-    
-
+    intake.raiseIntake();
   }
 
   @Override
   public void initialize(){
-    if (this.intake.isUp) {
-      activeSwitch=this.intake.bottomSwitch;
+    if (intake.isUp) {
+      activeSwitch=intake.bottomSwitch;
     }
     else {
-      activeSwitch=this.intake.topSwitch;
+      activeSwitch=intake.topSwitch;
     }
 
   }
 
   @Override
   public void end(boolean wasInterupted){
-    this.intake.isUp=!this.intake.isUp;
+    intake.isUp=!intake.isUp;
   }
 
   @Override
