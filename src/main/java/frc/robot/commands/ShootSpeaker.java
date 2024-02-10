@@ -12,7 +12,6 @@ public class ShootSpeaker extends Command {
     public ShootSpeaker(SpeakerShooter shooter, BooleanSupplier shootTrigger) {
         this.shooter = shooter;
         this.shootTrigger = shootTrigger;
-
         addRequirements(shooter);
     }
 

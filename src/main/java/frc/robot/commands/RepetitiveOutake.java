@@ -6,19 +6,11 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
 public class RepetitiveOutake extends Command {
-  // setActive setActive;
   Intake intake;
   double speed;
   int counter;
   boolean noteInIntake;
 
-  /**
-   * Creates a new ArcadeDrive command.
-   *
-   * @param left       The control input for the left side of the drive
-   * @param right      The control input for the right sight of the drive
-   * @param driveSubsystem The driveSubsystem subsystem to drive
-   */
   public RepetitiveOutake(Intake intake) {
     this.intake = intake;
     addRequirements(intake);
@@ -26,7 +18,7 @@ public class RepetitiveOutake extends Command {
 
   @Override
   public void initialize(){
-    if (!intake.bottomSwitch.isOk()||!intake.topSwitch.isOk()){
+    if (!intake.bottomSwitch.isOk()||!intake.topSwitch.isOk()) {
       CommandScheduler.getInstance().cancel(this);
     }
     counter = 0;
@@ -40,7 +32,6 @@ public class RepetitiveOutake extends Command {
     if (noteInIntake){
       intake.outake();
     }
-
     else if (counter <= Constants.intake.counterCap) {
       intake.outake();
       counter++;
@@ -50,7 +41,6 @@ public class RepetitiveOutake extends Command {
   @Override
   public boolean isFinished() { 
     return counter > Constants.intake.counterCap;
-
   } 
 
   @Override
@@ -59,7 +49,5 @@ public class RepetitiveOutake extends Command {
         counter++;
         intake.outake();
     }
-  
   }
-   
 }

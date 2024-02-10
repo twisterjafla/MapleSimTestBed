@@ -13,14 +13,11 @@ public class ElevatorToggle extends Command {
   public ElevatorToggle(Elevator elevator) {
     this.elevator = elevator;
     addRequirements(elevator);
-
 	}
-
 
     @Override
     public void execute() {
       elevator.moveElevator(speed);
-      
   }
 
     @Override
@@ -33,19 +30,15 @@ public class ElevatorToggle extends Command {
         activeSwitch = elevator.topSwitch;
         speed = Constants.elevator.elevatorUp;
       }
-
     }
 
     @Override
-    public void end(boolean wasInterupted){
+    public void end(boolean wasInterupted) {
       elevator.isUp=!elevator.isUp;
-
     }
 
     @Override
     public boolean isFinished() { 
       return activeSwitch.getVal();
-      
     } 
-      
   }

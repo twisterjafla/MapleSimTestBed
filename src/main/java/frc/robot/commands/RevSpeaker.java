@@ -12,13 +12,11 @@ public class RevSpeaker extends Command {
     final BooleanSupplier endTrigger;
     int count = 0;
 
-
     public RevSpeaker(SpeakerShooter shooter, BooleanSupplier endTrigger) {
         this.shooter = shooter;
         this.endTrigger = endTrigger;
         addRequirements(shooter);
     }
-
 
     @Override
     public void execute() {
@@ -29,7 +27,5 @@ public class RevSpeaker extends Command {
     public boolean isFinished() { 
         count++;
         return (endTrigger.getAsBoolean() && count>Constants.speakerShooter.RevTimeCountInTicks);
-
-    } 
-        
+    }      
 }
