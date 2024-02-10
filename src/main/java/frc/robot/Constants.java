@@ -55,10 +55,10 @@ public final class Constants {
         public static double rampspeed= .25;
 
         public static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.robotStats.trackWidth);
-        public static final double ksVolts = 0;
-        public static final double kvVoltSecondsPerMeter = 0;
-        public static final double kaVoltSecondsSquaredPerMeter = 0;
-        public static final double kPDriveVel = 0;
+        public static final double ksVolts = 0.522;
+        public static final double kvVoltSecondsPerMeter = 2.402;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.433;
+        public static final double kPDriveVel = 4.572;
 
     }
 
