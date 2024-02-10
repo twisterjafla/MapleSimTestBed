@@ -2,8 +2,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.SemiAutoRoutines.testRoutine;
 import frc.robot.commands.*;
 import frc.robot.semiAutoCommands.CancelCurrentRoutine;
+import frc.robot.semiAutoCommands.attemptToScheduleRoutine;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Midi;
 
@@ -21,6 +23,7 @@ public class controlInitalizer {
     public static CancelCurrentRoutine cancel;
     public static Boolean hasBeenInitalizedFromRobot = false;
     public static Boolean hasBeenInitalizedFromSemiAutoManager = false;
+    public static Command testRoutine;
 
     public static void controlInitalizerFromRobot(
         ToggleCompressor ToggleCompressor,
@@ -37,6 +40,7 @@ public class controlInitalizer {
         toggleBucket=ToggleBucket;
         toggleIntake=ToggleIntake;
         driveSubsystem=DriveSubsystem;
+        testRoutine = new testRoutine(driveSubsystem);
 
 
     }
@@ -63,7 +67,7 @@ public class controlInitalizer {
               () -> (-movementController.getLeftX() )
         ));
 
-
+      movementController.x().onFalse(new attemptToScheduleRoutine(testRoutine));
       manipulatorController.leftBumper() //intake
       .whileTrue(runIntake);
 

@@ -168,6 +168,7 @@ public final class Constants {
     public static final class fieldPosits{
         public static final Pose2d leftStart = new Pose2d(7.1, 0.0, new Rotation2d(0.0));
         public static final Pose2d ampScore = null;
+        public static final Pose2d testPosit = new Pose2d(17.1, 0.0, new Rotation2d(0.0));
     }
 
 
