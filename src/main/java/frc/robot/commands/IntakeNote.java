@@ -11,13 +11,6 @@ public class IntakeNote extends Command {
   Intake m_intake;
   double speed;
 
-  /**
-   * Creates a new ArcadeDrive command.
-   *
-   * @param left       The control input for the left side of the drive
-   * @param right      The control input for the right sight of the drive
-   * @param driveSubsystem The driveSubsystem subsystem to drive
-   */
   public IntakeNote(Intake importedIntake) {
     m_intake = importedIntake;
   }

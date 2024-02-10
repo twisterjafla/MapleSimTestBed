@@ -11,14 +11,6 @@ public class RepetitiveIntake extends Command {
   double speed;
   int counter;
   boolean noteInIntake;
-
-  /**
-   * Creates a new ArcadeDrive command.
-   *
-   * @param left       The control input for the left side of the drive
-   * @param right      The control input for the right sight of the drive
-   * @param driveSubsystem The driveSubsystem subsystem to drive
-   */ 
   
   public RepetitiveIntake(Intake importedIntake) {
     m_intake = importedIntake;
