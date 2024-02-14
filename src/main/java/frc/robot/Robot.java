@@ -27,9 +27,6 @@ import frc.robot.subsystems.*;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
-
-
   final DriveBase m_driveSubsystem = new DriveBase();
   final ShiftableGearbox gearBox = new ShiftableGearbox();
 
@@ -56,15 +53,11 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    configureControls();
     
     // starts the auto selector
     autoChooser.setDefaultOption("doNothing", new InstantCommand());
-
   
     SmartDashboard.putData("autos: ", autoChooser);
-
-
 
     //starts the control type chooser
     controlChooser.setDefaultOption("Two Controler", 0);
@@ -73,14 +66,11 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putData("control type", controlChooser);
 
-
     //start cameraServer
     CameraServer.startAutomaticCapture();
     CameraServer.startAutomaticCapture();
-    
 
     configureControls();
-
 
     gyro.log();
 
