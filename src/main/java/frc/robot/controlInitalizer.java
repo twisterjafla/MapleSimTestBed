@@ -30,7 +30,6 @@ public class controlInitalizer {
               () -> ((-movementController.getLeftTriggerAxis() + movementController.getRightTriggerAxis())),
               () -> (-movementController.getLeftX() )
         ));
-        movementController.rightTrigger().onTrue(new shiftGears(true, gearBox)).onFalse(new shiftGears(false, gearBox));
 
 
     }
@@ -53,6 +52,8 @@ public class controlInitalizer {
                   () -> ( movementController.getLeftY()),
                   () -> (-movementController.getLeftX())
             ));
+        movementController.rightTrigger().onTrue(new shiftGears(true, gearBox)).onFalse(new shiftGears(false, gearBox));
+
         
     }
 

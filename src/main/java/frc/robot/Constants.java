@@ -59,9 +59,10 @@ public final class Constants {
 
     // Changing Solenoid Values idk 50/50 this'll work
     public static final class pneumatics{
-        public static final int hubID = 0;
+        public static final int hubID = 8;
 
-        public static final int solenoidPort=0;
+        public static final int solenoidPortA=0;
+        public static final int solenoidPortB=1;
     }                             
 
     public static final class auto{
