@@ -15,7 +15,7 @@ public class Gyro extends SubsystemBase{
   public Gyro(){
     
     addChild("Gyro", gyro);
-    gyro.calibrate();
+    //gyro.calibrate();
   }
 
   public void reset() {

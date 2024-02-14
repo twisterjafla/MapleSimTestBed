@@ -27,7 +27,7 @@ public  class semiAutoManager{
     public static CancelCurrentRoutine cancel= new CancelCurrentRoutine();
 
 
-    public static void semiAutoManagerCompiler(DriveBase Drive, Gyro Gyro, Limelight Limelight, Timer Timer){
+    public static void configureSemiAutoManager(DriveBase Drive, Gyro Gyro, Limelight Limelight, Timer Timer){
         drive=Drive;
         gyro=Gyro;
         limelight=Limelight;

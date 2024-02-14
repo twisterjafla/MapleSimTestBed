@@ -14,8 +14,9 @@ NetworkTable table;
 
 //post to smart dashboard periodically
     public Limelight(){
-
-        isBlue=(DriverStation.getAlliance() == DriverStation.Alliance.Blue);
+        
+        isBlue=(DriverStation.getAlliance().get()==DriverStation.Alliance.Blue);
+        
         table = NetworkTableInstance.getDefault().getTable("limelight");
     }
 

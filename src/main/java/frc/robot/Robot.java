@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.autoRoutines.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.controlInitalizer;
 
 
 /**
@@ -52,7 +53,6 @@ public class Robot extends TimedRobot {
   SendableChooser<Integer> controlChooser = new SendableChooser<Integer>();
 
 
-  
 
   final Midi midi = new Midi();
 
@@ -66,6 +66,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    controlInitalizer.controlInitalizerFromRobot(toggleCompressor, runIntake, runIntakeBackward, toggleBucket, toggleIntake, m_driveSubsystem);
+
+    semiAutoManager.configureSemiAutoManager(m_driveSubsystem, gyro, lime, timer);
     configureControls();
     midi.InitButtons();
     
@@ -91,8 +94,7 @@ public class Robot extends TimedRobot {
 
 
     //start cameraServer
-    CameraServer.startAutomaticCapture();
-    CameraServer.startAutomaticCapture();
+
     
 
     configureControls();
