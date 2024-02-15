@@ -40,6 +40,7 @@ public  class semiAutoManager{
             0,
             0, 
             Constants.fieldPosits.leftStart);
+            
         controlInitalizer.controlInitalizerFromSemiAutoManager(cancel);
         
     }

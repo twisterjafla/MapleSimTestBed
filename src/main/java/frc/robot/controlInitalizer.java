@@ -2,12 +2,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.SemiAutoRoutines.testRoutine;
+import frc.robot.SemiAutoRoutines.*;
 import frc.robot.commands.*;
-import frc.robot.semiAutoCommands.CancelCurrentRoutine;
-import frc.robot.semiAutoCommands.attemptToScheduleRoutine;
-import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.Midi;
+import frc.robot.semiAutoCommands.*;
+import frc.robot.subsystems.*;
 
 //object to deal with all ofthe dirty work of multiple control schemes
 public class controlInitalizer {
@@ -40,7 +38,7 @@ public class controlInitalizer {
         toggleBucket=ToggleBucket;
         toggleIntake=ToggleIntake;
         driveSubsystem=DriveSubsystem;
-        testRoutine = new testRoutine(driveSubsystem);
+        testRoutine = new testRoutineRunner(driveSubsystem);
 
 
     }
@@ -120,8 +118,8 @@ public class controlInitalizer {
         driveSubsystem.setDefaultCommand(
             new ArcadeDrive(
                   driveSubsystem,
-                  () -> ( movementController.getLeftY()),
-                  () -> (-movementController.getLeftX())
+                  () -> (-movementController.getLeftY()),
+                  () -> (-movementController.getRightX())
             ));
     
     
@@ -166,6 +164,7 @@ public class controlInitalizer {
                   () -> (-movementController.getLeftX())
             ));
 
+        
         midi.getButtonFromDict("button9").buttonTrigger.onFalse(cancel);
     }
 

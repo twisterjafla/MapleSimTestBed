@@ -66,9 +66,10 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    semiAutoManager.configureSemiAutoManager(m_driveSubsystem, gyro, lime, timer);
+
     controlInitalizer.controlInitalizerFromRobot(toggleCompressor, runIntake, runIntakeBackward, toggleBucket, toggleIntake, m_driveSubsystem);
 
-    semiAutoManager.configureSemiAutoManager(m_driveSubsystem, gyro, lime, timer);
     configureControls();
     midi.InitButtons();
     

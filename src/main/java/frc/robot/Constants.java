@@ -95,8 +95,8 @@ public final class Constants {
     public static final class auto{
         public static final double fwdSpeed = 0.5;
         public static final double revSpeed = -0.4;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 0;
-        public static final double kMaxSpeedMetersPerSecond = 0;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+        public static final double kMaxSpeedMetersPerSecond = 2;
        
      
 
