@@ -104,6 +104,7 @@ public class Robot extends TimedRobot {
     gyro.log();
 
     m_driveSubsystem.resetEncoder();
+    semiAutoManager.resetAudomity();
   }
 
   private void configureControls() {
@@ -145,6 +146,7 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     semiAutoManager.periodic();
+    
 
   }
 

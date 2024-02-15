@@ -1,6 +1,8 @@
 package frc.robot;
 
 
+import java.util.List;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -8,6 +10,7 @@ import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.semiAutoCommands.CancelCurrentRoutine;
@@ -25,6 +28,7 @@ public  class semiAutoManager{
     public static DifferentialDrivePoseEstimator poseEstimator;
     private static Command current;
     public static CancelCurrentRoutine cancel= new CancelCurrentRoutine();
+    private static Pose2d startingPose;
 
 
     public static void configureSemiAutoManager(DriveBase Drive, Gyro Gyro, Limelight Limelight, Timer Timer){
@@ -32,6 +36,7 @@ public  class semiAutoManager{
         gyro=Gyro;
         limelight=Limelight;
         timer=Timer;
+        startingPose=Constants.fieldPosits.leftStart;
 
 
         poseEstimator = new DifferentialDrivePoseEstimator(
@@ -39,8 +44,8 @@ public  class semiAutoManager{
             gyro.getRoll(),
             0,
             0, 
-            Constants.fieldPosits.leftStart);
-            
+            startingPose);
+
         controlInitalizer.controlInitalizerFromSemiAutoManager(cancel);
         
     }
@@ -53,6 +58,11 @@ public  class semiAutoManager{
         if (visionCoords!=null){
             poseEstimator.addVisionMeasurement(limelight.getCoords(), limelight.getDelayInMs());
         }
+        Pose2d currentPose2d = getCoords();
+        SmartDashboard.putNumber("robotPositX", currentPose2d.getX());
+        SmartDashboard.putNumber("robotPositY", currentPose2d.getY());
+        SmartDashboard.putNumber("RobotRotation",, currentPose2d.getRotation().getDegrees());
+        
     }
 
 
@@ -88,6 +98,10 @@ public  class semiAutoManager{
         current = newCommand;
     }
 
+    public static void resetAudomity(){
+        poseEstimator.resetPosition(gyro.getRoll(), drive.getLeftEncoderInMeters(), drive.getRightEncoderInMeters(), startingPose);
+    }
+    
 
 
 
