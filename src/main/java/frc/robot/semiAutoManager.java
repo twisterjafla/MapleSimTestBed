@@ -61,7 +61,7 @@ public  class semiAutoManager{
         Pose2d currentPose2d = getCoords();
         SmartDashboard.putNumber("robotPositX", currentPose2d.getX());
         SmartDashboard.putNumber("robotPositY", currentPose2d.getY());
-        SmartDashboard.putNumber("RobotRotation",, currentPose2d.getRotation().getDegrees());
+        SmartDashboard.putNumber("RobotRotation", currentPose2d.getRotation().getDegrees());
         
     }
 
