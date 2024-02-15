@@ -27,13 +27,11 @@ public final RelativeEncoder encoderL;
 
 
   final MotorControllerGroup leftMotors = new MotorControllerGroup(
-    sparkMaxLeftFront
+    sparkMaxLeftFront, sparkMaxLeftBack
       );
 
   final MotorControllerGroup rightMotors = new MotorControllerGroup(
-    
-    
-    sparkMaxRightFront
+    sparkMaxRightFront, sparkMaxRightBack
       );
 
   final DifferentialDrive m_RobotDrive;
@@ -44,8 +42,8 @@ public final RelativeEncoder encoderL;
     //left voltage ramping
     encoderR=sparkMaxRightFront.getEncoder();    
     encoderL= sparkMaxLeftFront.getEncoder();
-
-
+    sparkMaxLeftBack.setInverted(true);
+    sparkMaxLeftFront.setInverted(true);
 
     sparkMaxLeftBack.setOpenLoopRampRate(Constants.drive.rampspeed);
     sparkMaxLeftFront.setOpenLoopRampRate(Constants.drive.rampspeed);

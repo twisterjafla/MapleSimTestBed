@@ -26,12 +26,12 @@ public final class Constants {
         // r: rear
 
         // left
-        public static final int leftFrontMotor = 3;
-        public static final int leftBackMotor = 9;
+        public static final int leftFrontMotor = 5;
+        public static final int leftBackMotor = 6;
 
         // right
-        public static final int rightFrontMotor = 7;
-        public static final int rightBackMotor = 8;
+        public static final int rightFrontMotor = 1;
+        public static final int rightBackMotor = 2;
         public static final double gearRatio=8.5;
         
         
