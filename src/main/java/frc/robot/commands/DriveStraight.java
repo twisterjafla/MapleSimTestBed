@@ -25,6 +25,7 @@ public class DriveStraight extends CommandBase {
     );
     double setpoint;
 
+    @Deprecated
     public DriveStraight(DriveBase driveSubsystem, double Meters) {
       driveBase = driveSubsystem;
       this.setpoint = Meters;

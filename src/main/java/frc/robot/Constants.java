@@ -54,6 +54,9 @@ public final class Constants {
 
         public static double rampspeed= .25;
 
+        public static final double encoderToMetersRatio= 1/(robotStats.gearRatio*robotStats.gearRatio*Math.PI*2);
+        public static final double encoderToWheelRatio = 1/(robotStats.gearRatio);
+
         public static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.robotStats.trackWidth);
         public static final double ksVolts = 0.522;
         public static final double kvVoltSecondsPerMeter = 2.402;
@@ -180,7 +183,7 @@ public final class Constants {
                 Constants.drive.kvVoltSecondsPerMeter,
                 Constants.drive.kaVoltSecondsSquaredPerMeter),
             Constants.drive.kinematics,
-            10);
+            12);
 
 
         public static final TrajectoryConfig trajectoryConfigurer =

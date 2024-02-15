@@ -52,7 +52,7 @@ public  class semiAutoManager{
 
 
     public static void periodic(){
-        poseEstimator.update(gyro.getRoll(), drive.getLeftEncoderInMeters(), drive.getRightEncoderInMeters());
+        poseEstimator.update(gyro.getRoll(), drive.getLeftEncoder(), drive.getRightEncoder());
 
         Pose2d visionCoords=limelight.getCoords();
         if (visionCoords!=null){
@@ -99,7 +99,7 @@ public  class semiAutoManager{
     }
 
     public static void resetAudomity(){
-        poseEstimator.resetPosition(gyro.getRoll(), drive.getLeftEncoderInMeters(), drive.getRightEncoderInMeters(), startingPose);
+        poseEstimator.resetPosition(gyro.getRoll(), drive.getLeftEncoder(), drive.getRightEncoder(), startingPose);
     }
     
 

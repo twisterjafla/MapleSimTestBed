@@ -47,6 +47,11 @@ public final RelativeEncoder encoderL;
     encoderR=sparkMaxrf.getEncoder();    
     encoderL= sparkMaxlf.getEncoder();
 
+    encoderL.setPositionConversionFactor(Constants.drive.encoderToMetersRatio);
+    encoderR.setPositionConversionFactor(Constants.drive.encoderToMetersRatio);
+
+    encoderL.setVelocityConversionFactor(Constants.drive.encoderToWheelRatio);
+    encoderR.setVelocityConversionFactor(Constants.drive.encoderToWheelRatio);
 
 
     sparkMaxlr.setOpenLoopRampRate(Constants.drive.rampspeed);
@@ -69,18 +74,18 @@ public final RelativeEncoder encoderL;
   }
   //returns average of encoder values.
 
-  public double getEncoderAvrg(){
-    // SmartDashboard.putNumber("encoder", (encoderL.getPosition()+encoderR.getPosition())/2);
-    return encoderToMeters((getLeftEncoder()+getRightEncoder())/2);
-  }
+  // public double getEncoderAvrg(){
+  //   // SmartDashboard.putNumber("encoder", (encoderL.getPosition()+encoderR.getPosition())/2);
+  //   return encoderToMeters((getLeftEncoder()+getRightEncoder())/2);
+  // }
 
-  public double getLeftEncoder(){
-    return encoderL.getPosition();
-  }
+  // public double getLeftEncoder(){
+  //   return encoderL.getPosition();
+  // }
 
-  public double getRightEncoder(){
-    return encoderR.getPosition();
-  }
+  // public double getRightEncoder(){
+  //   return encoderR.getPosition();
+  // }
 
   public void resetEncoder(){
     encoderL.setPosition(0);
@@ -94,16 +99,19 @@ public final RelativeEncoder encoderL;
 
   }
 
-  public double encoderToMeters(double encoderValue){
-    return (encoderValue/Constants.robotStats.gearRatio)*(Constants.robotStats.gearRatio*Math.PI*2);
+  // public double encoderToMeters(double encoderValue){
+  //   return (encoderValue/Constants.robotStats.gearRatio)*(Constants.robotStats.gearRatio*Math.PI*2);
+  // }
+  public double getEncoderAvrg(){
+    return (getRightEncoder()+getLeftEncoder())/2;
   }
 
-  public double getRightEncoderInMeters(){
-    return encoderToMeters(getRightEncoder());
+  public double getRightEncoder(){
+    return encoderR.getPosition();
   }
 
-  public double getLeftEncoderInMeters(){
-    return encoderToMeters(getLeftEncoder());
+  public double getLeftEncoder(){
+    return encoderL.getPosition();
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
