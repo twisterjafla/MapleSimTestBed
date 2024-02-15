@@ -1,6 +1,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
@@ -22,14 +25,13 @@ public final RelativeEncoder encoderR;
 public final RelativeEncoder encoderL;
 
 
+
   final MotorControllerGroup leftMotors = new MotorControllerGroup(
-    sparkMaxLeftFront
+    sparkMaxLeftFront, sparkMaxLeftBack
       );
 
   final MotorControllerGroup rightMotors = new MotorControllerGroup(
-    
-    
-    sparkMaxRightFront
+    sparkMaxRightFront, sparkMaxRightBack
       );
 
   final DifferentialDrive m_RobotDrive;
@@ -40,8 +42,8 @@ public final RelativeEncoder encoderL;
     //left voltage ramping
     encoderR=sparkMaxRightFront.getEncoder();    
     encoderL= sparkMaxLeftFront.getEncoder();
-
-
+    sparkMaxLeftBack.setInverted(true);
+    sparkMaxLeftFront.setInverted(true);
 
     sparkMaxLeftBack.setOpenLoopRampRate(Constants.drive.rampspeed);
     sparkMaxLeftFront.setOpenLoopRampRate(Constants.drive.rampspeed);
@@ -78,4 +80,5 @@ public final RelativeEncoder encoderL;
     m_RobotDrive.arcadeDrive(ySpeed, rotateValue);
 
   }
+
 }
