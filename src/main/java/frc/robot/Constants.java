@@ -26,14 +26,12 @@ public final class Constants {
         // r: rear
 
         // left
-        public static final int lf = 3;
-        public static final int lt = 4;
-        public static final int lr = 9;
+        public static final int leftFrontMotor = 3;
+        public static final int leftBackMotor = 9;
 
         // right
-        public static final int rf = 7;
-        public static final int rt = 5;
-        public static final int rr = 8;
+        public static final int rightFrontMotor = 7;
+        public static final int rightBackMotor = 8;
         public static final double gearRatio=8.5;
         
         
@@ -56,7 +54,7 @@ public final class Constants {
         public static final int elevatorUp = 1;
         public static final int elevatorDown = -1;
     }
-
+  
     // Changing Solenoid Values idk 50/50 this'll work
     public static final class pneumatics{
         public static final int hubID = 8;
@@ -64,6 +62,16 @@ public final class Constants {
         public static final int solenoidPortA=0;
         public static final int solenoidPortB=1;
     }                             
+
+
+    public static final class climbingArm{
+        public static final int motorPort = 0;
+
+        public static final int limitSwitchRight = 0;
+        public static final int limitSwitchLeft = 0;
+
+        public static final int armDownSpeed = 0;
+    }
 
     public static final class auto{
         public static final double fwdSpeed = 0.5;
@@ -90,9 +98,47 @@ public final class Constants {
         }
     }
 
+    public static final class intake {
+        public static final int counterCap = 25; // this number is untested, it should run for 0.5 seconds after note is taken
+
+        public static final class intakeSpeeds {
+            public static final int intakeSpeed = 1;
+            public static final int outakeSpeed = -1;
+            public static final int intakeRaiseSpeed = 1;
+        }
+
+        public static final class intakeNote {
+            public static final int intakeMotorPortLeft = 0;
+            public static final int intakeMotorPortRight = 0;
+        }
+        
+        public static final class raisingIntake {
+            public static final int raisingMotorPort = 0;
+
+            public static final int topLimitSwitchPort = 0;
+            public static final int bottomLimitSwitchPort = 0;
+            public static final int beamBreakPort = 0;
+        }
+    }
+
+
+    public static final class speakerShooter {
+        public static int RevTimeCountInTicks = 0;
+
+        public static final class ports {
+            public static final int topMotorPort = 0;
+            public static final int bottomMotorPort = 0;
+            public static final int beamBreakPort = 0;
+        }
+
+        public static final class motorSpeeds {
+            public static final int topMotorSpeed = 0;
+            public static final int bottomMotorSpeed = 0; // slower than top speed
+        }
+    }
+
     public static final int MOVEMENT_JOYSTICK = 0;
     public static final int MANIPULATOR_JOYSTICK = 1;
     public static final int OneJoystick=2;
     public static double driveSpeedRatio;
-
 }

@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
 
 
 
+
  
   SendableChooser<Command> autoChooser = new SendableChooser<Command>();
   SendableChooser<Integer> controlChooser = new SendableChooser<Integer>();
@@ -42,9 +43,9 @@ public class Robot extends TimedRobot {
 
   controlInitalizer controlInitalizer = new controlInitalizer(m_driveSubsystem, gearBox);
 
-
-  final CommandXboxController controller1 = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
-  final CommandXboxController controller2 = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
+  final CommandXboxController movementController = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
+  final CommandXboxController manipulatorController = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -91,6 +92,7 @@ public class Robot extends TimedRobot {
 
     else if (controlChooser.getSelected()==2){
       controlInitalizer.initalizeJaceControllWithSecondController(controller1, controller2);
+
     }
      
 

@@ -1,13 +1,11 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.limitSwitch;
 
-public class ElevatorToggle extends CommandBase {
+public class ElevatorToggle extends Command {
   // setActive setActive;
   Elevator elevator;
   Boolean hasHitTop = false;
