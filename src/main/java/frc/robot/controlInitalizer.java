@@ -54,8 +54,8 @@ public class controlInitalizer {
         m_driveSubsystem.setDefaultCommand(
             new ArcadeDrive(
                   m_driveSubsystem,
-                  () -> ( movementController.getLeftY()),
-                  () -> (-movementController.getRightX()),
+                  () -> (-movementController.getLeftY()),
+                  () -> (movementController.getRightX()),
                   gyro
             ));
         movementController.rightTrigger().onTrue(new shiftGears(false, gearBox)).onFalse(new shiftGears(true, gearBox));

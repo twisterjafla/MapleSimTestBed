@@ -42,8 +42,11 @@ public final RelativeEncoder encoderL;
     //left voltage ramping
     encoderR=sparkMaxRightFront.getEncoder();    
     encoderL= sparkMaxLeftFront.getEncoder();
-    sparkMaxLeftBack.setInverted(true);
-    sparkMaxLeftFront.setInverted(true);
+    sparkMaxRightBack.setInverted(true);
+    sparkMaxRightFront.setInverted(true);
+    sparkMaxLeftBack.setInverted(false);
+    sparkMaxLeftFront.setInverted(false);
+    //rightMotors.setInverted(true);
 
     sparkMaxLeftBack.setOpenLoopRampRate(Constants.drive.rampspeed);
     sparkMaxLeftFront.setOpenLoopRampRate(Constants.drive.rampspeed);
@@ -77,6 +80,8 @@ public final RelativeEncoder encoderL;
 
   public void drive(final double ySpeed, final double rotateValue) {
     SmartDashboard.putNumber("encoder", getEncoder());
+    SmartDashboard.putNumber("speed", ySpeed);
+    SmartDashboard.putNumber("rotate", rotateValue);
     m_RobotDrive.arcadeDrive(ySpeed, rotateValue);
 
   }
