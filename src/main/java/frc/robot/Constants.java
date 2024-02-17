@@ -43,7 +43,7 @@ public final class Constants {
 
         public static final class driftSolve{
             public static final double tolerence = 1;
-            public static final double Kp = 0.09;
+            public static final double Kp = 0.01;
             public static final double Ki = 0;
             public static final double Kd = 0.1;
         }
@@ -97,7 +97,7 @@ public final class Constants {
             public static final double velocityTolerance = 2;
         }
         public static final class straightPID{
-            public static final double kp = 0.09;
+            public static final double kp = 0.009;
             public static final double ki = 0;
             public static final double kd = 0.1;
 

@@ -13,7 +13,6 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Gyro;
@@ -49,7 +48,7 @@ public class ArcadeDrive extends Command {
     this.speed=speed;
     this.rotation=rotation;
     this.gyro=gyro;
-    StraightAngle=gyro.getRoll();
+    StraightAngle=gyro.getYaw();
 
     driftPID.setTolerance(Constants.drive.driftSolve.tolerence);
     addRequirements(drive);
@@ -61,7 +60,8 @@ public class ArcadeDrive extends Command {
       double rotation=MathUtil.applyDeadband(this.rotation.getAsDouble(), 0.1);
       double speed=MathUtil.applyDeadband(this.speed.getAsDouble(), 0.1);
       SmartDashboard.putBoolean("isStraight", isCurrentlyStraight);
-      if (rotation==0){
+      SmartDashboard.putNumber("rotateRaw", rotation);
+      if (rotation==0 && speed!=0){
         driveStraight(speed);
       }
       else{
@@ -74,21 +74,22 @@ public class ArcadeDrive extends Command {
       if (!isCurrentlyStraight){
         isCurrentlyStraight=true;
         
-        SmartDashboard.putNumber("goal", gyro.getRoll());
-        driftPID.setSetpoint(gyro.getRoll());
+        SmartDashboard.putNumber("goal", gyro.getYaw());
+        driftPID.setSetpoint(gyro.getYaw());
 
       }
 
       if (!driftPID.atSetpoint()){
         SmartDashboard.putBoolean("isGood", false);
-        drive.drive(speed, driftPID.calculate(gyro.getRoll()));
-        SmartDashboard.putNumber("driftinput", driftPID.calculate(gyro.getRoll()));
+        drive.drive(speed, driftPID.calculate(gyro.getYaw())/7);
+                SmartDashboard.putNumber("driftinput", driftPID.calculate(gyro.getYaw()) );
 
 
       }
       else{
         drive.drive(speed, 0);
         SmartDashboard.putBoolean("isGood", true);
+        driftPID.calculate(gyro.getYaw());
       }
       
       SmartDashboard.putNumber("pidSetpoint", driftPID.getSetpoint());
