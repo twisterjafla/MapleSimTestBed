@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.WristIntake;
@@ -37,6 +38,7 @@ public class WristMove extends Command {
   @Override
   public void initialize() {
     wrist.resetEncoder();
+    //SmartDashboard.putNumber("setpoint", setpoint);
     pid.setSetpoint(setpoint);
     pid.setTolerance(Constants.wrist.tolerance);
   }
@@ -45,6 +47,8 @@ public class WristMove extends Command {
   @Override
   public void execute() {
     wrist.move(pid.calculate(wrist.getEncoder()));
+    SmartDashboard.putNumber("wristPID", pid.calculate(wrist.getEncoder()));
+    SmartDashboard.putNumber("Encoder Wrist Value.", wrist.getEncoder());
   }
 
   @Override
@@ -52,5 +56,10 @@ public class WristMove extends Command {
     return pid.atSetpoint();
 
   } 
+
+  @Override
+  public void end(boolean interrupted){
+    wrist.move(0);
+  }
 
 }

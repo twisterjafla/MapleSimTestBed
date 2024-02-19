@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.ShiftableGearbox;
+import frc.robot.subsystems.WristIntake;
 
 //object to deal with all ofthe dirty work of multiple control schemes
 public class controlInitalizer {
@@ -13,11 +14,13 @@ public class controlInitalizer {
     final DriveBase m_driveSubsystem;
 
     final ShiftableGearbox gearBox;
+    final WristIntake wrist;
 
     public controlInitalizer(
-        DriveBase m_driveSubsystem, ShiftableGearbox gearBox){
+        DriveBase m_driveSubsystem, ShiftableGearbox gearBox, WristIntake wrist){
         this.gearBox=gearBox;
         this.m_driveSubsystem=m_driveSubsystem;
+        this.wrist = wrist;
 
 
     }
@@ -54,8 +57,10 @@ public class controlInitalizer {
             ));
         movementController.rightTrigger().onTrue(new shiftGears(false, gearBox)).onFalse(new shiftGears(true, gearBox));
 
+        movementController.leftTrigger().onTrue(new WristMove(wrist, 100));
         
     }
+
 
 
 }
