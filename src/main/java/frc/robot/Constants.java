@@ -137,6 +137,19 @@ public final class Constants {
         }
     }
 
+    public static final class wrist {
+
+        public static final class ports {
+            public static final int motorPort = 0;
+            public static final int encoderLimitSwitch = 0;
+        }
+
+        public static final class motorSpeeds {
+            public static final double motorUp = 0;
+            public static final double motorDown = 0;
+        }
+    }
+
     public static final int MOVEMENT_JOYSTICK = 0;
     public static final int MANIPULATOR_JOYSTICK = 1;
     public static final int OneJoystick=2;
