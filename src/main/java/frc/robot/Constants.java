@@ -54,14 +54,12 @@ public final class Constants {
 
         public static double rampspeed= .25;
 
-        public static final double encoderToMetersRatio= 1/(robotStats.gearRatio*robotStats.gearRatio*Math.PI*2);
+        public static final double encoderToMetersRatio= robotStats.wheelRadius*Math.PI*2/(robotStats.gearRatio);
         public static final double encoderToWheelRatio = 1/(robotStats.gearRatio);
 
         public static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.robotStats.trackWidth);
-        public static final double ksVolts = 0.522;
+        public static final double ksVolts = 1.22;
         public static final double kvVoltSecondsPerMeter = 2.402;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.433;
-        public static final double kPDriveVel = 4.572;
 
     }
 
@@ -165,13 +163,12 @@ public final class Constants {
 
     public static final int MOVEMENT_JOYSTICK = 0;
     public static final int MANIPULATOR_JOYSTICK = 1;
-    public static final int OneJoystick=2;
     public static int blinkinPort=0;
 
     public static final class fieldPosits{
         public static final Pose2d leftStart = new Pose2d(7.1, 0.0, new Rotation2d(0.0));
         public static final Pose2d ampScore = null;
-        public static final Pose2d testPosit = new Pose2d(17.1, 0.0, new Rotation2d(0.0));
+        public static final Pose2d testPosit = new Pose2d(20.1, 0.0, new Rotation2d(0.0));
     }
 
 
@@ -180,10 +177,9 @@ public final class Constants {
         new DifferentialDriveVoltageConstraint(
             new SimpleMotorFeedforward(
                 Constants.drive.ksVolts,
-                Constants.drive.kvVoltSecondsPerMeter,
-                Constants.drive.kaVoltSecondsSquaredPerMeter),
-            Constants.drive.kinematics,
-            12);
+                Constants.drive.kvVoltSecondsPerMeter),
+                Constants.drive.kinematics,
+            10);
 
 
         public static final TrajectoryConfig trajectoryConfigurer =

@@ -12,6 +12,6 @@ public class testRoutineRunner extends InstantCommand{
 
     @Override
     public void initialize(){
-        new testRoutine(drive).schedule();;
+        new testRoutine(drive).schedule();
     }
 }

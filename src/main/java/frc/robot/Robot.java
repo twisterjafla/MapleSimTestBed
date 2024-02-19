@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
     configureControls();
 
 
-    gyro.log();
+    gyro.reset();
 
     m_driveSubsystem.resetEncoder();
     semiAutoManager.resetAudomity();
@@ -147,8 +147,10 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     semiAutoManager.periodic();
     
+    
 
   }
+
 
   /**
    * This function is called once each time the robot enters Disabled mode.

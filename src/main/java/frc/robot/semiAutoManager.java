@@ -8,7 +8,6 @@ import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,7 +16,6 @@ import frc.robot.semiAutoCommands.CancelCurrentRoutine;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.Limelight;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 
 public  class semiAutoManager{
@@ -41,7 +39,7 @@ public  class semiAutoManager{
 
         poseEstimator = new DifferentialDrivePoseEstimator(
             Constants.drive.kinematics,
-            gyro.getRoll(),
+            gyro.getYaw(),
             0,
             0, 
             startingPose);
@@ -52,7 +50,7 @@ public  class semiAutoManager{
 
 
     public static void periodic(){
-        poseEstimator.update(gyro.getRoll(), drive.getLeftEncoder(), drive.getRightEncoder());
+        poseEstimator.update(gyro.getYaw(), drive.getLeftEncoder(), drive.getRightEncoder());
 
         Pose2d visionCoords=limelight.getCoords();
         if (visionCoords!=null){
@@ -62,6 +60,8 @@ public  class semiAutoManager{
         SmartDashboard.putNumber("robotPositX", currentPose2d.getX());
         SmartDashboard.putNumber("robotPositY", currentPose2d.getY());
         SmartDashboard.putNumber("RobotRotation", currentPose2d.getRotation().getDegrees());
+        SmartDashboard.putNumber("gyroValue", gyro.getYaw().getDegrees());
+
         
     }
 
@@ -80,12 +80,11 @@ public  class semiAutoManager{
             new RamseteController(),
             new SimpleMotorFeedforward(
                 Constants.drive.ksVolts,
-                Constants.drive.kvVoltSecondsPerMeter,
-                Constants.drive.kaVoltSecondsSquaredPerMeter),
+                Constants.drive.kvVoltSecondsPerMeter),
             Constants.drive.kinematics,
             drive::getWheelSpeeds,
-            new PIDController(Constants.drive.kPDriveVel, 0, 0),
-            new PIDController(Constants.drive.kPDriveVel, 0, 0),
+            new PIDController(0.1, 0, 0),
+            new PIDController(0.1, 0, 0),
             // RamseteCommand passes volts to the callback
             drive::tankDriveVolts,
             drive);
