@@ -148,6 +148,12 @@ public final class Constants {
             public static final double motorUp = 0;
             public static final double motorDown = 0;
         }
+
+        public static final double resetPosition = 0;
+        public static final double tolerance = 0;
+        public static final double kp = 0;
+        public static final double ki = 0;
+        public static final double kd = 0;
     }
 
     public static final int MOVEMENT_JOYSTICK = 0;

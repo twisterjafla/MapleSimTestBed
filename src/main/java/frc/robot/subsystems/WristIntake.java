@@ -28,7 +28,7 @@ public class WristIntake extends SubsystemBase {
     @Override
     public void periodic() {
         if (wristLimitSwitch.getVal()){
-            resetEncoder();
+            wristEncoder.setPosition(Constants.wrist.resetPosition);
         }
     }
 }

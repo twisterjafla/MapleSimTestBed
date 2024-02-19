@@ -21,9 +21,9 @@ public class WristMove extends Command {
   double setpoint;
 
   private final PIDController pid = new PIDController(
-        Constants.auto.straightPID.kp,
-        Constants.auto.straightPID.ki,
-        Constants.auto.straightPID.kd
+        Constants.wrist.kp,
+        Constants.wrist.ki,
+        Constants.wrist.kd
   );
 
   public WristMove(WristIntake wrist, double setpoint) {
@@ -38,6 +38,7 @@ public class WristMove extends Command {
   public void initialize() {
     wrist.resetEncoder();
     pid.setSetpoint(setpoint);
+    pid.setTolerance(Constants.wrist.tolerance);
   }
 
 
