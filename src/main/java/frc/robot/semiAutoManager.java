@@ -40,8 +40,8 @@ public  class semiAutoManager{
         poseEstimator = new DifferentialDrivePoseEstimator(
             Constants.drive.kinematics,
             gyro.getYaw(),
-            0,
-            0, 
+            drive.getLeftEncoder(),
+            drive.getRightEncoder(), 
             startingPose);
 
         controlInitalizer.controlInitalizerFromSemiAutoManager(cancel);
@@ -88,6 +88,16 @@ public  class semiAutoManager{
             // RamseteCommand passes volts to the callback
             drive::tankDriveVolts,
             drive);
+
+        // return new RamseteCommand(
+        //     trajectory,
+        //     semiAutoManager :: getCoords,
+        //     new RamseteController(),
+        //     Constants.drive.kinematics,            // RamseteCommand passes volts to the callback
+        //     drive::tankDriveVolts,
+        //     drive);
+
+
     }
 
     public static Command getCurrent(){
