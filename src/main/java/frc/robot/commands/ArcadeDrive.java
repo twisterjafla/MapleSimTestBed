@@ -10,18 +10,15 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.Gyro;
 
 /**
  * Have the robot drive tank style.
  */
-public class ArcadeDrive extends Command {
+public class ArcadeDrive extends RunCommand {
   /**
    * Creates a new ArcadeDrive command.
    *
@@ -29,65 +26,19 @@ public class ArcadeDrive extends Command {
    * @param right      The control input for the right sight of the drive
    * @param driveSubsystem The driveSubsystem subsystem to drive
    */
+  public ArcadeDrive(DriveBase drive, DoubleSupplier speed, DoubleSupplier rotation) {
+    super(
+      ()->{
+        SmartDashboard.putString("On", "true");
 
-  public DriveBase drive;
-  public DoubleSupplier speed;
-  public DoubleSupplier rotation;
-  public double StraightAngle;
-  public boolean isCurrentlyStraight=true;
-  public Gyro gyro;
-
-  private final PIDController driftPID = new PIDController(
-    Constants.drive.driftSolve.Kp,
-    Constants.drive.driftSolve.Ki,
-    Constants.drive.driftSolve.Kd
-);
-
-  public ArcadeDrive(DriveBase drive, DoubleSupplier speed, DoubleSupplier rotation, Gyro gyro) {
-    
-    this.drive=drive;
-    this.speed=speed;
-    this.rotation=rotation;
-    this.gyro=gyro;
-    StraightAngle=gyro.getRoll();
-
-    driftPID.setTolerance(Constants.drive.driftSolve.tolerence);
+        drive.drive(
+          MathUtil.applyDeadband(speed.getAsDouble(), 0.1),
+          MathUtil.applyDeadband(rotation.getAsDouble(), 0.1)
+        );
+      },
+      drive
+    );
     addRequirements(drive);
+
   }
-
-
-    @Override
-    public void execute(){
-      double rotation=MathUtil.applyDeadband(this.rotation.getAsDouble(), 0.1);
-      double speed=MathUtil.applyDeadband(this.speed.getAsDouble(), 0.1);
-
-      if (rotation==0){
-        driveStraight(speed);
-      }
-      else{
-        driveCurved(speed, rotation);
-      }
-
-    }
-
-    private void driveStraight(double speed){
-      if (!isCurrentlyStraight){
-        isCurrentlyStraight=true;
-        driftPID.setSetpoint(gyro.getRoll());
-
-      }
-
-      if (driftPID.atSetpoint()){
-        drive.drive(speed, driftPID.calculate(gyro.getRoll()));
-
-      }
-
-    }
-
-    private void driveCurved(double speed, double rotation){
-      isCurrentlyStraight=false;
-      drive.drive(speed, rotation);
-    }
-
-  
 }
