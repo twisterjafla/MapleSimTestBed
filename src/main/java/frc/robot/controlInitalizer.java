@@ -66,14 +66,15 @@ public class controlInitalizer {
         ));
 
       movementController.x().onFalse(new attemptToScheduleRoutine(testRoutine));
+      
       manipulatorController.leftBumper() //intake
       .whileTrue(runIntake);
 
       manipulatorController.rightBumper()//outake
       .whileTrue(runIntakeBackward);
 
-      manipulatorController.x()
-      .onTrue(toggleBucket);
+    //   manipulatorController.x()
+    //   .onTrue(toggleBucket);
 
       manipulatorController.a()
       .onTrue(toggleIntake);

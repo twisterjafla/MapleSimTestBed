@@ -97,8 +97,11 @@ public final RelativeEncoder encoderL;
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    leftMotors.setVoltage(leftVolts);
-    rightMotors.setVoltage(rightVolts);
+    SmartDashboard.putNumber("leftVolt", leftVolts);
+    sparkMaxlf.setVoltage(leftVolts);
+    SmartDashboard.putNumber("rightVolts", rightVolts);
+    sparkMaxrf.setVoltage(rightVolts);
+    SmartDashboard.putNumber("voltageDiff", leftVolts-rightVolts);
     m_RobotDrive.feed();
   }
 

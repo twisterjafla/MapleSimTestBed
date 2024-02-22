@@ -175,11 +175,9 @@ public final class Constants {
     public static final class TrajectoryGeneratorObjects{
         public static final DifferentialDriveVoltageConstraint TrajectoryVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(
-                Constants.drive.ksVolts,
-                Constants.drive.kvVoltSecondsPerMeter),
-                Constants.drive.kinematics,
-            10);
+            new SimpleMotorFeedforward( Constants.drive.ksVolts, Constants.drive.kvVoltSecondsPerMeter),
+            Constants.drive.kinematics,
+10);
 
 
         public static final TrajectoryConfig trajectoryConfigurer =
@@ -188,8 +186,8 @@ public final class Constants {
                 Constants.auto.kMaxAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(Constants.drive.kinematics)
-            // Apply the voltage constraint
-            .addConstraint(TrajectoryVoltageConstraint);
+                        // Apply the voltage constraint
+           .addConstraint(TrajectoryVoltageConstraint);
 
     }
 

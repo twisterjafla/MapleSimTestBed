@@ -14,8 +14,8 @@ public class attemptToScheduleRoutine extends InstantCommand {
         this.toSchedule=toSchedule;
     }
 
-    
-    public void execute(){
+    @Override
+    public void initialize(){
         if (semiAutoManager.getCurrent()!=null){
             CommandScheduler.getInstance().cancel(semiAutoManager.getCurrent());
         }

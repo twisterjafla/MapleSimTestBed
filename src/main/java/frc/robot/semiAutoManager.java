@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -34,7 +35,7 @@ public  class semiAutoManager{
         gyro=Gyro;
         limelight=Limelight;
         timer=Timer;
-        startingPose=Constants.fieldPosits.leftStart;
+        startingPose=new Pose2d(0, 0, new Rotation2d(0));
 
 
         poseEstimator = new DifferentialDrivePoseEstimator(
@@ -61,6 +62,8 @@ public  class semiAutoManager{
         SmartDashboard.putNumber("robotPositY", currentPose2d.getY());
         SmartDashboard.putNumber("RobotRotation", currentPose2d.getRotation().getDegrees());
         SmartDashboard.putNumber("gyroValue", gyro.getYaw().getDegrees());
+        SmartDashboard.putNumber("leftEncoder", drive.getLeftEncoder());
+        SmartDashboard.putNumber("rightEncoder", drive.getRightEncoder());
 
         
     }
@@ -83,8 +86,8 @@ public  class semiAutoManager{
                 Constants.drive.kvVoltSecondsPerMeter),
             Constants.drive.kinematics,
             drive::getWheelSpeeds,
-            new PIDController(0.1, 0, 0),
-            new PIDController(0.1, 0, 0),
+            new PIDController(.001, 0, 0.01),
+            new PIDController(.001, 0, 0.01),
             // RamseteCommand passes volts to the callback
             drive::tankDriveVolts,
             drive);

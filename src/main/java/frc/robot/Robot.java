@@ -76,7 +76,6 @@ public class Robot extends TimedRobot {
     // starts the auto selector
 
     autoChooser.setDefaultOption("Auto Grab", new AutonomousGrab(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem));
-
     autoChooser.addOption("doNothing", new InstantCommand());
     autoChooser.addOption("Dump Do Nothing", new AutonomousDumpDoNothing(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem));
   
@@ -98,10 +97,10 @@ public class Robot extends TimedRobot {
 
     
 
-    configureControls();
+    //configureControls();
 
 
-    gyro.reset();
+    //gyro.reset();
 
     m_driveSubsystem.resetEncoder();
     semiAutoManager.resetAudomity();
