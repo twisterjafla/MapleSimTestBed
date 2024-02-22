@@ -26,7 +26,6 @@ public class Gyro extends SubsystemBase
   }
 
   public double getRoll() {
-    SmartDashboard.putNumber("LegitGyro", gyro.getRoll());
     return gyro.getRoll();
   }
 }

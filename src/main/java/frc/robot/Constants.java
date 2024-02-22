@@ -27,7 +27,7 @@ public final class Constants {
 
         // left
         public static final int leftFrontMotor = 5;
-        public static final int leftBackMotor = 9;
+        public static final int leftBackMotor = 6;
 
         // right
         public static final int rightFrontMotor = 1;
@@ -101,7 +101,7 @@ public final class Constants {
             public static final double ki = 0;
             public static final double kd = 0.1;
 
-            public static final double positionTolerance = 0.01;
+            public static final double positionTolerance = 1;
         }
     }
 

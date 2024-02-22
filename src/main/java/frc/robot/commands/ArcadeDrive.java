@@ -33,7 +33,7 @@ public class ArcadeDrive extends Command {
   public DriveBase drive;
   public DoubleSupplier speed;
   public DoubleSupplier rotation;
-  public double StraightAngle=0;
+  public double StraightAngle;
   public boolean isCurrentlyStraight=true;
   public Gyro gyro;
 
@@ -60,7 +60,7 @@ public class ArcadeDrive extends Command {
     public void execute(){
       double rotation=MathUtil.applyDeadband(this.rotation.getAsDouble(), 0.1);
       double speed=MathUtil.applyDeadband(this.speed.getAsDouble(), 0.1);
-      SmartDashboard.putBoolean("isStraight", isCurrentlyStraight);
+
       if (rotation==0){
         driveStraight(speed);
       }
@@ -73,25 +73,15 @@ public class ArcadeDrive extends Command {
     private void driveStraight(double speed){
       if (!isCurrentlyStraight){
         isCurrentlyStraight=true;
-        
-        SmartDashboard.putNumber("goal", gyro.getRoll());
         driftPID.setSetpoint(gyro.getRoll());
 
       }
 
-      if (!driftPID.atSetpoint()){
-        SmartDashboard.putBoolean("isGood", false);
+      if (driftPID.atSetpoint()){
         drive.drive(speed, driftPID.calculate(gyro.getRoll()));
-        SmartDashboard.putNumber("driftinput", driftPID.calculate(gyro.getRoll()));
-
 
       }
-      else{
-        drive.drive(speed, 0);
-        SmartDashboard.putBoolean("isGood", true);
-      }
-      
-      SmartDashboard.putNumber("pidSetpoint", driftPID.getSetpoint());
+
     }
 
     private void driveCurved(double speed, double rotation){
