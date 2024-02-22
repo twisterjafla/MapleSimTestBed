@@ -45,7 +45,7 @@ public final class Constants {
             public static final double tolerence = 1;
             public static final double Kp = 0.01;
             public static final double Ki = 0;
-            public static final double Kd = 0.09;
+            public static final double Kd = 0.1;
         }
 
 
