@@ -27,7 +27,7 @@ public final class Constants {
 
         // left
         public static final int leftFrontMotor = 5;
-        public static final int leftBackMotor = 6;
+        public static final int leftBackMotor = 9;
 
         // right
         public static final int rightFrontMotor = 1;
@@ -59,8 +59,9 @@ public final class Constants {
     public static final class pneumatics{
         public static final int hubID = 8;
 
-        public static final int solenoidPortA=0;
-        public static final int solenoidPortB=1;
+        public static final int solenoidPortA=8;
+        public static final int solenoidPortB=9
+        ;
     }                             
 
 
