@@ -8,7 +8,7 @@ public class ElevatorTimed extends WaitCommand {
   private final Elevator elevator;
   private double speed;
 
-  public ElevatorTimed(Elevator elevator, double time, double speed) {
+  public ElevatorTimed(Elevator elevator, double time) {
     super(time);
     this.elevator = elevator;
   }
