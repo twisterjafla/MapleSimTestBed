@@ -150,6 +150,9 @@ public final class Constants {
         }
 
         public static final double resetPosition = 0;
+        public static final double upPosition = 0;
+        public static final double downPosition = 0;
+        
         public static final double tolerance = 1;
         public static final double kp = 0.06;
         public static final double ki = 0;

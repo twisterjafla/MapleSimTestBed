@@ -30,19 +30,15 @@ public class Robot extends TimedRobot {
   final DriveBase m_driveSubsystem = new DriveBase();
   final ShiftableGearbox gearBox = new ShiftableGearbox();
   final WristIntake wrist = new WristIntake();
+  final Intake intake = new Intake();
 
   final Gyro gyro = new Gyro();
 
-
-
-
-
- 
   SendableChooser<Command> autoChooser = new SendableChooser<Command>();
   SendableChooser<Integer> controlChooser = new SendableChooser<Integer>();
 
 
-  controlInitalizer controlInitalizer = new controlInitalizer(m_driveSubsystem, gearBox, wrist);
+  controlInitalizer controlInitalizer = new controlInitalizer(m_driveSubsystem, gearBox, wrist, intake);
 
   final CommandXboxController controller1 = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
   final CommandXboxController controller2 = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
@@ -92,7 +88,7 @@ public class Robot extends TimedRobot {
 
 
     else if (controlChooser.getSelected()==2){
-      controlInitalizer.initalizeJaceControllWithSecondController(controller1, controller2);
+      controlInitalizer.initalizeJaceControllWithSecondController(controller1, controller2, intake);
 
     }
      
