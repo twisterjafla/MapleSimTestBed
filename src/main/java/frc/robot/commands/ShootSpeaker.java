@@ -6,27 +6,24 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SpeakerShooter;
 
 public class ShootSpeaker extends Command {
-    // setActive setActive;
-    final SpeakerShooter m_shooter;
+    final SpeakerShooter shooter;
     final BooleanSupplier shootTrigger;
     
-    public ShootSpeaker(SpeakerShooter importedShooter, BooleanSupplier shootTrigger) {
-        m_shooter = importedShooter;
-        this.shootTrigger=shootTrigger;
+    public ShootSpeaker(SpeakerShooter shooter, BooleanSupplier shootTrigger) {
+        this.shooter = shooter;
+        this.shootTrigger = shootTrigger;
+        addRequirements(shooter);
     }
 
 
     @Override
     public void execute() {
-        m_shooter.runIndex();
-        m_shooter.revving();
+        shooter.runIndex();
+        shooter.revving();
     }
 
     @Override
     public boolean isFinished() { 
-        
         return shootTrigger.getAsBoolean();
-
-    } 
-        
+    }    
 }

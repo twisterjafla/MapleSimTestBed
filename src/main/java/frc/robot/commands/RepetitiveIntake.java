@@ -6,47 +6,41 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
 public class RepetitiveIntake extends Command {
-  // setActive setActive;
-  Intake m_intake;
-  double speed;
+  Intake intake;
   int counter;
+
   boolean noteInIntake;
   
-  public RepetitiveIntake(Intake importedIntake) {
-    m_intake = importedIntake;
+  public RepetitiveIntake(Intake intake) {
+    this.intake = intake;
+    addRequirements(intake);
+
   }
 
   @Override
-  public void initialize(){
-    if (!m_intake.topSwitch.isOk()||!m_intake.bottomSwitch.isOk()){
+  public void initialize() {
+    if (!intake.topSwitch.isOk()||!intake.bottomSwitch.isOk()) {
       CommandScheduler.getInstance().cancel(this);
     }
-
     counter = 0;
+
   }
 
   @Override
   public void execute() {
-    m_intake.intake();
+    intake.intake();
+
   }
 
   @Override
   public boolean isFinished() { 
-    if (m_intake.beamBreak.getVal()){
+    if (intake.beamBreak.getVal()) {
       counter++;
     }
 
-    else{
+    else {
       counter=0;
     }
-
     return counter > Constants.intake.counterCap;
-
   } 
-
-  @Override
-  public void end(boolean wasInterupted){
-  
-  }
-   
 }

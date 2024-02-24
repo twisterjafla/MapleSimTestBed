@@ -15,7 +15,6 @@ public class SpeakerShooter extends SubsystemBase {
 	public final limitSwitch beamBreak = new limitSwitch(Constants.speakerShooter.ports.beamBreakPort);
 	
 
-
 	public void revving(){
     	speakerMotorTop.set(Constants.speakerShooter.motorSpeeds.topMotorSpeed);
   	}
