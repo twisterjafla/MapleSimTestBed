@@ -8,6 +8,8 @@ import frc.robot.subsystems.Intake;
 public class RepetitiveIntake extends Command {
   Intake intake;
   int counter;
+
+  boolean noteInIntake;
   
   public RepetitiveIntake(Intake intake) {
     this.intake = intake;

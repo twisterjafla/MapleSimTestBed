@@ -10,7 +10,7 @@ public class IntakeNote extends Command {
     this.intake = intake;
     addRequirements(intake);
   }
-
+  
   @Override
   public void execute() {
     intake.intake();

@@ -25,7 +25,6 @@ public class ArcadeDrive extends RunCommand {
         drive.drive(
           MathUtil.applyDeadband(speed.getAsDouble(), 0.1)*Constants.drive.driveSpeedRatio,
           MathUtil.applyDeadband(rotation.getAsDouble(), 0.1)*Constants.drive.rotationSpeedRatio
-
         );
       },
       drive

@@ -26,12 +26,12 @@ public final class Constants {
         // r: rear
 
         // left
-        public static final int leftFrontMotor = 3;
+        public static final int leftFrontMotor = 5;
         public static final int leftBackMotor = 9;
 
         // right
-        public static final int rightFrontMotor = 7;
-        public static final int rightBackMotor = 8;
+        public static final int rightFrontMotor = 1;
+        public static final int rightBackMotor = 2;
         public static final double gearRatio=8.5;
         
         
@@ -39,6 +39,9 @@ public final class Constants {
         public static final double driveSpeedRatio= 1;
 
         public static double rampspeed= .25;
+
+
+
     }
 
     public static final class elevator {
@@ -53,13 +56,14 @@ public final class Constants {
     }
   
     // Changing Solenoid Values idk 50/50 this'll work
-    public static final class bucket {
-        public static final class solenoid {
-            public static final int fwdPort = 6;
-            public static final int revPort = 7;
+    public static final class pneumatics{
+        public static final int hubID = 8;
 
-        }
-    }
+        public static final int solenoidPortA=8;
+        public static final int solenoidPortB=9
+        ;
+    }                             
+
 
     public static final class climbingArm{
         public static final int motorPort = 0;
@@ -132,6 +136,25 @@ public final class Constants {
             public static final int topMotorSpeed = 0;
             public static final int bottomMotorSpeed = 0; // slower than top speed
         }
+    }
+
+    public static final class wrist {
+
+        public static final class ports {
+            public static final int motorPort = 3;
+            public static final int encoderLimitSwitch = 0;
+        }
+
+        public static final class motorSpeeds {
+            public static final double motorUp = 0.5;
+            public static final double motorDown = -0.5;
+        }
+
+        public static final double resetPosition = 0;
+        public static final double tolerance = 1;
+        public static final double kp = 0.06;
+        public static final double ki = 0;
+        public static final double kd = 0.05;
     }
 
     public static final int MOVEMENT_JOYSTICK = 0;

@@ -27,7 +27,7 @@ public class SpeakerShooter extends SubsystemBase {
         return beamBreak.getVal();
     }
 
-    public void SafteyFunction(double indexSpeed, double flySpeed){
+    public void SafetyFunction(double indexSpeed, double flySpeed){
         speakerMotorBottom.set(indexSpeed);
         speakerMotorTop.set(flySpeed);
     }
