@@ -29,8 +29,11 @@ public class ElevatorTimed extends WaitCommand {
     elevator.moveElevator(speed);
   }
 
+
+
   @Override
   public void end(boolean interupted) {
     super.end(interupted);
+    elevator.isUp=!elevator.isUp;
   }
 }

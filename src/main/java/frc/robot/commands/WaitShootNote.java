@@ -17,7 +17,7 @@ public class WaitShootNote extends WaitCommand {
   @Override
   public void execute() {
       super.execute();
-      this.intake.outake();
+      intake.outake();
   }
 
   @Override
