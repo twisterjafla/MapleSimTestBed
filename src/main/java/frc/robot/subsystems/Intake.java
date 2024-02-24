@@ -11,16 +11,19 @@ public class Intake extends SubsystemBase {
 	public final CANSparkMax intakeMotorLeft = new CANSparkMax(Constants.intake.intakeNote.intakeMotorPortLeft, MotorType.kBrushless);
 	public final CANSparkMax intakeMotorRight = new CANSparkMax(Constants.intake.intakeNote.intakeMotorPortRight, MotorType.kBrushless);
 	public final MotorControllerGroup intakeMotors = new MotorControllerGroup(intakeMotorLeft, intakeMotorRight);
+    // public final CANSparkMax raiseMotor = new CANSparkMax(Constants.intake.raisingIntake.raisingMotorPort, MotorType.kBrushless);
 
-    public final CANSparkMax raiseMotor = new CANSparkMax(Constants.intake.raisingIntake.raisingMotorPort, MotorType.kBrushless);
+	// public final limitSwitch topSwitch = new limitSwitch(Constants.intake.raisingIntake.topLimitSwitchPort);
+	// public final limitSwitch bottomSwitch = new limitSwitch(Constants.intake.raisingIntake.bottomLimitSwitchPort);
 
-	public final limitSwitch topSwitch = new limitSwitch(Constants.intake.raisingIntake.topLimitSwitchPort);
-	public final limitSwitch bottomSwitch = new limitSwitch(Constants.intake.raisingIntake.bottomLimitSwitchPort);
-
-	public final limitSwitch beamBreak = new limitSwitch(Constants.intake.raisingIntake.beamBreakPort);
+	public final limitSwitch beamBreak = new limitSwitch(Constants.intake.beamBreakPort);
 
 	public boolean isUp = false;
 	
+	public Intake(){
+		intakeMotorLeft.setInverted(true);
+
+	}
 
 
 	public void intake(){
@@ -31,9 +34,9 @@ public class Intake extends SubsystemBase {
     	intakeMotors.set(Constants.intake.intakeSpeeds.outakeSpeed);
   	}
 
-    public void raiseIntake(){
-		raiseMotor.set(Constants.intake.intakeSpeeds.intakeRaiseSpeed);
-    }
+    // public void raiseIntake(){
+	// 	raiseMotor.set(Constants.intake.intakeSpeeds.intakeRaiseSpeed);
+    // }
 
 }
 
