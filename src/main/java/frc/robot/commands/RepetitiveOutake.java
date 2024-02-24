@@ -49,5 +49,6 @@ public class RepetitiveOutake extends Command {
         counter++;
         intake.outake();
     }
+    intake.stop();
   }
 }

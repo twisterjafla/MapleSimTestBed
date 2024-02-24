@@ -21,7 +21,7 @@ public class WristIntake extends SubsystemBase {
   	}
 
     public void resetEncoder(){
-        wristEncoder.setPosition(0);
+        //wristEncoder.setPosition(0);
     }
 
     public double getEncoder(){
@@ -30,10 +30,10 @@ public class WristIntake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("wristencoder2", wristEncoder.getPosition());
-        if (wristLimitSwitch.getVal()){
-            wristEncoder.setPosition(Constants.wrist.resetPosition);
-        }
+        SmartDashboard.putNumber("wristencoder2", getEncoder());
+        // if (wristLimitSwitch.getVal()){
+        //     wristEncoder.setPosition(Constants.wrist.resetPosition);
+        // }
     }
 }
 

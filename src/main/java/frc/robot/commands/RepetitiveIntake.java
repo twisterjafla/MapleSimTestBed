@@ -33,6 +33,11 @@ public class RepetitiveIntake extends Command {
   }
 
   @Override
+  public void end(boolean wasInterupted){
+    intake.stop();
+  }
+
+  @Override
   public boolean isFinished() { 
     if (intake.beamBreak.getVal()) {
       counter++;

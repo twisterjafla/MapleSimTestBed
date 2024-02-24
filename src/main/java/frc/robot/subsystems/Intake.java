@@ -21,7 +21,7 @@ public class Intake extends SubsystemBase {
 	public boolean isUp = false;
 	
 	public Intake(){
-		intakeMotorLeft.setInverted(true);
+		//intakeMotorLeft.setInverted(true);
 
 	}
 
@@ -33,6 +33,10 @@ public class Intake extends SubsystemBase {
 	public void outake(){
     	intakeMotors.set(Constants.intake.intakeSpeeds.outakeSpeed);
   	}
+
+	public void stop(){
+		intakeMotors.set(0);
+	}
 
     // public void raiseIntake(){
 	// 	raiseMotor.set(Constants.intake.intakeSpeeds.intakeRaiseSpeed);

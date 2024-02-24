@@ -45,14 +45,15 @@ public final class Constants {
     }
 
     public static final class elevator {
-        public static final int motorPortLeft = 10;
-        public static final int motorPortRight = 11;
+        public static final int motorPortLeft = 3;
+        public static final int motorPortRight = 4;
 
         public static final int topLimitSwitch = 0;
         public static final int bottomLimitSwitch = 1;
 
-        public static final int elevatorUp = 1;
-        public static final int elevatorDown = -1;
+        public static final double elevatorUpSpeed = 0.1;
+        public static final double elevatorDownSpeed = -0.3;
+        public static final double elevatorStayAtTopSpeed = 0.03;
     }
   
     // Changing Solenoid Values idk 50/50 this'll work
@@ -101,7 +102,7 @@ public final class Constants {
 
     public static final class intake {
         public static final int counterCap = 25; // this number is untested, it should run for 0.5 seconds after note is taken
-        public static final int beamBreakPort = 1;
+        public static final int beamBreakPort = 2;
 
         public static final class intakeSpeeds {
             public static final double intakeSpeed = 0.6;
@@ -142,7 +143,12 @@ public final class Constants {
 
         public static final class ports {
             public static final int motorPort = 10;
-            public static final int encoderLimitSwitch = 0;
+            public static final int encoderLimitSwitch = 20;
+        }
+
+        public static final class posits{
+            public static final double scorePosit=8.16;
+            public static final double intakePosit=10.43;
         }
 
         public static final class motorSpeeds {
