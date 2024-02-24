@@ -45,8 +45,8 @@ public final class Constants {
     }
 
     public static final class elevator {
-        public static final int motorPortLeft = 0;
-        public static final int motorPortRight = 1;
+        public static final int motorPortLeft = 10;
+        public static final int motorPortRight = 11;
 
         public static final int topLimitSwitch = 0;
         public static final int bottomLimitSwitch = 1;
@@ -101,25 +101,25 @@ public final class Constants {
 
     public static final class intake {
         public static final int counterCap = 25; // this number is untested, it should run for 0.5 seconds after note is taken
+        public static final int beamBreakPort = 1;
 
         public static final class intakeSpeeds {
-            public static final int intakeSpeed = 1;
-            public static final int outakeSpeed = -1;
-            public static final int intakeRaiseSpeed = 1;
+            public static final double intakeSpeed = 0.6;
+            public static final double outakeSpeed = -0.6;
+            // public static final int intakeRaiseSpeed = 1;
         }
 
         public static final class intakeNote {
-            public static final int intakeMotorPortLeft = 0;
-            public static final int intakeMotorPortRight = 0;
+            public static final int intakeMotorPortLeft = 7;
+            public static final int intakeMotorPortRight = 11;
         }
         
-        public static final class raisingIntake {
-            public static final int raisingMotorPort = 0;
+        // public static final class raisingIntake {
+        //     public static final int raisingMotorPort = 0;
 
-            public static final int topLimitSwitchPort = 0;
-            public static final int bottomLimitSwitchPort = 0;
-            public static final int beamBreakPort = 0;
-        }
+        //     public static final int topLimitSwitchPort = 0;
+        //     public static final int bottomLimitSwitchPort = 0;
+        // }
     }
 
 
@@ -141,7 +141,7 @@ public final class Constants {
     public static final class wrist {
 
         public static final class ports {
-            public static final int motorPort = 3;
+            public static final int motorPort = 10;
             public static final int encoderLimitSwitch = 0;
         }
 
