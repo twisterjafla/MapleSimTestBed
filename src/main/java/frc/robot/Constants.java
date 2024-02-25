@@ -164,6 +164,20 @@ public final class Constants {
     public static final int MOVEMENT_JOYSTICK = 0;
     public static final int MANIPULATOR_JOYSTICK = 1;
     public static int blinkinPort=0;
+    public static final class semiAuto{
+        public static final class turn{
+            public static final double Kp = 0.1;
+            public static final double Kd= 0.1;
+            public static final double tolerence = 0;
+            public static final double ringDistance = 0.1;
+
+        }
+        public static final class straight{
+            public static final double Kp = 0.1;
+            public static final double Kd= 0.1;
+            
+        }
+    }
 
     public static final class fieldPosits{
         public static final Pose2d leftStart = new Pose2d(7.1, 0.0, new Rotation2d(0.0));

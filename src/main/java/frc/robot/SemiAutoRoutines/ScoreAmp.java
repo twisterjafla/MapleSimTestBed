@@ -14,6 +14,7 @@ import frc.robot.commands.ToggleElevator;
 import frc.robot.semiAutoCommands.BlinkinGreen;
 import frc.robot.semiAutoCommands.BlinkinRed;
 import frc.robot.semiAutoCommands.BlinkinYellow;
+import frc.robot.semiAutoCommands.DriveToPoint;
 import frc.robot.semiAutoCommands.stealDriveCommand;
 import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.DriveBase;
@@ -32,11 +33,7 @@ public class ScoreAmp extends SequentialCommandGroup {
             //MainLoop
             new BlinkinRed(),
             new ParallelCommandGroup(
-                semiAutoManager.getRamseteCommand(
-                    TrajectoryGenerator.generateTrajectory(
-                        semiAutoManager.getCoords(),
-      null,
-                       Constants.fieldPosits.ampScore, Constants.TrajectoryGeneratorObjects.trajectoryConfigurer)),
+                new DriveToPoint(drive, Constants.fieldPosits.ampScore),
                        new ToggleElevator(intakeElevator)
             ),
 

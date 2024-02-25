@@ -74,35 +74,6 @@ public  class semiAutoManager{
     }
 
 
-
-    public static RamseteCommand getRamseteCommand(Trajectory trajectory) {
-        
-        return new RamseteCommand(
-            trajectory,
-            semiAutoManager :: getCoords,
-            new RamseteController(),
-            new SimpleMotorFeedforward(
-                Constants.drive.ksVolts,
-                Constants.drive.kvVoltSecondsPerMeter),
-            Constants.drive.kinematics,
-            drive::getWheelSpeeds,
-            new PIDController(.001, 0, 0.01),
-            new PIDController(.001, 0, 0.01),
-            // RamseteCommand passes volts to the callback
-            drive::tankDriveVolts,
-            drive);
-
-        // return new RamseteCommand(
-        //     trajectory,
-        //     semiAutoManager :: getCoords,
-        //     new RamseteController(),
-        //     Constants.drive.kinematics,            // RamseteCommand passes volts to the callback
-        //     drive::tankDriveVolts,
-        //     drive);
-
-
-    }
-
     public static Command getCurrent(){
         return current;
     }
