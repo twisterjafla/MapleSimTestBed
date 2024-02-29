@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
@@ -31,9 +32,8 @@ public class DriveToPoint extends Command{
     public void initialize(){
         turnPid.setSetpoint(goal.getRotation().getDegrees());
         turnPid.setTolerance(Constants.semiAuto.turn.tolerence);
-        turnPid.enableContinuousInput(-1, 1);
-  
-        straightPID.enableContinuousInput(-1, 1);
+        //turnPid.enableContinuousInput(-1, 1);        
+        //straightPID.enableContinuousInput(-1, 1);
     }
 
 
@@ -41,12 +41,16 @@ public class DriveToPoint extends Command{
     public void execute(){
         Pose2d current=semiAutoManager.getCoords();
         checkPhase(getDistance(current, goal), current);
-        drive.drive(straightMath(current), turnMath(current));
+        double speen = turnMath(current);
+        //SmartDashboard.putNumber("speen", speen);
+        SmartDashboard.putNumber("turnPidGoa", turnPid.getSetpoint());
+        drive.drive(straightMath(current), speen);
     
     }
 
     @Override
     public boolean isFinished(){
+        SmartDashboard.putBoolean("pid at set", turnPid.atSetpoint());
         return turnPid.atSetpoint()&&isInRing;
     }
 
@@ -57,6 +61,7 @@ public class DriveToPoint extends Command{
 
     public double turnMath(Pose2d current){
         return turnPid.calculate(current.getRotation().getDegrees());
+        
     }
 
     
@@ -67,11 +72,9 @@ public class DriveToPoint extends Command{
             turnPid.setSetpoint(goal.getRotation().getDegrees());
         }
         else if (!isInRing){
-            if (goal.getX()-current.getX()==0){
-                turnPid.setSetpoint(90);
-            }
             turnPid.setSetpoint(getAngle(current, goal));
         }
+        SmartDashboard.putBoolean("is in ring", isInRing);
         
     }
 
@@ -79,14 +82,14 @@ public class DriveToPoint extends Command{
         if (isInRing){
             return 0;
         }
-        double currentDistance=getDistance(current, goal);
-        Pose2d predicted = new Pose2d(current.getX()+Math.sin(getAngle(current, goal)), current.getY()+Math.cos(getAngle(current, goal)), current.getRotation());
-        double predictedDistance = getDistance(predicted, goal);
-        if (predictedDistance>currentDistance){
-            return 0;
-        }
+        // double currentDistance=getDistance(current, goal);
+        // Pose2d predicted = new Pose2d(current.getX()+Math.sin(getAngle(current, goal)), current.getY()+Math.cos(getAngle(current, goal)), current.getRotation());
+        // double predictedDistance = getDistance(predicted, goal);
+        // if (predictedDistance>currentDistance){
+        //     return 0;
+        // }
         straightPID.setSetpoint(getDistance(current, goal));
-        return straightPID.calculate(0);
+        return straightPID.calculate(5);
     }
 
 

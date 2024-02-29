@@ -80,6 +80,8 @@ public final RelativeEncoder encoderL;
 
   public void drive(final double ySpeed, final double rotateValue) {
     SmartDashboard.putNumber("encoder", getEncoderAvrg());
+    SmartDashboard.putNumber("speed", ySpeed);
+    SmartDashboard.putNumber("rotate", rotateValue);
     m_RobotDrive.arcadeDrive(ySpeed, rotateValue);
 
   }
