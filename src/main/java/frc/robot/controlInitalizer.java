@@ -62,22 +62,26 @@ public class controlInitalizer {
         new ArcadeDrive(
               driveSubsystem,
               () -> ((-movementController.getLeftTriggerAxis() + movementController.getRightTriggerAxis())),
-              () -> (-movementController.getLeftX() )
+              () -> (movementController.getLeftX() )
         ));
+
+      
 
       movementController.x().onFalse(new attemptToScheduleRoutine(testRoutine));
       
       manipulatorController.leftBumper() //intake
       .whileTrue(runIntake);
 
+
+    
       manipulatorController.rightBumper()//outake
       .whileTrue(runIntakeBackward);
 
     //   manipulatorController.x()
     //   .onTrue(toggleBucket);
 
-      manipulatorController.a()
-      .onTrue(toggleIntake);
+    //   manipulatorController.a()
+    //   .onTrue(toggleIntake);
 
       manipulatorController.y()
       .onTrue(toggleCompressor);
@@ -90,7 +94,7 @@ public class controlInitalizer {
             new ArcadeDrive(
                   driveSubsystem,
                   () -> ((-controller.getLeftTriggerAxis() + controller.getRightTriggerAxis())),
-                  () -> (-controller.getLeftX() )
+                  () -> (controller.getLeftX() )
             ));
     
     
@@ -120,7 +124,7 @@ public class controlInitalizer {
             new ArcadeDrive(
                   driveSubsystem,
                   () -> (-movementController.getLeftY()),
-                  () -> (-movementController.getRightX())
+                  () -> (movementController.getRightX())
             ));
     
     

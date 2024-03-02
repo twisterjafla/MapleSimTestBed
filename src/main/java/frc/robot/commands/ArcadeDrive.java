@@ -29,10 +29,13 @@ public class ArcadeDrive extends RunCommand {
   public ArcadeDrive(DriveBase drive, DoubleSupplier speed, DoubleSupplier rotation) {
     super(
       ()->{
+        SmartDashboard.putNumber("speed value", speed.getAsDouble());
 
         drive.drive(
+
+
           MathUtil.applyDeadband(speed.getAsDouble(), 0.1)*Constants.drive.driveSpeedRatio,
-          MathUtil.applyDeadband(rotation.getAsDouble(), 0.1)*Constants.drive.rotationSpeedRatio
+          MathUtil.applyDeadband(rotation.getAsDouble(), 0.1)
         );
       },
       drive

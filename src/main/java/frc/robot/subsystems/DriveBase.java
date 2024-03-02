@@ -62,7 +62,8 @@ public final RelativeEncoder encoderL;
     sparkMaxrf.setOpenLoopRampRate(Constants.drive.rampspeed);
 
 
-    //leftMotors.setInverted(true);
+    sparkMaxlf.setInverted(false);
+    sparkMaxrf.setInverted(true);
     //m_RobotDrive = new DifferentialDrive(rightMotors, leftMotors)
     m_RobotDrive = new DifferentialDrive(leftMotors, rightMotors);
     resetEncoder();
@@ -81,8 +82,8 @@ public final RelativeEncoder encoderL;
   public void drive(final double ySpeed, final double rotateValue) {
     SmartDashboard.putNumber("encoder", getEncoderAvrg());
     SmartDashboard.putNumber("speed", ySpeed);
-    SmartDashboard.putNumber("rotate", rotateValue);
-    m_RobotDrive.arcadeDrive(ySpeed, rotateValue);
+    SmartDashboard.putNumber("rotate", -rotateValue);
+    m_RobotDrive.arcadeDrive(ySpeed, -rotateValue);
 
   }
 

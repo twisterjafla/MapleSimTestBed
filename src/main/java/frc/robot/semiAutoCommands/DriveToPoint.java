@@ -15,6 +15,7 @@ import frc.robot.subsystems.DriveBase;
 public class DriveToPoint extends Command{
     DriveBase drive;
     Pose2d goal;
+    Pose2d start;
 
     PIDController turnPid = new PIDController(Constants.semiAuto.turn.Kp, 0, Constants.semiAuto.turn.Kd);
     PIDController straightPID = new PIDController(Constants.semiAuto.straight.Kp, 0, Constants.semiAuto.straight.Kd);
@@ -32,7 +33,9 @@ public class DriveToPoint extends Command{
     public void initialize(){
         turnPid.setSetpoint(goal.getRotation().getDegrees());
         turnPid.setTolerance(Constants.semiAuto.turn.tolerence);
-        //turnPid.enableContinuousInput(-1, 1);        
+    
+        turnPid.enableContinuousInput(-180, 180); 
+        straightPID.setSetpoint(0);
         //straightPID.enableContinuousInput(-1, 1);
     }
 
@@ -60,6 +63,10 @@ public class DriveToPoint extends Command{
     }
 
     public double turnMath(Pose2d current){
+        if (turnPid.atSetpoint()){
+            turnPid.calculate(current.getRotation().getDegrees());
+            return 0;
+        } 
         return turnPid.calculate(current.getRotation().getDegrees());
         
     }
@@ -72,8 +79,10 @@ public class DriveToPoint extends Command{
             turnPid.setSetpoint(goal.getRotation().getDegrees());
         }
         else if (!isInRing){
-            turnPid.setSetpoint(getAngle(current, goal));
+            turnPid.setSetpoint(getAngle(goal, current));
+            SmartDashboard.putNumber("angle", getAngle(goal, current));
         }
+        
         SmartDashboard.putBoolean("is in ring", isInRing);
         
     }
@@ -82,14 +91,13 @@ public class DriveToPoint extends Command{
         if (isInRing){
             return 0;
         }
-        // double currentDistance=getDistance(current, goal);
-        // Pose2d predicted = new Pose2d(current.getX()+Math.sin(getAngle(current, goal)), current.getY()+Math.cos(getAngle(current, goal)), current.getRotation());
-        // double predictedDistance = getDistance(predicted, goal);
-        // if (predictedDistance>currentDistance){
-        //     return 0;
-        // }
-        straightPID.setSetpoint(getDistance(current, goal));
-        return straightPID.calculate(5);
+        double currentDistance=getDistance(current, goal);
+        Pose2d predicted = new Pose2d(current.getX()+Math.sin(getAngle(current, goal)), current.getY()+Math.cos(getAngle(current, goal)), current.getRotation());
+        double predictedDistance = getDistance(predicted, goal);
+        if (Math.abs(current.getRotation().getDegrees()-goal.getRotation().getDegrees())>30){
+            return 0;
+        }
+        return straightPID.calculate(-getDistance(goal, current));
     }
 
 
@@ -121,15 +129,16 @@ public class DriveToPoint extends Command{
         
         double raw = Math.atan(goodY/goodX);
         
-        if (goodX<0&&goodY<0){
-            return -180+raw;
-        }
-        else if (goodX<0){
-            return 180+raw;
-        }    
-        else{
-            return raw;
-        }
+        // if (goodX<0&&goodY<0){
+        //     return -180+raw;
+        // }
+        // else if (goodX<0){
+        //     return 180-raw;
+        // }    
+        // else{
+        //     return raw;
+        // }
+        return raw;
     }
 
     public double square(double toSquare){

@@ -25,7 +25,7 @@ public class Gyro extends SubsystemBase{
   }
 
   public void log() {
-    //SmartDashboard.putNumber("Gyro", gyro.getYaw());
+    SmartDashboard.putNumber("Gyro", gyro.getYaw());
   }
 
   public double getHeading() {
