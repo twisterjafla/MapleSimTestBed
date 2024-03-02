@@ -2,6 +2,9 @@ package frc.robot.semiAutoCommands;
 
 import java.lang.reflect.Method;
 
+import javax.swing.text.Position;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -29,6 +32,7 @@ public class DriveToPoint extends Command{
         addRequirements(drive);
     }
 
+
     @Override
     public void initialize(){
         turnPid.setSetpoint(goal.getRotation().getDegrees());
@@ -43,11 +47,10 @@ public class DriveToPoint extends Command{
     @Override
     public void execute(){
         Pose2d current=semiAutoManager.getCoords();
-        checkPhase(getDistance(current, goal), current);
-        double speen = turnMath(current);
-        //SmartDashboard.putNumber("speen", speen);
+        checkPhase(current);
+
         SmartDashboard.putNumber("turnPidGoa", turnPid.getSetpoint());
-        drive.drive(straightMath(current), speen);
+        drive.drive(MathUtil.clamp(straightMath(current), -1, 1), MathUtil.clamp(-1, 1, turnMath(current)));
     
     }
 
@@ -73,7 +76,8 @@ public class DriveToPoint extends Command{
 
     
 
-    public void checkPhase(double distance, Pose2d current){
+    public void checkPhase(Pose2d current){
+        double distance=getDistance(current);
         if (!isInRing&&distance<Constants.semiAuto.turn.ringDistance){
             isInRing=true;
             turnPid.setSetpoint(goal.getRotation().getDegrees());
@@ -91,13 +95,21 @@ public class DriveToPoint extends Command{
         if (isInRing){
             return 0;
         }
-        double currentDistance=getDistance(current, goal);
-        Pose2d predicted = new Pose2d(current.getX()+Math.sin(getAngle(current, goal)), current.getY()+Math.cos(getAngle(current, goal)), current.getRotation());
-        double predictedDistance = getDistance(predicted, goal);
-        if (Math.abs(current.getRotation().getDegrees()-goal.getRotation().getDegrees())>30){
+
+        Pose2d predictedForward = new Pose2d(current.getX()+Math.cos(Math.toRadians(getAngle(current, goal))), current.getY()+Math.sin(Math.toRadians(getAngle(current, goal))), current.getRotation());
+        Pose2d predictedBack = new Pose2d(current.getX()-Math.cos(Math.toRadians(getAngle(current, goal))), current.getY()-Math.sin(Math.toRadians(getAngle(current, goal))), current.getRotation());
+        if (getDistance(current)>getDistance(predictedForward)){
+            return straightPID.calculate(-getDistance(current));
+        }
+        else if(getDistance(current)>getDistance(predictedBack)){
+            return straightPID.calculate(getDistance(current));
+        }
+        else{
             return 0;
         }
-        return straightPID.calculate(-getDistance(goal, current));
+        
+
+        
     }
 
 
@@ -107,19 +119,23 @@ public class DriveToPoint extends Command{
         return Math.sqrt(square(pointA.getX()-pointB.getX())+square(pointA.getY()-pointB.getY()));
     }
 
+    public double getDistance(Pose2d pointA){
+        return getDistance(pointA, goal);
+    }
+
     public double getAngle(Pose2d rotationA, Pose2d  rotationB){
         double goodY = rotationA.getY()-rotationB.getY();
         double goodX = rotationA.getX()-rotationB.getX();
-        if (goodX==0){
-            if (goodY>0){
+        if (goodY==0){
+            if (goodX>0){
                 return 0;
             }
             else{
                 return 180;
             }
         }
-        else if (goodY==0){
-            if (goodX>0){
+        else if (goodX==0){
+            if (goodY>0){
                 return 90;
             }
             else{
@@ -127,18 +143,18 @@ public class DriveToPoint extends Command{
             }
         }
         
-        double raw = Math.atan(goodY/goodX);
+        double raw = Math.toDegrees(Math.atan(goodY/goodX));
         
-        // if (goodX<0&&goodY<0){
-        //     return -180+raw;
-        // }
-        // else if (goodX<0){
-        //     return 180-raw;
-        // }    
-        // else{
-        //     return raw;
-        // }
-        return raw;
+        if (goodX<0&&goodY<0){
+            return -180+raw;
+        }
+        else if (goodY<0){
+            return 180-raw;
+        }    
+        else{
+            return raw;
+        }
+        //return raw;
     }
 
     public double square(double toSquare){
