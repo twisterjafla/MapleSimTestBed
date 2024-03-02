@@ -182,7 +182,7 @@ public final class Constants {
     public static final class fieldPosits{
         public static final Pose2d leftStart = new Pose2d(0, 0.0, new Rotation2d(0.0));
         public static final Pose2d ampScore = null;
-        public static final Pose2d testPosit = new Pose2d(0, 0.0, new Rotation2d(Math.toRadians(180)));
+        public static final Pose2d testPosit = new Pose2d(0, 0.0, new Rotation2d(Math.toRadians(170)));
     }
 
 

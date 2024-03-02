@@ -51,6 +51,7 @@ public class DriveToPoint extends Command{
 
         SmartDashboard.putNumber("turnPidGoa", turnPid.getSetpoint());
         drive.drive(MathUtil.clamp(straightMath(current), -1, 1), MathUtil.clamp(-1, 1, turnMath(current)));
+
     
     }
 
@@ -77,13 +78,12 @@ public class DriveToPoint extends Command{
     
 
     public void checkPhase(Pose2d current){
-        double distance=getDistance(current);
-        if (!isInRing&&distance<Constants.semiAuto.turn.ringDistance){
+        if (!isInRing&&getDistance(current)<Constants.semiAuto.turn.ringDistance){
             isInRing=true;
             turnPid.setSetpoint(goal.getRotation().getDegrees());
         }
         else if (!isInRing){
-            turnPid.setSetpoint(getAngle(goal, current));
+            turnPid.setSetpoint(getAngle(current, goal));
             SmartDashboard.putNumber("angle", getAngle(goal, current));
         }
         
