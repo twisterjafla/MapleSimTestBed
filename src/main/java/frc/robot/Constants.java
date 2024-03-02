@@ -166,23 +166,32 @@ public final class Constants {
     public static int blinkinPort=0;
     public static final class semiAuto{
         public static final class turn{
-            public static final double Kp = 0.1;
-            public static final double Kd= 0.06;
-            public static final double tolerence = 1;
-            public static final double ringDistance = 0.5;
+            public static final double finalKp = 0.1;
+            public static final double finalKi = 0.2;
+            public static final double finalKd= 0.2;
+
+            public static final double driveTurnKp = 0.001;
+            public static final double driveTurnKi = 0;
+            public static final double driveTurnKd= 0.9;
+
+            public static final double finalTolerence = 1;
+            public static final double driveTolerence = 9;
+            public static final double ringDistance = 0.18;
 
         }
         public static final class straight{
-            public static final double Kp = 0.4;
-            public static final double Kd= 0.0;
+            public static final double Kp = 0.5;
+            public static final double ki = 0.05;
+            public static final double Kd= 0;
             
         }
     }
 
+
     public static final class fieldPosits{
         public static final Pose2d leftStart = new Pose2d(0, 0.0, new Rotation2d(0.0));
         public static final Pose2d ampScore = null;
-        public static final Pose2d testPosit = new Pose2d(0, 0.0, new Rotation2d(Math.toRadians(170)));
+        public static final Pose2d testPosit = new Pose2d(0, 0.0, new Rotation2d(Math.toRadians(-90)));
     }
 
 

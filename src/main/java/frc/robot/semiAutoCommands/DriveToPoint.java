@@ -20,9 +20,10 @@ public class DriveToPoint extends Command{
     Pose2d goal;
     Pose2d start;
 
-    PIDController turnPid = new PIDController(Constants.semiAuto.turn.Kp, 0, Constants.semiAuto.turn.Kd);
-    PIDController straightPID = new PIDController(Constants.semiAuto.straight.Kp, 0, Constants.semiAuto.straight.Kd);
-
+    PIDController turnDrivePID = new PIDController(Constants.semiAuto.turn.driveTurnKp, Constants.semiAuto.turn.driveTurnKi, Constants.semiAuto.turn.driveTurnKd);
+    PIDController turnStationaryPID = new PIDController(Constants.semiAuto.turn.finalKp, Constants.semiAuto.turn.finalKi, Constants.semiAuto.turn.finalKd);
+    PIDController straightPID = new PIDController(Constants.semiAuto.straight.Kp, Constants.semiAuto.straight.ki, Constants.semiAuto.straight.Kd);
+    PIDController activeTurnPID;
     boolean isInRing=false;
 
     public DriveToPoint(DriveBase drive, Pose2d goal){
@@ -35,11 +36,18 @@ public class DriveToPoint extends Command{
 
     @Override
     public void initialize(){
-        turnPid.setSetpoint(goal.getRotation().getDegrees());
-        turnPid.setTolerance(Constants.semiAuto.turn.tolerence);
+        turnStationaryPID.setSetpoint(goal.getRotation().getDegrees());
+        turnStationaryPID.setTolerance(Constants.semiAuto.turn.finalTolerence);
     
-        turnPid.enableContinuousInput(-180, 180); 
+        turnStationaryPID.enableContinuousInput(-180, 180);
+        turnDrivePID.enableContinuousInput(-180, 180); 
+        turnDrivePID.setTolerance((Constants.semiAuto.turn.driveTolerence));
+
+
         straightPID.setSetpoint(0);
+        straightPID.setTolerance(0.1);
+
+        activeTurnPID=turnDrivePID;
         //straightPID.enableContinuousInput(-1, 1);
     }
 
@@ -48,17 +56,21 @@ public class DriveToPoint extends Command{
     public void execute(){
         Pose2d current=semiAutoManager.getCoords();
         checkPhase(current);
-
-        SmartDashboard.putNumber("turnPidGoa", turnPid.getSetpoint());
-        drive.drive(MathUtil.clamp(straightMath(current), -1, 1), MathUtil.clamp(-1, 1, turnMath(current)));
-
-    
+        double straight =  straightMath(current);
+        double turn = turnMath(current);
+        // if(straight<0){
+        //     turn=-turn;
+        // }
+       SmartDashboard.putNumber("turnPidGoa", activeTurnPID.getSetpoint());
+        drive.drive(straight, turn);
+        SmartDashboard.putBoolean("is in ring", isInRing);
+        SmartDashboard.putNumber("distanceToCurret", getDistance(current));
     }
 
     @Override
     public boolean isFinished(){
-        SmartDashboard.putBoolean("pid at set", turnPid.atSetpoint());
-        return turnPid.atSetpoint()&&isInRing;
+        SmartDashboard.putBoolean("pid at set", activeTurnPID.atSetpoint());
+        return activeTurnPID.atSetpoint()&&isInRing;
     }
 
     @Override
@@ -67,11 +79,12 @@ public class DriveToPoint extends Command{
     }
 
     public double turnMath(Pose2d current){
-        if (turnPid.atSetpoint()){
-            turnPid.calculate(current.getRotation().getDegrees());
+        if (activeTurnPID.atSetpoint()){
+            activeTurnPID.calculate(current.getRotation().getDegrees());
             return 0;
         } 
-        return turnPid.calculate(current.getRotation().getDegrees());
+
+        return activeTurnPID.calculate(current.getRotation().getDegrees());
         
     }
 
@@ -80,11 +93,21 @@ public class DriveToPoint extends Command{
     public void checkPhase(Pose2d current){
         if (!isInRing&&getDistance(current)<Constants.semiAuto.turn.ringDistance){
             isInRing=true;
-            turnPid.setSetpoint(goal.getRotation().getDegrees());
+            activeTurnPID=turnStationaryPID;
         }
         else if (!isInRing){
-            turnPid.setSetpoint(getAngle(current, goal));
+            activeTurnPID.setSetpoint(getAngle(current, goal));
+
             SmartDashboard.putNumber("angle", getAngle(goal, current));
+        }
+        else if(isInRing&&getDistance(current)>Constants.semiAuto.turn.ringDistance){
+            isInRing=false;
+            activeTurnPID=turnDrivePID;
+            activeTurnPID.setSetpoint(getAngle(current, goal));
+            SmartDashboard.putNumber("angle", getAngle(goal, current));
+            
+
+            
         }
         
         SmartDashboard.putBoolean("is in ring", isInRing);
@@ -96,19 +119,19 @@ public class DriveToPoint extends Command{
             return 0;
         }
 
-        Pose2d predictedForward = new Pose2d(current.getX()+Math.cos(Math.toRadians(getAngle(current, goal))), current.getY()+Math.sin(Math.toRadians(getAngle(current, goal))), current.getRotation());
-        Pose2d predictedBack = new Pose2d(current.getX()-Math.cos(Math.toRadians(getAngle(current, goal))), current.getY()-Math.sin(Math.toRadians(getAngle(current, goal))), current.getRotation());
+        Pose2d predictedForward = new Pose2d(current.getX()+Math.cos(Math.toRadians(getAngle(current, goal)))*0.1, current.getY()+Math.sin(Math.toRadians(getAngle(current, goal)))*0.1, current.getRotation());
+        Pose2d predictedBack = new Pose2d(current.getX()-Math.cos(Math.toRadians(getAngle(current, goal)))*0.1, current.getY()-Math.sin(Math.toRadians(getAngle(current, goal)))*0.1, current.getRotation());
         if (getDistance(current)>getDistance(predictedForward)){
+            SmartDashboard.putBoolean("forwardDrive", true);
             return straightPID.calculate(-getDistance(current));
         }
         else if(getDistance(current)>getDistance(predictedBack)){
+            SmartDashboard.putBoolean("forwardDrive", false);
             return straightPID.calculate(getDistance(current));
         }
         else{
             return 0;
         }
-        
-
         
     }
 
@@ -131,7 +154,7 @@ public class DriveToPoint extends Command{
                 return 0;
             }
             else{
-                return 180;
+                return 0;
             }
         }
         else if (goodX==0){
@@ -145,16 +168,16 @@ public class DriveToPoint extends Command{
         
         double raw = Math.toDegrees(Math.atan(goodY/goodX));
         
-        if (goodX<0&&goodY<0){
-            return -180+raw;
-        }
-        else if (goodY<0){
-            return 180-raw;
-        }    
-        else{
-            return raw;
-        }
-        //return raw;
+        // if (goodX<0&&goodY<0){
+        //     return -180+raw;
+        // }
+        // else if (goodY<0){
+        //     return 180-raw;
+        // }    
+        // else{
+        //     return raw;
+        // }                   
+        return raw;
     }
 
     public double square(double toSquare){
