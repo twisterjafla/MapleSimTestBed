@@ -91,7 +91,9 @@ public class DriveToPoint extends Command{
             turnPID.calculate(current.getRotation().getDegrees());
             return 0;
         } 
-
+        if (isInInnerRing){
+            return turnPID.calculate(current.getRotation().getDegrees())*Constants.semiAuto.turn.finalSlowRatio;
+        }
         return turnPID.calculate(current.getRotation().getDegrees());
         
     }

@@ -173,10 +173,12 @@ public final class Constants {
             public static final double finalKp = 0.06;
             public static final double finalKi = 0;
             public static final double finalKd= 0.4;
+            public static final double finalSlowRatio = 0.2;
 
             public static final double driveTurnKp = 0.1;
             public static final double driveTurnKi = 0;
             public static final double driveTurnKd= 0.3;
+            
 
             public static final double finalTolerence = 1;
             public static final double driveTolerence = 3;
