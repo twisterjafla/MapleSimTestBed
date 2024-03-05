@@ -31,6 +31,10 @@ public class DriveToPoint extends Command{
     boolean isInInnerRing=false;
     boolean isInOuterRing=false;
 
+    final double PI = Math.PI;
+
+    
+
     public DriveToPoint(DriveBase drive, Pose2d goal){
         this.drive=drive;
         this.goal=goal;
@@ -41,11 +45,11 @@ public class DriveToPoint extends Command{
 
     @Override
     public void initialize(){
-        turnStationaryPID.setSetpoint(goal.getRotation().getDegrees());
+        turnStationaryPID.setSetpoint(goal.getRotation().getRadians());
         turnStationaryPID.setTolerance(Constants.semiAuto.turn.finalTolerence);
     
-        turnStationaryPID.enableContinuousInput(-180, 180);
-        turnDrivePID.enableContinuousInput(-180, 180); 
+        turnStationaryPID.enableContinuousInput(-PI, PI);
+        turnDrivePID.enableContinuousInput(-PI, PI); 
         turnDrivePID.setTolerance((Constants.semiAuto.turn.driveTolerence));
 
 
@@ -63,13 +67,8 @@ public class DriveToPoint extends Command{
     public void execute(){
         Pose2d current=semiAutoManager.getCoords();
         checkPhase(current);
-        double straight =  straightMath(current);
-        double turn = turnMath(current);
-        // if(straight<0){
-        //     turn=-turn;
-        // }
-       SmartDashboard.putNumber("turnPidGoa", turnPID.getSetpoint());
-        drive.drive(straight, turn);
+        SmartDashboard.putNumber("turnPidGoaL", Math.toDegrees(turnPID.getSetpoint()));
+        drive.drive(straightMath(current), turnMath(current));
         SmartDashboard.putBoolean("is in ring", isInInnerRing);
         SmartDashboard.putNumber("distanceToCurret", getDistance(current));
     }
@@ -88,13 +87,10 @@ public class DriveToPoint extends Command{
 
     public double turnMath(Pose2d current){
         if (turnPID.atSetpoint()){
-            turnPID.calculate(current.getRotation().getDegrees());
+            turnPID.calculate(current.getRotation().getRadians());
             return 0;
         } 
-        if (isInInnerRing){
-            return turnPID.calculate(current.getRotation().getDegrees())*Constants.semiAuto.turn.finalSlowRatio;
-        }
-        return turnPID.calculate(current.getRotation().getDegrees());
+        return turnPID.calculate(current.getRotation().getRadians());
         
     }
 
@@ -108,13 +104,12 @@ public class DriveToPoint extends Command{
         else if (!isInInnerRing){
             turnPID.setSetpoint(getAngle(current, goal));
 
-            SmartDashboard.putNumber("angle", getAngle(goal, current));
         }
         else if(isInInnerRing&&getDistance(current)>Constants.semiAuto.goalRingDistance){
             isInInnerRing=false;
             turnPID=turnDrivePID;
             turnPID.setSetpoint(getAngle(current, goal));
-            SmartDashboard.putNumber("angle", getAngle(goal, current));   
+             
         }
         
         if(!isInOuterRing&&getDistance(current)<Constants.semiAuto.outerRingDistance){
@@ -137,8 +132,8 @@ public class DriveToPoint extends Command{
             return 0;
         }
 
-        Pose2d predictedForward = new Pose2d(current.getX()+Math.cos(Math.toRadians(getAngle(current, goal)))*0.1, current.getY()+Math.sin(Math.toRadians(getAngle(current, goal)))*0.1, current.getRotation());
-        Pose2d predictedBack = new Pose2d(current.getX()-Math.cos(Math.toRadians(getAngle(current, goal)))*0.1, current.getY()-Math.sin(Math.toRadians(getAngle(current, goal)))*0.1, current.getRotation());
+        Pose2d predictedForward = new Pose2d(current.getX()+Math.cos(getAngle(current, goal))*0.1, current.getY()+Math.sin(getAngle(current, goal))*0.1, current.getRotation());
+        Pose2d predictedBack = new Pose2d(current.getX()-Math.cos(getAngle(current, goal))*0.1, current.getY()-Math.sin(getAngle(current, goal))*0.1, current.getRotation());
         if (getDistance(current)>getDistance(predictedForward)){
             SmartDashboard.putBoolean("forwardDrive", true);
             return straightPID.calculate(-getDistance(current));
@@ -172,19 +167,19 @@ public class DriveToPoint extends Command{
                 return 0;
             }
             else{
-                return 0;
+                return PI;
             }
         }
         else if (goodX==0){
             if (goodY>0){
-                return 90;
+                return PI;
             }
             else{
-                return -90;
+                return -PI/2;
             }
         }
         
-        double raw = Math.toDegrees(Math.atan(goodY/goodX));
+        double raw = Math.atan(goodY/goodX);
         
         // if (goodX<0&&goodY<0){
         //     return -180+raw;
