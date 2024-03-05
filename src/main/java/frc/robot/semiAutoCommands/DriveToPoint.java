@@ -22,9 +22,14 @@ public class DriveToPoint extends Command{
 
     PIDController turnDrivePID = new PIDController(Constants.semiAuto.turn.driveTurnKp, Constants.semiAuto.turn.driveTurnKi, Constants.semiAuto.turn.driveTurnKd);
     PIDController turnStationaryPID = new PIDController(Constants.semiAuto.turn.finalKp, Constants.semiAuto.turn.finalKi, Constants.semiAuto.turn.finalKd);
-    PIDController straightPID = new PIDController(Constants.semiAuto.straight.Kp, Constants.semiAuto.straight.ki, Constants.semiAuto.straight.Kd);
-    PIDController activeTurnPID;
-    boolean isInRing=false;
+    PIDController turnPID;
+
+    PIDController innerStraightPID = new PIDController(Constants.semiAuto.straight.innerKp, Constants.semiAuto.straight.innerKi, Constants.semiAuto.straight.innerKd);
+    PIDController outerStraightPID = new PIDController(Constants.semiAuto.straight.outerKp, Constants.semiAuto.straight.outerKi, Constants.semiAuto.straight.outerKd);
+    PIDController straightPID;
+
+    boolean isInInnerRing=false;
+    boolean isInOuterRing=false;
 
     public DriveToPoint(DriveBase drive, Pose2d goal){
         this.drive=drive;
@@ -44,11 +49,13 @@ public class DriveToPoint extends Command{
         turnDrivePID.setTolerance((Constants.semiAuto.turn.driveTolerence));
 
 
-        straightPID.setSetpoint(0);
-        straightPID.setTolerance(0.1);
+        outerStraightPID.setSetpoint(0);
+        innerStraightPID.setSetpoint(0);
+        //straightPID.setTolerance(0.1);
 
-        activeTurnPID=turnDrivePID;
-        //straightPID.enableContinuousInput(-1, 1);
+        turnPID=turnDrivePID;
+        straightPID=outerStraightPID;
+               //straightPID.enableContinuousInput(-1, 1);
     }
 
 
@@ -61,16 +68,17 @@ public class DriveToPoint extends Command{
         // if(straight<0){
         //     turn=-turn;
         // }
-       SmartDashboard.putNumber("turnPidGoa", activeTurnPID.getSetpoint());
+       SmartDashboard.putNumber("turnPidGoa", turnPID.getSetpoint());
         drive.drive(straight, turn);
-        SmartDashboard.putBoolean("is in ring", isInRing);
+        SmartDashboard.putBoolean("is in ring", isInInnerRing);
         SmartDashboard.putNumber("distanceToCurret", getDistance(current));
     }
 
     @Override
     public boolean isFinished(){
-        SmartDashboard.putBoolean("pid at set", activeTurnPID.atSetpoint());
-        return activeTurnPID.atSetpoint()&&isInRing;
+        SmartDashboard.putBoolean("pid at set", turnPID.atSetpoint());
+        return turnPID.atSetpoint()&&isInInnerRing;
+        //return false;
     }
 
     @Override
@@ -79,43 +87,51 @@ public class DriveToPoint extends Command{
     }
 
     public double turnMath(Pose2d current){
-        if (activeTurnPID.atSetpoint()){
-            activeTurnPID.calculate(current.getRotation().getDegrees());
+        if (turnPID.atSetpoint()){
+            turnPID.calculate(current.getRotation().getDegrees());
             return 0;
         } 
 
-        return activeTurnPID.calculate(current.getRotation().getDegrees());
+        return turnPID.calculate(current.getRotation().getDegrees());
         
     }
 
     
 
     public void checkPhase(Pose2d current){
-        if (!isInRing&&getDistance(current)<Constants.semiAuto.turn.ringDistance){
-            isInRing=true;
-            activeTurnPID=turnStationaryPID;
+        if (!isInInnerRing&&getDistance(current)<Constants.semiAuto.goalRingDistance){
+            isInInnerRing=true;
+            turnPID=turnStationaryPID;
         }
-        else if (!isInRing){
-            activeTurnPID.setSetpoint(getAngle(current, goal));
+        else if (!isInInnerRing){
+            turnPID.setSetpoint(getAngle(current, goal));
 
             SmartDashboard.putNumber("angle", getAngle(goal, current));
         }
-        else if(isInRing&&getDistance(current)>Constants.semiAuto.turn.ringDistance){
-            isInRing=false;
-            activeTurnPID=turnDrivePID;
-            activeTurnPID.setSetpoint(getAngle(current, goal));
-            SmartDashboard.putNumber("angle", getAngle(goal, current));
-            
-
-            
+        else if(isInInnerRing&&getDistance(current)>Constants.semiAuto.goalRingDistance){
+            isInInnerRing=false;
+            turnPID=turnDrivePID;
+            turnPID.setSetpoint(getAngle(current, goal));
+            SmartDashboard.putNumber("angle", getAngle(goal, current));   
         }
         
-        SmartDashboard.putBoolean("is in ring", isInRing);
+        if(!isInOuterRing&&getDistance(current)<Constants.semiAuto.outerRingDistance){
+            isInOuterRing=true;
+            straightPID=innerStraightPID;
+        }
+        else if(isInOuterRing&&getDistance(current)>Constants.semiAuto.outerRingDistance){
+            isInOuterRing=false;
+            straightPID=outerStraightPID;
+        }
+
+        SmartDashboard.putBoolean("is in inner ring", isInInnerRing);
+        SmartDashboard.putBoolean("is in outer ring", isInOuterRing);
+
         
     }
 
     public double straightMath(Pose2d current){
-        if (isInRing){
+        if (isInInnerRing){
             return 0;
         }
 
