@@ -15,7 +15,11 @@ public class gearBoxEncoder extends SubsystemBase{
     double currentRatio;
     double sharedRatio;
 
-
+    /** creates a gear box encoders with two encoder values that get swaped between
+     * @param spark the spark max that the encoder is pulled from
+     * @param lowRatio the ratio that gets used when the box is in its low state
+     * @param highRatio the ratio that gets used when the box is in its high state
+     */
     gearBoxEncoder(CANSparkMax spark, double lowRatio, double highRatio){
         this.spark=spark;
         encoder=spark.getEncoder();
@@ -24,6 +28,13 @@ public class gearBoxEncoder extends SubsystemBase{
         this.highRatio=highRatio;
     }
 
+
+    /** creates a gear box encoders with two encoder values that get swaped between, also inclues a shared ratio that is used in both the high and low state
+     * @param spark the spark max that the encoder is pulled from
+     * @param lowRatio the ratio that gets used when the box is in its low state
+     * @param highRatio the ratio that gets used when the box is in its high state
+     * @param sharedRatio a ratio that is aplied in both the low and high state, should be used for wheel circumference
+     */
     gearBoxEncoder(CANSparkMax spark, double lowRatio, double highRatio, double sharedRatio){
         this.spark=spark;
         encoder=spark.getEncoder();
@@ -38,7 +49,7 @@ public class gearBoxEncoder extends SubsystemBase{
 
     @Override
     public void periodic(){
-        count+=encoder.getPosition()*currentRatio;
+        count+=encoder.getPosition()/currentRatio;
         encoder.setPosition(0);
     }
 
