@@ -40,6 +40,10 @@ public final class Constants {
 
         public static double rampspeed= .25;
 
+        public static final double Wheelcircumference =0.05715;
+        public static final double lowGearRatio=5.392;
+        public static final double highGearRatio=12.255;
+
 
 
     }

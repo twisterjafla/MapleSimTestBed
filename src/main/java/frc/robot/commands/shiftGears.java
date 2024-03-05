@@ -5,7 +5,7 @@ import frc.robot.subsystems.ShiftableGearbox;
 
 public class shiftGears extends InstantCommand {
     
-    public shiftGears(boolean isOn, ShiftableGearbox gearBox){
-        super(()->{gearBox.shift(isOn);}, gearBox);
+    public shiftGears(boolean isHigh, ShiftableGearbox gearBox){
+        super(()->{gearBox.shift(isHigh);}, gearBox);
     }
 }
