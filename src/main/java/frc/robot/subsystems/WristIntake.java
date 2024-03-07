@@ -21,7 +21,7 @@ public class WristIntake extends SubsystemBase {
   	}
 
     public void resetEncoder(){
-        //wristEncoder.setPosition(0);
+        wristEncoder.setPosition(0);
     }
 
     public double getEncoder(){
