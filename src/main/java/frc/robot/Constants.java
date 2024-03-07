@@ -51,7 +51,7 @@ public final class Constants {
         public static final int topLimitSwitch = 0;
         public static final int bottomLimitSwitch = 1;
 
-        public static final double elevatorUpSpeed = 0.1;
+        public static final double elevatorUpSpeed = 0.6;
         public static final double elevatorDownSpeed = -0.3;
         public static final double elevatorStayAtTopSpeed = 0.03;
     }
@@ -105,8 +105,8 @@ public final class Constants {
         public static final int beamBreakPort = 2;
 
         public static final class intakeSpeeds {
-            public static final double intakeSpeed = 0.6;
-            public static final double outakeSpeed = -0.6;
+            public static final double intakeSpeed = 0.3;
+            public static final double outakeSpeed = -0.3;
             // public static final int intakeRaiseSpeed = 1;
         }
 
@@ -157,10 +157,11 @@ public final class Constants {
         }
 
         public static final double resetPosition = 0;
+
         public static final double tolerance = 1;
         public static final double kp = 0.06;
         public static final double ki = 0;
-        public static final double kd = 0.05;
+        public static final double kd = 0.03;
     }
 
     public static final int MOVEMENT_JOYSTICK = 0;

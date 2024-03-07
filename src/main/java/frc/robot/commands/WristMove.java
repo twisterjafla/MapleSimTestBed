@@ -45,7 +45,8 @@ public class WristMove extends Command {
 
   @Override 
   public void execute() {
-    wrist.move(pid.calculate(wrist.getEncoder()));
+    //wrist.move(pid.calculate(wrist.getEncoder()));
+    wrist.move(-0.3);
     SmartDashboard.putNumber("wristPID", pid.calculate(wrist.getEncoder()));
     SmartDashboard.putNumber("Encoder Wrist Value.", wrist.getEncoder());
   }

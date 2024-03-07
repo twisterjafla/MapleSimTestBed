@@ -60,7 +60,7 @@ public class controlInitalizer {
             ));
         movementController.rightTrigger().onTrue(new shiftGears(false, gearBox)).onFalse(new shiftGears(true, gearBox));
         
-        movementController.leftBumper().whileTrue(new WristMove(wrist, Constants.wrist.posits.intakePosit));
+        movementController.leftBumper().whileTrue(new WristMove(wrist, -90));
         movementController.rightBumper().whileTrue(new WristMove(wrist, Constants.wrist.posits.scorePosit));
 
         movementController.a().whileTrue(new RepetitiveIntake(intake));
