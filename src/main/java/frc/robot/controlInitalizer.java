@@ -7,6 +7,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.ShiftableGearbox;
 import frc.robot.subsystems.WristIntake;
+import frc.robot.commands.WristMove;
 
 //object to deal with all ofthe dirty work of multiple control schemes
 public class controlInitalizer {
@@ -59,14 +60,13 @@ public class controlInitalizer {
             ));
         movementController.rightTrigger().onTrue(new shiftGears(false, gearBox)).onFalse(new shiftGears(true, gearBox));
         
-        movementController.leftBumper().whileTrue(new WristMove(wrist, Constants.wrist.motorSpeeds.motorUp));
-        movementController.rightBumper().whileTrue(new WristMove(wrist, Constants.wrist.motorSpeeds.motorDown));
+        movementController.leftBumper().whileTrue(new WristMove(wrist, Constants.wrist.posits.intakePosit));
+        movementController.rightBumper().whileTrue(new WristMove(wrist, Constants.wrist.posits.scorePosit));
 
         movementController.a().whileTrue(new RepetitiveIntake(intake));
         movementController.x().whileTrue(new RepetitiveOutake(intake));
 
         movementController.y().onTrue(new ElevatorToggle(elevator));
-        movementController.b().onFalse(new WristMove(wrist, Constants.wrist.posits.scorePosit));
         
     }
 }
