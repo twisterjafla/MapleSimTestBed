@@ -130,10 +130,20 @@ public class DriveToPoint extends Command{
     public double straightMath(Pose2d current){
         if (isInInnerRing){
             return 0;
+        }   
+        Pose2d predictedForward;
+        Pose2d predictedBack;
+        Pose2d predictedFieldForward = new Pose2d(current.getX()+Math.cos(getAngle(current, goal))*0.1, current.getY()+Math.sin(getAngle(current, goal))*0.1, current.getRotation());
+        Pose2d predictedFieldBack = new Pose2d(current.getX()-Math.cos(getAngle(current, goal))*0.1, current.getY()-Math.sin(getAngle(current, goal))*0.1, current.getRotation());
+        if (current.getRotation().getDegrees()>90||current.getRotation().getDegrees()<-90){
+            predictedBack=predictedFieldForward;
+            predictedForward=predictedFieldBack;
         }
-        
-        Pose2d predictedForward = new Pose2d(current.getX()+Math.cos(getAngle(current, goal))*0.1, current.getY()+Math.sin(getAngle(current, goal))*0.1, current.getRotation());
-        Pose2d predictedBack = new Pose2d(current.getX()-Math.cos(getAngle(current, goal))*0.1, current.getY()-Math.sin(getAngle(current, goal))*0.1, current.getRotation());
+        else{
+            predictedBack=predictedFieldBack;
+            predictedForward=predictedFieldForward;
+        }
+
 
         if (current.getRotation().getDegrees()>90 || current.getRotation().getDegrees()<-90){
             predictedForward = new Pose2d(current.getX()-Math.cos(getAngle(current, goal))*0.1, current.getY()-Math.sin(getAngle(current, goal))*0.1, current.getRotation());
