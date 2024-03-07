@@ -152,8 +152,8 @@ public final class Constants {
         }
 
         public static final class motorSpeeds {
-            public static final double motorUp = 0.5;
-            public static final double motorDown = -0.5;
+            public static final double motorUp = -0.3;
+            public static final double motorDown = 0.2;
         }
 
         public static final double resetPosition = 0;

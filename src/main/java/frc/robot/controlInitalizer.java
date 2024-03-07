@@ -7,7 +7,6 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.ShiftableGearbox;
 import frc.robot.subsystems.WristIntake;
-import frc.robot.commands.WristMove;
 
 //object to deal with all ofthe dirty work of multiple control schemes
 public class controlInitalizer {
@@ -58,15 +57,17 @@ public class controlInitalizer {
                   () -> ( movementController.getLeftY()),
                   () -> (-movementController.getRightX())
             ));
-        movementController.rightTrigger().onTrue(new shiftGears(false, gearBox)).onFalse(new shiftGears(true, gearBox));
-        
-        movementController.leftBumper().whileTrue(new WristMove(wrist, -90));
-        movementController.rightBumper().whileTrue(new WristMove(wrist, Constants.wrist.posits.scorePosit));
 
-        movementController.a().whileTrue(new RepetitiveIntake(intake));
-        movementController.x().whileTrue(new RepetitiveOutake(intake));
+        movementController.x().onTrue(new shiftGears(false, gearBox)).onFalse(new shiftGears(true, gearBox));
 
-        movementController.y().onTrue(new ElevatorToggle(elevator));
+        movementController.rightTrigger().whileTrue(new WristMove(wrist, Constants.wrist.motorSpeeds.motorUp));
+        movementController.leftTrigger().whileTrue(new WristMove(wrist, Constants.wrist.motorSpeeds.motorDown));
+        movementController.a().whileTrue(new IntakeNote(intake));
+        movementController.b().whileTrue(new ShootNote(intake));
+        movementController.rightBumper().whileTrue(new ElevatorMove(elevator, Constants.elevator.elevatorUpSpeed));
+        movementController.leftBumper().whileTrue(new ElevatorMove(elevator, Constants.elevator.elevatorDownSpeed));
+        movementController.povUp().whileTrue(new stayAtTop(elevator));
+        movementController.y().whileTrue(new ElevatorToggle(elevator));
         
     }
 }
