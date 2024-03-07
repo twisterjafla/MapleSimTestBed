@@ -40,7 +40,7 @@ public class ElevatorToggle extends Command {
         elevator.isUp=!elevator.isUp;
       }
       elevator.moveElevator(0);
-            SmartDashboard.putNumber("elevator switch", 999999999);
+
       new stayAtTop(elevator).schedule();
 
 
