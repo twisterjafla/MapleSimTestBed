@@ -167,11 +167,11 @@ public final class Constants {
     public static final class semiAuto{
 
         public static final double goalRingDistance = 0.18;
-        public static final double outerRingDistance = 3;
+        public static final double outerRingDistance = 1.5;
 
         public static final class turn{
-            public static final double finalKp = 0.7;
-            public static final double finalKi = 0;
+            public static final double finalKp = 1;
+            public static final double finalKi = 0.9;
             public static final double finalKd= 0.4;
             
             public static final double driveTurnKp = 0.4;
@@ -179,8 +179,8 @@ public final class Constants {
             public static final double driveTurnKd= 0.3;
             
 
-            public static final double finalTolerence = 1;
-            public static final double driveTolerence = 3;
+            public static final double finalTolerence = 0.0175;
+            public static final double driveTolerence = 0.0524;
 
         }
         public static final class straight{

@@ -67,7 +67,7 @@ public class DriveToPoint extends Command{
     public void execute(){
         Pose2d current=semiAutoManager.getCoords();
         checkPhase(current);
-        SmartDashboard.putNumber("turnPidGoaL", Math.toDegrees(turnPID.getSetpoint()));
+        SmartDashboard.putNumber("turnPidGoal", turnPID.getSetpoint());
         drive.drive(straightMath(current), turnMath(current));
         SmartDashboard.putBoolean("is in ring", isInInnerRing);
         SmartDashboard.putNumber("distanceToCurret", getDistance(current));
@@ -131,12 +131,20 @@ public class DriveToPoint extends Command{
         if (isInInnerRing){
             return 0;
         }
-
+        
         Pose2d predictedForward = new Pose2d(current.getX()+Math.cos(getAngle(current, goal))*0.1, current.getY()+Math.sin(getAngle(current, goal))*0.1, current.getRotation());
         Pose2d predictedBack = new Pose2d(current.getX()-Math.cos(getAngle(current, goal))*0.1, current.getY()-Math.sin(getAngle(current, goal))*0.1, current.getRotation());
+
+        if (current.getRotation().getDegrees()>90 || current.getRotation().getDegrees()<-90){
+            predictedForward = new Pose2d(current.getX()-Math.cos(getAngle(current, goal))*0.1, current.getY()-Math.sin(getAngle(current, goal))*0.1, current.getRotation());
+            predictedBack = new Pose2d(current.getX()+Math.cos(getAngle(current, goal))*0.1, current.getY()+Math.sin(getAngle(current, goal))*0.1, current.getRotation());
+        }
+
+
+
         if (getDistance(current)>getDistance(predictedForward)){
             SmartDashboard.putBoolean("forwardDrive", true);
-            return straightPID.calculate(-getDistance(current));
+            return straightPID.calculate(getDistance(current));
         }
         else if(getDistance(current)>getDistance(predictedBack)){
             SmartDashboard.putBoolean("forwardDrive", false);
@@ -172,7 +180,7 @@ public class DriveToPoint extends Command{
         }
         else if (goodX==0){
             if (goodY>0){
-                return PI;
+                return PI/2;
             }
             else{
                 return -PI/2;
@@ -189,9 +197,26 @@ public class DriveToPoint extends Command{
         // }    
         // else{
         //     return raw;
-        // }                   
+        // }                    
         return raw;
     }
+
+    public double getAngle360(Pose2d pointA, Pose2d pointB){
+        double raw = getAngle(pointA, pointB);
+        
+        
+
+        if (pointA.getX()<pointB.getX()&&pointA.getY()<pointB.getY()){
+            return -180+raw;
+        }
+        else if (pointA.getX()<pointB.getX()){
+            return 180-raw;
+        }    
+        else{
+            return raw;
+        }    
+    }
+
 
     public double square(double toSquare){
         return Math.pow(toSquare, 2);

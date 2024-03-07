@@ -61,6 +61,7 @@ public  class semiAutoManager{
         SmartDashboard.putNumber("robotPositX", currentPose2d.getX());
         SmartDashboard.putNumber("robotPositY", currentPose2d.getY());
         SmartDashboard.putNumber("RobotRotation", currentPose2d.getRotation().getDegrees());
+        SmartDashboard.putNumber("robotRotation radians", currentPose2d.getRotation().getRadians());
         //SmartDashboard.putNumber("gyroValue", gyro.getYaw().getDegrees());
         //SmartDashboard.putNumber("leftEncoder", drive.getLeftEncoder());
         //SmartDashboard.putNumber("rightEncoder", drive.getRightEncoder());
