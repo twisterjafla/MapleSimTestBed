@@ -19,7 +19,7 @@ import frc.robot.subsystems.WristIntake;
 public class WristMove extends Command {
 
   WristIntake wrist;
-  double setpoint;
+  double speed;
 
   private final PIDController pid = new PIDController(
         Constants.wrist.kp,
@@ -27,9 +27,9 @@ public class WristMove extends Command {
         Constants.wrist.kd
   );
 
-  public WristMove(WristIntake wrist, double setpoint) {
+  public WristMove(WristIntake wrist, double speed) {
     this.wrist = wrist;
-    this.setpoint=setpoint;
+    this.speed=speed;
     
     addRequirements(wrist);
 
@@ -38,7 +38,7 @@ public class WristMove extends Command {
   @Override
   public void initialize() {
     //SmartDashboard.putNumber("setpoint", setpoint);
-    pid.setSetpoint(setpoint);
+    pid.setSetpoint(speed);
     pid.setTolerance(Constants.wrist.tolerance);
   }
 
@@ -46,16 +46,10 @@ public class WristMove extends Command {
   @Override 
   public void execute() {
     //wrist.move(pid.calculate(wrist.getEncoder()));
-    wrist.move(-0.3);
+    wrist.move(speed);
     SmartDashboard.putNumber("wristPID", pid.calculate(wrist.getEncoder()));
     SmartDashboard.putNumber("Encoder Wrist Value.", wrist.getEncoder());
   }
-
-  @Override
-  public boolean isFinished() { 
-    return pid.atSetpoint();
-
-  } 
 
   @Override
   public void end(boolean interrupted){

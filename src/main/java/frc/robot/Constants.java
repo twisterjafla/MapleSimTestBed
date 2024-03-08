@@ -48,8 +48,8 @@ public final class Constants {
         public static final int motorPortLeft = 3;
         public static final int motorPortRight = 4;
 
-        public static final int topLimitSwitch = 0;
-        public static final int bottomLimitSwitch = 1;
+        public static final int topLimitSwitch = 1;
+        public static final int bottomLimitSwitch = 0;
 
         public static final double elevatorUpSpeed = 0.6;
         public static final double elevatorDownSpeed = -0.3;
@@ -106,7 +106,7 @@ public final class Constants {
 
         public static final class intakeSpeeds {
             public static final double intakeSpeed = 0.3;
-            public static final double outakeSpeed = -0.3;
+            public static final double outakeSpeed = -1;
             // public static final int intakeRaiseSpeed = 1;
         }
 
@@ -152,8 +152,8 @@ public final class Constants {
         }
 
         public static final class motorSpeeds {
-            public static final double motorUp = -0.3;
-            public static final double motorDown = 0.2;
+            public static final double motorUp = 0.3;
+            public static final double motorDown = -0.6;
         }
 
         public static final double resetPosition = 0;
