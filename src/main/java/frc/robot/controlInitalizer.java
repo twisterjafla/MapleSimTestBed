@@ -60,8 +60,8 @@ public class controlInitalizer {
 
         movementController.x().onTrue(new shiftGears(false, gearBox)).onFalse(new shiftGears(true, gearBox));
 
-        movementController.rightTrigger().whileTrue(new WristMove(wrist, Constants.wrist.motorSpeeds.motorUp));
-        movementController.leftTrigger().whileTrue(new WristMove(wrist, Constants.wrist.motorSpeeds.motorDown));
+        movementController.rightTrigger().whileTrue(new WristMove(wrist, Constants.wrist.positions.up));
+        movementController.leftTrigger().whileTrue(new WristMove(wrist, Constants.wrist.positions.intake));
         movementController.a().whileTrue(new IntakeNote(intake));
         movementController.b().whileTrue(new ShootNote(intake));
         movementController.rightBumper().whileTrue(new ElevatorMove(elevator, Constants.elevator.elevatorUpSpeed));

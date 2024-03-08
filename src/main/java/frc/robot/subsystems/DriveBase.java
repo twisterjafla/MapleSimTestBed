@@ -41,6 +41,7 @@ public class DriveBase extends SubsystemBase {
     //left voltage ramping
     encoderR=sparkMaxRightFront.getEncoder();    
     encoderL= sparkMaxLeftFront.getEncoder();
+    encoderL.setPositionConversionFactor(3.3);
     sparkMaxLeftBack.setInverted(true);
     sparkMaxLeftFront.setInverted(true);
 

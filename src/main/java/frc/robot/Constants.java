@@ -140,15 +140,16 @@ public final class Constants {
     }
 
     public static final class wrist {
+        
 
         public static final class ports {
             public static final int motorPort = 10;
             public static final int encoderLimitSwitch = 20;
         }
 
-        public static final class posits{
-            public static final double scorePosit=8.16;
-            public static final double intakePosit=10.43;
+        public static final class positions{
+            public static final double up = 90;
+            public static final double intake = 0;
         }
 
         public static final class motorSpeeds {
@@ -162,6 +163,7 @@ public final class Constants {
         public static final double kp = 0.06;
         public static final double ki = 0;
         public static final double kd = 0.03;
+        public static final double gearRatio=40;
     }
 
     public static final int MOVEMENT_JOYSTICK = 0;
