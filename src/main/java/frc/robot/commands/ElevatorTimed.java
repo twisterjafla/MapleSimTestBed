@@ -16,10 +16,10 @@ public class ElevatorTimed extends WaitCommand {
   @Override
   public void initialize() {
     if (elevator.isUp) {
-      this.speed = Constants.elevator.elevatorDown;
+      this.speed = Constants.elevator.elevatorDownSpeed;
     }
     else {
-      this.speed = Constants.elevator.elevatorUp;
+      this.speed = Constants.elevator.elevatorUpSpeed;
     }
   }
 
@@ -29,8 +29,12 @@ public class ElevatorTimed extends WaitCommand {
     elevator.moveElevator(speed);
   }
 
+
+
   @Override
   public void end(boolean interupted) {
     super.end(interupted);
+    elevator.isUp=!elevator.isUp;
+    elevator.moveElevator(0);
   }
 }

@@ -13,11 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.WristIntake;
 
-/**
- * Have the robot drive tank style.
- */
 public class WristMove extends Command {
-
   WristIntake wrist;
   double setpoint;
 
@@ -37,28 +33,26 @@ public class WristMove extends Command {
 
   @Override
   public void initialize() {
-    //SmartDashboard.putNumber("setpoint", setpoint);
     pid.setSetpoint(setpoint);
     pid.setTolerance(Constants.wrist.tolerance);
   }
 
 
-  @Override
+  @Override 
   public void execute() {
     wrist.move(pid.calculate(wrist.getEncoder()));
     SmartDashboard.putNumber("wristPID", pid.calculate(wrist.getEncoder()));
     SmartDashboard.putNumber("Encoder Wrist Value.", wrist.getEncoder());
   }
 
-  @Override
-  public boolean isFinished() { 
+  @Override 
+  public boolean isFinished() {
     return pid.atSetpoint();
-
-  } 
+  }
 
   @Override
   public void end(boolean interrupted){
-    wrist.move(0);
+    wrist.stop();
   }
 
 }

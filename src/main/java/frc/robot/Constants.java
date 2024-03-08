@@ -45,14 +45,15 @@ public final class Constants {
     }
 
     public static final class elevator {
-        public static final int motorPortLeft = 0;
-        public static final int motorPortRight = 1;
+        public static final int motorPortLeft = 3;
+        public static final int motorPortRight = 4;
 
-        public static final int topLimitSwitch = 0;
-        public static final int bottomLimitSwitch = 1;
+        public static final int topLimitSwitch = 1;
+        public static final int bottomLimitSwitch = 0;
 
-        public static final int elevatorUp = 1;
-        public static final int elevatorDown = -1;
+        public static final double elevatorUpSpeed = 0.6;
+        public static final double elevatorDownSpeed = -0.3;
+        public static final double elevatorStayAtTopSpeed = 0.03;
     }
   
     // Changing Solenoid Values idk 50/50 this'll work
@@ -101,25 +102,25 @@ public final class Constants {
 
     public static final class intake {
         public static final int counterCap = 25; // this number is untested, it should run for 0.5 seconds after note is taken
+        public static final int beamBreakPort = 2;
 
         public static final class intakeSpeeds {
-            public static final int intakeSpeed = 1;
-            public static final int outakeSpeed = -1;
-            public static final int intakeRaiseSpeed = 1;
+            public static final double intakeSpeed = 0.3;
+            public static final double outakeSpeed = -1;
+            // public static final int intakeRaiseSpeed = 1;
         }
 
         public static final class intakeNote {
-            public static final int intakeMotorPortLeft = 0;
-            public static final int intakeMotorPortRight = 0;
+            public static final int intakeMotorPortLeft = 7;
+            public static final int intakeMotorPortRight = 11;
         }
         
-        public static final class raisingIntake {
-            public static final int raisingMotorPort = 0;
+        // public static final class raisingIntake {
+        //     public static final int raisingMotorPort = 0;
 
-            public static final int topLimitSwitchPort = 0;
-            public static final int bottomLimitSwitchPort = 0;
-            public static final int beamBreakPort = 0;
-        }
+        //     public static final int topLimitSwitchPort = 0;
+        //     public static final int bottomLimitSwitchPort = 0;
+        // }
     }
 
 
@@ -139,22 +140,30 @@ public final class Constants {
     }
 
     public static final class wrist {
+        
 
         public static final class ports {
-            public static final int motorPort = 3;
-            public static final int encoderLimitSwitch = 0;
+            public static final int motorPort = 10;
+            public static final int encoderLimitSwitch = 20;
+        }
+
+        public static final class positions{
+            public static final double up = 90;
+            public static final double intake = 0;
         }
 
         public static final class motorSpeeds {
-            public static final double motorUp = 0.5;
-            public static final double motorDown = -0.5;
+            public static final double motorUp = 0.3;
+            public static final double motorDown = -0.6;
         }
 
         public static final double resetPosition = 0;
+
         public static final double tolerance = 1;
         public static final double kp = 0.06;
         public static final double ki = 0;
-        public static final double kd = 0.05;
+        public static final double kd = 0.03;
+        public static final double gearRatio=40;
     }
 
     public static final int MOVEMENT_JOYSTICK = 0;

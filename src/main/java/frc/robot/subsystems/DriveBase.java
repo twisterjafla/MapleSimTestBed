@@ -1,8 +1,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -43,6 +41,7 @@ public class DriveBase extends SubsystemBase {
     //left voltage ramping
     encoderR=sparkMaxRightFront.getEncoder();    
     encoderL= sparkMaxLeftFront.getEncoder();
+    encoderL.setPositionConversionFactor(3.3);
     sparkMaxLeftBack.setInverted(true);
     sparkMaxLeftFront.setInverted(true);
 

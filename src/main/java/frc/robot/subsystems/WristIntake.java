@@ -9,11 +9,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class WristIntake extends SubsystemBase {
-	public final CANSparkMax wristMotor = new CANSparkMax(Constants.wrist.ports.motorPort, MotorType.kBrushless);
+	public final CANSparkMax wristMotor;
+    public final limitSwitch wristLimitSwitch;
+    public final RelativeEncoder encoder;
 
-    public final limitSwitch wristLimitSwitch = new limitSwitch(Constants.wrist.ports.encoderLimitSwitch);
+    
 
-    public final RelativeEncoder wristEncoder = wristMotor.getEncoder();
+    public WristIntake(){
+        wristLimitSwitch = new limitSwitch(Constants.wrist.ports.encoderLimitSwitch);
+        wristMotor = new CANSparkMax(Constants.wrist.ports.motorPort, MotorType.kBrushless);
+        encoder = wristMotor.getEncoder();
+
+        encoder.setPositionConversionFactor(Constants.wrist.gearRatio/360);
+    }
 
 	public void move(double speed){
         SmartDashboard.putNumber("speed", speed);
@@ -21,18 +29,22 @@ public class WristIntake extends SubsystemBase {
   	}
 
     public void resetEncoder(){
-        wristEncoder.setPosition(0);
+        encoder.setPosition(0);
     }
 
     public double getEncoder(){
-        return wristEncoder.getPosition();
+        return encoder.getPosition();
+    }
+
+    public void stop(){
+        move(0);
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("wristencoder2", wristEncoder.getPosition());
+        SmartDashboard.putNumber("wristencoder2", getEncoder());
         if (wristLimitSwitch.getVal()){
-            wristEncoder.setPosition(Constants.wrist.resetPosition);
+            resetEncoder();
         }
     }
 }

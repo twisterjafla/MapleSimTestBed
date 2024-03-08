@@ -15,4 +15,9 @@ public class IntakeNote extends Command {
   public void execute() {
     intake.intake();
   }
+  
+  @Override
+  public void end(boolean interrupted) {
+    intake.stop();
+  }
 }

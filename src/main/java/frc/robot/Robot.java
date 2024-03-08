@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
 
@@ -30,6 +29,8 @@ public class Robot extends TimedRobot {
   final DriveBase m_driveSubsystem = new DriveBase();
   final ShiftableGearbox gearBox = new ShiftableGearbox();
   final WristIntake wrist = new WristIntake();
+  final Intake intake = new Intake();
+  final Elevator elevator = new Elevator();
 
   final Gyro gyro = new Gyro();
 
@@ -42,7 +43,7 @@ public class Robot extends TimedRobot {
   SendableChooser<Integer> controlChooser = new SendableChooser<Integer>();
 
 
-  controlInitalizer controlInitalizer = new controlInitalizer(m_driveSubsystem, gearBox, wrist);
+  controlInitalizer controlInitalizer = new controlInitalizer(m_driveSubsystem, gearBox, wrist, intake, elevator);
 
   final CommandXboxController controller1 = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
   final CommandXboxController controller2 = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
@@ -92,7 +93,7 @@ public class Robot extends TimedRobot {
 
 
     else if (controlChooser.getSelected()==2){
-      controlInitalizer.initalizeJaceControllWithSecondController(controller1, controller2);
+      controlInitalizer.initalizeJaceControllWithSecondController(controller1, controller2, wrist, intake, elevator);
 
     }
      

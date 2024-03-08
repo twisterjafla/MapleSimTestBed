@@ -19,7 +19,7 @@ public class RepetitiveIntake extends Command {
 
   @Override
   public void initialize() {
-    if (!intake.topSwitch.isOk()||!intake.bottomSwitch.isOk()) {
+    if (!intake.beamBreak.isOk()) {
       CommandScheduler.getInstance().cancel(this);
     }
     counter = 0;
@@ -30,6 +30,11 @@ public class RepetitiveIntake extends Command {
   public void execute() {
     intake.intake();
 
+  }
+
+  @Override
+  public void end(boolean wasInterupted){
+    intake.stop();
   }
 
   @Override
