@@ -85,6 +85,7 @@ public class Robot extends TimedRobot {
     controlChooser.addOption("One controler", 1);
     controlChooser.addOption("jace control", 2);
     controlChooser.addOption("MidiControl alone", 3);
+    controlChooser.addOption("autoDriveTest", 4);
 
 
     SmartDashboard.putData("control type", controlChooser);
@@ -121,6 +122,9 @@ public class Robot extends TimedRobot {
     }
     else if (controlChooser.getSelected()==3){
       controlInitalizer.initalizeMIDIAloneControl(midi);
+    }
+    else if (controlChooser.getSelected()==4){
+      controlInitalizer.autoDriveTest(controller1);
     }
      
 

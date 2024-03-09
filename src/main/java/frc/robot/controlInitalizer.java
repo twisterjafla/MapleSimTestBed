@@ -139,6 +139,7 @@ public class controlInitalizer {
 
         controller.y().onTrue(cancel);
         controller.x().onFalse(testRoutine);
+        controller.rightTrigger().onTrue(new shiftGears(true, gearBox)).onFalse(new shiftGears(false, gearBox));
     }
 
 
