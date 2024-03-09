@@ -63,6 +63,10 @@ public final class Constants {
 
         public static final double encoderToMetersRatio= robotStats.wheelRadius*Math.PI*2/(robotStats.gearRatio);
         public static final double encoderToWheelRatio = 1/(robotStats.gearRatio);
+        public static final double Wheelcircumference =0.05715;
+        public static final double lowGearRatio=5.392;
+        public static final double highGearRatio=12.255;
+
 
         public static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.robotStats.trackWidth);
         public static final double ksVolts = 1.22;

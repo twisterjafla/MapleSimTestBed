@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelPositions;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
@@ -12,9 +13,11 @@ public class ShiftableGearbox extends SubsystemBase{
 
   DoubleSolenoid shifter = hub.makeDoubleSolenoid(Constants.pneumatics.solenoidPortA, Constants.pneumatics.solenoidPortB);
   Compressor compressor = hub.makeCompressor();
+  DriveBase drive;
 
-  public ShiftableGearbox(){
+  public ShiftableGearbox(DriveBase drive){
     compressor.enableDigital();
+    this.drive=drive;
   }
 
 
@@ -27,8 +30,9 @@ public class ShiftableGearbox extends SubsystemBase{
     }
   }
 
-  public void shift(boolean isOn){
-    if (isOn){
+  public void shift(boolean isHigh){
+    drive.shift(isHigh);
+    if (isHigh){
       shifter.set(DoubleSolenoid.Value.kForward);
     } 
     else{

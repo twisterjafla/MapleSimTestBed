@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
 
  
 
-  final ShiftableGearbox gearBox = new ShiftableGearbox();
+  final ShiftableGearbox gearBox = new ShiftableGearbox(m_driveSubsystem);
   final WristIntake wrist = new WristIntake();
   final Elevator elevator = new Elevator();
   final Midi midi = new Midi();
