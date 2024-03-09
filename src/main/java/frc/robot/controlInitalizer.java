@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.SemiAutoRoutines.*;
 import frc.robot.commands.*;
@@ -11,6 +12,7 @@ import frc.robot.subsystems.Midi;
 import frc.robot.subsystems.ShiftableGearbox;
 import frc.robot.subsystems.WristIntake;
 
+
 //object to deal with all ofthe dirty work of multiple control schemes
 public class controlInitalizer {
     static DriveBase driveSubsystem;
@@ -21,6 +23,8 @@ public class controlInitalizer {
     static CancelCurrentRoutine cancel;
     static boolean hasBeenInitalizedFromRobot=false;
     static boolean hasBeenInitalizedFromSemiAutoManager;
+    public static Command testRoutine;
+
 
     public static void controlInitalizerFromRobot(
         DriveBase DriveSubsystem, ShiftableGearbox GearBox, WristIntake Wrist, Intake Intake, Elevator Elevator){
@@ -29,6 +33,8 @@ public class controlInitalizer {
         wrist = Wrist;
         intake = Intake;
         elevator = Elevator;
+        testRoutine = new testRoutineRunner(driveSubsystem, GearBox);
+
 
 
     }
@@ -36,6 +42,7 @@ public class controlInitalizer {
     public static void controlInitalizerFromSemiAutoManager(CancelCurrentRoutine Cancel){
         hasBeenInitalizedFromSemiAutoManager=true;
         cancel = Cancel;
+
     }
 
 
@@ -120,6 +127,18 @@ public class controlInitalizer {
 
         
         midi.getButtonFromDict("button9").buttonTrigger.onFalse(cancel);
+    }
+
+    public static final void autoDriveTest(CommandXboxController controller){
+        driveSubsystem.setDefaultCommand(
+            new ArcadeDrive(
+                  driveSubsystem,
+                  () -> ( controller.getLeftY()),
+                  () -> (-controller.getLeftX())
+            )); 
+
+        controller.y().onTrue(cancel);
+        controller.x().onFalse(testRoutine);
     }
 
 

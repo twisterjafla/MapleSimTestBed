@@ -12,11 +12,12 @@ import frc.robot.semiAutoManager;
 import frc.robot.semiAutoCommands.DriveToPoint;
 //import frc.robot.commands.testDriveStraight;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.ShiftableGearbox;
 
 public class testRoutine extends SequentialCommandGroup{
-    public testRoutine(DriveBase drive){
+    public testRoutine(DriveBase drive, ShiftableGearbox gearbox){
         super(
-            new DriveToPoint(drive, Constants.fieldPosits.testPosit)
+            new DriveToPoint(drive, Constants.fieldPosits.testPosit, gearbox)
         );
     }
 }
