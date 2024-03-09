@@ -25,7 +25,7 @@ public class WristIntake extends SubsystemBase {
     }
 
 	public void move(double speed){
-        //SmartDashboard.putNumber("speed", speed);
+        SmartDashboard.putNumber("Wrist speed", speed);
     	wristMotor.set(speed);
   	}
 

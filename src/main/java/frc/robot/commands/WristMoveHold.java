@@ -37,18 +37,26 @@ public class WristMoveHold extends Command {
     addRequirements(wrist);
     pid.enableContinuousInput(-PI, PI);
 
+
   }
 
   @Override
   public void initialize() {
     pid.setSetpoint(setpoint);
     pid.setTolerance(Constants.wrist.tolerance);
+    SmartDashboard.putString("wrist", "holding");
+
   }
 
 
   @Override 
   public void execute() {
-    wrist.move(MathUtil.clamp(pid.calculate(Math.toRadians(wrist.getEncoder())), -Constants.wrist.motorSpeeds.maxSpeed, Constants.wrist.motorSpeeds.maxSpeed));
+    if (pid.atSetpoint()){
+      wrist.move(0);
+    }
+    else{
+      wrist.move(MathUtil.clamp(pid.calculate(Math.toRadians(wrist.getEncoder())), -Constants.wrist.motorSpeeds.maxSpeed, Constants.wrist.motorSpeeds.maxSpeed));
+    }
   }
 
   @Override

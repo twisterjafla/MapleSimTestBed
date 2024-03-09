@@ -43,6 +43,8 @@ public class WristMoveAuto extends Command {
   public void initialize() {
     pid.setSetpoint(setpoint);
     pid.setTolerance(Constants.wrist.tolerance);
+    SmartDashboard.putString("wrist", "moving");
+
   }
 
 
@@ -62,6 +64,7 @@ public class WristMoveAuto extends Command {
     if (!interrupted){
       new WristMoveHold(wrist, setpoint).schedule();
     }
+    wrist.move(0);
   }
 
 }
