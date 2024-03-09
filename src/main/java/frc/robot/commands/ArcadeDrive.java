@@ -15,21 +15,12 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveBase;
 
-/**
- * Have the robot drive tank style.
- */
+
 public class ArcadeDrive extends RunCommand {
-  /**
-   * Creates a new ArcadeDrive command.
-   *
-   * @param left       The control input for the left side of the drive
-   * @param right      The control input for the right sight of the drive
-   * @param driveSubsystem The driveSubsystem subsystem to drive
-   */
+
   public ArcadeDrive(DriveBase drive, DoubleSupplier speed, DoubleSupplier rotation) {
     super(
       ()->{
-        SmartDashboard.putNumber("speed value", speed.getAsDouble());
 
         drive.drive(
 

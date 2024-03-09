@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.Encoder;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
@@ -13,29 +14,30 @@ import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class DriveBase extends SubsystemBase {
- // new CANSparkMax(Constats.drive.lt, MotorType.kBrushless);
 
-// left side
- public final CANSparkMax sparkMaxlr = new CANSparkMax(Constants.drive.lr, MotorType.kBrushless);
- public final CANSparkMax sparkMaxlf = new CANSparkMax(Constants.drive.lf, MotorType.kBrushless);
+  // left side
+  public final CANSparkMax sparkMaxLeftBack = new CANSparkMax(Constants.drive.leftBackMotor, MotorType.kBrushless);
+  public final CANSparkMax sparkMaxLeftFront = new CANSparkMax(Constants.drive.leftFrontMotor, MotorType.kBrushless);
 
-//right side
-public final CANSparkMax sparkMaxrr = new CANSparkMax(Constants.drive.rr, MotorType.kBrushless);
-public final CANSparkMax sparkMaxrf = new CANSparkMax(Constants.drive.rf, MotorType.kBrushless);
-public final RelativeEncoder encoderR;
-public final RelativeEncoder encoderL;
+  //right side
+  public final CANSparkMax sparkMaxRightBack = new CANSparkMax(Constants.drive.rightBackMotor, MotorType.kBrushless);
+  public final CANSparkMax sparkMaxRightFront = new CANSparkMax(Constants.drive.rightFrontMotor, MotorType.kBrushless);
+
+
+  public final RelativeEncoder encoderR;
+  public final RelativeEncoder encoderL;
+
 
 
 
 
   final MotorControllerGroup leftMotors = new MotorControllerGroup(
-    sparkMaxlf
+
+    sparkMaxLeftFront, sparkMaxLeftBack
       );
 
   final MotorControllerGroup rightMotors = new MotorControllerGroup(
-    
-    
-    sparkMaxrf
+    sparkMaxRightFront, sparkMaxRightBack
       );
 
   final DifferentialDrive m_RobotDrive;
@@ -44,8 +46,8 @@ public final RelativeEncoder encoderL;
 
 
     //left voltage ramping
-    encoderR=sparkMaxrf.getEncoder();    
-    encoderL= sparkMaxlf.getEncoder();
+    encoderR=sparkMaxRightFront.getEncoder();    
+    encoderL= sparkMaxLeftFront.getEncoder();
 
     encoderL.setPositionConversionFactor(Constants.drive.encoderToMetersRatio);
     encoderR.setPositionConversionFactor(Constants.drive.encoderToMetersRatio);
@@ -54,16 +56,16 @@ public final RelativeEncoder encoderL;
     encoderR.setVelocityConversionFactor(Constants.drive.encoderToWheelRatio);
 
 
-    sparkMaxlr.setOpenLoopRampRate(Constants.drive.rampspeed);
-    sparkMaxlf.setOpenLoopRampRate(Constants.drive.rampspeed);
+    sparkMaxLeftFront.setOpenLoopRampRate(Constants.drive.rampspeed);
+    sparkMaxRightFront.setOpenLoopRampRate(Constants.drive.rampspeed);
 
     //right voltage ramping
-    sparkMaxrr.setOpenLoopRampRate(Constants.drive.rampspeed);
-    sparkMaxrf.setOpenLoopRampRate(Constants.drive.rampspeed);
+    sparkMaxRightBack.setOpenLoopRampRate(Constants.drive.rampspeed);
+    sparkMaxRightFront.setOpenLoopRampRate(Constants.drive.rampspeed);
 
 
-    sparkMaxlf.setInverted(false);
-    sparkMaxrf.setInverted(true);
+    sparkMaxLeftBack.setInverted(true);
+    sparkMaxLeftFront.setInverted(true);
     //m_RobotDrive = new DifferentialDrive(rightMotors, leftMotors)
     m_RobotDrive = new DifferentialDrive(leftMotors, rightMotors);
     resetEncoder();
@@ -99,17 +101,11 @@ public final RelativeEncoder encoderL;
     return encoderL.getPosition();
   }
 
-  public void tankDriveVolts(double leftVolts, double rightVolts) {
-    SmartDashboard.putNumber("leftVolt", leftVolts);
-    sparkMaxlf.setVoltage(leftVolts);
-    SmartDashboard.putNumber("rightVolts", rightVolts);
-    sparkMaxrf.setVoltage(rightVolts);
-    SmartDashboard.putNumber("voltageDiff", leftVolts-rightVolts);
-    m_RobotDrive.feed();
-  }
+
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(encoderL.getVelocity()*60, encoderR.getVelocity()*60);
   }
+
 
 }

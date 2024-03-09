@@ -47,6 +47,13 @@ public final class Constants {
         public static final int rt = 5;
         public static final int rr = 8;
         
+        public static final int leftFrontMotor = 5;
+        public static final int leftBackMotor = 9;
+
+        // right
+        public static final int rightFrontMotor = 1;
+        public static final int rightBackMotor = 2;
+        public static final double gearRatio=8.5;
         
         
         public static double rotationSpeedRatio= 0.6;
@@ -63,14 +70,27 @@ public final class Constants {
 
     }
 
-    // Changing Solenoid Values idk 50/50 this'll work
-    public static final class bucket {
-        public static final class solenoid {
-            public static final int fwdPort = 6;
-            public static final int revPort = 7;
 
-        }
+    public static final class elevator {
+        public static final int motorPortLeft = 3;
+        public static final int motorPortRight = 4;
+
+        public static final int topLimitSwitch = 1;
+        public static final int bottomLimitSwitch = 0;
+
+        public static final double elevatorUpSpeed = 0.6;
+        public static final double elevatorDownSpeed = -0.3;
+        public static final double elevatorStayAtTopSpeed = 0.03;
     }
+  
+    // Changing Solenoid Values idk 50/50 this'll work
+    public static final class pneumatics{
+        public static final int hubID = 8;
+
+        public static final int solenoidPortA=8;
+        public static final int solenoidPortB=9;
+    }                             
+
 
     public static final class robotStats{
         public static final double trackWidth=0.3937;
@@ -79,18 +99,53 @@ public final class Constants {
         public static final double SemiAutoRoutineWaitTimes = 0.25;
     }
 
-    public static final class intake{
-        public static final class solenoid {
-            public static final int fwdPort = 4;
-            public static final int revPort = 5;
+    public static final class intake {
+        public static final int counterCap = 25; // this number is untested, it should run for 0.5 seconds after note is taken
+        public static final int beamBreakPort = 2;
 
+        public static final class intakeSpeeds {
+            public static final double intakeSpeed = 0.3;
+            public static final double outakeSpeed = -1;
+            // public static final int intakeRaiseSpeed = 1;
         }
-        public static final int motor1 = 6;
-        public static final int motor2 = 11;
+
+        public static final class intakeNote {
+            public static final int intakeMotorPortLeft = 7;
+            public static final int intakeMotorPortRight = 11;
+        }
         
-        //reversed
-        public static final double fwdSpeed = .5;
-        public static final double revSpeed = -.2;
+        // public static final class raisingIntake {
+        //     public static final int raisingMotorPort = 0;
+
+        //     public static final int topLimitSwitchPort = 0;
+        //     public static final int bottomLimitSwitchPort = 0;
+        // }
+    }
+
+
+
+    public static final class speakerShooter {
+        public static int RevTimeCountInTicks = 0;
+
+        public static final class ports {
+            public static final int topMotorPort = 0;
+            public static final int bottomMotorPort = 0;
+            public static final int beamBreakPort = 0;
+        }
+
+        public static final class motorSpeeds {
+            public static final int topMotorSpeed = 0;
+            public static final int bottomMotorSpeed = 0; // slower than top speed
+        }
+    }
+
+    public static final class climbingArm{
+        public static final int motorPort = 0;
+
+        public static final int limitSwitchRight = 0;
+        public static final int limitSwitchLeft = 0;
+
+        public static final int armDownSpeed = 0;
     }
 
     public static final class auto{
@@ -161,6 +216,33 @@ public final class Constants {
             "leftSilverDial"};
     }
 
+    public static final class wrist {
+        
+
+        public static final class ports {
+            public static final int motorPort = 10;
+            public static final int encoderLimitSwitch = 20;
+        }
+
+        public static final class positions{
+            public static final double up = 90;
+            public static final double intake = 0;
+        }
+
+        public static final class motorSpeeds {
+            public static final double motorUp = 0.3;
+            public static final double motorDown = -0.6;
+        }
+
+        public static final double resetPosition = 0;
+
+        public static final double tolerance = 1;
+        public static final double kp = 0.06;
+        public static final double ki = 0;
+        public static final double kd = 0.03;
+        public static final double gearRatio=40;
+    }
+
     public static final int MOVEMENT_JOYSTICK = 0;
     public static final int MANIPULATOR_JOYSTICK = 1;
     public static int blinkinPort=0;
@@ -203,42 +285,6 @@ public final class Constants {
         public static final Pose2d leftStart = new Pose2d(0, 0.0, new Rotation2d(0.0));
         public static final Pose2d ampScore = null;
         public static final Pose2d testPosit = new Pose2d(0, 0.0, new Rotation2d(Math.toRadians(90)));
-    }
-
-
-    public static final class TrajectoryGeneratorObjects{
-        public static final DifferentialDriveVoltageConstraint TrajectoryVoltageConstraint =
-        new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward( Constants.drive.ksVolts, Constants.drive.kvVoltSecondsPerMeter),
-            Constants.drive.kinematics,
-10);
-
-
-        public static final TrajectoryConfig trajectoryConfigurer =
-        new TrajectoryConfig(
-                Constants.auto.kMaxSpeedMetersPerSecond,
-                Constants.auto.kMaxAccelerationMetersPerSecondSquared)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(Constants.drive.kinematics)
-                        // Apply the voltage constraint
-           .addConstraint(TrajectoryVoltageConstraint);
-
-    }
-
-    public static final class Trajectorys{
-
-        // public static Trajectory exampleTrajectory =
-        // TrajectoryGenerator.generateTrajectory(
-        //     // Start at the origin facing the +X direction
-        //     new Pose2d(0, 0, new Rotation2d(0)),
-        //     // Pass through these two interior waypoints, making an 's' curve path
-        //     List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-        //     // End 3 meters straight ahead of where we started, facing forward
-        //     new Pose2d(3, 0, new Rotation2d(0)),
-        //     // Pass config
-        //     TrajectoryGeneratorObjects.trajectoryConfigurer);
-
-            
     }
 
 }

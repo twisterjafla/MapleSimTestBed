@@ -1,44 +1,34 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.SemiAutoRoutines.*;
 import frc.robot.commands.*;
-import frc.robot.semiAutoCommands.*;
-import frc.robot.subsystems.*;
+import frc.robot.semiAutoCommands.CancelCurrentRoutine;
+import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Midi;
+import frc.robot.subsystems.ShiftableGearbox;
+import frc.robot.subsystems.WristIntake;
 
 //object to deal with all ofthe dirty work of multiple control schemes
 public class controlInitalizer {
-
-    public static ToggleCompressor toggleCompressor=null;
-
-  
-    public static RunIntake runIntake=null;
-    public static RunIntake runIntakeBackward=null;
-    public static ToggleBucket toggleBucket=null;
-    public static IntakeToggle toggleIntake=null;
-    public static DriveBase driveSubsystem=null;
-    public static CancelCurrentRoutine cancel;
-    public static Boolean hasBeenInitalizedFromRobot = false;
-    public static Boolean hasBeenInitalizedFromSemiAutoManager = false;
-    public static Command testRoutine;
+    static DriveBase driveSubsystem;
+    static ShiftableGearbox gearBox;
+    static WristIntake wrist;
+    static Intake intake;
+    static Elevator elevator;
+    static CancelCurrentRoutine cancel;
+    static boolean hasBeenInitalizedFromRobot=false;
+    static boolean hasBeenInitalizedFromSemiAutoManager;
 
     public static void controlInitalizerFromRobot(
-        ToggleCompressor ToggleCompressor,
-        RunIntake RunIntake,
-        RunIntake RunIntakeBackward,
-        ToggleBucket ToggleBucket,
-        IntakeToggle ToggleIntake,
-        DriveBase DriveSubsystem){
-        
-        hasBeenInitalizedFromRobot=true;
-        toggleCompressor=ToggleCompressor;
-        runIntake=RunIntake;
-        runIntakeBackward=RunIntakeBackward;
-        toggleBucket=ToggleBucket;
-        toggleIntake=ToggleIntake;
+        DriveBase DriveSubsystem, ShiftableGearbox GearBox, WristIntake Wrist, Intake Intake, Elevator Elevator){
+        gearBox=GearBox;
         driveSubsystem=DriveSubsystem;
-        testRoutine = new testRoutineRunner(driveSubsystem);
+        wrist = Wrist;
+        intake = Intake;
+        elevator = Elevator;
 
 
     }
@@ -67,24 +57,6 @@ public class controlInitalizer {
 
       
 
-      movementController.x().onFalse(new attemptToScheduleRoutine(testRoutine));
-      
-      manipulatorController.leftBumper() //intake
-      .whileTrue(runIntake);
-
-
-    
-      manipulatorController.rightBumper()//outake
-      .whileTrue(runIntakeBackward);
-
-    //   manipulatorController.x()
-    //   .onTrue(toggleBucket);
-
-    //   manipulatorController.a()
-    //   .onTrue(toggleIntake);
-
-      manipulatorController.y()
-      .onTrue(toggleCompressor);
     }
 
     public static final void configureOneControllersBasic(CommandXboxController controller){
@@ -96,56 +68,32 @@ public class controlInitalizer {
                   () -> ((-controller.getLeftTriggerAxis() + controller.getRightTriggerAxis())),
                   () -> (controller.getLeftX() )
             ));
-    
-    
-    
-    
-            controller.leftBumper() //intake
-          .whileTrue(runIntake);
-    
-          controller.rightBumper()//outake
-          .whileTrue(runIntakeBackward);
-    
-          controller.x()
-          .onTrue(toggleBucket);
-    
-          controller.a()
-          .onTrue(toggleIntake);
-    
-          controller.y()
-          .onTrue(toggleCompressor);
+
         
     }
 
     public static final void initalizeJaceControllWithSecondController(CommandXboxController movementController, CommandXboxController manipulatorController){
-        checkInit();
-
         driveSubsystem.setDefaultCommand(
             new ArcadeDrive(
                   driveSubsystem,
-                  () -> (-movementController.getLeftY()),
-                  () -> (movementController.getRightX())
+                  () -> ( movementController.getLeftY()),
+                  () -> (-movementController.getRightX())
             ));
-    
-    
-    
-    
-            movementController.leftBumper() //intake
-          .whileTrue(runIntake);
-    
-          movementController.rightBumper()//outake
-          .whileTrue(runIntakeBackward);
-    
-          movementController.x()
-          .onTrue(toggleBucket);
-    
-          movementController.a()
-          .onTrue(toggleIntake);
-    
-          movementController.y()
-          .onTrue(toggleCompressor);
+
+        movementController.x().onTrue(new shiftGears(false, gearBox)).onFalse(new shiftGears(true, gearBox));
+
+        movementController.rightTrigger().whileTrue(new WristMove(wrist, Constants.wrist.positions.up));
+        movementController.leftTrigger().whileTrue(new WristMove(wrist, Constants.wrist.positions.intake));
+        movementController.a().onTrue(new RepetitiveIntake(intake));
+        movementController.b().onTrue(new RepetitiveOutake(intake));
+        movementController.rightBumper().whileTrue(new ElevatorMove(elevator, Constants.elevator.elevatorUpSpeed));
+        movementController.leftBumper().whileTrue(new ElevatorMove(elevator, Constants.elevator.elevatorDownSpeed));
+        movementController.povUp().whileTrue(new stayAtTop(elevator));
+        movementController.y().onTrue(new ElevatorToggle(elevator));
         
     }
+
+
     public static final void initalizeMIDIAloneControl(Midi midi){
         checkInit();
 
@@ -156,7 +104,7 @@ public class controlInitalizer {
                   () -> (midi.getButtonFromDict("sliderAB").getValAsOneToNegOne())
                   ));
 
-       midi.getButtonFromDict("button1").buttonTrigger.whileTrue(runIntake);
+       //midi.getButtonFromDict("button1").buttonTrigger.whileTrue(runIntake);
     }
 
     public static final void jaceControllWithMidi(CommandXboxController movementController, Midi midi){
@@ -172,6 +120,7 @@ public class controlInitalizer {
         
         midi.getButtonFromDict("button9").buttonTrigger.onFalse(cancel);
     }
+
 
 
 }

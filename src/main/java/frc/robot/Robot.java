@@ -34,8 +34,7 @@ public class Robot extends TimedRobot {
 
   final Pneumatics pneumatics = new Pneumatics();
   final DriveBase m_driveSubsystem = new DriveBase();
-  final Intake m_intakeSubsystem = new Intake(pneumatics);
-  final Bucket m_bucketSubsystem = new Bucket(pneumatics);
+  final Intake intake = new Intake();
   final ToggleCompressor toggleCompressor = new ToggleCompressor(pneumatics);
   final Gyro gyro = new Gyro();
   final Timer timer = new Timer();
@@ -44,17 +43,17 @@ public class Robot extends TimedRobot {
 
  
 
-  final RunIntake runIntake = new RunIntake(m_intakeSubsystem, Constants.intake.fwdSpeed);
-  final RunIntake runIntakeBackward = new RunIntake(m_intakeSubsystem, Constants.intake.revSpeed);
-  final ToggleBucket toggleBucket = new ToggleBucket(m_bucketSubsystem);
-  final IntakeToggle toggleIntake = new IntakeToggle(m_intakeSubsystem);
+  final ShiftableGearbox gearBox = new ShiftableGearbox();
+  final WristIntake wrist = new WristIntake();
+  final Elevator elevator = new Elevator();
+  final Midi midi = new Midi();
+
  
   SendableChooser<Command> autoChooser = new SendableChooser<Command>();
   SendableChooser<Integer> controlChooser = new SendableChooser<Integer>();
 
 
 
-  final Midi midi = new Midi();
 
   final CommandXboxController controller1 = new CommandXboxController(Constants.MOVEMENT_JOYSTICK);
   final CommandXboxController controller2 = new CommandXboxController(Constants.MANIPULATOR_JOYSTICK);
@@ -68,16 +67,14 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     semiAutoManager.configureSemiAutoManager(m_driveSubsystem, gyro, lime, timer);
 
-    controlInitalizer.controlInitalizerFromRobot(toggleCompressor, runIntake, runIntakeBackward, toggleBucket, toggleIntake, m_driveSubsystem);
+    controlInitalizer.controlInitalizerFromRobot(m_driveSubsystem, gearBox, wrist, intake, elevator);
 
     configureControls();
     midi.InitButtons();
     
     // starts the auto selector
 
-    autoChooser.setDefaultOption("Auto Grab", new AutonomousGrab(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem));
-    autoChooser.addOption("doNothing", new InstantCommand());
-    autoChooser.addOption("Dump Do Nothing", new AutonomousDumpDoNothing(m_driveSubsystem, m_intakeSubsystem, m_bucketSubsystem));
+    autoChooser.setDefaultOption("doNothing", new InstantCommand());
   
     SmartDashboard.putData("autos: ", autoChooser);
 
@@ -120,6 +117,7 @@ public class Robot extends TimedRobot {
 
     else if (controlChooser.getSelected()==2){
       controlInitalizer.initalizeJaceControllWithSecondController(controller1, controller2);
+
     }
     else if (controlChooser.getSelected()==3){
       controlInitalizer.initalizeMIDIAloneControl(midi);
