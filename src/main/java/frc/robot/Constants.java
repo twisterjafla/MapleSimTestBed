@@ -148,13 +148,13 @@ public final class Constants {
         }
 
         public static final class positions{
-            public static final double up = 90;
-            public static final double intake = 0;
+            public static final double up = 0;
+            public static final double intake = 70;
         }
 
         public static final class motorSpeeds {
             public static final double motorUp = 0.3;
-            public static final double motorDown = -0.6;
+            public static final double motorDown = -0.2;
         }
 
         public static final double resetPosition = 0;
@@ -162,7 +162,7 @@ public final class Constants {
         public static final double tolerance = 1;
         public static final double kp = 0.06;
         public static final double ki = 0;
-        public static final double kd = 0.03;
+        public static final double kd = 0.2;
         public static final double gearRatio=40;
     }
 

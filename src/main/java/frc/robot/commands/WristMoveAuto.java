@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.WristIntake;
 
-public class WristMove extends Command {
+public class WristMoveAuto extends Command {
   WristIntake wrist;
   double setpoint;
 
@@ -23,11 +23,12 @@ public class WristMove extends Command {
         Constants.wrist.kd
   );
 
-  public WristMove(WristIntake wrist, double setpoint) {
+  public WristMoveAuto(WristIntake wrist, double setpoint) {
     this.wrist = wrist;
     this.setpoint=setpoint;
     
     addRequirements(wrist);
+    pid.enableContinuousInput(0, 360);
 
   }
 
@@ -41,7 +42,6 @@ public class WristMove extends Command {
   @Override 
   public void execute() {
     wrist.move(pid.calculate(wrist.getEncoder()));
-    SmartDashboard.putNumber("wristPID", pid.calculate(wrist.getEncoder()));
     SmartDashboard.putNumber("Encoder Wrist Value.", wrist.getEncoder());
   }
 
