@@ -48,6 +48,7 @@ public  class semiAutoManager{
         controlInitalizer.controlInitalizerFromSemiAutoManager(cancel);
         
     }
+    
 
 
     public static void periodic(){

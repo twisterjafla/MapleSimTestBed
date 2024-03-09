@@ -22,12 +22,13 @@ public class controlInitalizer {
     static Elevator elevator;
     static CancelCurrentRoutine cancel;
     static boolean hasBeenInitalizedFromRobot=false;
-    static boolean hasBeenInitalizedFromSemiAutoManager;
+    static boolean hasBeenInitalizedFromSemiAutoManager=false;
     public static Command testRoutine;
 
 
     public static void controlInitalizerFromRobot(
         DriveBase DriveSubsystem, ShiftableGearbox GearBox, WristIntake Wrist, Intake Intake, Elevator Elevator){
+        hasBeenInitalizedFromRobot=true;
         gearBox=GearBox;
         driveSubsystem=DriveSubsystem;
         wrist = Wrist;
@@ -134,7 +135,7 @@ public class controlInitalizer {
             new ArcadeDrive(
                   driveSubsystem,
                   () -> ( controller.getLeftY()),
-                  () -> (-controller.getLeftX())
+                  () -> (-controller.getRightX())
             )); 
 
         controller.y().onTrue(cancel);

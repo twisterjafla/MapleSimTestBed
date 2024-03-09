@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.autoRoutines.*;
+//import frc.robot.autoRoutines.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.controlInitalizer;
@@ -32,10 +32,10 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
 
-  final Pneumatics pneumatics = new Pneumatics();
+ // final Pneumatics pneumatics = new Pneumatics();
   final DriveBase m_driveSubsystem = new DriveBase();
   final Intake intake = new Intake();
-  final ToggleCompressor toggleCompressor = new ToggleCompressor(pneumatics);
+ // final ToggleCompressor toggleCompressor = new ToggleCompressor(pneumatics);
   final Gyro gyro = new Gyro();
   final Timer timer = new Timer();
   final Limelight lime = new Limelight();
@@ -90,7 +90,7 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putData("control type", controlChooser);
 
-
+    
     //start cameraServer
 
     
