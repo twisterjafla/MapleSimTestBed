@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.semiAutoManager;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.ShiftableGearbox;
 
 public class DriveToPoint extends Command{
     DriveBase drive;
@@ -32,12 +33,14 @@ public class DriveToPoint extends Command{
     boolean isInOuterRing=false;
 
     final double PI = Math.PI;
+    ShiftableGearbox gearbox;
 
     
 
-    public DriveToPoint(DriveBase drive, Pose2d goal){
+    public DriveToPoint(DriveBase drive, Pose2d goal, ShiftableGearbox gearBox){
         this.drive=drive;
         this.goal=goal;
+        this.gearbox=gearBox;
 
         addRequirements(drive);
     }
@@ -51,7 +54,7 @@ public class DriveToPoint extends Command{
         turnStationaryPID.enableContinuousInput(-PI, PI);
         turnDrivePID.enableContinuousInput(-PI, PI); 
         turnDrivePID.setTolerance((Constants.semiAuto.turn.driveTolerence));
-
+        gearbox.shift(false);
 
         outerStraightPID.setSetpoint(0);
         innerStraightPID.setSetpoint(0);
