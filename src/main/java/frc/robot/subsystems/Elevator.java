@@ -21,6 +21,14 @@ public class Elevator extends SubsystemBase {
     	armMotors.set(-speed);
   	}
 
+	public void stop(){
+    	armMotors.set(0);
+  	}
+
+	public boolean checkOkLimitSwitches(){
+		return topSwitch.isOk() && bottomSwitch.isOk();
+	}
+
 }
 
 

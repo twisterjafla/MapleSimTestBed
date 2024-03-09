@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.*;
+import frc.robot.commands.ElevatorParallelCommands.ElevatorMove;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -60,14 +61,13 @@ public class controlInitalizer {
 
         movementController.x().onTrue(new shiftGears(false, gearBox)).onFalse(new shiftGears(true, gearBox));
 
-        movementController.rightTrigger().whileTrue(new WristMove(wrist, Constants.wrist.positions.up));
-        movementController.leftTrigger().whileTrue(new WristMove(wrist, Constants.wrist.positions.intake));
+        // movementController.rightTrigger().onTrue(new WristMove(wrist, Constants.wrist.positions.up));
+        // movementController.leftTrigger().onTrue(new WristMove(wrist, Constants.wrist.positions.intake));
         movementController.a().onTrue(new RepetitiveIntake(intake));
         movementController.b().onTrue(new RepetitiveOutake(intake));
-        movementController.rightBumper().whileTrue(new ElevatorMove(elevator, Constants.elevator.elevatorUpSpeed));
-        movementController.leftBumper().whileTrue(new ElevatorMove(elevator, Constants.elevator.elevatorDownSpeed));
+        movementController.rightBumper().whileTrue(new ElevatorParallel(elevator, Constants.elevator.elevatorUpSpeed));
+        movementController.leftBumper().whileTrue(new ElevatorParallel(elevator, Constants.elevator.elevatorDownSpeed));
         movementController.povUp().whileTrue(new stayAtTop(elevator));
-        movementController.y().onTrue(new ElevatorToggle(elevator));
         
     }
 }

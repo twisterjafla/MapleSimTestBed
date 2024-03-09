@@ -19,12 +19,13 @@ public class WristIntake extends SubsystemBase {
         wristLimitSwitch = new limitSwitch(Constants.wrist.ports.encoderLimitSwitch);
         wristMotor = new CANSparkMax(Constants.wrist.ports.motorPort, MotorType.kBrushless);
         encoder = wristMotor.getEncoder();
+        encoder.setPosition(0);
 
-        encoder.setPositionConversionFactor(Constants.wrist.gearRatio/360);
+        encoder.setPositionConversionFactor(360/ Constants.wrist.gearRatio);
     }
 
 	public void move(double speed){
-        SmartDashboard.putNumber("speed", speed);
+        //SmartDashboard.putNumber("speed", speed);
     	wristMotor.set(speed);
   	}
 
@@ -40,13 +41,13 @@ public class WristIntake extends SubsystemBase {
         move(0);
     }
 
-    @Override
-    public void periodic() {
-        SmartDashboard.putNumber("wristencoder2", getEncoder());
-        if (wristLimitSwitch.getVal()){
-            resetEncoder();
-        }
-    }
+    // @Override
+    // public void periodic() {
+    //     SmartDashboard.putNumber("wristencoder2", getEncoder());
+    //     if (wristLimitSwitch.getVal()){
+    //         resetEncoder();
+    //     }
+    // }
 }
 
 

@@ -28,6 +28,7 @@ public class WristMove extends Command {
     this.setpoint=setpoint;
     
     addRequirements(wrist);
+    pid.enableContinuousInput(0, 360);
 
   }
 
@@ -41,7 +42,6 @@ public class WristMove extends Command {
   @Override 
   public void execute() {
     wrist.move(pid.calculate(wrist.getEncoder()));
-    SmartDashboard.putNumber("wristPID", pid.calculate(wrist.getEncoder()));
     SmartDashboard.putNumber("Encoder Wrist Value.", wrist.getEncoder());
   }
 
