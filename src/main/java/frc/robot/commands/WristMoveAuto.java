@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,19 +17,25 @@ import frc.robot.subsystems.WristIntake;
 public class WristMoveAuto extends Command {
   WristIntake wrist;
   double setpoint;
+  double PI=Math.PI;
 
   private final PIDController pid = new PIDController(
         Constants.wrist.kp,
         Constants.wrist.ki,
         Constants.wrist.kd
   );
-
+  /**
+   * moves the wrist to the inputed place in degrees
+   * 
+   * @param wrist the wrist to be moved
+   * @param setpoint the setpoint to be moved to in degrees
+   */
   public WristMoveAuto(WristIntake wrist, double setpoint) {
     this.wrist = wrist;
-    this.setpoint=setpoint;
+    this.setpoint=Math.toRadians(setpoint);
     
     addRequirements(wrist);
-    pid.enableContinuousInput(0, 360);
+    pid.enableContinuousInput(-PI, PI);
 
   }
 
@@ -41,7 +48,7 @@ public class WristMoveAuto extends Command {
 
   @Override 
   public void execute() {
-    wrist.move(pid.calculate(wrist.getEncoder()));
+    wrist.move(MathUtil.clamp(pid.calculate(Math.toRadians(wrist.getEncoder())), -Constants.wrist.motorSpeeds.maxSpeed, Constants.wrist.motorSpeeds.maxSpeed));
     SmartDashboard.putNumber("Encoder Wrist Value.", wrist.getEncoder());
   }
 

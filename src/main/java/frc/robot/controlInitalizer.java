@@ -64,10 +64,13 @@ public class controlInitalizer {
 
         movementController.rightTrigger().whileTrue(new WristMoveManual(wrist, Constants.wrist.motorSpeeds.motorUp));
         movementController.leftTrigger().whileTrue(new WristMoveManual(wrist, Constants.wrist.motorSpeeds.motorDown));
-        movementController.a().whileTrue(new IntakeNote(intake));
-        movementController.b().whileTrue(new ShootNote(intake));
+        // movementController.a().whileTrue(new IntakeNote(intake));
+        // movementController.b().whileTrue(new ShootNote(intake));
+        movementController.a().onTrue(new RepetitiveIntake(intake));
+        movementController.b().onTrue(new RepetitiveOutake(intake));
         movementController.rightBumper().whileTrue(new ElevatorParallel(elevator, Constants.elevator.elevatorUpSpeed));
         movementController.leftBumper().whileTrue(new ElevatorParallel(elevator, Constants.elevator.elevatorDownSpeed));
+        movementController.y().onTrue(new ElevatorToggle(elevator));
         movementController.povUp().whileTrue(new stayAtTop(elevator));
         
     }
