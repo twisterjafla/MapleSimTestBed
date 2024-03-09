@@ -21,7 +21,7 @@ public class WristIntake extends SubsystemBase {
         encoder = wristMotor.getEncoder();
         encoder.setPosition(0);
 
-        encoder.setPositionConversionFactor(360/ Constants.wrist.gearRatio);
+        encoder.setPositionConversionFactor(360 / Constants.wrist.gearRatio);
     }
 
 	public void move(double speed){

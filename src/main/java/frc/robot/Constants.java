@@ -163,7 +163,7 @@ public final class Constants {
         public static final double kp = 0.06;
         public static final double ki = 0;
         public static final double kd = 0.2;
-        public static final double gearRatio=40;
+        public static final double gearRatio = 40;
     }
 
     public static final int MOVEMENT_JOYSTICK = 0;
