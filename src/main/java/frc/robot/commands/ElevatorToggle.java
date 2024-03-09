@@ -39,10 +39,11 @@ public class ElevatorToggle extends Command {
     elevator.stop();
     if (!wasInterupted){
       elevator.isUp=!elevator.isUp;
-    }
-    if (elevator.isUp){
+      if (elevator.isUp){
         new stayAtTop(elevator).schedule();
+      }
     }
+
 
 
   }
