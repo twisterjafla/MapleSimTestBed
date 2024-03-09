@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.WristIntake;
 
-public class WristMove extends Command {
+public class WristMoveAuto extends Command {
   WristIntake wrist;
   double setpoint;
 
@@ -23,7 +23,7 @@ public class WristMove extends Command {
         Constants.wrist.kd
   );
 
-  public WristMove(WristIntake wrist, double setpoint) {
+  public WristMoveAuto(WristIntake wrist, double setpoint) {
     this.wrist = wrist;
     this.setpoint=setpoint;
     

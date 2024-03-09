@@ -149,12 +149,12 @@ public final class Constants {
 
         public static final class positions{
             public static final double up = 0;
-            public static final double intake = 90;
+            public static final double intake = 70;
         }
 
         public static final class motorSpeeds {
             public static final double motorUp = 0.3;
-            public static final double motorDown = -0.6;
+            public static final double motorDown = -0.2;
         }
 
         public static final double resetPosition = 0;

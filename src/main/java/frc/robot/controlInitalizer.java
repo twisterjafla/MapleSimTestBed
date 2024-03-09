@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.intake.intakeNote;
 import frc.robot.commands.*;
 import frc.robot.commands.ElevatorParallelCommands.ElevatorMove;
 import frc.robot.subsystems.DriveBase;
@@ -61,10 +62,10 @@ public class controlInitalizer {
 
         movementController.x().onTrue(new shiftGears(false, gearBox)).onFalse(new shiftGears(true, gearBox));
 
-        // movementController.rightTrigger().onTrue(new WristMove(wrist, Constants.wrist.positions.up));
-        // movementController.leftTrigger().onTrue(new WristMove(wrist, Constants.wrist.positions.intake));
-        movementController.a().onTrue(new RepetitiveIntake(intake));
-        movementController.b().onTrue(new RepetitiveOutake(intake));
+        movementController.rightTrigger().whileTrue(new WristMoveManual(wrist, Constants.wrist.motorSpeeds.motorUp));
+        movementController.leftTrigger().whileTrue(new WristMoveManual(wrist, Constants.wrist.motorSpeeds.motorDown));
+        movementController.a().whileTrue(new IntakeNote(intake));
+        movementController.b().whileTrue(new ShootNote(intake));
         movementController.rightBumper().whileTrue(new ElevatorParallel(elevator, Constants.elevator.elevatorUpSpeed));
         movementController.leftBumper().whileTrue(new ElevatorParallel(elevator, Constants.elevator.elevatorDownSpeed));
         movementController.povUp().whileTrue(new stayAtTop(elevator));
