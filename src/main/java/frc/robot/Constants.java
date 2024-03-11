@@ -128,8 +128,8 @@ public final class Constants {
         public static int RevTimeCountInTicks = 0;
 
         public static final class ports {
-            public static final int topMotorPort = 0;
-            public static final int bottomMotorPort = 0;
+            public static final int topMotorPort = 13;
+            public static final int bottomMotorPort = 12;
             public static final int beamBreakPort = 0;
         }
 
