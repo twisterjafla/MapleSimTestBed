@@ -134,8 +134,9 @@ public final class Constants {
         }
 
         public static final class motorSpeeds {
-            public static final int topMotorSpeed = 0;
-            public static final int bottomMotorSpeed = 0; // slower than top speed
+            public static final int topMotorSpeed = 1;
+            public static final int bottomMotorSpeed = 1; // slower than top speed
+            public static final double intakeSpeed = -0.3;
         }
     }
 
