@@ -53,6 +53,7 @@ public class WristMoveHold extends Command {
   public void execute() {
     if (pid.atSetpoint()){
       wrist.move(0);
+      pid.calculate(Math.toRadians(wrist.getEncoder()));
     }
     else{
       wrist.move(MathUtil.clamp(pid.calculate(Math.toRadians(wrist.getEncoder())), -Constants.wrist.motorSpeeds.maxSpeed, Constants.wrist.motorSpeeds.maxSpeed));

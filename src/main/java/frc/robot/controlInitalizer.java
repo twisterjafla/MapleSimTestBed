@@ -70,7 +70,7 @@ public class controlInitalizer {
         movementController.b().onTrue(new RepetitiveOutake(intake));
         movementController.rightBumper().whileTrue(new ElevatorParallel(elevator, Constants.elevator.elevatorUpSpeed));
         movementController.leftBumper().whileTrue(new ElevatorParallel(elevator, Constants.elevator.elevatorDownSpeed));
-        movementController.y().onTrue(new ElevatorToggle(elevator));
+        movementController.y().onTrue(new wristReset(wrist));
         movementController.povUp().whileTrue(new stayAtTop(elevator));
         
     }

@@ -50,7 +50,7 @@ public class WristMoveAuto extends Command {
 
   @Override 
   public void execute() {
-    wrist.move(MathUtil.clamp(pid.calculate(Math.toRadians(wrist.getEncoder())), -Constants.wrist.motorSpeeds.maxSpeed, Constants.wrist.motorSpeeds.maxSpeed));
+    wrist.move(pid.calculate(Math.toRadians(wrist.getEncoder())));
     SmartDashboard.putNumber("Encoder Wrist Value.", wrist.getEncoder());
   }
 
