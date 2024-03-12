@@ -15,4 +15,9 @@ public class ShootNote extends Command {
   public void execute() {
     intake.outake();
   } 
+  
+  @Override
+  public void end(boolean interrupted) {
+    intake.stop();
+  }
 }

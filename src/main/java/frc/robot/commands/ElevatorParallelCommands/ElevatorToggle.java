@@ -1,8 +1,9 @@
-package frc.robot.commands;
+package frc.robot.commands.ElevatorParallelCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.stayAtTop;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.limitSwitch;
 
@@ -14,7 +15,7 @@ public class ElevatorToggle extends Command {
   public ElevatorToggle(Elevator elevator) {
     this.elevator = elevator;
     addRequirements(elevator);
-	}
+  }
 
   @Override
   public void execute() {
@@ -24,28 +25,19 @@ public class ElevatorToggle extends Command {
 
   @Override
   public void initialize() {
-    if (elevator.isUp) {
-      activeSwitch=elevator.bottomSwitch;
-      speed = Constants.elevator.elevatorDownSpeed;
-    }
-    else {
-      activeSwitch = elevator.topSwitch;
-      speed = Constants.elevator.elevatorUpSpeed;
+    if (elevator.checkOkLimitSwitches()) {
+      CommandScheduler.getInstance().cancel(this);
     }
   }
 
   @Override
   public void end(boolean wasInterupted) {
-    elevator.stop();
     if (!wasInterupted){
       elevator.isUp=!elevator.isUp;
-      if (elevator.isUp){
-        new stayAtTop(elevator).schedule();
-      }
     }
 
-
-
+    elevator.stop();
+    new stayAtTop(elevator).schedule();
   }
 
   @Override
