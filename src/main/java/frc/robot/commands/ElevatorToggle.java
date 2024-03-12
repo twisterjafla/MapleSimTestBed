@@ -36,12 +36,16 @@ public class ElevatorToggle extends Command {
 
   @Override
   public void end(boolean wasInterupted) {
+    elevator.stop();
     if (!wasInterupted){
       elevator.isUp=!elevator.isUp;
+      if (elevator.isUp){
+        new stayAtTop(elevator).schedule();
+      }
     }
 
-    elevator.stop();
-    new stayAtTop(elevator).schedule();
+
+
   }
 
   @Override

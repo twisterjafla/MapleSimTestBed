@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.WristIntake;
 
-public class WristMoveAuto extends Command {
+public class WristMoveHold extends Command {
   WristIntake wrist;
   double setpoint;
   double PI=Math.PI;
@@ -30,12 +30,13 @@ public class WristMoveAuto extends Command {
    * @param wrist the wrist to be moved
    * @param setpoint the setpoint to be moved to in degrees
    */
-  public WristMoveAuto(WristIntake wrist, double setpoint) {
+  public WristMoveHold(WristIntake wrist, double setpoint) {
     this.wrist = wrist;
-    this.setpoint=Math.toRadians(setpoint);
+    this.setpoint=setpoint;
     
     addRequirements(wrist);
     pid.enableContinuousInput(-PI, PI);
+
 
   }
 
@@ -43,28 +44,25 @@ public class WristMoveAuto extends Command {
   public void initialize() {
     pid.setSetpoint(setpoint);
     pid.setTolerance(Constants.wrist.tolerance);
-    SmartDashboard.putString("wrist", "moving");
+    SmartDashboard.putString("wrist", "holding");
 
   }
 
 
   @Override 
   public void execute() {
-    wrist.move(pid.calculate(Math.toRadians(wrist.getEncoder())));
-    SmartDashboard.putNumber("Encoder Wrist Value.", wrist.getEncoder());
-  }
-
-  @Override 
-  public boolean isFinished() {
-    return pid.atSetpoint();
+    if (pid.atSetpoint()){
+      wrist.move(0);
+      pid.calculate(Math.toRadians(wrist.getEncoder()));
+    }
+    else{
+      wrist.move(MathUtil.clamp(pid.calculate(Math.toRadians(wrist.getEncoder())), -Constants.wrist.motorSpeeds.maxSpeed, Constants.wrist.motorSpeeds.maxSpeed));
+    }
   }
 
   @Override
   public void end(boolean interrupted){
-    if (!interrupted){
-      new WristMoveHold(wrist, setpoint).schedule();
-    }
-    wrist.move(0);
+    wrist.stop();
   }
 
 }

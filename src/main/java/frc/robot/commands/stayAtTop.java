@@ -16,8 +16,11 @@ public class stayAtTop extends Command {
 
     @Override
     public void execute(){
-        if (!topSwitch.getVal()){
+        if (topSwitch.getVal()){
             elevator.moveElevator(Constants.elevator.elevatorStayAtTopSpeed);
+        }
+        else{
+            elevator.moveElevator(0);
         }
     }
 

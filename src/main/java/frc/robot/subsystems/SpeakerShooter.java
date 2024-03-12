@@ -32,4 +32,14 @@ public class SpeakerShooter extends SubsystemBase {
         speakerMotorTop.set(flySpeed);
     }
 
+	public void intake(){
+		intakeMotors.set(Constants.speakerShooter.motorSpeeds.intakeSpeed);
+	}
+
+	public void stop(){
+		intakeMotors.set(0);
+	}
+
+
+
 }
