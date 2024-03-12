@@ -16,6 +16,13 @@ public class wristReset extends Command{
     }
 
     @Override
+    public void initialize(){
+        if (limitSwitch.isOk()){
+            cancel();
+        }
+    }
+
+    @Override
     public void execute(){
         wrist.move(Constants.wrist.resetSpeed);
     }
