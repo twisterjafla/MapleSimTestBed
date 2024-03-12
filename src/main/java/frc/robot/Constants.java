@@ -54,6 +54,9 @@ public final class Constants {
         public static final double elevatorUpSpeed = -0.6;
         public static final double elevatorDownSpeed = 0.3;
         public static final double elevatorStayAtTopSpeed = -0.06;
+        public static final double elevatorBackupDownSpeed=0.01;
+        public static final double elevatorBackupUpSpeed=-0.3;
+        public static final double elevatorBackupTime = 1.3;
     }
   
     // Changing Solenoid Values idk 50/50 this'll work
@@ -103,6 +106,8 @@ public final class Constants {
     public static final class intake {
         public static final int counterCap = 25; // this number is untested, it should run for 0.5 seconds after note is taken
         public static final int beamBreakPort = 2;
+        public static final double backupTime = 5;
+        public static final double outtakeBackupTime = 1;
 
         public static final class intakeSpeeds {
             public static final double intakeSpeed = 0.3;

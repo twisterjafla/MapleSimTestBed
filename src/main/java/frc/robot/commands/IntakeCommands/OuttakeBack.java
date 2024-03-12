@@ -1,17 +1,26 @@
-package frc.robot.commands;
+package frc.robot.commands.IntakeCommands;
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
-public class WaitShootNote extends WaitCommand {
+public class OuttakeBack extends WaitCommand {
   private final Intake intake;
 
-  public WaitShootNote(Intake intake, double time) {
-    super(time);
+  public OuttakeBack(Intake intake) {
+    super(Constants.intake.outtakeBackupTime);
     this.intake = intake;
 
 
   }
+
+  @Override
+  public void initialize(){
+    if (intake.beamBreak.isOk()){
+      cancel();
+    }
+  }
+
 
   // Called repeatedly when this Command is scheduled to run
   @Override
@@ -22,7 +31,8 @@ public class WaitShootNote extends WaitCommand {
 
   @Override
   public void end(boolean interupted){
-    super.end(interupted);
-    intake.stop();
+    if(!interupted){
+      intake.stop();
+    }
   }
 }

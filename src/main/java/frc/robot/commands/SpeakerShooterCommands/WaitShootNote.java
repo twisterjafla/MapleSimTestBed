@@ -1,12 +1,12 @@
-package frc.robot.commands;
+package frc.robot.commands.SpeakerShooterCommands;
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Intake;
 
-public class WaitIntakeNote extends WaitCommand {
+public class WaitShootNote extends WaitCommand {
   private final Intake intake;
 
-  public WaitIntakeNote(Intake intake, double time) {
+  public WaitShootNote(Intake intake, double time) {
     super(time);
     this.intake = intake;
 
@@ -17,11 +17,12 @@ public class WaitIntakeNote extends WaitCommand {
   @Override
   public void execute() {
       super.execute();
-      this.intake.intake();
+      intake.outake();
   }
 
   @Override
   public void end(boolean interupted){
     super.end(interupted);
+    intake.stop();
   }
 }
