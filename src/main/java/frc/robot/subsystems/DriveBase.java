@@ -20,8 +20,8 @@ public class DriveBase extends SubsystemBase {
   public final CANSparkMax sparkMaxRightFront = new CANSparkMax(Constants.drive.rightFrontMotor, MotorType.kBrushless);
 
 
-  public final RelativeEncoder encoderR;
-  public final RelativeEncoder encoderL;
+  public final gearBoxEncoder encoderR;
+  public final gearBoxEncoder encoderL;
 
 
 
@@ -39,8 +39,8 @@ public class DriveBase extends SubsystemBase {
 
 
     //left voltage ramping
-    encoderR=sparkMaxRightFront.getEncoder();    
-    encoderL= sparkMaxLeftFront.getEncoder();
+    encoderR=new gearBoxEncoder(sparkMaxRightBack, Constants.drive.lowGearRatio, Constants.drive.highGearRatio, Constants.drive.Wheelcircumference);    
+    encoderL= new gearBoxEncoder(sparkMaxLeftBack, Constants.drive.lowGearRatio, Constants.drive.highGearRatio, Constants.drive.Wheelcircumference);
     sparkMaxLeftBack.setInverted(true);
     sparkMaxLeftFront.setInverted(true);
 
@@ -69,8 +69,8 @@ public class DriveBase extends SubsystemBase {
   }
 
   public void resetEncoder(){
-    encoderL.setPosition(0);
-    encoderR.setPosition(0);
+    encoderL.resetEncoderPosition();;
+    encoderR.resetEncoderPosition();;
   }
 
 
@@ -78,6 +78,11 @@ public class DriveBase extends SubsystemBase {
     SmartDashboard.putNumber("encoder", getEncoder());
     m_RobotDrive.arcadeDrive(ySpeed, rotateValue);
 
+  }
+
+  public void shift(boolean isHigh){
+    encoderL.shift(isHigh);
+    encoderR.shift(isHigh);
   }
 
 }
