@@ -165,6 +165,7 @@ public final class Constants {
         public static final double tolerance = 0.017;
         public static final double kp = 0.4;
         public static final double ki = 0;
+
         public static final double kd = 0.1;
         public static final double gearRatio=40;
 
