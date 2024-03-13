@@ -63,9 +63,11 @@ public class controlInitalizer {
                   () -> (-movementController.getRightX())
             ));
 
+        movementController.rightTrigger().onTrue(new shiftGears(true, gearBox)).onFalse(new shiftGears(false, gearBox));
+
+
         movementController.x().onTrue(new shiftGears(false, gearBox)).onFalse(new shiftGears(true, gearBox));
 
-        movementController.rightTrigger().onTrue(new WristMoveAuto(wrist, Constants.wrist.positions.up));
         movementController.leftTrigger().onTrue(new WristMoveAuto(wrist, Constants.wrist.positions.intake));
         // movementController.a().whileTrue(new IntakeNote(intake));
         // movementController.b().whileTrue(new ShootNote(intake));
