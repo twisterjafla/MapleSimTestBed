@@ -9,12 +9,9 @@ import frc.robot.subsystems.SpeakerShooter;
 public class RevSpeaker extends Command {
     // setActive setActive;
     final SpeakerShooter shooter;
-    final BooleanSupplier endTrigger;
-    int count = 0;
 
-    public RevSpeaker(SpeakerShooter shooter, BooleanSupplier endTrigger) {
+    public RevSpeaker(SpeakerShooter shooter) {
         this.shooter = shooter;
-        this.endTrigger = endTrigger;
         addRequirements(shooter);
     }
 
@@ -23,9 +20,4 @@ public class RevSpeaker extends Command {
         shooter.revving();
     }
 
-    @Override
-    public boolean isFinished() { 
-        count++;
-        return (endTrigger.getAsBoolean() && count>Constants.speakerShooter.RevTimeCountInTicks);
-    }      
 }

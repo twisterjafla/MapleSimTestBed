@@ -6,8 +6,8 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.SpeakerShooter;
 
-public class SpeakerSafety extends RunCommand {
-  public SpeakerSafety(SpeakerShooter shooter, DoubleSupplier flySpeed, DoubleSupplier indexSpeed) {
+public class SpeakerManual extends RunCommand {
+  public SpeakerManual(SpeakerShooter shooter, DoubleSupplier flySpeed, DoubleSupplier indexSpeed) {
     super(
         ()->{
             shooter.SafetyFunction(
