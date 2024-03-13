@@ -13,6 +13,12 @@ public class ShootSpeakerMain extends Command {
         addRequirements(shooter);
     }
 
+    @Override
+    public void initialize(){
+        if(!shooter.beamBreak.isOk()||!shooter.beamBreak.getVal()){
+            cancel();
+        }
+    }
 
     @Override
     public void execute() {

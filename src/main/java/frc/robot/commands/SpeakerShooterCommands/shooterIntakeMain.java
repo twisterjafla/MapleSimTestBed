@@ -11,6 +11,12 @@ public class shooterIntakeMain extends Command{
 
     }
 
+    @Override
+    public void initialize(){
+        if (!shooter.beamBreak.isOk()||shooter.beamBreak.getVal()){
+            cancel();
+        }
+    }
 
     public void execute(){
         shooter.intake();

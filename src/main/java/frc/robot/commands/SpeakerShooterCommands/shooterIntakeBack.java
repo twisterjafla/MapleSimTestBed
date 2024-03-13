@@ -19,6 +19,14 @@ public class shooterIntakeBack extends WaitCommand {
 
 
     @Override
+    public void initialize(){
+        if (shooter.beamBreak.isOk()){
+            cancel();
+        }
+    }
+
+
+    @Override
     public void execute() {
         shooter.intake();
     }
