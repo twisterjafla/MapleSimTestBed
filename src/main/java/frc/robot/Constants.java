@@ -61,13 +61,11 @@ public final class Constants {
 
         public static double rampspeed= .25;
 
-        public static final double encoderToMetersRatio= robotStats.wheelRadius*Math.PI*2/(robotStats.gearRatio);
+        public static final double encoderToMetersRatio= (robotStats.wheelRadius*Math.PI*2)/drive.highGearRatio;
         public static final double encoderToWheelRatio = 1/(robotStats.gearRatio);
         public static final double Wheelcircumference =0.05715;
-        public static final double lowGearRatio=5.392;
-        public static final double highGearRatio=12.255;
-
-
+        public static final double highGearRatio=5.392;
+        public static final double lowGearRatio=12.255;
         public static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.robotStats.trackWidth);
         public static final double ksVolts = 1.22;
         public static final double kvVoltSecondsPerMeter = 2.402;
@@ -100,6 +98,7 @@ public final class Constants {
 
 
     public static final class robotStats{
+        public static double highGearRatio;
         public static final double trackWidth=0.3937;
         public static final double wheelRadius=0.0762;
         public static final double gearRatio=8.5;
@@ -286,11 +285,12 @@ public final class Constants {
         public static final class straight{
             public static final double innerKp = 1;
             public static final double innerKi = 0.05;
-            public static final double innerKd= 0.4;
+            public static final double innerKd= 0.3;
 
-            public static final double outerKp=0.2;
+            public static final double outerKp=0.5;
             public static final double outerKi=0;
-            public static final double outerKd=0.5;
+            public static final double outerKd=0.5
+            ;
 
 
 

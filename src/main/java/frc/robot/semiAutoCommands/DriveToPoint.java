@@ -160,11 +160,11 @@ public class DriveToPoint extends Command{
 
         if (getDistance(current)>getDistance(predictedFieldForward)){
             SmartDashboard.putBoolean("forwardDrive", true);
-            return straightPID.calculate(getDistance(current));
+            return straightPID.calculate(-getDistance(current));
         }
         else if(getDistance(current)>getDistance(predictedFieldBack)){
             SmartDashboard.putBoolean("forwardDrive", false);
-            return straightPID.calculate(-getDistance(current));
+            return straightPID.calculate(getDistance(current));
         }
         else{
             return 0;
