@@ -5,6 +5,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.SemiAutoRoutines.*;
 import frc.robot.commands.*;
 import frc.robot.semiAutoCommands.CancelCurrentRoutine;
+
+import frc.robot.Constants.intake.intakeNote;
+import frc.robot.commands.*;
+import frc.robot.commands.DriveCommands.*;
+import frc.robot.commands.ElevatorCommands.*;
+import frc.robot.commands.IntakeCommands.*;
+import frc.robot.commands.IntakeCommands.RepetitiveOutake.OuttakeMain;
+import frc.robot.commands.WristComands.*;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -91,14 +99,15 @@ public class controlInitalizer {
 
         movementController.x().onTrue(new shiftGears(false, gearBox)).onFalse(new shiftGears(true, gearBox));
 
-        movementController.rightTrigger().whileTrue(new WristMove(wrist, Constants.wrist.positions.up));
-        movementController.leftTrigger().whileTrue(new WristMove(wrist, Constants.wrist.positions.intake));
-        movementController.a().onTrue(new RepetitiveIntake(intake));
-        movementController.b().onTrue(new RepetitiveOutake(intake));
-        movementController.rightBumper().whileTrue(new ElevatorMove(elevator, Constants.elevator.elevatorUpSpeed));
-        movementController.leftBumper().whileTrue(new ElevatorMove(elevator, Constants.elevator.elevatorDownSpeed));
-        movementController.povUp().whileTrue(new stayAtTop(elevator));
-        movementController.y().onTrue(new ElevatorToggle(elevator));
+        movementController.leftTrigger().onTrue(new WristMoveAuto(wrist, Constants.wrist.positions.intake));
+        // movementController.a().whileTrue(new IntakeNote(intake));
+        // movementController.b().whileTrue(new ShootNote(intake));
+        movementController.a().onTrue(new IntakeMain(intake));
+        movementController.b().onTrue(new OuttakeMain(intake));
+        movementController.rightBumper().whileTrue(new ElevatorToggle(elevator, Constants.elevator.elevatorUpSpeed));
+        movementController.leftBumper().whileTrue(new ElevatorToggle(elevator, Constants.elevator.elevatorDownSpeed));
+        movementController.y().onTrue(new wristReset(wrist));
+        movementController.povUp().whileTrue(new stayAtTopMain(elevator));
         
     }
 
@@ -140,7 +149,7 @@ public class controlInitalizer {
 
         controller.y().onTrue(cancel);
         controller.x().onFalse(testRoutine);
-        controller.rightTrigger().onTrue(new shiftGears(true, gearBox)).onFalse(new shiftGears(false, gearBox));
+        //controller.rightTrigger().onTrue(new shiftGears(true, gearBox)).onFalse(new shiftGears(false, gearBox));
     }
 
 

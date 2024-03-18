@@ -1,12 +1,12 @@
-package frc.robot.commands;
+package frc.robot.commands.IntakeCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
 
-public class ShootNote extends Command {
+public class ShootNoteRaw extends Command {
   Intake intake;
 
-  public ShootNote(Intake intake) {
+  public ShootNoteRaw(Intake intake) {
     this.intake = intake;
     addRequirements(intake);
   }
