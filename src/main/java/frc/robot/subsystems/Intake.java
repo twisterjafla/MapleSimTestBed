@@ -26,7 +26,6 @@ public class Intake extends SubsystemBase {
 
 	}
 
-
 	public void intake(){
     	intakeMotors.set(Constants.intake.intakeSpeeds.intakeSpeed);
   	}
@@ -38,6 +37,7 @@ public class Intake extends SubsystemBase {
 	public void stop(){
 		intakeMotors.set(0);
 	}
+
 
 	public void periodic(){
 		SmartDashboard.putBoolean("Intake Beam Break", beamBreak.getVal());

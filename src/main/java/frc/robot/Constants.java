@@ -4,6 +4,18 @@
 
 package frc.robot;
 
+import java.util.List;
+
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -26,6 +38,15 @@ public final class Constants {
         // r: rear
 
         // left
+        public static final int lf = 3;
+        public static final int lt = 4;
+        public static final int lr = 9;
+
+        // right
+        public static final int rf = 7;
+        public static final int rt = 5;
+        public static final int rr = 8;
+        
         public static final int leftFrontMotor = 5;
         public static final int leftBackMotor = 9;
 
@@ -40,13 +61,17 @@ public final class Constants {
 
         public static double rampspeed= .25;
 
+        public static final double encoderToMetersRatio= (robotStats.wheelRadius*Math.PI*2)/drive.highGearRatio;
+        public static final double encoderToWheelRatio = 1/(robotStats.gearRatio);
         public static final double Wheelcircumference =0.05715;
-        public static final double lowGearRatio=5.392;
-        public static final double highGearRatio=12.255;
-
-
+        public static final double highGearRatio=5.392;
+        public static final double lowGearRatio=12.255;
+        public static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.robotStats.trackWidth);
+        public static final double ksVolts = 1.22;
+        public static final double kvVoltSecondsPerMeter = 2.402;
 
     }
+
 
     public static final class elevator {
         public static final int motorPortLeft = 3;
@@ -68,43 +93,16 @@ public final class Constants {
         public static final int hubID = 8;
 
         public static final int solenoidPortA=8;
-        public static final int solenoidPortB=9
-        ;
+        public static final int solenoidPortB=9;
     }                             
 
 
-    public static final class climbingArm{
-        public static final int motorPort = 0;
-
-        public static final int limitSwitchRight = 0;
-        public static final int limitSwitchLeft = 0;
-
-        public static final int armDownSpeed = 0;
-    }
-
-    public static final class auto{
-        public static final double fwdSpeed = 0.5;
-        public static final double revSpeed = -0.4;
-        public static final double wheelRadius=3;
-        public static final double TicksPerRotation= 4096;
-
-        public static final class balancePID{
-            public static final double kP = 0.06;
-            public static final double kI = 0;
-            public static final double kD = 0.05;
-            public static final double outputMax = 1;
-            public static final double outputMin = -1;
-
-            public static final double positionTolerance = 2;
-            public static final double velocityTolerance = 2;
-        }
-        public static final class straightPID{
-            public static final double kp = 0.09;
-            public static final double ki = 0;
-            public static final double kd = 0.1;
-
-            public static final double positionTolerance = 1;
-        }
+    public static final class robotStats{
+        public static double highGearRatio;
+        public static final double trackWidth=0.3937;
+        public static final double wheelRadius=0.054;
+        public static final double gearRatio=8.5;
+        public static final double SemiAutoRoutineWaitTimes = 0.25;
     }
 
     public static final class intake {
@@ -133,6 +131,7 @@ public final class Constants {
     }
 
 
+
     public static final class speakerShooter {
         public static final double minimumSpeed = 3600;
         public static final double intakeTime = 5;
@@ -149,6 +148,83 @@ public final class Constants {
             public static final int bottomMotorSpeed = 1; // slower than top speed
             public static final double intakeSpeed = -0.3;
         }
+    }
+
+    public static final class climbingArm{
+        public static final int motorPort = 0;
+
+        public static final int limitSwitchRight = 0;
+        public static final int limitSwitchLeft = 0;
+
+        public static final int armDownSpeed = 0;
+    }
+
+    public static final class auto{
+        public static final double fwdSpeed = 0.5;
+        public static final double revSpeed = -0.4;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+        public static final double kMaxSpeedMetersPerSecond = 2;
+       
+     
+
+        public static final class balancePID{
+            public static final double kP = 0.06;
+            public static final double kI = 0;
+            public static final double kD = 0.05;
+            public static final double outputMax = 1;
+            public static final double outputMin = -1;
+
+            public static final double positionTolerance = 2;
+            public static final double velocityTolerance = 2;
+        }
+        public static final class straightPID{
+            public static final double kp = 0.09;
+            public static final double ki = 0;
+            public static final double kd = 0.1;
+
+            public static final double positionTolerance = 1;
+        }
+    }
+    public static final class Midi{
+        public static final String[] buttonNames={
+            "bankButton1", 
+            "bankButton2", 
+            "slider1", 
+            "slider2", 
+            "slider3", 
+            "slider4", 
+            "slider5", 
+            "slider6", 
+            "slider7", 
+            "slider8", 
+            "slider9", 
+            "dail1", 
+            "dail2", 
+            "dail3", 
+            "dail4", 
+            "dail5", 
+            "dail6", 
+            "dail7", 
+            "dail8", 
+            "dail9", 
+            "button1",
+            "button2",
+            "button3",
+            "button4",
+            "button5",
+            "button6",
+            "button7",
+            "button8",
+            "button9",
+            "record",
+            "pause",
+            "play",
+            "rewindLeft",
+            "rewindRight",
+            "replay",
+            "sliderAB",
+            "rightSilverDial",
+            "leftSilverDial"};
     }
 
     public static final class wrist {
@@ -186,6 +262,46 @@ public final class Constants {
 
     public static final int MOVEMENT_JOYSTICK = 0;
     public static final int MANIPULATOR_JOYSTICK = 1;
-    public static final int OneJoystick=2;
-    public static double driveSpeedRatio;
+    public static int blinkinPort=0;
+    public static final class semiAuto{
+
+        public static final double goalRingDistance = 0.18;
+        public static final double outerRingDistance = 0.75;
+
+        public static final class turn{
+            public static final double finalKp = 1;
+            public static final double finalKi = 0.9;
+            public static final double finalKd= 0.4;
+            
+            public static final double driveTurnKp = 0.8;
+            public static final double driveTurnKi = 0;
+            public static final double driveTurnKd= 0.3;
+            
+
+            public static final double finalTolerence = 0.0175;
+            public static final double driveTolerence = 0.0524;
+
+        }
+        public static final class straight{
+            public static final double innerKp = 1;
+            public static final double innerKi = 0.05;
+            public static final double innerKd= 0.5;
+
+            public static final double outerKp=0.7;
+            public static final double outerKi=0;
+            public static final double outerKd=0.2;
+
+
+
+            
+        }
+    }
+
+
+    public static final class fieldPosits{
+        public static final Pose2d leftStart = new Pose2d(0, 0.0, new Rotation2d(0.0));
+        public static final Pose2d ampScore = null;
+        public static final Pose2d testPosit = new Pose2d(0, 0.0, new Rotation2d(Math.toRadians(90)));
+    }
+
 }

@@ -30,13 +30,4 @@ public class limitSwitch extends SubsystemBase{
     public void runWhenHit(Command runner){
         new SequentialCommandGroup(new WaitUntilCommand(valSupplier), runner);
     }
-
-
-    @Override
-    public void periodic(){
-        SmartDashboard.putBoolean(String.valueOf(index), limit.get());
-
-    }
-    
-
 }
