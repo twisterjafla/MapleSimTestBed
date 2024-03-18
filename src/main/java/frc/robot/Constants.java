@@ -100,7 +100,7 @@ public final class Constants {
     public static final class robotStats{
         public static double highGearRatio;
         public static final double trackWidth=0.3937;
-        public static final double wheelRadius=0.0762;
+        public static final double wheelRadius=0.054;
         public static final double gearRatio=8.5;
         public static final double SemiAutoRoutineWaitTimes = 0.25;
     }
