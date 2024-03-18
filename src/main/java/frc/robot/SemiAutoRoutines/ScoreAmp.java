@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.semiAutoManager;
-import frc.robot.commands.RepetitiveOutake;
 import frc.robot.commands.ToggleElevator;
+import frc.robot.commands.IntakeCommands.OuttakeMain;
 import frc.robot.semiAutoCommands.BlinkinGreen;
 import frc.robot.semiAutoCommands.BlinkinRed;
 import frc.robot.semiAutoCommands.BlinkinYellow;
@@ -42,7 +42,7 @@ public class ScoreAmp extends SequentialCommandGroup {
             new BlinkinYellow(),
 
             new ParallelCommandGroup(
-            new RepetitiveOutake(intake),
+            new OuttakeMain(intake),
             new stealDriveCommand(drive)
             ),
 

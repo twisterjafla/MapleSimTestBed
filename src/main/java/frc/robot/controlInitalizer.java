@@ -11,7 +11,6 @@ import frc.robot.commands.*;
 import frc.robot.commands.DriveCommands.*;
 import frc.robot.commands.ElevatorCommands.*;
 import frc.robot.commands.IntakeCommands.*;
-import frc.robot.commands.IntakeCommands.RepetitiveOutake.OuttakeMain;
 import frc.robot.commands.WristComands.*;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Elevator;
