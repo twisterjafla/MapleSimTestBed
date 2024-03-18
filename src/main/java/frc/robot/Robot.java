@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -20,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.controlInitalizer;
+import frc.robot.Constants.speakerShooter;
 
 
 /**
@@ -39,6 +41,7 @@ public class Robot extends TimedRobot {
   final Gyro gyro = new Gyro();
   final Timer timer = new Timer();
   final Limelight lime = new Limelight();
+  final speakerShooter shooter = new speakerShooter();
 
 
  
@@ -67,7 +70,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     semiAutoManager.configureSemiAutoManager(m_driveSubsystem, gyro, lime, timer);
 
-    controlInitalizer.controlInitalizerFromRobot(m_driveSubsystem, gearBox, wrist, intake, elevator);
+    controlInitalizer.controlInitalizerFromRobot(m_driveSubsystem, gearBox, wrist, intake, elevator, shooter);
 
     configureControls();
     midi.InitButtons();
@@ -147,6 +150,7 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     semiAutoManager.periodic();
+
     
     
 

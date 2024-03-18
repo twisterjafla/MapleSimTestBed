@@ -24,8 +24,8 @@ public class DriveBase extends SubsystemBase {
   public final CANSparkMax sparkMaxRightFront = new CANSparkMax(Constants.drive.rightFrontMotor, MotorType.kBrushless);
 
 
-  public final gearBoxEncoder encoderR;
-  public final gearBoxEncoder encoderL;
+  public final RelativeEncoder encoderR;
+  public final RelativeEncoder encoderL;
 
 
 
@@ -45,14 +45,15 @@ public class DriveBase extends SubsystemBase {
   public DriveBase() {
 
 
-    //left voltage ramping
-    encoderR=new gearBoxEncoder(sparkMaxRightBack, Constants.drive.lowGearRatio, Constants.drive.highGearRatio, Constants.drive.Wheelcircumference);    
-    encoderL= new gearBoxEncoder(sparkMaxLeftBack, Constants.drive.lowGearRatio, Constants.drive.highGearRatio, Constants.drive.Wheelcircumference);
+    // //left voltage ramping
+    // encoderR=new gearBoxEncoder(sparkMaxRightBack, Constants.drive.lowGearRatio, Constants.drive.highGearRatio, Constants.drive.Wheelcircumference);    
+    // encoderL= new gearBoxEncoder(sparkMaxLeftBack, Constants.drive.lowGearRatio, Constants.drive.highGearRatio, Constants.drive.Wheelcircumference);
     sparkMaxLeftBack.setInverted(true);
     sparkMaxLeftFront.setInverted(true);
 
    
-
+    encoderL=sparkMaxLeftBack.getEncoder();
+    encoderR=sparkMaxRightBack.getEncoder();
 
     sparkMaxLeftFront.setOpenLoopRampRate(Constants.drive.rampspeed);
     sparkMaxRightFront.setOpenLoopRampRate(Constants.drive.rampspeed);
@@ -74,8 +75,8 @@ public class DriveBase extends SubsystemBase {
   }
 
   public void resetEncoder(){
-    encoderL.resetEncoderPosition();
-    encoderR.resetEncoderPosition();
+    encoderL.setPosition(0);
+    encoderR.setPosition(0);
   }
 
 
@@ -106,8 +107,8 @@ public class DriveBase extends SubsystemBase {
 
 
   public void shift(boolean isHigh){
-    encoderL.shift(isHigh);
-    encoderR.shift(isHigh);
+  //   encoderL.shift(isHigh);
+  //   encoderR.shift(isHigh);
   }
 
 }

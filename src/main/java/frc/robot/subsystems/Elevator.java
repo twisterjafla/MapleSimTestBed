@@ -30,7 +30,7 @@ public class Elevator extends SubsystemBase {
 		return topSwitch.isOk() && bottomSwitch.isOk();
 	}
 	public void periodic(){
-		SmartDashboard.putBoolean("elvator is up", isUp);
+		//SmartDashboard.putBoolean("elvator is up", isUp);
 	}
 
 }

@@ -17,7 +17,7 @@ public class ShiftableGearbox extends SubsystemBase{
   DriveBase drive;
 
   public ShiftableGearbox(DriveBase drive){
-    compressor.enableDigital();
+    compressor.disable();
     this.drive=drive;
   }
 
@@ -32,7 +32,7 @@ public class ShiftableGearbox extends SubsystemBase{
   }
 
   public void shift(boolean isHigh){
-    SmartDashboard.putBoolean("isHigh", isHigh);
+    //SmartDashboard.putBoolean("isHigh", isHigh);
     drive.shift(isHigh);
     if (isHigh){
       shifter.set(DoubleSolenoid.Value.kForward);

@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.SemiAutoRoutines.*;
 import frc.robot.commands.*;
 import frc.robot.semiAutoCommands.CancelCurrentRoutine;
-
+import frc.robot.Constants.speakerShooter;
 import frc.robot.Constants.intake.intakeNote;
 import frc.robot.commands.*;
 import frc.robot.commands.DriveCommands.*;
@@ -31,15 +31,17 @@ public class controlInitalizer {
     static boolean hasBeenInitalizedFromRobot=false;
     static boolean hasBeenInitalizedFromSemiAutoManager=false;
     public static Command testRoutine;
+    public static speakerShooter shooter;
 
 
     public static void controlInitalizerFromRobot(
-        DriveBase DriveSubsystem, ShiftableGearbox GearBox, WristIntake Wrist, Intake Intake, Elevator Elevator){
+        DriveBase DriveSubsystem, ShiftableGearbox GearBox, WristIntake Wrist, Intake Intake, Elevator Elevator, speakerShooter Shooter){
         hasBeenInitalizedFromRobot=true;
         gearBox=GearBox;
         driveSubsystem=DriveSubsystem;
         wrist = Wrist;
         intake = Intake;
+        shooter=Shooter;
         elevator = Elevator;
         testRoutine = new testRoutineRunner(driveSubsystem, GearBox);
 
@@ -99,8 +101,8 @@ public class controlInitalizer {
         movementController.x().onTrue(new shiftGears(false, gearBox)).onFalse(new shiftGears(true, gearBox));
 
         movementController.leftTrigger().onTrue(new WristMoveAuto(wrist, Constants.wrist.positions.intake));
-        // movementController.a().whileTrue(new IntakeNote(intake));
-        // movementController.b().whileTrue(new ShootNote(intake));
+        //movementController.a().whileTrue(new IntakeNote(intake));
+        //movementController.b().whileTrue(new ShootNote(intake));
         movementController.a().onTrue(new IntakeMain(intake));
         movementController.b().onTrue(new OuttakeMain(intake));
         movementController.rightBumper().whileTrue(new ElevatorToggle(elevator, Constants.elevator.elevatorUpSpeed));

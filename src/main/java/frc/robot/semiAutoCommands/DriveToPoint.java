@@ -54,7 +54,7 @@ public class DriveToPoint extends Command{
         turnStationaryPID.enableContinuousInput(-PI, PI);
         turnDrivePID.enableContinuousInput(-PI, PI); 
         turnDrivePID.setTolerance((Constants.semiAuto.turn.driveTolerence));
-        gearbox.shift(false);
+        //gearbox.shift(false);
 
         outerStraightPID.setSetpoint(0);
         innerStraightPID.setSetpoint(0);
@@ -62,6 +62,8 @@ public class DriveToPoint extends Command{
 
         turnPID=turnDrivePID;
         straightPID=outerStraightPID;
+        SmartDashboard.putBoolean("hasFinished", false);
+
                //straightPID.enableContinuousInput(-1, 1);
     }
 
@@ -80,11 +82,12 @@ public class DriveToPoint extends Command{
     public boolean isFinished(){
         SmartDashboard.putBoolean("pid at set", turnPID.atSetpoint());
         return turnPID.atSetpoint()&&isInInnerRing;
-        //return false;
+        //return true;
     }
 
     @Override
     public void end(boolean wasIntinterupted){
+        SmartDashboard.putBoolean("hasFinished", true);
         drive.drive(0,0);
     }
 
@@ -138,14 +141,14 @@ public class DriveToPoint extends Command{
         Pose2d predictedBack;
         Pose2d predictedFieldForward = new Pose2d(current.getX()+Math.cos(getAngle(current, goal))*0.1, current.getY()+Math.sin(getAngle(current, goal))*0.1, current.getRotation());
         Pose2d predictedFieldBack = new Pose2d(current.getX()-Math.cos(getAngle(current, goal))*0.1, current.getY()-Math.sin(getAngle(current, goal))*0.1, current.getRotation());
-        if (current.getRotation().getDegrees()>90||current.getRotation().getDegrees()<-90){
-            predictedBack=predictedFieldForward;
-            predictedForward=predictedFieldBack;
-        }
-        else{
-            predictedBack=predictedFieldBack;
-            predictedForward=predictedFieldForward;
-        }
+        // if (current.getRotation().getDegrees()>90||current.getRotation().getDegrees()<-90){
+        //     predictedBack=predictedFieldForward;
+        //     predictedForward=predictedFieldBack;
+        // }
+        // else{
+        //     predictedBack=predictedFieldBack;
+        //     predictedForward=predictedFieldForward;
+        // }
 
 
         // if (current.getRotation().getDegrees()>90 || current.getRotation().getDegrees()<-90){
@@ -155,13 +158,13 @@ public class DriveToPoint extends Command{
 
 
 
-        if (getDistance(current)>getDistance(predictedForward)){
+        if (getDistance(current)>getDistance(predictedFieldForward)){
             SmartDashboard.putBoolean("forwardDrive", true);
             return straightPID.calculate(getDistance(current));
         }
-        else if(getDistance(current)>getDistance(predictedBack)){
+        else if(getDistance(current)>getDistance(predictedFieldBack)){
             SmartDashboard.putBoolean("forwardDrive", false);
-            return straightPID.calculate(getDistance(current));
+            return straightPID.calculate(-getDistance(current));
         }
         else{
             return 0;
@@ -214,21 +217,21 @@ public class DriveToPoint extends Command{
         return raw;
     }
 
-    public double getAngle360(Pose2d pointA, Pose2d pointB){
-        double raw = getAngle(pointA, pointB);
+    // public double getAngle360(Pose2d pointA, Pose2d pointB){
+    //     double raw = getAngle(pointA, pointB);
         
         
 
-        if (pointA.getX()<pointB.getX()&&pointA.getY()<pointB.getY()){
-            return -180+raw;
-        }
-        else if (pointA.getX()<pointB.getX()){
-            return 180-raw;
-        }    
-        else{
-            return raw;
-        }    
-    }
+    //     if (pointA.getX()<pointB.getX()&&pointA.getY()<pointB.getY()){
+    //         return -180+raw;
+    //     }
+    //     else if (pointA.getX()<pointB.getX()){
+    //         return 180-raw;
+    //     }    
+    //     else{
+    //         return raw;
+    //     }    
+    // }
 
 
     public double square(double toSquare){
