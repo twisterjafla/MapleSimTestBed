@@ -4,6 +4,13 @@
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/autos: ": "String Chooser",
       "/SmartDashboard/control type": "String Chooser"
+    },
+    "windows": {
+      "/FMSInfo": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   }
 }

@@ -13,15 +13,13 @@ boolean isBlue;
 NetworkTable table;
 
 //post to smart dashboard periodically
-    public Limelight(){
-        
-        isBlue=(DriverStation.getAlliance().get()==DriverStation.Alliance.Blue);
-        
+    public Limelight(){        
         table = NetworkTableInstance.getDefault().getTable("limelight");
     }
 
    public Pose2d getCoords(){
-
+    isBlue=(DriverStation.getAlliance().isPresent() 
+            && DriverStation.getAlliance().get() == DriverStation.Alliance.Blue);
 
     if (table.getEntry("tid").getDouble(-1)==-1){
         return null;

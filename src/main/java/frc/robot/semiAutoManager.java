@@ -55,8 +55,9 @@ public  class semiAutoManager{
         poseEstimator.update(gyro.getYaw(), drive.getLeftEncoder(), drive.getRightEncoder());
 
         Pose2d visionCoords=limelight.getCoords();
+        
         if (visionCoords!=null){
-            poseEstimator.addVisionMeasurement(limelight.getCoords(), limelight.getDelayInMs());
+            poseEstimator.addVisionMeasurement(visionCoords, limelight.getDelayInMs());
         }
         Pose2d currentPose2d = getCoords();
         SmartDashboard.putNumber("robotPositX", currentPose2d.getX());
