@@ -269,8 +269,8 @@ public final class Constants {
         public static final double outerRingDistance = 0.75;
 
         public static final class turn{
-            public static final double finalKp = 1;
-            public static final double finalKi = 0.9;
+            public static final double finalKp = 0.7;
+            public static final double finalKi = 0.5;
             public static final double finalKd= 0.4;
             
             public static final double driveTurnKp = 0.8;
@@ -285,7 +285,7 @@ public final class Constants {
         public static final class straight{
             public static final double innerKp = 1;
             public static final double innerKi = 0.05;
-            public static final double innerKd= 0.5;
+            public static final double innerKd= 0.2;
 
             public static final double outerKp=0.7;
             public static final double outerKi=0;
