@@ -53,7 +53,7 @@ public class DriveToPoint extends Command{
         turnStationaryPID.setTolerance(Constants.semiAuto.turn.finalTolerence);
     
         turnStationaryPID.enableContinuousInput(-PI, PI);
-        turnDrivePID.enableContinuousInput(-PI, PI); 
+        turnDrivePID.enableContinuousInput(-PI/2, PI/2); 
         turnDrivePID.setTolerance((Constants.semiAuto.turn.driveTolerence));
         //gearbox.shift(false);
 
