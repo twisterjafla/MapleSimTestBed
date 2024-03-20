@@ -8,6 +8,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
@@ -137,10 +138,9 @@ public class DriveToPoint extends Command{
         if (isInInnerRing){
             return 0;
         }   
-        Pose2d predictedForward;
-        Pose2d predictedBack;
-        Pose2d predictedFieldForward = new Pose2d(current.getX()+Math.cos(getAngle(current, goal))*0.1, current.getY()+Math.sin(getAngle(current, goal))*0.1, current.getRotation());
-        Pose2d predictedFieldBack = new Pose2d(current.getX()-Math.cos(getAngle(current, goal))*0.1, current.getY()-Math.sin(getAngle(current, goal))*0.1, current.getRotation());
+        Pose2d predictedForward = current.exp(new Twist2d(0.1, 0, 0));
+    
+        Pose2d predictedBack = current.exp( new Twist2d(-0.1, 0, 0));
         // if (current.getRotation().getDegrees()>90||current.getRotation().getDegrees()<-90){
         //     predictedBack=predictedFieldForward;
         //     predictedForward=predictedFieldBack;
@@ -158,11 +158,11 @@ public class DriveToPoint extends Command{
 
 
 
-        if (getDistance(current)>getDistance(predictedFieldForward)){
+        if (getDistance(current)>getDistance(predictedForward)){
             SmartDashboard.putBoolean("forwardDrive", true);
             return straightPID.calculate(-getDistance(current));
         }
-        else if(getDistance(current)>getDistance(predictedFieldBack)){
+        else if(getDistance(current)>getDistance(predictedBack)){
             SmartDashboard.putBoolean("forwardDrive", false);
             return straightPID.calculate(getDistance(current));
         }
