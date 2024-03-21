@@ -1,52 +1,53 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Intake extends SubsystemBase {
-	public final CANSparkMax intakeMotorLeft = new CANSparkMax(Constants.intake.intakeNote.intakeMotorPortLeft, MotorType.kBrushless);
-	public final CANSparkMax intakeMotorRight = new CANSparkMax(Constants.intake.intakeNote.intakeMotorPortRight, MotorType.kBrushless);
-	public final MotorControllerGroup intakeMotors = new MotorControllerGroup(intakeMotorLeft, intakeMotorRight);
-    // public final CANSparkMax raiseMotor = new CANSparkMax(Constants.intake.raisingIntake.raisingMotorPort, MotorType.kBrushless);
+  
 
-	// public final limitSwitch topSwitch = new limitSwitch(Constants.intake.raisingIntake.topLimitSwitchPort);
-	// public final limitSwitch bottomSwitch = new limitSwitch(Constants.intake.raisingIntake.bottomLimitSwitchPort);
-
-	public final limitSwitch beamBreak = new limitSwitch(Constants.intake.beamBreakPort);
-
-	public boolean isUp = false;
-	
-	public Intake(){
-		//intakeMotorLeft.setInverted(true);
-
-	}
-
-	public void intake(){
-    	intakeMotors.set(Constants.intake.intakeSpeeds.intakeSpeed);
-  	}
-
-	public void outake(){
-    	intakeMotors.set(Constants.intake.intakeSpeeds.outakeSpeed);
-  	}
-
-	public void stop(){
-		intakeMotors.set(0);
-	}
+  CANSparkMax intakeMotor1 = new CANSparkMax(Constants.intake.motor1,MotorType.kBrushless);
+  CANSparkMax intakeMotor2 = new CANSparkMax(Constants.intake.motor2, MotorType.kBrushless);
+  DoubleSolenoid intakeSolenoid;
 
 
-	public void periodic(){
-		SmartDashboard.putBoolean("Intake Beam Break", beamBreak.getVal());
-	}
+  MotorControllerGroup intakeMotors;
+  
+  public Intake(Pneumatics pneumatics) {
 
-    // public void raiseIntake(){
-	// 	raiseMotor.set(Constants.intake.intakeSpeeds.intakeRaiseSpeed);
-    // }
+    intakeSolenoid = pneumatics.makeDoubleSolenoid(
+      Constants.intake.solenoid.fwdPort, 
+      Constants.intake.solenoid.revPort
+    );
+
+    intakeMotor1.setInverted(true);
+    intakeMotor1.setSmartCurrentLimit(40, 25);
+    intakeMotor2.setSmartCurrentLimit(40, 25);
+    intakeMotors = new MotorControllerGroup(intakeMotor1, intakeMotor2);
+    
+    intakeSolenoid.set(DoubleSolenoid.Value.kForward);
+  }
+
+  public void toggleIntakepiston(){
+    intakeSolenoid.toggle();
+  }
+
+  public void intakeCargo(double speed) {
+    intakeMotor1.set(speed);
+    intakeMotor2.set(-speed);
+
+  }
+
+  public void stopMotors(){
+    intakeMotors.stopMotor();
+  }
+
+  public void set(DoubleSolenoid.Value val){
+    intakeSolenoid.set(val);
+  }
 
 }
-
-
