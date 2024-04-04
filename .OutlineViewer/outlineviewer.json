@@ -1,0 +1,21 @@
+{
+  "NetworkTables Settings": {
+    "listenAddress": "1799",
+    "mode": "Client (NT4)",
+    "serverTeam": "1799"
+  },
+  "Retained Values": {
+    "open": false
+  },
+  "Server": {
+    "open": true
+  },
+  "retained": {
+    "limelight": {
+      "double[]##v_/limelight/botpose_wpiblue": {
+        "open": true
+      },
+      "open": true
+    }
+  }
+}

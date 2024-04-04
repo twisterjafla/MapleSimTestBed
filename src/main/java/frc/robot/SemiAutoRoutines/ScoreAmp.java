@@ -1,0 +1,54 @@
+package frc.robot.SemiAutoRoutines;
+
+import java.util.List;
+
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants;
+import frc.robot.semiAutoManager;
+import frc.robot.commands.ToggleElevator;
+import frc.robot.commands.IntakeCommands.OuttakeMain;
+import frc.robot.semiAutoCommands.BlinkinGreen;
+import frc.robot.semiAutoCommands.BlinkinRed;
+import frc.robot.semiAutoCommands.BlinkinYellow;
+import frc.robot.semiAutoCommands.DriveToPoint;
+import frc.robot.semiAutoCommands.stealDriveCommand;
+import frc.robot.subsystems.Blinkin;
+import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.ShiftableGearbox;
+
+public class ScoreAmp extends SequentialCommandGroup {
+    public ScoreAmp(DriveBase drive, Elevator intakeElevator, Intake intake, ShiftableGearbox gearbox){
+        
+        super(
+            //Init
+            new BlinkinYellow(),
+            new WaitCommand(Constants.robotStats.SemiAutoRoutineWaitTimes),
+            
+
+            //MainLoop
+            new BlinkinRed(),
+            new ParallelCommandGroup(
+                new DriveToPoint(drive, Constants.fieldPosits.ampScore, gearbox),
+                       new ToggleElevator(intakeElevator)
+            ),
+
+            //Ending set
+            new BlinkinYellow(),
+
+            new ParallelCommandGroup(
+            new OuttakeMain(intake),
+            new stealDriveCommand(drive)
+            ),
+
+            //passOff
+            new BlinkinGreen()
+        );
+
+    }
+}

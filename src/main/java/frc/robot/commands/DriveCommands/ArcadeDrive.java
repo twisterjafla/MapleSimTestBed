@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.DriveCommands;
 
 import java.util.function.DoubleSupplier;
 
@@ -15,25 +15,18 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveBase;
 
-/**
- * Have the robot drive tank style.
- */
+
 public class ArcadeDrive extends RunCommand {
-  /**
-   * Creates a new ArcadeDrive command.
-   *
-   * @param left       The control input for the left side of the drive
-   * @param right      The control input for the right sight of the drive
-   * @param driveSubsystem The driveSubsystem subsystem to drive
-   */
+
   public ArcadeDrive(DriveBase drive, DoubleSupplier speed, DoubleSupplier rotation) {
     super(
       ()->{
-        SmartDashboard.putString("On", "true");
 
         drive.drive(
+
+
           MathUtil.applyDeadband(speed.getAsDouble(), 0.1)*Constants.drive.driveSpeedRatio,
-          MathUtil.applyDeadband(rotation.getAsDouble(), 0.1)*Constants.drive.rotationSpeedRatio
+          MathUtil.applyDeadband(rotation.getAsDouble(), 0.1)
         );
       },
       drive
