@@ -8,10 +8,13 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -33,6 +36,8 @@ import frc.robot.Constants.AutonConstants;
 import frc.robot.SystemManager;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.DoubleSupplier;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
@@ -138,7 +143,17 @@ public class SwerveSubsystem extends SubsystemBase
           return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
         },
         this // Reference to this subsystem to set requirements
-                                  );
+        );
+        PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
+          // Do whatever you want with the pose here
+          swerveDrive.field.getObject("target pose").setPose(pose);
+        });
+
+        // Logging callback for the active path, this is sent as a list of poses
+        PathPlannerLogging.setLogActivePathCallback((poses) -> {
+          // Do whatever you want with the poses here
+          swerveDrive.field.getObject("path").setPoses(poses);
+        });
   }
 
 
@@ -266,8 +281,21 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.drive(velocity);
   }
 
+  public void repopObstacles(){
+    List<Pair<Translation2d, Translation2d>> obstacles = new ArrayList<>();
+
+    obstacles.add(Pair.of(SystemManager.fakeBot.getTopCorner(), SystemManager.fakeBot.getBottemCorner()));
+
+    Pathfinding.setDynamicObstacles(obstacles, swerveDrive.getPose().getTranslation());
+  }
+
+
   @Override
   public void periodic(){
+    repopObstacles();
+    //postTrajectory();
+    
+
     // if (RobotBase.isReal()){
     //   Pose2d currentPose2d=getPose();
     //   SmartDashboard.putNumber("robotPositX", currentPose2d.getX());
@@ -315,6 +343,7 @@ public class SwerveSubsystem extends SubsystemBase
   public void setChassisSpeeds(ChassisSpeeds chassisSpeeds){
     swerveDrive.setChassisSpeeds(chassisSpeeds);
   }
+
 
   /**
    * Post the trajectory to the field.

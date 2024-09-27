@@ -3,8 +3,12 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
+import frc.robot.commands.swervedrive.drivebase.AutoDefenceForFakeBot;
+import frc.robot.commands.swervedrive.drivebase.FakeDrive;
+import frc.robot.commands.swervedrive.drivebase.FakePoseReset;
 
 public class ControlManager {
     public static int getPOVForTest(CommandXboxController controller){
@@ -35,7 +39,8 @@ public class ControlManager {
         // if (!RobotBase.isReal()){
         //     testController.x().onTrue(SystemManager.fakeBot.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
         // }
-
+        SystemManager.fakeBot.setDefaultCommand(new FakeDrive(SystemManager.fakeBot, ()->testController.getLeftX(), ()->-testController.getLeftY(),()-> Math.PI/180 * getPOVForTest(testController)));
+        testController.x().whileTrue(new AutoDefenceForFakeBot(new Pose2d(2,4, new Rotation2d(0))));
         
     }
 }

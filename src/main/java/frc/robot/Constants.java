@@ -52,7 +52,10 @@ public final class Constants
     public static final int mainControllerPort =0;
     public static final int[] supportedPOV={0,90,180,270};
   }
-
+  public static class sim{
+    public static final double maxSpeed=4;
+    public static final double maxExel=2;
+  }
 
 // Since AutoBuilder is configured, we can use it to build pathfinding commands
 
