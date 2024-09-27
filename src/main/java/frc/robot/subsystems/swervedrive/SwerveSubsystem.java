@@ -53,6 +53,7 @@ public class SwerveSubsystem extends SubsystemBase
    * Swerve drive object.
    */
   private final SwerveDrive swerveDrive;
+  public final PathConstraints constraints;
   /**
    * AprilTag field layout.
    */
@@ -89,6 +90,10 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(false);//!SwerveDriveTelemetry.isSimulation); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
     setupPathPlanner();
+    constraints = new PathConstraints(
+      swerveDrive.getMaximumVelocity(), 4.0,
+      swerveDrive.getMaximumAngularVelocity(), Units.degreesToRadians(720));
+  
   }
 
   /**
@@ -99,6 +104,9 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public SwerveSubsystem(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controllerCfg){
     swerveDrive = new SwerveDrive(driveCfg, controllerCfg, Constants.MAX_SPEED);
+    constraints = new PathConstraints(
+      swerveDrive.getMaximumVelocity(), 4.0,
+      swerveDrive.getMaximumAngularVelocity(), Units.degreesToRadians(720));
   }
 
   /**

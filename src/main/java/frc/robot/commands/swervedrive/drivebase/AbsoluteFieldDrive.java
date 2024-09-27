@@ -38,7 +38,7 @@ public class AbsoluteFieldDrive extends Command
    * @param vY      DoubleSupplier that supplies the y-translation joystick input.  Should be in the range -1 to 1 with
    *                deadband already accounted for.  Positive Y is towards the left wall when looking through the driver
    *                station glass.
-   * @param heading DoubleSupplier that supplies the robot's heading angle.
+   * @param heading DoubleSupplier that supplies the robot's heading angle in deggrees.
    */
   public AbsoluteFieldDrive(SwerveSubsystem swerve, DoubleSupplier vX, DoubleSupplier vY,
                             DoubleSupplier heading)
@@ -64,7 +64,7 @@ public class AbsoluteFieldDrive extends Command
     // Get the desired chassis speeds based on a 2 joystick module.
 
     ChassisSpeeds desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
-                                                         new Rotation2d(heading.getAsDouble() * Math.PI));
+                                                         new Rotation2d(heading.getAsDouble() * Math.PI/180d));
 
     // Limit velocity to prevent tippy
     Translation2d translation = SwerveController.getTranslation2d(desiredSpeeds);

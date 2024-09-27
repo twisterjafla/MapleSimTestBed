@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.PIDConstants;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
@@ -51,4 +52,8 @@ public final class Constants
     public static final int mainControllerPort =0;
     public static final int[] supportedPOV={0,90,180,270};
   }
+
+
+// Since AutoBuilder is configured, we can use it to build pathfinding commands
+
 }

@@ -21,11 +21,6 @@
           "open": true
         }
       },
-      "Talon FX (v6)[51]": {
-        "header": {
-          "open": true
-        }
-      },
       "Talon FX[50]": {
         "header": {
           "open": true
@@ -45,11 +40,11 @@
         "header": {
           "open": true
         }
-      },
-      "navX-Sensor[0]": {
-        "header": {
-          "open": true
-        }
+      }
+    },
+    "RoboRIO": {
+      "window": {
+        "visible": true
       }
     }
   },
@@ -64,6 +59,7 @@
       "/SmartDashboard/Pigeon 2 (v6) [13]": "Gyro",
       "/SmartDashboard/Pigeon 2 [13]": "Gyro",
       "/SmartDashboard/SendableChooser[0]": "String Chooser",
+      "/SmartDashboard/bot chara map": "Field2d",
       "/SmartDashboard/navX-Sensor[1]": "Gyro",
       "/SmartDashboard/navX-Sensor[4]": "Gyro"
     },
@@ -94,6 +90,17 @@
         "window": {
           "visible": true
         }
+      },
+      "/SmartDashboard/bot chara map": {
+        "bottom": 1476,
+        "height": 8.210550308227539,
+        "left": 150,
+        "right": 2961,
+        "top": 79,
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
       }
     }
   },
@@ -109,6 +116,9 @@
       },
       "SmartDashboard": {
         "Field": {
+          "double[]##v_/SmartDashboard/Field/Bot Chara": {
+            "open": true
+          },
           "double[]##v_/SmartDashboard/Field/Robot": {
             "open": true
           },
@@ -117,7 +127,10 @@
           },
           "open": true
         },
-        "Swerve Drive": {
+        "bot chara map": {
+          "double[]##v_/SmartDashboard/bot chara map/Robot": {
+            "open": true
+          },
           "open": true
         },
         "open": true,
