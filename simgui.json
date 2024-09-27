@@ -21,11 +21,6 @@
           "open": true
         }
       },
-      "Talon FX (v6)[2]/Rotor Sensor": {
-        "header": {
-          "open": true
-        }
-      },
       "Talon FX (v6)[51]": {
         "header": {
           "open": true
@@ -47,6 +42,11 @@
         }
       },
       "Talon FX[8]/Integrated Sensor": {
+        "header": {
+          "open": true
+        }
+      },
+      "navX-Sensor[0]": {
         "header": {
           "open": true
         }
@@ -99,8 +99,19 @@
   },
   "NetworkTables": {
     "transitory": {
+      "PathPlanner": {
+        "HotReload": {
+          "open": true
+        }
+      },
+      "Shuffleboard": {
+        "open": true
+      },
       "SmartDashboard": {
         "Field": {
+          "open": true
+        },
+        "Swerve Drive": {
           "open": true
         },
         "open": true,
@@ -111,6 +122,26 @@
     }
   },
   "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
+    "DartClient_30458887@1": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
+    "Server": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      }
+    },
     "visible": true
   }
 }

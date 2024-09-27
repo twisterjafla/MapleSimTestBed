@@ -21,13 +21,17 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants;
 import frc.robot.Constants.AutonConstants;
+import frc.robot.SystemManager;
+
 import java.io.File;
 import java.util.function.DoubleSupplier;
 import org.photonvision.PhotonCamera;
@@ -256,6 +260,14 @@ public class SwerveSubsystem extends SubsystemBase
 
   @Override
   public void periodic(){
+    // if (RobotBase.isReal()){
+    //   Pose2d currentPose2d=getPose();
+    //   SmartDashboard.putNumber("robotPositX", currentPose2d.getX());
+    //   SmartDashboard.putNumber("robotPositY", currentPose2d.getY());
+    //   SmartDashboard.putNumber("RobotRotation", currentPose2d.getRotation().getDegrees());
+    //   SmartDashboard.putNumber("robotRotation radians", currentPose2d.getRotation().getRadians());
+    //   SystemManager.m_field.setRobotPose(currentPose2d);
+    // }
   }
 
   /**

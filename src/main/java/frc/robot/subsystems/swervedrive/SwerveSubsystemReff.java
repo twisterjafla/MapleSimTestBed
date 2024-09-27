@@ -23,11 +23,14 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants;
 import frc.robot.Constants.AutonConstants;
+import frc.robot.SystemManager;
+
 import java.io.File;
 import java.util.function.DoubleSupplier;
 import org.photonvision.PhotonCamera;
@@ -52,7 +55,7 @@ public class SwerveSubsystemReff extends SubsystemBase
   /**
    * AprilTag field layout.
    */
-  //private final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+  private final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
@@ -137,27 +140,27 @@ public class SwerveSubsystemReff extends SubsystemBase
    *
    * @return Distance to speaker in meters.
    */
-  // public double getDistanceToSpeaker()
-  // {
-  //   int allianceAprilTag = DriverStation.getAlliance().get() == Alliance.Blue ? 7 : 4;
-  //   // Taken from PhotonUtils.getDistanceToPose
-  //   Pose3d speakerAprilTagPose = aprilTagFieldLayout.getTagPose(allianceAprilTag).get();
-  //   return getPose().getTranslation().getDistance(speakerAprilTagPose.toPose2d().getTranslation());
-  // }
+  public double getDistanceToSpeaker()
+  {
+    int allianceAprilTag = DriverStation.getAlliance().get() == Alliance.Blue ? 7 : 4;
+    // Taken from PhotonUtils.getDistanceToPose
+    Pose3d speakerAprilTagPose = aprilTagFieldLayout.getTagPose(allianceAprilTag).get();
+    return getPose().getTranslation().getDistance(speakerAprilTagPose.toPose2d().getTranslation());
+  }
 
   /**
    * Get the yaw to aim at the speaker.
    *
    * @return {@link Rotation2d} of which you need to achieve.
    */
-  // public Rotation2d getSpeakerYaw()
-  // {
-  //   int allianceAprilTag = DriverStation.getAlliance().get() == Alliance.Blue ? 7 : 4;
-  //   // Taken from PhotonUtils.getYawToPose()
-  //   Pose3d        speakerAprilTagPose = aprilTagFieldLayout.getTagPose(allianceAprilTag).get();
-  //   Translation2d relativeTrl         = speakerAprilTagPose.toPose2d().relativeTo(getPose()).getTranslation();
-  //   return new Rotation2d(relativeTrl.getX(), relativeTrl.getY()).plus(swerveDrive.getOdometryHeading());
-  // }
+  public Rotation2d getSpeakerYaw()
+  {
+    int allianceAprilTag = DriverStation.getAlliance().get() == Alliance.Blue ? 7 : 4;
+    // Taken from PhotonUtils.getYawToPose()
+    Pose3d        speakerAprilTagPose = aprilTagFieldLayout.getTagPose(allianceAprilTag).get();
+    Translation2d relativeTrl         = speakerAprilTagPose.toPose2d().relativeTo(getPose()).getTranslation();
+    return new Rotation2d(relativeTrl.getX(), relativeTrl.getY()).plus(swerveDrive.getOdometryHeading());
+  }
 
   /**
    * Aim the robot at the speaker.
@@ -165,19 +168,19 @@ public class SwerveSubsystemReff extends SubsystemBase
    * @param tolerance Tolerance in degrees.
    * @return Command to turn the robot to the speaker.
    */
-  // public Command aimAtSpeaker(double tolerance)
-  // {
-  //   SwerveController controller = swerveDrive.getSwerveController();
-  //   return run(
-  //       () -> {
-  //         drive(ChassisSpeeds.fromFieldRelativeSpeeds(0,
-  //                                                     0,
-  //                                                     controller.headingCalculate(getHeading().getRadians(),
-  //                                                                                 getSpeakerYaw().getRadians()),
-  //                                                     getHeading())
-  //              );
-  //       }).until(() -> getSpeakerYaw().minus(getHeading()).getDegrees() < tolerance);
-  // }
+  public Command aimAtSpeaker(double tolerance)
+  {
+    SwerveController controller = swerveDrive.getSwerveController();
+    return run(
+        () -> {
+          drive(ChassisSpeeds.fromFieldRelativeSpeeds(0,
+                                                      0,
+                                                      controller.headingCalculate(getHeading().getRadians(),
+                                                                                  getSpeakerYaw().getRadians()),
+                                                      getHeading())
+               );
+        }).until(() -> getSpeakerYaw().minus(getHeading()).getDegrees() < tolerance);
+  }
 
   /**
    * Aim the robot at the target returned by PhotonVision.
@@ -381,6 +384,12 @@ public class SwerveSubsystemReff extends SubsystemBase
   @Override
   public void simulationPeriodic()
   {
+    Pose2d currentPose2d=swerveDrive.getPose();
+    SmartDashboard.putNumber("robotPositX", currentPose2d.getX());
+    SmartDashboard.putNumber("robotPositY", currentPose2d.getY());
+    SmartDashboard.putNumber("RobotRotation", currentPose2d.getRotation().getDegrees());
+    SmartDashboard.putNumber("robotRotation radians", currentPose2d.getRotation().getRadians());
+    SystemManager.m_field.setRobotPose(currentPose2d);
   }
 
   /**
