@@ -109,6 +109,12 @@
       },
       "SmartDashboard": {
         "Field": {
+          "double[]##v_/SmartDashboard/Field/Robot": {
+            "open": true
+          },
+          "double[]##v_/SmartDashboard/Field/XModules": {
+            "open": true
+          },
           "open": true
         },
         "Swerve Drive": {
@@ -123,6 +129,9 @@
   },
   "NetworkTables Info": {
     "Clients": {
+      "open": true
+    },
+    "Connections": {
       "open": true
     },
     "DartClient_30458887@1": {
