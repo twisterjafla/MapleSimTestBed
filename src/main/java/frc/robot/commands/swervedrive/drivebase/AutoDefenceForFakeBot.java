@@ -1,6 +1,7 @@
 package frc.robot.commands.swervedrive.drivebase;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,14 +21,14 @@ public class AutoDefenceForFakeBot extends Command {
     @Override
     public void execute(){
         Pose2d currentTargetPose2d = SystemManager.getSwervePose();
-        Twist2d change = currentTargetPose2d.log(targetGoal);
-        if (change.dx<1){
-            return;
-        }
-        change.dx=1;
-        Pose2d selfGoal = targetGoal.exp(change);
-        Transform2d selfToGoal = fakeBot.pose.minus(selfGoal);
-        fakeBot.drive(selfGoal.getX(), selfGoal.getY(), 0);
+        Transform2d change = currentTargetPose2d.minus(targetGoal);
+        
+        change=change.div(1.2);
+
+        Pose2d selfGoal = targetGoal.transformBy(change);
+        SystemManager.m_field.getObject("Defence Goal").setPose(selfGoal);
+        Transform2d selfToGoal = selfGoal.minus(fakeBot.pose);
+        fakeBot.drive(selfToGoal.getX(), selfToGoal.getY(), 0);
 
     }
 }
