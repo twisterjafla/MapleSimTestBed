@@ -17,6 +17,7 @@ public class SystemManager{
     public static SwerveSubsystemReff swerveReff;
     public static Field2d m_field;
     public static FakeBot fakeBot;
+    public static boolean hasNote=false;
     
     
     public static void SystemManagerInit(){
