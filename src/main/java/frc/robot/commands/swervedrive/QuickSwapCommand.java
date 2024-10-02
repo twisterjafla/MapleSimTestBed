@@ -2,8 +2,10 @@ package frc.robot.commands.swervedrive;
 
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class QuickSwapCommand extends Command{
     boolean current=false;
@@ -12,10 +14,18 @@ public class QuickSwapCommand extends Command{
     Command falseCommand;
     Command selected;
     
-    QuickSwapCommand(Command trueCommand, Command falseCommand, BooleanSupplier supplier){
+    public QuickSwapCommand(Command trueCommand, Command falseCommand, BooleanSupplier supplier){
         this.supplier=supplier;
         this.trueCommand=trueCommand;
         this.falseCommand=falseCommand;
+    }
+    public QuickSwapCommand(Command trueCommand, Command falseCommand, BooleanSupplier supplier, Subsystem[] requirements){
+        this.supplier=supplier;
+        this.trueCommand=trueCommand;
+        this.falseCommand=falseCommand;
+        for (Subsystem subsystem: requirements){
+            addRequirements(subsystem);
+        }
     }
 
     @Override
@@ -39,8 +49,38 @@ public class QuickSwapCommand extends Command{
             else{
                 selected=falseCommand;
             }
+            this.current=supplier.getAsBoolean();
             selected.initialize();
         }
         selected.execute();
     }
+
+    @Override
+    public boolean isFinished(){
+        return selected.isFinished();
+    }
+
+    @Override
+    public void end(boolean WasInteruped){
+        selected.end(WasInteruped);
+    }
+
+     @Override
+     public void initSendable(SendableBuilder builder) {
+       super.initSendable(builder);
+       builder.addStringProperty("onTrue", trueCommand::getName, null);
+       builder.addStringProperty("onFalse", falseCommand::getName, null);
+       builder.addStringProperty(
+           "selected",
+           () -> {
+          if (selected == null) {
+               return "null";
+             } 
+          else {
+               return selected.getName();
+             }
+           },
+           null);
+        
+   }
 }

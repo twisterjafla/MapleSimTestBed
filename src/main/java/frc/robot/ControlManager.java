@@ -5,8 +5,10 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.swervedrive.AdditionalCommands;
+import frc.robot.commands.swervedrive.QuickSwapCommand;
 import frc.robot.commands.swervedrive.SetHasNote;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
 import frc.robot.commands.swervedrive.drivebase.AutoDefenceForFakeBot;
@@ -44,8 +46,8 @@ public class ControlManager {
         // }
         SystemManager.fakeBot.setDefaultCommand(new FakeDrive(SystemManager.fakeBot, ()->testController.getLeftX(), ()->-testController.getLeftY(),()-> Math.PI/180 * getPOVForTest(testController)));
         //testController.x().whileTrue(new AutoDefenceForFakeBot(new Pose2d(2,4, new Rotation2d(0))));
-        SystemManager.swerve.setDefaultCommand(new ConditionalCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->testController.getLeftX(), ()->-testController.getLeftY(),()-> getPOVForTest(testController)),
-        AdditionalCommands.SwappingAuto, ()->testController.a().getAsBoolean()));
+        SystemManager.swerve.setDefaultCommand(new QuickSwapCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->testController.getLeftX(), ()->-testController.getLeftY(),()-> getPOVForTest(testController)),
+        AdditionalCommands.SwappingAuto, ()->testController.a().getAsBoolean(), new Subsystem[]{SystemManager.swerve}));
         
     }
 }
