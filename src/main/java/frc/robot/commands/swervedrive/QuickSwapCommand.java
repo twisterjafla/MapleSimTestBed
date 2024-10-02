@@ -62,7 +62,8 @@ public class QuickSwapCommand extends Command{
 
     @Override
     public void end(boolean WasInteruped){
-        selected.end(WasInteruped);
+        trueCommand.end(WasInteruped);
+        falseCommand.end(WasInteruped);
     }
 
      @Override

@@ -77,10 +77,27 @@ public class FakeBot extends SubsystemBase{
         return pose.exp(frontRight).getTranslation();
     }
 
+    public Translation2d getTopCornerSmart(){
+        return applyVelocitySmear(getTopCorner());
+    }
+
     public Translation2d getBottemCorner(){
         return pose.exp(backLeft).getTranslation();
     }
+    
+    public Translation2d getBottemCornerSmart(){
+        return applyVelocitySmear(getBottemCorner());
+    }
 
-    
-    
+    public Translation2d applyVelocitySmear(Translation2d corner){
+        Translation2d velocityTrans = new Translation2d(dx*0.1, dy*0.1);
+        Translation2d finalTrans = new Translation2d(dx*0.25,dy*0.25);
+        Translation2d newCorner=corner.plus(velocityTrans);
+        if (newCorner.getDistance(pose.getTranslation())>corner.getDistance(pose.getTranslation())){
+            return corner.plus(finalTrans);
+        }
+        return corner;
+
+    }
+
 }

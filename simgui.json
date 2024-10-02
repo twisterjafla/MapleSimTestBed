@@ -21,6 +21,11 @@
           "open": true
         }
       },
+      "Talon FX (v6)[8]/Fwd Limit": {
+        "header": {
+          "open": true
+        }
+      },
       "Talon FX[50]": {
         "header": {
           "open": true
@@ -163,6 +168,7 @@
       "Subscribers": {
         "open": true
       }
-    }
+    },
+    "visible": true
   }
 }
