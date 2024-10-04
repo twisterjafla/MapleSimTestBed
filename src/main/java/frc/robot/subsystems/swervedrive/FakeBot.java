@@ -1,5 +1,9 @@
 package frc.robot.subsystems.swervedrive;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -73,21 +77,15 @@ public class FakeBot extends SubsystemBase{
         dy=0;
     }
 
-    public Translation2d getTopCorner(){
+    private Translation2d getTopCorner(){
         return pose.exp(frontRight).getTranslation();
     }
 
-    public Translation2d getTopCornerSmart(){
-        return applyVelocitySmear(getTopCorner());
-    }
-
-    public Translation2d getBottemCorner(){
+    private Translation2d getBottemCorner(){
         return pose.exp(backLeft).getTranslation();
     }
     
-    public Translation2d getBottemCornerSmart(){
-        return applyVelocitySmear(getBottemCorner());
-    }
+
 
     public Translation2d applyVelocitySmear(Translation2d corner){
         Translation2d velocityTrans = new Translation2d(dx*0.1, dy*0.1);
@@ -98,6 +96,23 @@ public class FakeBot extends SubsystemBase{
         }
         return corner;
 
+    }
+
+    public Pair<Translation2d, Translation2d> getHitbox(){
+        return Pair.of(getTopCorner(), getBottemCorner());
+    }
+
+    public List<Pair<Translation2d, Translation2d>> getTrajHitboxes(){
+        List<Pair<Translation2d, Translation2d>> hitboxes = new ArrayList<>();
+        Pair<Translation2d, Translation2d> CurrentHitbox = getHitbox();
+        hitboxes.add(CurrentHitbox); 
+        Translation2d  velocityTrans =new Translation2d(dx, dy);
+        for(double i = 0.05; i<0.25; i+=0.05){
+            //Pair<Translation2d, Translation2d> trajHitbox = CurrentHitbox;
+            //trajHitbox.= trajHitbox.first.plus(velocityTrans.times(i));
+            hitboxes.add(Pair.of(CurrentHitbox.getFirst().plus(velocityTrans.times(i)), CurrentHitbox.getSecond().plus(velocityTrans.times(i))));
+        }
+        return hitboxes;
     }
 
 }

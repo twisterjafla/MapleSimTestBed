@@ -284,7 +284,10 @@ public class SwerveSubsystem extends SubsystemBase
   public void repopObstacles(){
     List<Pair<Translation2d, Translation2d>> obstacles = new ArrayList<>();
 
-    obstacles.add(Pair.of(SystemManager.fakeBot.getTopCornerSmart(), SystemManager.fakeBot.getBottemCornerSmart()));
+    List<Pair<Translation2d, Translation2d>> fakeBotHitBoxes = SystemManager.fakeBot.getTrajHitboxes();
+    for (Pair<Translation2d, Translation2d> pair:fakeBotHitBoxes){
+      obstacles.add(pair);
+    }
 
     Pathfinding.setDynamicObstacles(obstacles, swerveDrive.getPose().getTranslation());
   }
