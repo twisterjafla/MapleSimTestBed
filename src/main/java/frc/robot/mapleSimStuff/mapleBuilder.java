@@ -4,6 +4,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import frc.robot.Constants;
+import frc.robot.Constants.driveConstants;
 import swervelib.SwerveDrive;
 import swervelib.parser.json.ControllerPropertiesJson;
 import swervelib.parser.json.ModuleJson;
@@ -11,6 +13,11 @@ import swervelib.parser.json.PIDFPropertiesJson;
 import swervelib.parser.json.PhysicalPropertiesJson;
 import swervelib.parser.json.SwerveDriveJson;
 import swervelib.simulation.SwerveModuleSimulation;
+import frc.robot.utils.MapleJoystickDriveInput;
+import frc.robot.utils.MapleShooterOptimization;
+import org.ironmaple.simulation.SimulatedArena;
+import org.ironmaple.simulation.drivesims.GyroSimulation;
+import org.ironmaple.simulation.drivesims.SwerveModuleSimulation;
 
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 
@@ -28,6 +35,7 @@ public class mapleBuilder {
     public static PIDFPropertiesJson pidfPropertiesJson;
     public static PhysicalPropertiesJson physicalPropertiesJson;
     public static ModuleJson[] moduleJsons;
+
    
     public final SwerveDriveSimulation getMapleSimDrive(File directory){
         this.checkDirectory(directory);
@@ -51,22 +59,22 @@ public class mapleBuilder {
 
         final GyroSimulation gyroSimulation = GyroSimulation.createPigeon2();
         this.driveSimulation = new SwerveDriveSimulation(
-            DriveTrainConstants.ROBOT_MASS_KG,
-            DriveTrainConstants.TRACK_WIDTH_METERS,
-            DriveTrainConstants.TRACK_LENGTH_METERS,
-            DriveTrainConstants.BUMPER_WIDTH_METERS,
-            DriveTrainConstants.BUMPER_LENGTH_METERS,
+            Constants.riveConstants.robotMass,
+            Constants.driveConstants.chassisHeight,
+            Constants.driveConstants.chassisWidth,
+            Constants.driveConstants.totalHeight,
+            Constants.driveConstants.totalWidth,
             () -> new SwerveModuleSimulation(
                 DCMotor.getKrakenX60(1),
                 DCMotor.getKrakenX60(1),
                 12,
                 PhysicalPropertiesJson.conversionFactors.drive,
                 PhysicalPropertiesJson.conversionFactors.angle,
-                    DriveTrainConstants.DRIVE_FRICTION_VOLTAGE,
-                    DriveTrainConstants.STEER_FRICTION_VOLTAGE,
+                Constants.driveTrainConstants.driveFrictionVoltage,
+                Constants.driveTrainConstants.steerFrictionVoltage,
                 PhysicalPropertiesJson.wheelGripCoefficientOfFriction,
-                    DriveTrainConstants.Constants.wheelRadusInMeters,
-                    DriveTrainConstants.STEER_INERTIA
+                Constants.driveTrainConstants.wheelRadusInMeters,
+                constants.driveTrainConstants.steerInertia
             ),
             gyroSimulation,
             new Pose2d(3, 3, new Rotation2d())
@@ -82,20 +90,20 @@ public class mapleBuilder {
             backRight = new ModuleIOSim(driveSimulation.getModules()[3]);
         final GyroIOSim gyroIOSim = new GyroIOSim(gyroSimulation);
         drive = new SwerveDrive(
-            SwerveDrive.DriveType.GENERIC,
+            Constants.driveConstants.driveType.GENERIC,
             gyroIOSim,
             frontLeft, frontRight, backLeft, backRight
         );
 
-        aprilTagVision = new AprilTagVision(
-            new ApriltagVisionIOSim(
-                    camerasProperties,
-                    VisionConstants.fieldLayout,
-                    driveSimulation::getSimulatedDriveTrainPose
-            ),
-            camerasProperties,
-            drive
-        );
+        // aprilTagVision = new AprilTagVision(
+        //     new ApriltagVisionIOSim(
+        //             camerasProperties,
+        //             VisionConstants.fieldLayout,
+        //             driveSimulation::getSimulatedDriveTrainPose
+        //     ),
+        //     camerasProperties,
+        //     drive
+        // );
 
         SimulatedArena.getInstance().resetFieldForAuto();
     }
