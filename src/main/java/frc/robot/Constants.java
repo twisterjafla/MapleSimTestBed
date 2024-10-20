@@ -21,6 +21,11 @@ import swervelib.math.Matter;
 public final class Constants
 {
 
+    private static double inchesToMeters(double inches){
+        return inches*0.0254;
+    }
+
+
   public static final double LOOP_TIME  = 0.03; //s, 20ms + 110ms sprk max velocity lag
 
   public static final class driveConstants {

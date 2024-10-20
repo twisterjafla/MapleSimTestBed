@@ -12,32 +12,35 @@ import swervelib.parser.json.ModuleJson;
 import swervelib.parser.json.PIDFPropertiesJson;
 import swervelib.parser.json.PhysicalPropertiesJson;
 import swervelib.parser.json.SwerveDriveJson;
-import swervelib.simulation.SwerveModuleSimulation;
-import frc.robot.utils.MapleJoystickDriveInput;
-import frc.robot.utils.MapleShooterOptimization;
+//import swervelib.simulation.SwerveModuleSimulation;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.GyroSimulation;
 import org.ironmaple.simulation.drivesims.SwerveModuleSimulation;
 
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.ironmaple.simulation.SimulatedArena;
 
 public class mapleBuilder {
-    private static final HashMap<String, Integer> moduleConfigs = new HashMap();
-    public static SwerveDriveJson swerveDriveJson;
-    public static ControllerPropertiesJson controllerPropertiesJson;
-    public static PIDFPropertiesJson pidfPropertiesJson;
-    public static PhysicalPropertiesJson physicalPropertiesJson;
-    public static ModuleJson[] moduleJsons;
+    private final HashMap<String, Integer> moduleConfigs = new HashMap();
+    public SwerveDriveJson swerveDriveJson;
+    public ControllerPropertiesJson controllerPropertiesJson;
+    public PIDFPropertiesJson pidfPropertiesJson;
+    public PhysicalPropertiesJson physicalPropertiesJson;
+    public ModuleJson[] moduleJsons;
+    public SwerveDriveSimulation driveSimulation;
+    public PowerDistribution powerDistribution;
 
    
-    public final SwerveDriveSimulation getMapleSimDrive(File directory){
+    public final SwerveDriveSimulation getMapleSimDrive(File directory) throws StreamReadException, DatabindException, IOException{
         this.checkDirectory(directory);
         swerveDriveJson = (SwerveDriveJson)(new ObjectMapper()).readValue(new File(directory, "swervedrive.json"), SwerveDriveJson.class);
         controllerPropertiesJson = (ControllerPropertiesJson)(new ObjectMapper()).readValue(new File(directory, "controllerproperties.json"), ControllerPropertiesJson.class);
@@ -58,8 +61,8 @@ public class mapleBuilder {
 
 
         final GyroSimulation gyroSimulation = GyroSimulation.createPigeon2();
-        this.driveSimulation = new SwerveDriveSimulation(
-            Constants.riveConstants.robotMass,
+        driveSimulation = new SwerveDriveSimulation(
+            Constants.driveConstants.robotMass,
             Constants.driveConstants.chassisHeight,
             Constants.driveConstants.chassisWidth,
             Constants.driveConstants.totalHeight,
@@ -67,14 +70,14 @@ public class mapleBuilder {
             () -> new SwerveModuleSimulation(
                 DCMotor.getKrakenX60(1),
                 DCMotor.getKrakenX60(1),
-                12,
-                PhysicalPropertiesJson.conversionFactors.drive,
-                PhysicalPropertiesJson.conversionFactors.angle,
-                Constants.driveTrainConstants.driveFrictionVoltage,
-                Constants.driveTrainConstants.steerFrictionVoltage,
-                PhysicalPropertiesJson.wheelGripCoefficientOfFriction,
-                Constants.driveTrainConstants.wheelRadusInMeters,
-                constants.driveTrainConstants.steerInertia
+                physicalPropertiesJson.currentLimit.drive,
+                physicalPropertiesJson.conversionFactors.drive.factor,
+                physicalPropertiesJson.conversionFactors.angle.factor,
+                Constants.driveConstants.driveFrictionVoltage,
+                Constants.driveConstants.steerFrictionVoltage,
+                physicalPropertiesJson.wheelGripCoefficientOfFriction,
+                Constants.driveConstants.wheelRadusInMeters,
+                Constants.driveConstants.steerInertia
             ),
             gyroSimulation,
             new Pose2d(3, 3, new Rotation2d())
@@ -89,11 +92,7 @@ public class mapleBuilder {
             backLeft = new ModuleIOSim(driveSimulation.getModules()[2]),
             backRight = new ModuleIOSim(driveSimulation.getModules()[3]);
         final GyroIOSim gyroIOSim = new GyroIOSim(gyroSimulation);
-        drive = new SwerveDrive(
-            Constants.driveConstants.driveType.GENERIC,
-            gyroIOSim,
-            frontLeft, frontRight, backLeft, backRight
-        );
+
 
         // aprilTagVision = new AprilTagVision(
         //     new ApriltagVisionIOSim(
@@ -106,6 +105,7 @@ public class mapleBuilder {
         // );
 
         SimulatedArena.getInstance().resetFieldForAuto();
+        return driveSimulation;
     }
      
 
