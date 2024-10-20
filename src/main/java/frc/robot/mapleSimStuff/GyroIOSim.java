@@ -1,5 +1,9 @@
 package frc.robot.mapleSimStuff;
 
+import org.ironmaple.simulation.drivesims.GyroSimulation;
+
+import edu.wpi.first.math.geometry.Rotation2d;
+
 public class GyroIOSim implements GyroIO {
     private final GyroSimulation gyroSimulation;
     public GyroIOSim(GyroSimulation gyroSimulation) {
