@@ -45,7 +45,7 @@ public class ControlManager {
         //     testController.x().onTrue(SystemManager.fakeBot.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
         // }
         SystemManager.fakeBot.setDefaultCommand(new FakeDrive(SystemManager.fakeBot, ()->testController.getLeftX(), ()->-testController.getLeftY(),()-> Math.PI/180 * getPOVForTest(testController)));
-        //testController.x().whileTrue(new AutoDefenceForFakeBot(new Pose2d(2,4, new Rotation2d(0))));
+        testController.x().whileTrue(new AutoDefenceForFakeBot(new Pose2d(2,4, new Rotation2d(0))));
         SystemManager.swerve.setDefaultCommand(new QuickSwapCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->testController.getLeftX(), ()->-testController.getLeftY(),()-> getPOVForTest(testController)),
         AdditionalCommands.SwappingAuto, ()->testController.a().getAsBoolean(), new Subsystem[]{SystemManager.swerve}));
         
