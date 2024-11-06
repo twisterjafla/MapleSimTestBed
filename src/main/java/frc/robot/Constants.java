@@ -57,8 +57,8 @@ public final class Constants
     public static final double maxExel=2;
   }
   public static class controllerID{
-    public static final int commandXboxController1ID=1;
-    public static final int commandXboxController2ID=2;
+    public static final int commandXboxController1ID=0;
+    public static final int commandXboxController2ID=1;
   }
 
 // Since AutoBuilder is configured, we can use it to build pathfinding commands
