@@ -27,6 +27,7 @@ public class Robot extends TimedRobot
 
   private static Robot   instance;
   private        Command m_autonomousCommand;
+  ControlChooser controlChooser;
 
   //private RobotContainer m_robotContainer;
 
@@ -36,6 +37,7 @@ public class Robot extends TimedRobot
   {
     instance = this;
     SystemManager.SystemManagerInit();
+    this.controlChooser=new ControlChooser();
   }
 
   public static Robot getInstance()
@@ -55,7 +57,6 @@ public class Robot extends TimedRobot
     // Create a timer to disable motor brake a few seconds after disable.  This will let the robot stop
     // immediately when disabled, but then also let it be pushed more 
     disabledTimer = new Timer();
-    ControlManager.testControl();
     FollowPathCommand.warmupCommand().schedule();
   }
 
@@ -75,6 +76,7 @@ public class Robot extends TimedRobot
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     SmartDashboard.putBoolean("running", true);
+    controlChooser.update();
   }
 
   /**

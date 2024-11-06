@@ -8,6 +8,7 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.PIDConstants;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import swervelib.math.Matter;
 
 /**
@@ -49,12 +50,15 @@ public final class Constants
     public static final double LEFT_Y_DEADBAND  = 0.1;
     public static final double RIGHT_X_DEADBAND = 0.1;
     public static final double TURN_CONSTANT    = 6;
-    public static final int mainControllerPort =0;
     public static final int[] supportedPOV={0,90,180,270};
   }
   public static class sim{
     public static final double maxSpeed=4;
     public static final double maxExel=2;
+  }
+  public static class controllerID{
+    public static final int commandXboxController1ID=1;
+    public static final int commandXboxController2ID=2;
   }
 
 // Since AutoBuilder is configured, we can use it to build pathfinding commands
