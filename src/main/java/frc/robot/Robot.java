@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -27,6 +28,7 @@ public class Robot extends TimedRobot
 
   private static Robot   instance;
   private        Command m_autonomousCommand;
+  private Command GrabageCollectorProtection;
   ControlChooser controlChooser;
 
   //private RobotContainer m_robotContainer;
@@ -59,7 +61,8 @@ public class Robot extends TimedRobot
     disabledTimer = new Timer();
     FollowPathCommand.warmupCommand().schedule();
     this.controlChooser=new ControlChooser();
-    ControlManager.testControl();
+    GrabageCollectorProtection=SystemManager.swerve.driveToPose(new Pose2d());
+    //ControlManager.testControl();
   }
 
   /**

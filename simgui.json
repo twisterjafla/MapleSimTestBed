@@ -135,8 +135,7 @@
           },
           "double[]##v_/SmartDashboard/Field/XModules": {
             "open": true
-          },
-          "open": true
+          }
         },
         "bot chara map": {
           "double[]##v_/SmartDashboard/bot chara map/Robot": {

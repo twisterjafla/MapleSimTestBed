@@ -53,22 +53,27 @@ public class ControlChooser {
                 //                        ));
 
                 //SystemManager.swerve.setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->testController.getLeftX(), ()->-testController.getLeftY(),()-> getPOVForTest(testController)));
-                host.xbox1.y(host.controlLoop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
-                host.xbox1.b(host.controlLoop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(15,1.2, new Rotation2d(Math.PI))));
+                //host.xbox1.y(host.controlLoop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
+                //host.xbox1.b(host.controlLoop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(15,1.2, new Rotation2d(Math.PI))));
                 //testController.y().whileTrue(drivebase.aimAtSpeaker(2));
                 // driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
                 // if (!RobotBase.isReal()){
                 //     testController.x().onTrue(SystemManager.fakeBot.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
                 // }
-                SystemManager.fakeBot.setDefaultCommand(new FakeDrive(SystemManager.fakeBot, ()->host.xbox1.getLeftX(), ()->-host.xbox1.getLeftY(),()-> Math.PI/180 * getPOVForTest(host.xbox1)));
-                host.xbox1.x(host.controlLoop).whileTrue(new AutoDefenceForFakeBot(new Pose2d(2,4, new Rotation2d(0))));
-                SystemManager.swerve.setDefaultCommand(new QuickSwapCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->host.xbox1.getLeftX(), ()->-host.xbox1.getLeftY(),()-> getPOVForTest(host.xbox1)),
-                AdditionalCommands.SwappingAuto, ()->host.xbox1.a(host.controlLoop).getAsBoolean(), new Subsystem[]{SystemManager.swerve}));
+                //SystemManager.fakeBot.setDefaultCommand(new FakeDrive(SystemManager.fakeBot, ()->host.xbox1.getLeftX(), ()->-host.xbox1.getLeftY(),()-> Math.PI/180 * getPOVForTest(host.xbox1)));
+                //host.xbox1.x(host.controlLoop).whileTrue(new AutoDefenceForFakeBot(new Pose2d(2,4, new Rotation2d(0))));
+                //SystemManager.swerve.setDefaultCommand(new QuickSwapCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->host.xbox1.getLeftX(), ()->-host.xbox1.getLeftY(),()-> getPOVForTest(host.xbox1)),
+                //    AdditionalCommands.SwappingAuto, ()->host.xbox1.a(host.controlLoop).getAsBoolean(), new Subsystem[]{SystemManager.swerve}));
             }
-            
-            
-            
         );
+
+
+
+        //schemes.put("testSchemeDOESNOTWORK",(ControlChooser host)->{});
+            
+            
+            
+        
         boolean first=true;
         for (Map.Entry<String, Consumer<ControlChooser>> scheme: schemes.entrySet()){
             if (first){
@@ -79,6 +84,7 @@ public class ControlChooser {
                 chooser.addOption(scheme.getKey(), scheme.getValue());
             }
         }
+        chooser.getSelected().accept(this);
         
 
         
