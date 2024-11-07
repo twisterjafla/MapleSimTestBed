@@ -113,14 +113,14 @@
     "Persistent Values": {
       "open": false
     },
+    "Retained Values": {
+      "open": false
+    },
     "transitory": {
       "PathPlanner": {
         "HotReload": {
           "open": true
         }
-      },
-      "Shuffleboard": {
-        "open": true
       },
       "SmartDashboard": {
         "Field": {
@@ -148,9 +148,6 @@
     }
   },
   "NetworkTables Info": {
-    "Clients": {
-      "open": true
-    },
     "Connections": {
       "open": true
     },
@@ -164,12 +161,7 @@
       "open": true
     },
     "Server": {
-      "Publishers": {
-        "open": true
-      },
-      "Subscribers": {
-        "open": true
-      }
+      "open": true
     },
     "visible": true
   }
