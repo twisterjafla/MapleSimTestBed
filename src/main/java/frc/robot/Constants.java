@@ -56,7 +56,7 @@ public final class Constants
     public static final double maxSpeed=4;
     public static final double maxExel=2;
   }
-  public static class controllerID{
+  public static class controllerIDs{
     public static final int commandXboxController1ID=0;
     public static final int commandXboxController2ID=1;
   }

@@ -37,7 +37,7 @@ public class Robot extends TimedRobot
   {
     instance = this;
     SystemManager.SystemManagerInit();
-    this.controlChooser=new ControlChooser();
+  
   }
 
   public static Robot getInstance()
@@ -58,6 +58,8 @@ public class Robot extends TimedRobot
     // immediately when disabled, but then also let it be pushed more 
     disabledTimer = new Timer();
     FollowPathCommand.warmupCommand().schedule();
+    this.controlChooser=new ControlChooser();
+    ControlManager.testControl();
   }
 
   /**
