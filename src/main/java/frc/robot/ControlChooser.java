@@ -49,16 +49,7 @@ public class ControlChooser {
         }
 
 
-
-
-
-
-        //schemes.put("testSchemeDOESNOTWORK",(ControlChooser host)->{});
-        
-        
-        
-
-        
+        chooser.addOption("StandardXboxControl", standardXboxControl());
     }
 
     public void update(){
@@ -99,6 +90,12 @@ public class ControlChooser {
         xbox1.x(loop).whileTrue(new AutoDefenceForFakeBot(new Pose2d(2,4, new Rotation2d(0))));
         SystemManager.swerve.setDefaultCommand(new QuickSwapCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)),
             AdditionalCommands.SwappingAuto, ()->xbox1.a(loop).getAsBoolean(), new Subsystem[]{SystemManager.swerve}));
+        return loop;
+    }
+
+    private EventLoop standardXboxControl(){
+        EventLoop loop = new EventLoop();
+        SystemManager.swerve.setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)));
         return loop;
     }
 
