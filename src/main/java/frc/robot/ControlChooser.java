@@ -13,14 +13,19 @@ import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.event.EventLoop;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilderImpl;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.swervedrive.AdditionalCommands;
 import frc.robot.commands.swervedrive.QuickSwapCommand;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
@@ -50,13 +55,18 @@ public class ControlChooser {
 
 
         chooser.addOption("StandardXboxControl", standardXboxControl());
+
+
+        //chooser.initSendable(new SendableBuilderImpl());
+        chooser.onChange((EventLoop scheme)->{changeControl(scheme);});
+        changeControl(getTestControl());
     }
 
-    public void update(){
-        if (CommandScheduler.getInstance().getActiveButtonLoop()!=chooser.getSelected()){
-            CommandScheduler.getInstance().cancelAll();
-            CommandScheduler.getInstance().setActiveButtonLoop(chooser.getSelected());
-        }
+
+
+    public void changeControl(EventLoop scheme){
+        CommandScheduler.getInstance().cancelAll();
+        CommandScheduler.getInstance().setActiveButtonLoop(scheme);
     }
 
 
@@ -70,14 +80,18 @@ public class ControlChooser {
 
     }
 
+    public static void setDefaultCommand(Command defaultCommand, Subsystem subsystem, EventLoop loop){
+        new Trigger(loop, ()->CommandScheduler.getInstance().requiring(subsystem)==null).whileTrue(new RepeatCommand(defaultCommand));
+    }
+
     private EventLoop getTestControl(){
         EventLoop loop = new EventLoop();
         
        
-        xbox1.b().whileTrue(
-            Commands.deferredProxy(() -> SystemManager.swerve.driveToPose(
-                                    new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))
-                                ));
+        // xbox1.b().whileTrue(
+        //     Commands.deferredProxy(() -> SystemManager.swerve.driveToPose(
+        //                             new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))
+        //                         ));
 
         
         xbox1.y(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
@@ -86,18 +100,23 @@ public class ControlChooser {
         // if (!RobotBase.isReal()){
         //     testController.x().onTrue(SystemManager.fakeBot.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
         // }
-        SystemManager.fakeBot.setDefaultCommand(new FakeDrive(SystemManager.fakeBot, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> Math.PI/180 * getPOVForTest(xbox1)));
+        setDefaultCommand(new FakeDrive(SystemManager.fakeBot, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> Math.PI/180 * getPOVForTest(xbox1)), SystemManager.fakeBot, loop);
         xbox1.x(loop).whileTrue(new AutoDefenceForFakeBot(new Pose2d(2,4, new Rotation2d(0))));
-        SystemManager.swerve.setDefaultCommand(new QuickSwapCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)),
-            AdditionalCommands.SwappingAuto, ()->xbox1.a(loop).getAsBoolean(), new Subsystem[]{SystemManager.swerve}));
+        setDefaultCommand(new QuickSwapCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)),
+            AdditionalCommands.SwappingAuto, ()->xbox1.getHID().getAButton()), SystemManager.swerve, loop);
+
+        //xbox1.b(loop).onTrue(()->{changeControl(standardXboxControl());});
         return loop;
     }
 
     private EventLoop standardXboxControl(){
         EventLoop loop = new EventLoop();
-        SystemManager.swerve.setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)));
+        setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)),SystemManager.swerve, loop);
+        xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(15,1.2, new Rotation2d(Math.PI))));
         return loop;
     }
+
+
 
 
 }
