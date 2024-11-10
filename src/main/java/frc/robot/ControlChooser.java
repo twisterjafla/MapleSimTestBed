@@ -19,9 +19,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilderImpl;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -36,8 +38,10 @@ public class ControlChooser {
     //Map<String, Consumer<ControlChooser>> schemes= new HashMap<>();
     SendableChooser<EventLoop> chooser =new SendableChooser<EventLoop>();
     Consumer<ControlChooser>current =null;
+    
     CommandXboxController xbox1;
     CommandXboxController xbox2;
+    
     EventLoop controlLoop=CommandScheduler.getInstance().getDefaultButtonLoop();
     
 
@@ -59,7 +63,12 @@ public class ControlChooser {
 
         //chooser.initSendable(new SendableBuilderImpl());
         chooser.onChange((EventLoop scheme)->{changeControl(scheme);});
+        //changeControl(CommandScheduler.getInstance().getDefaultButtonLoop());
         changeControl(getTestControl());
+        
+
+        //warmUpSystem(SystemManager.swerve );
+       
     }
 
 
@@ -67,6 +76,7 @@ public class ControlChooser {
     public void changeControl(EventLoop scheme){
         CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().setActiveButtonLoop(scheme);
+        SystemManager.falseForStartup=false;
     }
 
 
@@ -81,7 +91,8 @@ public class ControlChooser {
     }
 
     public static void setDefaultCommand(Command defaultCommand, Subsystem subsystem, EventLoop loop){
-        new Trigger(loop, ()->CommandScheduler.getInstance().requiring(subsystem)==null).whileTrue(new RepeatCommand(defaultCommand));
+        final Command trueDefaultCommand=new RepeatCommand(defaultCommand);
+        new Trigger(loop, ()->((CommandScheduler.getInstance().requiring(subsystem)==null||CommandScheduler.getInstance().requiring(subsystem)==trueDefaultCommand)&&SystemManager.falseForStartup)).whileTrue(trueDefaultCommand);
     }
 
     private EventLoop getTestControl(){
@@ -95,7 +106,7 @@ public class ControlChooser {
 
         
         xbox1.y(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
-        xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(15,1.2, new Rotation2d(Math.PI))));
+        //xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(15,1.2, new Rotation2d(Math.PI))));
 
         // if (!RobotBase.isReal()){
         //     testController.x().onTrue(SystemManager.fakeBot.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
@@ -105,7 +116,7 @@ public class ControlChooser {
         setDefaultCommand(new QuickSwapCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)),
             AdditionalCommands.SwappingAuto, ()->xbox1.getHID().getAButton()), SystemManager.swerve, loop);
 
-        //xbox1.b(loop).onTrue(()->{changeControl(standardXboxControl());});
+        xbox1.b(loop).onTrue(new InstantCommand(()->{changeControl(getTestControl());}));
         return loop;
     }
 

@@ -32,6 +32,7 @@ public class Robot extends TimedRobot
   private Command GrabageCollectorProtection;
   ControlChooser controlChooser;
   SendableChooser<Integer> controlChooserTest = new SendableChooser<Integer>();
+  
 
   //private RobotContainer m_robotContainer;
 
@@ -83,7 +84,11 @@ public class Robot extends TimedRobot
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    if (!SystemManager.falseForStartup&&isEnabled()){
+        SystemManager.falseForStartup=true;
+    }
     SmartDashboard.putBoolean("running", true);
+    SmartDashboard.putBoolean("test", CommandScheduler.getInstance().requiring(SystemManager.swerve)==null);
     
   }
 

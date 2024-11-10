@@ -18,6 +18,15 @@ public class QuickSwapCommand extends Command{
         this.supplier=supplier;
         this.trueCommand=trueCommand;
         this.falseCommand=falseCommand;
+        for (Subsystem subsystem: trueCommand.getRequirements()){
+            addRequirements(subsystem);
+        }
+        for (Subsystem subsystem: falseCommand.getRequirements()){
+            if (!this.getRequirements().contains(subsystem)){
+                addRequirements(subsystem);
+            }
+        }
+
     }
     public QuickSwapCommand(Command trueCommand, Command falseCommand, BooleanSupplier supplier, Subsystem[] requirements){
         this.supplier=supplier;
