@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.io.File;
 import java.io.IOException;
 
+import org.ironmaple.simulation.SimulatedArena;
+
 import com.pathplanner.lib.commands.FollowPathCommand;
 
 import swervelib.parser.SwerveParser;
@@ -87,6 +89,8 @@ public class Robot extends TimedRobot
     disabledTimer.reset();
     disabledTimer.start();
   }
+
+
 
   @Override
   public void disabledPeriodic()
@@ -173,13 +177,15 @@ public class Robot extends TimedRobot
   @Override
   public void simulationInit(){
     SmartDashboard.putBoolean("isSim", true);
+
+
   }
 
   /**
    * This function is called periodically whilst in simulation.
    */
   @Override
-  public void simulationPeriodic()
-  {
+  public void simulationPeriodic(){
+    SimulatedArena.getInstance().simulationPeriodic();
   }
 }
