@@ -59,12 +59,13 @@ public class ControlChooser {
 
 
         chooser.addOption("StandardXboxControl", standardXboxControl());
+        chooser.addOption("demoControl", demoControl());
 
 
         //chooser.initSendable(new SendableBuilderImpl());
         chooser.onChange((EventLoop scheme)->{changeControl(scheme);});
         //changeControl(CommandScheduler.getInstance().getDefaultButtonLoop());
-        changeControl(getTestControl());
+        changeControl(demoControl());
         
 
         //warmUpSystem(SystemManager.swerve );
@@ -122,8 +123,15 @@ public class ControlChooser {
 
     private EventLoop standardXboxControl(){
         EventLoop loop = new EventLoop();
-        setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)),SystemManager.swerve, loop);
+        setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> Math.atan2(xbox1.getRightX(), xbox1.getRightY())),SystemManager.swerve, loop);
         xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(15,1.2, new Rotation2d(Math.PI))));
+        return loop;
+    }
+
+    private EventLoop demoControl(){
+        EventLoop loop = new EventLoop();
+        setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)),SystemManager.swerve, loop);
+        ///xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(15,1.2, new Rotation2d(Math.PI))));
         return loop;
     }
 
