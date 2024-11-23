@@ -27,9 +27,9 @@ public class SystemManager{
         
         m_field = new Field2d();
         SmartDashboard.putData("Field", m_field);
-        if (!RobotBase.isReal()){
+        //if (!RobotBase.isReal()){
             fakeBot=new FakeBot();
-        }
+        //}
     }
 
     public static Pose2d getSwervePose(){
