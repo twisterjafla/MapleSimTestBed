@@ -4,9 +4,14 @@
 
 package frc.robot;
 
+import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
+
+import com.pathplanner.lib.config.ModuleConfig;
+import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.config.PIDConstants;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
 
@@ -28,6 +33,7 @@ public final class Constants
 
   public static final double LOOP_TIME  = 0.03; //s, 20ms + 110ms sprk max velocity lag
 
+
   public static final class driveConstants {
     public static final double driveFrictionVoltage = 0.25;
     public static final double steerFrictionVoltage = 0.25;
@@ -40,6 +46,7 @@ public final class Constants
     public static final double robotMass = (148 - 20.3) * 0.453592; // 32lbs * kg per pound
     public static final double maxSpeed  = Units.feetToMeters(14.5);
     public static final Matter chassis    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), robotMass);
+ 
 
     public static enum driveType {
         GENERIC,
@@ -56,6 +63,7 @@ public final class Constants
 
     public static final PIDConstants TRANSLATION_PID = new PIDConstants(0.7, 0, 0);
     public static final PIDConstants ANGLE_PID       = new PIDConstants(0.4, 0, 0.01);
+  
   }
 
   public static final class DrivebaseConstants
@@ -77,8 +85,7 @@ public final class Constants
     public static final int[] supportedPOV={0,90,180,270};
   }
   public static class sim{
-    public static final double maxSpeed=4;
-    public static final double maxExel=2;
+    //DriveTrainSimulationConfig simConfig= new DriveTrainSimulationConfig(55, 1, 0.05, 1, 0.05, null, null);
   }
 
 // Since AutoBuilder is configured, we can use it to build pathfinding commands

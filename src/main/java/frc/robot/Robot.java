@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.io.File;
 import java.io.IOException;
 
-import org.ironmaple.simulation.SimulatedArena;
+
 
 import com.pathplanner.lib.commands.FollowPathCommand;
 
@@ -186,6 +186,6 @@ public class Robot extends TimedRobot
    */
   @Override
   public void simulationPeriodic(){
-    SimulatedArena.getInstance().simulationPeriodic();
+    //SimulatedArena.getInstance().simulationPeriodic();
   }
 }

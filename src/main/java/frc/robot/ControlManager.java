@@ -12,8 +12,8 @@ import frc.robot.commands.swervedrive.QuickSwapCommand;
 import frc.robot.commands.swervedrive.SetHasNote;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
 import frc.robot.commands.swervedrive.drivebase.AutoDefenceForFakeBot;
-import frc.robot.commands.swervedrive.drivebase.FakeDrive;
-import frc.robot.commands.swervedrive.drivebase.FakePoseReset;
+// import frc.robot.commands.swervedrive.drivebase.FakeDrive;
+// import frc.robot.commands.swervedrive.drivebase.FakePoseReset;
 
 public class ControlManager {
     public static int getPOVForTest(CommandXboxController controller){
@@ -44,7 +44,7 @@ public class ControlManager {
         // if (!RobotBase.isReal()){
         //     testController.x().onTrue(SystemManager.fakeBot.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
         // }
-        SystemManager.fakeBot.setDefaultCommand(new FakeDrive(SystemManager.fakeBot, ()->testController.getLeftX(), ()->-testController.getLeftY(),()-> Math.PI/180 * getPOVForTest(testController)));
+        //SystemManager.fakeBot.setDefaultCommand(new FakeDrive(SystemManager.fakeBot, ()->testController.getLeftX(), ()->-testController.getLeftY(),()-> Math.PI/180 * getPOVForTest(testController)));
         //testController.x().whileTrue(new AutoDefenceForFakeBot(new Pose2d(2,4, new Rotation2d(0))));
         SystemManager.swerve.setDefaultCommand(new QuickSwapCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->testController.getLeftX(), ()->-testController.getLeftY(),()-> getPOVForTest(testController)),
         AdditionalCommands.SwappingAuto, ()->testController.a().getAsBoolean(), new Subsystem[]{SystemManager.swerve}));
