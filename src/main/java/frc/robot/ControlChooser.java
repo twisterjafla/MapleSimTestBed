@@ -79,6 +79,10 @@ public class ControlChooser {
         CommandScheduler.getInstance().setActiveButtonLoop(scheme);
         SystemManager.falseForStartup=false;
     }
+    public void restart(){
+        changeControl(chooser.getSelected());
+        changeControl(standardXboxControl());
+    }
 
 
     public static int getPOVForTest(CommandXboxController controller){
