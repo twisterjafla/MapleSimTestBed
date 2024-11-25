@@ -84,6 +84,10 @@ public class ControlChooser {
         changeControl(standardXboxControl());
     }
 
+    public void cancel(){
+        changeControl(new EventLoop());
+    }
+
 
     public static int getPOVForTest(CommandXboxController controller){
         for (int pov: Constants.OperatorConstants.supportedPOV){

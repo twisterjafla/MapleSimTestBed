@@ -119,6 +119,8 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousInit()
   {
+
+    controlChooser.cancel();
     //m_robotContainer.setMotorBrake(true);
     //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
