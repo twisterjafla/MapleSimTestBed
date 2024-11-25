@@ -88,6 +88,9 @@
     }
   },
   "NetworkTables Info": {
+    "Connections": {
+      "open": true
+    },
     "DartClient_30458887@1": {
       "Publishers": {
         "open": false
