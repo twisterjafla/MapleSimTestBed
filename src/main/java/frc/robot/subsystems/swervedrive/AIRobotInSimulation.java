@@ -58,7 +58,6 @@ public class AIRobotInSimulation implements Subsystem {
             8,
             new ModuleConfig(
                     Units.inchesToMeters(2), 3.5, 1.2, DCMotor.getFalcon500(1).withReduction(8.14), 60, 1),
-            0.6,
             0.6);
     private static final PPHolonomicDriveController driveController =
             new PPHolonomicDriveController(new PIDConstants(5.0, 0.02), new PIDConstants(7.0, 0.05));
