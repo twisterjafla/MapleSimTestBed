@@ -115,7 +115,7 @@ public class SwerveSubsystem extends SubsystemBase
    * @param controllerCfg Swerve Controller.
    */
   public SwerveSubsystem(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controllerCfg){
-    swerveDrive = new SwerveDrive(driveCfg, controllerCfg, Constants.driveConstants.maxSpeed);
+    swerveDrive = new SwerveDrive(driveCfg, controllerCfg, Constants.driveConstants.maxSpeed, new Pose2d());
     constraints = new PathConstraints(
       swerveDrive.getMaximumVelocity(), 4.0,
       swerveDrive.getMaximumAngularVelocity(), Units.degreesToRadians(720));
