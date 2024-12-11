@@ -22,7 +22,7 @@ public class SystemManager{
     
     
     public static void SystemManagerInit(){
-        swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),  "swerve/falcon"));
+        swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),  "swerve"));
         //swerveReff = new SwerveSubsystemReff(new File(Filesystem.getDeployDirectory(),  "swerve/falcon"));
         
         m_field = new Field2d();
