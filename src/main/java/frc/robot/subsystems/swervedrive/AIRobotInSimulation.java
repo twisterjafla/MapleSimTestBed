@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import java.util.Arrays;
 import java.util.function.Supplier;
 import org.ironmaple.simulation.SimulatedArena;
-import org.ironmaple.simulation.drivesims.SimplifiedSwerveDriveSimulation;
+
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
 import org.ironmaple.simulation.seasonspecific.crescendo2024.NoteOnFly;
@@ -109,13 +109,13 @@ public class AIRobotInSimulation implements Subsystem {
                 .addGamePieceProjectile(new NoteOnFly(
                                 instances[index]
                                         .driveSimulation
-                                        .getActualPoseInSimulationWorld()
+                                        .getSimulatedDriveTrainPose()
                                         .getTranslation(),
                                 new Translation2d(0.3, 0),
-                                instances[index].driveSimulation.getActualSpeedsFieldRelative(),
+                                instances[index].driveSimulation.getDriveTrainSimulatedChassisSpeedsFieldRelative(),
                                 instances[index]
                                         .driveSimulation
-                                        .getActualPoseInSimulationWorld()
+                                        .getSimulatedDriveTrainPose()
                                         .getRotation(),
                                 0.5,
                                 10,
@@ -129,13 +129,13 @@ public class AIRobotInSimulation implements Subsystem {
                 .addGamePieceProjectile(new NoteOnFly(
                                 instances[index]
                                         .driveSimulation
-                                        .getActualPoseInSimulationWorld()
+                                        .getSimulatedDriveTrainPose()
                                         .getTranslation(),
                                 new Translation2d(0.3, 0),
-                                instances[index].driveSimulation.getActualSpeedsFieldRelative(),
+                                instances[index].driveSimulation.getDriveTrainSimulatedChassisSpeedsFieldRelative(),
                                 instances[index]
                                         .driveSimulation
-                                        .getActualPoseInSimulationWorld()
+                                        .getSimulatedDriveTrainPose()
                                         .getRotation(),
                                 0.5,
                                 10,
@@ -149,13 +149,13 @@ public class AIRobotInSimulation implements Subsystem {
                 .addGamePieceProjectile(new NoteOnFly(
                                 instances[index]
                                         .driveSimulation
-                                        .getActualPoseInSimulationWorld()
+                                        .getSimulatedDriveTrainPose()
                                         .getTranslation(),
                                 new Translation2d(0.3, 0),
-                                instances[index].driveSimulation.getActualSpeedsFieldRelative(),
+                                instances[index].driveSimulation.getDriveTrainSimulatedChassisSpeedsFieldRelative(),
                                 instances[index]
                                         .driveSimulation
-                                        .getActualPoseInSimulationWorld()
+                                        .getSimulatedDriveTrainPose()
                                         .getRotation(),
                                 0.5,
                                 10,
@@ -163,7 +163,7 @@ public class AIRobotInSimulation implements Subsystem {
                         .enableBecomeNoteOnFieldAfterTouchGround()));
     }
 
-    private final SimplifiedSwerveDriveSimulation driveSimulation;
+    private final SwerveDriveSimulation driveSimulation;
     private final int id;
 
     public AIRobotInSimulation(
@@ -175,7 +175,7 @@ public class AIRobotInSimulation implements Subsystem {
             int id) {
         this.id = id;
         this.driveSimulation =
-                new SimplifiedSwerveDriveSimulation(new SwerveDriveSimulation(AI_ROBOT_CONFIG, queeningPose));
+                new SwerveDriveSimulation(AI_ROBOT_CONFIG, queeningPose);
         SendableChooser<Command> behaviorChooser = new SendableChooser<>();
         behaviorChooser.setDefaultOption(
                 "None", Commands.run(() -> driveSimulation.setSimulationWorldPose(queeningPose), this));
@@ -196,7 +196,7 @@ public class AIRobotInSimulation implements Subsystem {
                         .ignoringDisable(true));
 
         SmartDashboard.putData("AIRobotBehaviors/Opponent Robot " + id + " Behavior", behaviorChooser);
-        SimulatedArena.getInstance().addDriveTrainSimulation(driveSimulation.getDriveTrainSimulation());
+        SimulatedArena.getInstance().addDriveTrainSimulation(driveSimulation);
     }
 
     private Command getAutoCycleCommand(
@@ -221,8 +221,8 @@ public class AIRobotInSimulation implements Subsystem {
     private Command opponentRobotFollowPath(PathPlannerPath path) {
         return new FollowPathCommand(
                 path,
-                driveSimulation::getActualPoseInSimulationWorld,
-                driveSimulation::getActualSpeedsRobotRelative,
+                driveSimulation::getSimulatedDriveTrainPose,
+                driveSimulation::getSimulatedDriveTrainPose,
                 (speeds, feedForwards) -> driveSimulation.runChassisSpeeds(speeds, new Translation2d(), false, false),
                 driveController,
                 robotConfig,
@@ -261,7 +261,7 @@ public class AIRobotInSimulation implements Subsystem {
 
     private static Pose2d[] getRobotPoses(AIRobotInSimulation[] instances) {
         return Arrays.stream(instances)
-                .map(instance -> instance.driveSimulation.getActualPoseInSimulationWorld())
+                .map(instance -> instance.driveSimulation.getSimulatedDriveTrainPoseq())
                 .toArray(Pose2d[]::new);
     }
 }
