@@ -64,7 +64,7 @@ public class SwerveSubsystem extends SubsystemBase
   /**
    * Swerve drive object.
    */
-  private final SwerveDrive swerveDrive;
+  public final SwerveDrive swerveDrive;
   public final PathConstraints constraints;
   /**
    * AprilTag field layout.
@@ -90,6 +90,7 @@ public class SwerveSubsystem extends SubsystemBase
 
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
+    SwerveDriveTelemetry.isSimulation= Constants.simConfigs.driveShouldBeSim;
     try
     {
       swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.driveConstants.maxSpeed);

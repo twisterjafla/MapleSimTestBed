@@ -13,6 +13,7 @@ import com.pathplanner.lib.config.PIDConstants;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotBase;
 import swervelib.math.Matter;
 
 /**
@@ -86,6 +87,11 @@ public final class Constants
   }
   public static class sim{
     //DriveTrainSimulationConfig simConfig= new DriveTrainSimulationConfig(55, 1, 0.05, 1, 0.05, null, null);
+  }
+
+  public static class simConfigs{
+    public static final boolean driveShouldBeSim=false||RobotBase.isReal();
+    public static final boolean intakeShouldBeReal=false||RobotBase.isReal();
   }
 
 // Since AutoBuilder is configured, we can use it to build pathfinding commands

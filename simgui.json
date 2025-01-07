@@ -61,6 +61,7 @@
       "/LiveWindow/Ungrouped/Pigeon 2 [13]": "Gyro",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/SmartDashboard/AIRobotBehaviors/Opponent Robot 1 Behavior": "String Chooser",
+      "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Configuration": "Alerts",
       "/SmartDashboard/Encoders": "Alerts",
       "/SmartDashboard/Field": "Field2d",
