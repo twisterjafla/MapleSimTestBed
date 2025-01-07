@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Utils.BetterTrigger;
 import frc.robot.commands.swervedrive.AdditionalCommands;
 import frc.robot.commands.swervedrive.QuickSwapCommand;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
@@ -77,7 +78,7 @@ public class ControlChooser {
     public void changeControl(EventLoop scheme){
         CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().setActiveButtonLoop(scheme);
-        SystemManager.falseForStartup=false;
+
     }
     public void restart(){
         changeControl(chooser.getSelected());
@@ -100,8 +101,7 @@ public class ControlChooser {
     }
 
     public static void setDefaultCommand(Command defaultCommand, Subsystem subsystem, EventLoop loop){
-        final Command trueDefaultCommand=new RepeatCommand(defaultCommand);
-        new Trigger(loop, ()->((CommandScheduler.getInstance().requiring(subsystem)==null||CommandScheduler.getInstance().requiring(subsystem)==trueDefaultCommand)&&SystemManager.falseForStartup)).whileTrue(trueDefaultCommand);
+        new BetterTrigger(loop, ()->((CommandScheduler.getInstance().requiring(subsystem)==null||CommandScheduler.getInstance().requiring(subsystem)==defaultCommand))).whileTrue(defaultCommand);
     }
 
     private EventLoop getTestControl(){
