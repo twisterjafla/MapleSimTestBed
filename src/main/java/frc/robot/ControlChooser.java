@@ -131,11 +131,11 @@ public class ControlChooser {
 
     private EventLoop standardXboxControl(){
         EventLoop loop = new EventLoop();
-        setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->-xbox1.getLeftY(), ()->-xbox1.getLeftX(),()->{
-             if(Math.sqrt(Math.pow(xbox1.getRightX(), 2)+Math.pow(xbox1.getRightY(), 2))>=0.2)return Math.atan2(-xbox1.getRightX(), -xbox1.getRightY()); return SystemManager.swerve.getHeading().getRadians()/Math.PI;})
+        setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->-xbox1.getLeftY(), ()->-xbox1.getLeftX(), ()->{
+             if(Math.sqrt(Math.pow(xbox1.getRightX(), 2)+Math.pow(xbox1.getRightY(), 2))>=0.2)return Math.atan2(-xbox1.getRightX(), -xbox1.getRightY())/Math.PI; return SystemManager.swerve.getHeading().getRadians()/Math.PI;})
             ,SystemManager.swerve, loop);
         //setDefaultCommand(SystemManager.swerve.driveCommand(()->0, ()->0, ()->xbox1.getLeftX(), ()->xbox1.getLeftY()), SystemManager.swerve, loop);
-        xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(15,1.2, new Rotation2d(Math.PI))));
+        xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(0,0, new Rotation2d(Math.PI))));
         return loop;
     }
 
