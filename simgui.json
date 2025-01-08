@@ -176,7 +176,9 @@
       "Subscribers": {
         "open": true
       }
-    },
-    "visible": true
+    }
+  },
+  "NetworkTables View": {
+    "visible": false
   }
 }
