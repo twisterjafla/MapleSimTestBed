@@ -21,9 +21,6 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 
 import com.pathplanner.lib.util.PathPlannerLogging;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.ReplanningConfig;
-
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -48,15 +45,13 @@ import frc.robot.Constants;
 
 import frc.robot.SystemManager;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.DoubleSupplier;
+import java.util.Optional;
 
+import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.json.simple.parser.ParseException;
-import org.photonvision.PhotonCamera;
-import org.photonvision.targeting.PhotonPipelineResult;
 import frc.robot.Constants.AutonConstants;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
@@ -79,7 +74,7 @@ public class SwerveSubsystem extends SubsystemBase
   /**
    * Swerve drive object.
    */
-  public final SwerveDrive swerveDrive;
+  private final SwerveDrive swerveDrive;
   public final PathConstraints constraints;
 
   /**
@@ -362,7 +357,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                                       translationY.getAsDouble(),
                                                                       rotation.getAsDouble() * Math.PI,
                                                                       swerveDrive.getOdometryHeading().getRadians(),
-                                                                      swerveDrive.getMaximumVelocity()));
+                                                                      swerveDrive.getMaximumChassisVelocity()));
     });
   }
 
@@ -421,17 +416,16 @@ public class SwerveSubsystem extends SubsystemBase
                                  );
   }
 
+  public Optional<SwerveDriveSimulation>getMapleSimDrive(){
+    return swerveDrive.getMapleSimDrive();
+  }
+
   /**
    * Sets the maximum speed of the swerve drive.
    *
    * @param maximumSpeedInMetersPerSecond the maximum speed to set for the swerve drive in meters per second
    */
-  public void setMaximumSpeed(double maximumSpeedInMetersPerSecond)
-  {
-    swerveDrive.setMaximumSpeed(maximumSpeedInMetersPerSecond,
-                                false,
-                                swerveDrive.swerveDriveConfiguration.physicalCharacteristics.optimalVoltage);
-  }
+
 
   /**
    * Replaces the swerve module feedforward with a new SimpleMotorFeedforward object.

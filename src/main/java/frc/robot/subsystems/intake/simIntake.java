@@ -16,7 +16,7 @@ public class simIntake extends SubsystemBase implements intakeInterface{
     int checkClock=0;
 
     public simIntake(){
-        intakeSim= IntakeSimulation.InTheFrameIntake("Note", SystemManager.swerve.swerveDrive.getMapleSimDrive().get(), Meters.of(0.7), IntakeSimulation.IntakeSide.BACK, 1);
+        intakeSim= IntakeSimulation.InTheFrameIntake("Note", SystemManager.swerve.getMapleSimDrive().get(), Meters.of(0.7), IntakeSimulation.IntakeSide.BACK, 1);
     }
 
     @Override 
