@@ -90,8 +90,8 @@ public final class Constants
   }
 
   public static class simConfigs{
-    public static final boolean driveShouldBeSim=false||RobotBase.isReal();
-    public static final boolean intakeShouldBeReal=false||RobotBase.isReal();
+    public static final boolean driveShouldBeSim=false||!RobotBase.isReal();
+    public static final boolean intakeShouldBeReal=false||!RobotBase.isReal();
   }
   public static class controllerIDs{
     public static final int commandXboxController1ID=0;

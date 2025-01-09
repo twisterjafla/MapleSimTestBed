@@ -35,7 +35,6 @@ public class Robot extends TimedRobot
 
   private static Robot   instance;
   private        Command m_autonomousCommand;
-  private Command GrabageCollectorProtection;
   ControlChooser controlChooser;
   SendableChooser<Integer> controlChooserTest = new SendableChooser<Integer>();
   
@@ -48,6 +47,7 @@ public class Robot extends TimedRobot
   {
     instance = this;
     SystemManager.SystemManagerInit();
+    SmartDashboard.putString("testBox", "test");
   
   }
 
@@ -70,7 +70,7 @@ public class Robot extends TimedRobot
     disabledTimer = new Timer();
     FollowPathCommand.warmupCommand().schedule();
     this.controlChooser=new ControlChooser();
-    GrabageCollectorProtection=SystemManager.swerve.driveToPose(new Pose2d());
+    
     //ControlManager.testControl();
 
   }

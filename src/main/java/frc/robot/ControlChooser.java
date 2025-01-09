@@ -37,8 +37,8 @@ import frc.robot.commands.swervedrive.drivebase.AutoDefenceForFakeBot;
 
 public class ControlChooser {
     //Map<String, Consumer<ControlChooser>> schemes= new HashMap<>();
-    SendableChooser<EventLoop> chooser =new SendableChooser<EventLoop>();
-    Consumer<ControlChooser>current =null;
+    SendableChooser<EventLoop> chooser=new SendableChooser<>();
+    Consumer<ControlChooser>current;
     
     CommandXboxController xbox1;
     CommandXboxController xbox2;
@@ -49,6 +49,7 @@ public class ControlChooser {
     
 
     ControlChooser(){
+        
         xbox1=new CommandXboxController(Constants.controllerIDs.commandXboxController1ID);
         xbox2=new CommandXboxController(Constants.controllerIDs.commandXboxController2ID);
 
@@ -61,15 +62,15 @@ public class ControlChooser {
 
         chooser.addOption("StandardXboxControl", standardXboxControl());
         chooser.addOption("demoControl", demoControl());
-
-
+        
         //chooser.initSendable(new SendableBuilderImpl());
         chooser.onChange((EventLoop scheme)->{changeControl(scheme);});
         //changeControl(CommandScheduler.getInstance().getDefaultButtonLoop());
-        changeControl(standardXboxControl());
+        changeControl(chooser.getSelected());
         
 
         //warmUpSystem(SystemManager.swerve );
+        SmartDashboard.putData(chooser);
        
     }
 
@@ -135,7 +136,7 @@ public class ControlChooser {
              if(Math.sqrt(Math.pow(xbox1.getRightX(), 2)+Math.pow(xbox1.getRightY(), 2))>=0.2)return Math.atan2(-xbox1.getRightX(), -xbox1.getRightY())/Math.PI; return SystemManager.swerve.getHeading().getRadians()/Math.PI;})
             ,SystemManager.swerve, loop);
         //setDefaultCommand(SystemManager.swerve.driveCommand(()->0, ()->0, ()->xbox1.getLeftX(), ()->xbox1.getLeftY()), SystemManager.swerve, loop);
-        xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(0,0, new Rotation2d(Math.PI))));
+        xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(10,10, new Rotation2d(Math.PI))));
         return loop;
     }
 

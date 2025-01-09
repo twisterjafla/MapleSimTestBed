@@ -3,6 +3,7 @@ package frc.robot;
 import java.io.File;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -26,6 +27,7 @@ public class SystemManager{
     
     public static void SystemManagerInit(){
         swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),  "swerve"));
+        swerve.resetOdometry(new Pose2d(3.,3, new Rotation2d()));
         //swerveReff = new SwerveSubsystemReff(new File(Filesystem.getDeployDirectory(),  "swerve/falcon"));
         
         m_field = new Field2d();
