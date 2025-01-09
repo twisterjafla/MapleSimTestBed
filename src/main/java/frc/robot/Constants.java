@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import swervelib.math.Matter;
 
 /**
@@ -82,7 +83,6 @@ public final class Constants
     public static final double LEFT_Y_DEADBAND  = 0.1;
     public static final double RIGHT_X_DEADBAND = 0.1;
     public static final double TURN_CONSTANT    = 6;
-    public static final int mainControllerPort =0;
     public static final int[] supportedPOV={0,90,180,270};
   }
   public static class sim{
@@ -92,6 +92,10 @@ public final class Constants
   public static class simConfigs{
     public static final boolean driveShouldBeSim=false||RobotBase.isReal();
     public static final boolean intakeShouldBeReal=false||RobotBase.isReal();
+  }
+  public static class controllerIDs{
+    public static final int commandXboxController1ID=0;
+    public static final int commandXboxController2ID=1;
   }
 
 // Since AutoBuilder is configured, we can use it to build pathfinding commands

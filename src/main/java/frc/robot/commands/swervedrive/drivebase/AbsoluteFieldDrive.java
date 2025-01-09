@@ -10,9 +10,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.Constants.driveConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-
 import java.util.List;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
@@ -39,7 +37,7 @@ public class AbsoluteFieldDrive extends Command
    * @param vY      DoubleSupplier that supplies the y-translation joystick input.  Should be in the range -1 to 1 with
    *                deadband already accounted for.  Positive Y is towards the left wall when looking through the driver
    *                station glass.
-   * @param heading DoubleSupplier that supplies the robot's heading angle in deggrees.
+   * @param heading DoubleSupplier that supplies the robot's heading angle.
    */
   public AbsoluteFieldDrive(SwerveSubsystem swerve, DoubleSupplier vX, DoubleSupplier vY,
                             DoubleSupplier heading)
@@ -65,13 +63,13 @@ public class AbsoluteFieldDrive extends Command
     // Get the desired chassis speeds based on a 2 joystick module.
 
     ChassisSpeeds desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
-                                                         new Rotation2d(heading.getAsDouble() * Math.PI/180d));
+                                                         new Rotation2d(heading.getAsDouble() * Math.PI));
 
     // Limit velocity to prevent tippy
     Translation2d translation = SwerveController.getTranslation2d(desiredSpeeds);
-    translation = SwerveMath.limitVelocity(translation, swerve.getFieldVelocity(), swerve.getPose(),
-                                           Constants.LOOP_TIME, driveConstants.robotMass, List.of(driveConstants.chassis),
-                                           swerve.getSwerveDriveConfiguration());
+    // translation = SwerveMath.limitVelocity(translation, swerve.getFieldVelocity(), swerve.getPose(),
+    //                                        Constants.LOOP_TIME, Constants.ROBOT_MASS, List.of(Constants.CHASSIS),
+    //                                        swerve.getSwerveDriveConfiguration());
     SmartDashboard.putNumber("LimitedTranslation", translation.getX());
     SmartDashboard.putString("Translation", translation.toString());
 

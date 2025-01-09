@@ -5,9 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose3d;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -32,6 +35,10 @@ public class Robot extends TimedRobot
 
   private static Robot   instance;
   private        Command m_autonomousCommand;
+  private Command GrabageCollectorProtection;
+  ControlChooser controlChooser;
+  SendableChooser<Integer> controlChooserTest = new SendableChooser<Integer>();
+  
 
   //private RobotContainer m_robotContainer;
 
@@ -41,6 +48,7 @@ public class Robot extends TimedRobot
   {
     instance = this;
     SystemManager.SystemManagerInit();
+  
   }
 
   public static Robot getInstance()
@@ -60,8 +68,11 @@ public class Robot extends TimedRobot
     // Create a timer to disable motor brake a few seconds after disable.  This will let the robot stop
     // immediately when disabled, but then also let it be pushed more 
     disabledTimer = new Timer();
-    ControlManager.testControl();
     FollowPathCommand.warmupCommand().schedule();
+    this.controlChooser=new ControlChooser();
+    GrabageCollectorProtection=SystemManager.swerve.driveToPose(new Pose2d());
+    //ControlManager.testControl();
+
   }
 
   /**
@@ -79,7 +90,8 @@ public class Robot extends TimedRobot
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putBoolean("running", true);
+
+    
   }
 
   /**
@@ -111,6 +123,8 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousInit()
   {
+
+    controlChooser.cancel();
     //m_robotContainer.setMotorBrake(true);
     //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
@@ -140,6 +154,7 @@ public class Robot extends TimedRobot
     {
       m_autonomousCommand.cancel();
     }
+    controlChooser.restart();
     // m_robotContainer.setDriveMode();
     // m_robotContainer.setMotorBrake(true);
   }
