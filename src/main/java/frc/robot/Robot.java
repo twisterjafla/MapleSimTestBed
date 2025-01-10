@@ -5,11 +5,15 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose3d;
-
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,6 +24,9 @@ import java.io.File;
 import java.io.IOException;
 
 import org.ironmaple.simulation.SimulatedArena;
+import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeAlgaeOnField;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
 
 import com.pathplanner.lib.commands.FollowPathCommand;
 
@@ -189,12 +196,30 @@ public class Robot extends TimedRobot
   {
   }
 
+
+
+
+  StructArrayPublisher<Pose3d> algeaPublisher = NetworkTableInstance.getDefault()
+  .getStructArrayTopic("algea", Pose3d.struct).publish();
+StructArrayPublisher<Pose3d> coralPublisher = NetworkTableInstance.getDefault()
+  .getStructArrayTopic("coral ", Pose3d.struct).publish();
+
+
+
+
+  // StructArrayPublisher<Pose3d> algaePoses = NetworkTableInstance.getDefault()
+  // .getStructArrayTopic("AlgaePoses", Pose3d.struct)
+  // .publish();
+
   /**
    * This function is called once when the robot is first started up.
    */
   @Override
   public void simulationInit(){
+    
+    SimulatedArena.getInstance().addGamePiece(new ReefscapeAlgaeOnField(new Translation2d(2,2)));
     SmartDashboard.putBoolean("isSim", true);
+    Logger.addDataReceiver(new NT4Publisher());
 
 
   }
@@ -202,8 +227,26 @@ public class Robot extends TimedRobot
   /**
    * This function is called periodically whilst in simulation.
    */
-  @Override
-  public void simulationPeriodic(){
+
+@Override
+public void simulationPeriodic() {
+  SimulatedArena.getInstance().simulationPeriodic();
+
+  algeaPublisher.set(SimulatedArena.getInstance().getGamePiecesArrayByType("Algae"));
+  coralPublisher.set(SimulatedArena.getInstance().getGamePiecesArrayByType("Coral"));
+  // Get the positions of the notes (both on the field and in the air)
+  // Pose3d[] AlgaePoses = SimulatedArena.getInstance()
+  //       .getGamePiecesArrayByType("Note");
+  // algaePoses.accept(SimulatedArena.getInstance()
+  //       .getGamePiecesByType("Note")
+  //       .toArray(Pose3d::new));
+
+  ///SystemManager.feild;
+
+  Logger.recordOutput("FieldSimulation/Algae", 
+      SimulatedArena.getInstance().getGamePiecesArrayByType("Algae"));
+  Logger.recordOutput("FieldSimulation/Coral", 
+      SimulatedArena.getInstance().getGamePiecesArrayByType("Coral"));
     //SimulatedArena.getInstance().simulationPeriodic();
   }
 

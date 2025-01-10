@@ -2,6 +2,8 @@ package frc.robot;
 
 import java.io.File;
 
+import org.ironmaple.simulation.SimulatedArena;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -19,10 +21,12 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 public class SystemManager{
     public static SwerveSubsystem swerve;
 
-    public static Field2d m_field;
+    public static Field2d feild;
+    public static SimulatedArena simFeild;
     public static AIRobotInSimulation fakeBot;
     public static boolean hasNote=false;
     public static intakeInterface intake;
+    
     
     
     public static void SystemManagerInit(){
@@ -30,16 +34,20 @@ public class SystemManager{
         swerve.resetOdometry(new Pose2d(3.,3, new Rotation2d()));
         //swerveReff = new SwerveSubsystemReff(new File(Filesystem.getDeployDirectory(),  "swerve/falcon"));
         
-        m_field = new Field2d();
-        SmartDashboard.putData("Field", m_field);
+        feild = new Field2d();
+        SmartDashboard.putData("Field", feild);
 
 
         if (Constants.simConfigs.intakeShouldBeReal){
             intake=new simIntake();
         }
-        // if (!RobotBase.isReal()){
-        //     AIRobotInSimulation.startOpponentRobotSimulations();
-        // }
+        if (!RobotBase.isReal()){
+            //AIRobotInSimulation.startOpponentRobotSimulations();
+            simFeild = SimulatedArena.getInstance();
+            // Overrides the default simulation
+            SimulatedArena.overrideInstance(simFeild); 
+
+        }
 
     }
 
