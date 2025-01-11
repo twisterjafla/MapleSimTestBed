@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.networktables.StructTopic;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -204,6 +205,7 @@ public class Robot extends TimedRobot
   .getStructArrayTopic("algea", Pose3d.struct).publish();
 StructArrayPublisher<Pose3d> coralPublisher = NetworkTableInstance.getDefault()
   .getStructArrayTopic("coral ", Pose3d.struct).publish();
+StructPublisher<Pose2d> robotPublisher = NetworkTableInstance.getDefault().getStructTopic("robot", Pose2d.struct).publish();
 
 
 
@@ -239,6 +241,7 @@ public void simulationPeriodic() {
 
   algeaPublisher.set(SimulatedArena.getInstance().getGamePiecesArrayByType("Algae"));
   coralPublisher.set(SimulatedArena.getInstance().getGamePiecesArrayByType("Coral"));
+  robotPublisher.set(SystemManager.getSwervePose());
   // Get the positions of the notes (both on the field and in the air)
   // Pose3d[] AlgaePoses = SimulatedArena.getInstance()
   //       .getGamePiecesArrayByType("Note");

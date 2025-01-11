@@ -59,7 +59,8 @@
       "/SmartDashboard/Motors": "Alerts",
       "/SmartDashboard/Pigeon 2 (v6) [13]": "Gyro",
       "/SmartDashboard/SendableChooser[1]": "String Chooser",
-      "/SmartDashboard/Swerve Drive": "Alerts"
+      "/SmartDashboard/Swerve Drive": "Alerts",
+      "/SmartDashboard/VisionSystemSim-main/Sim Field": "Field2d"
     }
   },
   "NetworkTables": {

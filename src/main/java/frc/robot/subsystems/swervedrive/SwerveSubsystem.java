@@ -517,6 +517,7 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic(){
     repopObstacles();
+    swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getPose().toPose2d(), Timer.getFPGATimestamp());
     //postTrajectory();
     
 
@@ -745,5 +746,9 @@ public class SwerveSubsystem extends SubsystemBase
   public void addFakeVisionReading()
   {
     swerveDrive.addVisionMeasurement(new Pose2d(3, 3, Rotation2d.fromDegrees(65)), Timer.getFPGATimestamp());
+  }
+
+  public Pose2d getMapleSimPose(){
+    return getMapleSimDrive().get().getSimulatedDriveTrainPose();
   }
 }

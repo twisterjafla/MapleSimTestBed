@@ -15,6 +15,8 @@ import frc.robot.subsystems.intake.simIntake;
 import frc.robot.subsystems.swervedrive.AIRobotInSimulation;
 //import frc.robot.subsystems.swervedrive.FakeBotSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.vision.aprilTagInterface;
+import frc.robot.subsystems.vision.photonSim;
 
 
 
@@ -26,7 +28,7 @@ public class SystemManager{
     public static AIRobotInSimulation fakeBot;
     public static boolean hasNote=false;
     public static intakeInterface intake;
-    
+    public static aprilTagInterface aprilTag;
     
     
     public static void SystemManagerInit(){
@@ -38,9 +40,18 @@ public class SystemManager{
         SmartDashboard.putData("Field", feild);
 
 
-        if (Constants.simConfigs.intakeShouldBeReal){
+        if (Constants.simConfigs.intakeShouldBeSim){
             intake=new simIntake();
         }
+        else{
+        }
+
+        if (Constants.simConfigs.aprilTagShouldBeSim){
+            aprilTag= new photonSim();
+        }
+        else{
+        }
+
         if (!RobotBase.isReal()){
             //AIRobotInSimulation.startOpponentRobotSimulations();
             simFeild = SimulatedArena.getInstance();
@@ -53,5 +64,9 @@ public class SystemManager{
 
     public static Pose2d getSwervePose(){
         return swerve.getPose();
+    }
+
+    public static Pose2d getRealPoseMaple(){
+        return swerve.getMapleSimPose();
     }
 }

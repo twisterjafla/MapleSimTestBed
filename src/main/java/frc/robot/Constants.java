@@ -10,6 +10,8 @@ import com.pathplanner.lib.config.ModuleConfig;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.config.PIDConstants;
+
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
@@ -86,12 +88,14 @@ public final class Constants
     public static final int[] supportedPOV={0,90,180,270};
   }
   public static class sim{
+    public static double targetTolerence =0.2;
     //DriveTrainSimulationConfig simConfig= new DriveTrainSimulationConfig(55, 1, 0.05, 1, 0.05, null, null);
   }
 
   public static class simConfigs{
     public static final boolean driveShouldBeSim=false||!RobotBase.isReal();
-    public static final boolean intakeShouldBeReal=false||!RobotBase.isReal();
+    public static final boolean intakeShouldBeSim=false||!RobotBase.isReal();
+    public static final boolean aprilTagShouldBeSim=true||!RobotBase.isReal();
   }
   public static class controllerIDs{
     public static final int commandXboxController1ID=0;
@@ -110,6 +114,11 @@ public final class Constants
     public static double l3EncoderVal = 0;
     public static double l2EncoderVal = 0;
     public static double l1EncoderVal = 0;
+  }
+
+
+  public static class cameraConstants{
+    public static Transform3d frontAprilTagCameraTrans = new Transform3d();
   }
 
 // Since AutoBuilder is configured, we can use it to build pathfinding commands
