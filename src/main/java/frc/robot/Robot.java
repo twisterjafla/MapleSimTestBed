@@ -25,6 +25,7 @@ import java.io.IOException;
 
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeAlgaeOnField;
+import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeCoralAlgaeStack;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 
@@ -217,7 +218,9 @@ StructArrayPublisher<Pose3d> coralPublisher = NetworkTableInstance.getDefault()
   @Override
   public void simulationInit(){
     
-    SimulatedArena.getInstance().addGamePiece(new ReefscapeAlgaeOnField(new Translation2d(2,2)));
+    SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(FieldPosits.StaringGamePeices.leftStack.getTranslation()));
+    SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(FieldPosits.StaringGamePeices.midStack.getTranslation()));
+    SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(FieldPosits.StaringGamePeices.rightStack.getTranslation()));
     SmartDashboard.putBoolean("isSim", true);
     Logger.addDataReceiver(new NT4Publisher());
 

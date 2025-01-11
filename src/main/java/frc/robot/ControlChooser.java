@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Utils.BetterTrigger;
+import frc.robot.commands.sim.CreateCoral;
 import frc.robot.commands.swervedrive.AdditionalCommands;
 import frc.robot.commands.swervedrive.QuickSwapCommand;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
@@ -83,7 +84,7 @@ public class ControlChooser {
     }
     public void restart(){
         changeControl(chooser.getSelected());
-        changeControl(standardXboxControl());
+        
     }
 
     public void cancel(){
@@ -107,26 +108,31 @@ public class ControlChooser {
 
     private EventLoop getTestControl(){
         EventLoop loop = new EventLoop();
-        
+        setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->-xbox1.getLeftY(), ()->-xbox1.getLeftX(), ()->{
+            if(Math.sqrt(Math.pow(xbox1.getRightX(), 2)+Math.pow(xbox1.getRightY(), 2))>=0.2)return Math.atan2(-xbox1.getRightX(), -xbox1.getRightY())/Math.PI; return SystemManager.swerve.getHeading().getRadians()/Math.PI;})
+           ,SystemManager.swerve, loop);
+       //setDefaultCommand(SystemManager.swerve.driveCommand(()->0, ()->0, ()->xbox1.getLeftX(), ()->xbox1.getLeftY()), SystemManager.swerve, loop);
+       xbox1.b(loop).onTrue(new CreateCoral("leftMid"));
        
-        // xbox1.b().whileTrue(
-        //     Commands.deferredProxy(() -> SystemManager.swerve.driveToPose(
-        //                             new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))
-        //                         ));
+       
+        // // xbox1.b().whileTrue(
+        // //     Commands.deferredProxy(() -> SystemManager.swerve.driveToPose(
+        // //                             new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))
+        // //                         ));
 
         
-        xbox1.y(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
-        //xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(15,1.2, new Rotation2d(Math.PI))));
+        // xbox1.y(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
+        // //xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(15,1.2, new Rotation2d(Math.PI))));
 
-        // if (!RobotBase.isReal()){
-        //     testController.x().onTrue(SystemManager.fakeBot.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
-        // }
-        // setDefaultCommand(new FakeDrive(SystemManager.fakeBot, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> Math.PI/180 * getPOVForTest(xbox1)), SystemManager.fakeBot, loop);
-        xbox1.x(loop).whileTrue(new AutoDefenceForFakeBot(new Pose2d(2,4, new Rotation2d(0))));
-        setDefaultCommand(new QuickSwapCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)),
-            AdditionalCommands.SwappingAuto, ()->xbox1.getHID().getAButton()), SystemManager.swerve, loop);
+        // // if (!RobotBase.isReal()){
+        // //     testController.x().onTrue(SystemManager.fakeBot.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
+        // // }
+        // // setDefaultCommand(new FakeDrive(SystemManager.fakeBot, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> Math.PI/180 * getPOVForTest(xbox1)), SystemManager.fakeBot, loop);
+        // xbox1.x(loop).whileTrue(new AutoDefenceForFakeBot(new Pose2d(2,4, new Rotation2d(0))));
+        // setDefaultCommand(new QuickSwapCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)),
+        //     AdditionalCommands.SwappingAuto, ()->xbox1.getHID().getAButton()), SystemManager.swerve, loop);
 
-        xbox1.b(loop).onTrue(new InstantCommand(()->{changeControl(getTestControl());}));
+        // xbox1.b(loop).onTrue(new InstantCommand(()->{changeControl(getTestControl());}));
         return loop;
     }
 
