@@ -29,6 +29,8 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Utils.BetterTrigger;
+import frc.robot.commands.intake.intakeCommand;
+import frc.robot.commands.intake.outtakeCommand;
 import frc.robot.commands.sim.CreateCoral;
 import frc.robot.commands.swervedrive.AdditionalCommands;
 import frc.robot.commands.swervedrive.QuickSwapCommand;
@@ -113,6 +115,8 @@ public class ControlChooser {
            ,SystemManager.swerve, loop);
        //setDefaultCommand(SystemManager.swerve.driveCommand(()->0, ()->0, ()->xbox1.getLeftX(), ()->xbox1.getLeftY()), SystemManager.swerve, loop);
        xbox1.b(loop).onTrue(new CreateCoral("leftMid"));
+       xbox1.a(loop).onTrue(new intakeCommand());
+       xbox1.x(loop).onTrue(new outtakeCommand());
        
        
         // // xbox1.b().whileTrue(

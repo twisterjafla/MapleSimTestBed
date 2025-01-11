@@ -4,11 +4,14 @@ import static edu.wpi.first.units.Units.Meters;
 
 import org.ironmaple.simulation.IntakeSimulation;
 
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SystemManager;
 
 public class simIntake extends SubsystemBase implements intakeInterface{
     IntakeSimulation intakeSim;
+    
 
   
     boolean isIntaking;
@@ -27,6 +30,8 @@ public class simIntake extends SubsystemBase implements intakeInterface{
             
         }
         clock++;
+
+        SmartDashboard.putBoolean("hasCoral", hasPeice());
     }
 
     public void intake(){
@@ -41,6 +46,10 @@ public class simIntake extends SubsystemBase implements intakeInterface{
     }
 
     public void outtake(){
-
+        if (hasPeice()){
+            intakeSim.obtainGamePieceFromIntake();
+        }
     }
+
+    
 }

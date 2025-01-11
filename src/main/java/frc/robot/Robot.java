@@ -217,10 +217,12 @@ StructArrayPublisher<Pose3d> coralPublisher = NetworkTableInstance.getDefault()
    */
   @Override
   public void simulationInit(){
+
+    SimulatedArena.getInstance().resetFieldForAuto();
     
-    SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(FieldPosits.StaringGamePeices.leftStack.getTranslation()));
-    SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(FieldPosits.StaringGamePeices.midStack.getTranslation()));
-    SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(FieldPosits.StaringGamePeices.rightStack.getTranslation()));
+    // SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(FieldPosits.StaringGamePeices.leftStack.getTranslation()));
+    // SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(FieldPosits.StaringGamePeices.midStack.getTranslation()));
+    // SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(FieldPosits.StaringGamePeices.rightStack.getTranslation()));
     SmartDashboard.putBoolean("isSim", true);
     Logger.addDataReceiver(new NT4Publisher());
 

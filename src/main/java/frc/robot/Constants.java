@@ -98,6 +98,20 @@ public final class Constants
     public static final int commandXboxController2ID=1;
   }
 
+  public static class elevatorConstants{
+    public static double l4EncoderVal = 0;
+    public static double l3EncoderVal = 0;
+    public static double l2EncoderVal = 0;
+    public static double l1EncoderVal = 0;
+  }
+
+  public static class wristConstants{
+    public static double l4EncoderVal = 0;
+    public static double l3EncoderVal = 0;
+    public static double l2EncoderVal = 0;
+    public static double l1EncoderVal = 0;
+  }
+
 // Since AutoBuilder is configured, we can use it to build pathfinding commands
 
 }
