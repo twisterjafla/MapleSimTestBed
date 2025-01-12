@@ -5,12 +5,15 @@
 package frc.robot;
 
 import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
 import com.pathplanner.lib.config.ModuleConfig;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.config.PIDConstants;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -18,6 +21,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import swervelib.math.Matter;
+import edu.wpi.first.math.geometry.Rotation3d;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean constants. This
@@ -119,6 +123,11 @@ public final class Constants
 
   public static class cameraConstants{
     public static Transform3d frontAprilTagCameraTrans = new Transform3d();
+    // Change these for camera to work properly
+    public static String APRIL_TAG_CAMERA_NAME = "USB_Camera"; 
+    public static AprilTagFieldLayout FIELD_LAYOUT = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
+    public static PoseStrategy POSITION_STRATEGY = PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR;
+    public static Double POSE_AMBIGUITY_TOLERANCE = 0.2;
   }
 
 // Since AutoBuilder is configured, we can use it to build pathfinding commands
