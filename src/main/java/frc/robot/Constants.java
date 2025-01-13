@@ -50,6 +50,7 @@ public final class Constants
     public static final double robotMass = (148 - 20.3) * 0.453592; // 32lbs * kg per pound
     public static final double maxSpeed  = Units.feetToMeters(14.5);
     public static final Matter chassis    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), robotMass);
+    public static final double MOI = 6.884;
  
 
     public static enum driveType {

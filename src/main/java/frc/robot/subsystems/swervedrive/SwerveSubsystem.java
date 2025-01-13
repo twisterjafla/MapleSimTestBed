@@ -13,6 +13,7 @@ import org.photonvision.targeting.PhotonPipelineResult;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.config.ModuleConfig;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
@@ -30,6 +31,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -60,6 +62,7 @@ import swervelib.math.SwerveMath;
 import swervelib.parser.PIDFConfig;
 import swervelib.parser.SwerveControllerConfiguration;
 import swervelib.parser.SwerveDriveConfiguration;
+import swervelib.parser.SwerveModuleConfiguration;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
@@ -164,6 +167,10 @@ public class SwerveSubsystem extends SubsystemBase
 //     vision = new Vision(swerveDrive::getPose, swerveDrive.field);
 //   }
 
+  public ModuleConfig getPathplannerStyleConfig(){
+    return new ModuleConfig(Constants.driveConstants.wheelRadusInMeters, /**Constants.driveConstants.maxSpeed*/5, 1, DCMotor.getKrakenX60(1), 60, 1);
+  }
+
   @Override
   public void simulationPeriodic(){
   }
@@ -172,7 +179,7 @@ public class SwerveSubsystem extends SubsystemBase
    * Setup AutoBuilder for PathPlanner.
    */
   public void setupPathPlanner(){
-    try {
+     try {
         AutoBuilder.configure(
             this::getPose, // Robot pose supplier
             this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
@@ -183,6 +190,7 @@ public class SwerveSubsystem extends SubsystemBase
                 Constants.AutonConstants.TRANSLATION_PID, // Translation PID constants
                 Constants.AutonConstants.ANGLE_PID // Rotation PID constants
             ),
+            //new RobotConfig(Constants.driveConstants.robotMass, Constants.driveConstants.MOI, getPathplannerStyleConfig(), swerveDrive.swerveDriveConfiguration.getTrackwidth()),
             RobotConfig.fromGUISettings(),
             () -> {
               // Boolean supplier that controls when the path will be mirrored for the red alliance

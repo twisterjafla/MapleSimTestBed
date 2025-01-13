@@ -117,7 +117,7 @@ public class ControlChooser {
        xbox1.b(loop).onTrue(new CreateCoral("leftMid"));
        xbox1.a(loop).onTrue(new intakeCommand());
        xbox1.x(loop).onTrue(new outtakeCommand());
-       xbox1.y(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(6,4, new Rotation2d(Math.PI))));       
+       xbox1.y(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(5.8,3.8, new Rotation2d(Math.PI))));       
        
         // // xbox1.b().whileTrue(
         // //     Commands.deferredProxy(() -> SystemManager.swerve.driveToPose(
