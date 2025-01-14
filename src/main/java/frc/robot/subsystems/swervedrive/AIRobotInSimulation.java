@@ -75,34 +75,34 @@ public class AIRobotInSimulation implements Subsystem {
                     Commands.none(),
                     ROBOT_QUEENING_POSITIONS[0],
                     1);
-            instances[1] = new AIRobotInSimulation(
-                    PathPlannerPath.fromPathFile("opponent robot cycle path 1"),
-                    shootAtSpeaker(1),
-                    PathPlannerPath.fromPathFile("opponent robot cycle path 1 backwards"),
-                    Commands.none(),
-                    ROBOT_QUEENING_POSITIONS[1],
-                    2);
-            instances[2] = new AIRobotInSimulation(
-                    PathPlannerPath.fromPathFile("opponent robot cycle path 2"),
-                    shootAtSpeaker(2),
-                    PathPlannerPath.fromPathFile("opponent robot cycle path 2 backwards"),
-                    Commands.none(),
-                    ROBOT_QUEENING_POSITIONS[2],
-                    3);
-            instances[3] = new AIRobotInSimulation(
-                    PathPlannerPath.fromPathFile("opponent robot cycle path 3"),
-                    feedShotLow(),
-                    PathPlannerPath.fromPathFile("opponent robot cycle path 3 backwards"),
-                    Commands.none(),
-                    ROBOT_QUEENING_POSITIONS[3],
-                    4);
-            instances[4] = new AIRobotInSimulation(
-                    PathPlannerPath.fromPathFile("opponent robot cycle path 4"),
-                    feedShotHigh(),
-                    PathPlannerPath.fromPathFile("opponent robot cycle path 4 backwards"),
-                    Commands.none(),
-                    ROBOT_QUEENING_POSITIONS[4],
-                    5);
+        //     instances[1] = new AIRobotInSimulation(
+        //             PathPlannerPath.fromPathFile("opponent robot cycle path 1"),
+        //             shootAtSpeaker(1),
+        //             PathPlannerPath.fromPathFile("opponent robot cycle path 1 backwards"),
+        //             Commands.none(),
+        //             ROBOT_QUEENING_POSITIONS[1],
+        //             2);
+        //     instances[2] = new AIRobotInSimulation(
+        //             PathPlannerPath.fromPathFile("opponent robot cycle path 2"),
+        //             shootAtSpeaker(2),
+        //             PathPlannerPath.fromPathFile("opponent robot cycle path 2 backwards"),
+        //             Commands.none(),
+        //             ROBOT_QUEENING_POSITIONS[2],
+        //             3);
+        //     instances[3] = new AIRobotInSimulation(
+        //             PathPlannerPath.fromPathFile("opponent robot cycle path 3"),
+        //             feedShotLow(),
+        //             PathPlannerPath.fromPathFile("opponent robot cycle path 3 backwards"),
+        //             Commands.none(),
+        //             ROBOT_QUEENING_POSITIONS[3],
+        //             4);
+        //     instances[4] = new AIRobotInSimulation(
+        //             PathPlannerPath.fromPathFile("opponent robot cycle path 4"),
+        //             feedShotHigh(),
+        //             PathPlannerPath.fromPathFile("opponent robot cycle path 4 backwards"),
+        //             Commands.none(),
+        //             ROBOT_QUEENING_POSITIONS[4],
+        //             5);
         } catch (Exception e) {
             DriverStation.reportError("failed to load opponent robot simulation path, error:" + e.getMessage(), false);
         }
@@ -226,6 +226,11 @@ public class AIRobotInSimulation implements Subsystem {
         return cycle.repeatedly()
                 .beforeStarting(Commands.runOnce(() -> driveSimulation.setSimulationWorldPose(
                         FieldMirroringUtils.toCurrentAlliancePose(startingPose))));
+    }
+
+    @Override
+    public void periodic(){
+        //SmartDashboard.putData(driveSimulation.getActualPoseInSimulationWorld());
     }
 
     private Command opponentRobotFollowPath(PathPlannerPath path) {

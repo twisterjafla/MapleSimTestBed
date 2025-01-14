@@ -47,7 +47,7 @@ public final class Constants
     public static final double chassisHeight=inchesToMeters(27);
     public static final double steerInertia = 0.025;
     public static final double wheelRadusInMeters = inchesToMeters(2);
-    public static final double robotMass = (33) * 0.453592; // 32lbs * kg per pound
+    public static final double robotMass = 50;//(33) * 0.453592; // 32lbs * kg per pound
     public static final double maxSpeed  = 4.6;
     public static final Matter chassis    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(3)), robotMass);
     public static final double MOI = 6.884;
@@ -66,7 +66,9 @@ public final class Constants
   public static final class AutonConstants
   {
 
-    public static final PIDConstants TRANSLATION_PID = new PIDConstants(5, 0, 0);
+    // public static final PIDConstants TRANSLATION_PID = new PIDConstants(10, 0, 0.5);
+    public static final PIDConstants TRANSLATION_PID = new PIDConstants(10, 0, 0);
+
     public static final PIDConstants ANGLE_PID       = new PIDConstants(5, 0, 0);
   
   }
