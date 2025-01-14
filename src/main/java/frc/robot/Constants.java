@@ -35,7 +35,7 @@ public final class Constants
     }
 
 
-  public static final double LOOP_TIME  = 0.03; //s, 20ms + 110ms sprk max velocity lag
+  public static final double LOOP_TIME  = 0.02; //s, 20ms + 110ms sprk max velocity lag
 
 
   public static final class driveConstants {
@@ -48,8 +48,8 @@ public final class Constants
     public static final double steerInertia = 0.025;
     public static final double wheelRadusInMeters = inchesToMeters(2);
     public static final double robotMass = (33) * 0.453592; // 32lbs * kg per pound
-    public static final double maxSpeed  = 5.1;
-    public static final Matter chassis    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), robotMass);
+    public static final double maxSpeed  = 4.6;
+    public static final Matter chassis    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(3)), robotMass);
     public static final double MOI = 6.884;
  
 
