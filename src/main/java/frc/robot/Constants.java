@@ -97,7 +97,7 @@ public final class Constants
 
   public static class simConfigs{
     public static final boolean driveShouldBeSim=false||!RobotBase.isReal();
-    public static final boolean intakeShouldBeSim=false||!RobotBase.isReal();
+    public static final boolean intakeShouldBeSim=true||!RobotBase.isReal();
     public static final boolean aprilTagShouldBeSim=true||!RobotBase.isReal();
   }
   public static class controllerIDs{
