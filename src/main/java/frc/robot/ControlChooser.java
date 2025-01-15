@@ -60,6 +60,7 @@ public class ControlChooser {
 
         if (!RobotBase.isReal()){
             chooser.addOption("testControl", getTestControl());
+            chooser.addOption("autoTestControll", getAutoTestControl());
         }
 
 
@@ -73,7 +74,7 @@ public class ControlChooser {
         
 
         //warmUpSystem(SystemManager.swerve );
-        SmartDashboard.putData(chooser);
+        SmartDashboard.putData("Control chooser", chooser);
        
     }
 
@@ -158,6 +159,12 @@ public class ControlChooser {
         return loop;
     }
 
+    private EventLoop getAutoTestControl(){
+        EventLoop loop = new EventLoop();
+        setDefaultCommand(new QuickSwapCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)),
+            AdditionalCommands.SwappingAuto, ()->xbox1.getHID().getAButton()), SystemManager.swerve, loop);
+        return loop;
+    }
 
 
 

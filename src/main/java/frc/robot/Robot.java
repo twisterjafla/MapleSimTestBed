@@ -203,8 +203,16 @@ public class Robot extends TimedRobot
 
   StructArrayPublisher<Pose3d> algeaPublisher = NetworkTableInstance.getDefault()
   .getStructArrayTopic("algea", Pose3d.struct).publish();
+
+  // StructArrayPublisher<Pose2d> opponentRobotsPublisher = NetworkTableInstance.getDefault()
+  // .getStructArrayTopic("opponentRobots", Pose2d.struct).publish();
+  // StructArrayPublisher<Pose2d> teamRobotsPublisher = NetworkTableInstance.getDefault()
+  // .getStructArrayTopic("teamRobots", Pose2d.struct).publish();
+  StructPublisher<Pose2d> opponentPublisher = NetworkTableInstance.getDefault().getStructTopic("René DesCoded", Pose2d.struct).publish();
+
 StructArrayPublisher<Pose3d> coralPublisher = NetworkTableInstance.getDefault()
   .getStructArrayTopic("coral ", Pose3d.struct).publish();
+
 StructPublisher<Pose2d> robotPublisher = NetworkTableInstance.getDefault().getStructTopic("robot", Pose2d.struct).publish();
 
 
@@ -242,6 +250,11 @@ public void simulationPeriodic() {
   algeaPublisher.set(SimulatedArena.getInstance().getGamePiecesArrayByType("Algae"));
   coralPublisher.set(SimulatedArena.getInstance().getGamePiecesArrayByType("Coral"));
   robotPublisher.set(SystemManager.getSwervePose());
+  // opponentRobotsPublisher.set(AIRobotInSimulation.getOpponentRobotPoses());
+  // teamRobotsPublisher.set(AIRobotInSimulation.getAlliancePartnerRobotPoses());
+  if (SystemManager.fakeBot!=null){
+    opponentPublisher.set(SystemManager.fakeBot.driveSimulation.getActualPoseInSimulationWorld());
+  }
   // Get the positions of the notes (both on the field and in the air)
   // Pose3d[] AlgaePoses = SimulatedArena.getInstance()
   //       .getGamePiecesArrayByType("Note");

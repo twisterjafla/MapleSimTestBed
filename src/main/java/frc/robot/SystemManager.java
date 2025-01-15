@@ -53,7 +53,8 @@ public class SystemManager{
         }
 
         if (!RobotBase.isReal()){
-            //AIRobotInSimulation.startOpponentRobotSimulations();
+            AIRobotInSimulation.startOpponentRobotSimulations();
+            fakeBot=AIRobotInSimulation.getRobotAtIndex(0);
             simFeild = SimulatedArena.getInstance();
             // Overrides the default simulation
             SimulatedArena.overrideInstance(simFeild); 

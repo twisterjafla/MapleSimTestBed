@@ -9,12 +9,18 @@ import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathPlannerPath;
+
+import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -24,7 +30,10 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Supplier;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SelfControlledSwerveDriveSimulation;
@@ -42,6 +51,7 @@ public class AIRobotInSimulation implements Subsystem {
         new Pose2d(-3, 0, new Rotation2d()),
         new Pose2d(-2, 0, new Rotation2d())
     };
+    
     public static final Pose2d[] ROBOTS_STARTING_POSITIONS = new Pose2d[] {
         new Pose2d(15, 6, Rotation2d.fromDegrees(180)),
         new Pose2d(15, 4, Rotation2d.fromDegrees(180)),
@@ -49,6 +59,10 @@ public class AIRobotInSimulation implements Subsystem {
         new Pose2d(1.6, 6, new Rotation2d()),
         new Pose2d(1.6, 4, new Rotation2d())
     };
+
+    public static final Twist2d backLeft = new Twist2d(-0.5, -0.5, 0);
+    public static final Twist2d frontRight= new Twist2d(0.5, 0.5, 0);
+
     public static final AIRobotInSimulation[] instances = new AIRobotInSimulation[5];
 
     private static final DriveTrainSimulationConfig AI_ROBOT_CONFIG =
@@ -108,6 +122,9 @@ public class AIRobotInSimulation implements Subsystem {
         }
     }
 
+    public static AIRobotInSimulation getRobotAtIndex(int index){
+        return instances[index];
+    }
 
     /**placeholder action */
     private static Command shootAtSpeaker(int index) {
@@ -173,7 +190,7 @@ public class AIRobotInSimulation implements Subsystem {
                         .enableBecomeNoteOnFieldAfterTouchGround()));
     }
 
-    private final SelfControlledSwerveDriveSimulation driveSimulation;
+    public final SelfControlledSwerveDriveSimulation driveSimulation;
     private final int id;
 
     public AIRobotInSimulation(
@@ -228,10 +245,7 @@ public class AIRobotInSimulation implements Subsystem {
                         FieldMirroringUtils.toCurrentAlliancePose(startingPose))));
     }
 
-    @Override
-    public void periodic(){
-        //SmartDashboard.putData(driveSimulation.getActualPoseInSimulationWorld());
-    }
+
 
     private Command opponentRobotFollowPath(PathPlannerPath path) {
         return new FollowPathCommand(
@@ -246,7 +260,7 @@ public class AIRobotInSimulation implements Subsystem {
     }
 
     private Command getJoystickDriveCommand() {
-        final XboxController joystick = new XboxController(id);
+        final XboxController joystick = new XboxController(id-1);
         final Supplier<ChassisSpeeds> joystickSpeeds = () -> new ChassisSpeeds(
                 -joystick.getLeftY() * 3.5, -joystick.getLeftX() * 3.5, -joystick.getRightX() * Math.toRadians(360));
         final Supplier<Rotation2d> opponentDriverStationFacing = () ->
@@ -258,8 +272,7 @@ public class AIRobotInSimulation implements Subsystem {
                                     FieldMirroringUtils.getCurrentAllianceDriverStationFacing()
                                             .plus(Rotation2d.fromDegrees(180)));
                             driveSimulation.runChassisSpeeds(joystickSpeeds.get(), new Translation2d(), true, true);
-                            System.out.println("joystick speeds: " + joystick.getLeftY());
-                            System.out.println("id: " + id);
+                            
                         },
                         this)
                 .beforeStarting(() -> driveSimulation.setSimulationWorldPose(
@@ -274,9 +287,55 @@ public class AIRobotInSimulation implements Subsystem {
         return getRobotPoses(new AIRobotInSimulation[] {instances[3], instances[4]});
     }
 
-    private static Pose2d[] getRobotPoses(AIRobotInSimulation[] instances) {
+    public static Pose2d[] getRobotPoses(AIRobotInSimulation[] instances) {
         return Arrays.stream(instances)
                 .map(instance -> instance.driveSimulation.getActualPoseInSimulationWorld())
                 .toArray(Pose2d[]::new);
     }
+
+    private Translation2d getTopCorner(){
+        return driveSimulation.getActualPoseInSimulationWorld().exp(frontRight).getTranslation();
+    }
+
+    private Translation2d getBottemCorner(){
+        return driveSimulation.getActualPoseInSimulationWorld().exp(backLeft).getTranslation();
+    }
+    
+
+
+    public Translation2d applyVelocitySmear(Translation2d corner){
+        Translation2d velocityTrans = getVelocityOver(0.1);
+        Translation2d finalTrans = getVelocityOver(0.25);
+        Translation2d newCorner=corner.plus(velocityTrans);
+        if (newCorner.getDistance(driveSimulation.getActualPoseInSimulationWorld().getTranslation())>corner.getDistance(driveSimulation.getActualPoseInSimulationWorld().getTranslation())){
+            return corner.plus(finalTrans);
+        }
+        return corner;
+
+    }
+
+    public Pair<Translation2d, Translation2d> getHitbox(){
+        return Pair.of(getTopCorner(), getBottemCorner());
+    }
+
+    public List<Pair<Translation2d, Translation2d>> getTrajHitboxes(){
+        List<Pair<Translation2d, Translation2d>> hitboxes = new ArrayList<>();
+        Pair<Translation2d, Translation2d> CurrentHitbox = getHitbox();
+        hitboxes.add(CurrentHitbox); 
+        Translation2d  velocityTrans = getVelocityOver(0.25);
+        for(double i = 0.05; i<0.25; i+=0.05){
+            //Pair<Translation2d, Translation2d> trajHitbox = CurrentHitbox;
+            //trajHitbox.= trajHitbox.first.plus(velocityTrans.times(i));
+            hitboxes.add(Pair.of(CurrentHitbox.getFirst().plus(velocityTrans.times(i)), CurrentHitbox.getSecond().plus(velocityTrans.times(i))));
+        }
+        return hitboxes;
+    }
+
+    public Translation2d getVelocity(){
+        return getVelocityOver(1);
+    }
+    public Translation2d getVelocityOver(double seconds){
+        return new Translation2d(driveSimulation.getActualSpeedsFieldRelative().vxMetersPerSecond*seconds, driveSimulation.getActualSpeedsFieldRelative().vyMetersPerSecond*seconds);
+    }
+
 }

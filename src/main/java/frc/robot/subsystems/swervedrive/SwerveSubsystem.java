@@ -24,6 +24,7 @@ import com.pathplanner.lib.util.FileVersionException;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -34,6 +35,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
@@ -178,6 +181,7 @@ public class SwerveSubsystem extends SubsystemBase
 
   @Override
   public void simulationPeriodic(){
+    repopObstacles();
   }
 
   /**
@@ -338,7 +342,7 @@ public class SwerveSubsystem extends SubsystemBase
     return SwerveDriveTest.generateSysIdCommand(
         SwerveDriveTest.setDriveSysIdRoutine(
             new Config(),
-            this, swerveDrive, 12),
+            this, swerveDrive, 12, true),
         3.0, 5.0, 3.0);
   }
 
@@ -470,20 +474,21 @@ public class SwerveSubsystem extends SubsystemBase
   }
 
   public void repopObstacles(){
-    // List<Pair<Translation2d, Translation2d>> obstacles = new ArrayList<>();
+    List<Pair<Translation2d, Translation2d>> obstacles = new ArrayList<>();
 
-    // List<Pair<Translation2d, Translation2d>> fakeBotHitBoxes = SystemManager.fakeBot.getTrajHitboxes();
-    // for (Pair<Translation2d, Translation2d> pair:fakeBotHitBoxes){
-    //   obstacles.add(pair);
-    // }
+    List<Pair<Translation2d, Translation2d>> fakeBotHitBoxes = SystemManager.fakeBot.getTrajHitboxes();
+    for (Pair<Translation2d, Translation2d> pair:fakeBotHitBoxes){
+      obstacles.add(pair);
+    }
 
-    // Pathfinding.setDynamicObstacles(obstacles, swerveDrive.getPose().getTranslation());
+
+    Pathfinding.setDynamicObstacles(obstacles, swerveDrive.getPose().getTranslation());
   }
 
 
   @Override
   public void periodic(){
-    repopObstacles();
+    
     swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getPose().toPose2d(), Timer.getFPGATimestamp());
     //postTrajectory();
     

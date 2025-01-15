@@ -53,6 +53,7 @@
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/AIRobotBehaviors/Opponent Robot 1 Behavior": "String Chooser",
       "/SmartDashboard/Alerts": "Alerts",
+      "/SmartDashboard/Control chooser": "String Chooser",
       "/SmartDashboard/Encoders": "Alerts",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/IMU": "Alerts",
@@ -122,8 +123,7 @@
     "AdvantageScope@2": {
       "Subscribers": {
         "open": true
-      },
-      "open": true
+      }
     },
     "Clients": {
       "open": true
