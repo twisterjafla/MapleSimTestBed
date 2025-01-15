@@ -59,8 +59,10 @@ public class ControlChooser {
         chooser.setDefaultOption("default", CommandScheduler.getInstance().getDefaultButtonLoop());
 
         if (!RobotBase.isReal()){
-            chooser.addOption("testControl", getTestControl());
+            //chooser.addOption("testControl", getTestControl());
         }
+        chooser.addOption("testControl", getTestControl());
+
 
 
         chooser.addOption("StandardXboxControl", standardXboxControl());
