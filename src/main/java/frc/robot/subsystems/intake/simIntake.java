@@ -2,21 +2,31 @@ package frc.robot.subsystems.intake;
 
 import static edu.wpi.first.units.Units.Meters;
 
+import java.util.function.BooleanSupplier;
+
 import org.ironmaple.simulation.IntakeSimulation;
+
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.SystemManager;
 
 public class simIntake extends SubsystemBase implements intakeInterface{
     IntakeSimulation intakeSim;
     
 
-  
-    boolean isIntaking;
-    int clock=0;
-    int checkClock=0;
+    public static enum intakeState{
+        intaking,
+        outtaking,
+        resting;
+    }
+    
+    intakeState state;
+    double intakeSpeed=Constants.intakeConstants.intakeSpeed;
+    double outtakeSpeed=Constants.intakeConstants.outtakeSpeed;
+    BooleanSupplier stopTrigger=()->{return false;};
 
     public simIntake(){
         intakeSim= IntakeSimulation.InTheFrameIntake("Coral", SystemManager.swerve.getMapleSimDrive().get(), Meters.of(0.7), IntakeSimulation.IntakeSide.BACK, 1);
@@ -24,32 +34,67 @@ public class simIntake extends SubsystemBase implements intakeInterface{
 
     @Override 
     public void periodic(){
-        if (clock!=checkClock){
-            isIntaking=false;
-            intakeSim.stopIntake();
-            
+        if (stopTrigger.getAsBoolean()){
+            stop();
         }
-        clock++;
+        if (state==intakeState.intaking){
+            intakeSim.startIntake();
+        }
+        else if (state==intakeState.outtaking){
+            outtakeInternal();
+        }
+        
 
         SmartDashboard.putBoolean("hasCoral", hasPeice());
     }
 
-    public void intake(){
-        intakeSim.startIntake();
-        isIntaking=true;
-        checkClock=clock;
+    // public void intake(){
+    //     intakeSim.startIntake();
+    //     isIntaking=true;
+    //     checkClock=clock;
 
-    }
-
+    // }
+    @Override
     public boolean hasPeice(){
         return intakeSim.getGamePiecesAmount()==1;
     }
 
-    public void outtake(){
+
+    public void outtakeInternal(){
         if (hasPeice()){
             intakeSim.obtainGamePieceFromIntake();
         }
     }
 
+    @Override
+    public void intake(){
+        intakeUntil(()->hasPeice());
+        
+    }
     
+    @Override
+    public void intakeUntil(BooleanSupplier trigger){
+        state=intakeState.intaking;
+        stopTrigger=trigger;
+    }
+
+
+    @Override
+    public void outtake(){
+        outtakeUntil(()->!hasPeice());
+
+    }
+
+    @Override
+    public void outtakeUntil(BooleanSupplier trigger) {
+        state=intakeState.outtaking;
+        stopTrigger=trigger;
+    }
+
+    @Override
+    public void stop(){
+        state=intakeState.resting;
+        stopTrigger=()->true;
+    }
+
 }

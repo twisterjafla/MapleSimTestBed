@@ -105,6 +105,11 @@ public final class Constants
     public static final int commandXboxController2ID=1;
   }
 
+  public static class intakeConstants{
+    public static final double intakeSpeed=1;
+    public static final double outtakeSpeed=-1;
+  }
+
   public static class elevatorConstants{
     public static double l4EncoderVal = 0;
     public static double l3EncoderVal = 0;
