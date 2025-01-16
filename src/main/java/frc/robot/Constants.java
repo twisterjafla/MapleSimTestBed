@@ -11,6 +11,7 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.config.PIDConstants;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -99,6 +100,8 @@ public final class Constants
     public static final boolean driveShouldBeSim=false||!RobotBase.isReal();
     public static final boolean intakeShouldBeSim=true||!RobotBase.isReal();
     public static final boolean aprilTagShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean wristShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean elevatorShouldBeSim=true||!RobotBase.isReal();
   }
   public static class controllerIDs{
     public static final int commandXboxController1ID=0;
@@ -108,6 +111,7 @@ public final class Constants
   public static class intakeConstants{
     public static final double intakeSpeed=1;
     public static final double outtakeSpeed=-1;
+    public static final double intakeLength=0.2;
   }
 
   public static class elevatorConstants{
@@ -117,7 +121,7 @@ public final class Constants
     public static final double l1EncoderVal = 0;
     public static final double encoderToMeters =1;
     public static final double maxEncoderHeight = 6;
-    public static final double angle = 0;
+    public static final Rotation2d angle = new Rotation2d(Math.toRadians(70));
   }
 
   public static class wristConstants{
@@ -126,8 +130,9 @@ public final class Constants
     public static final double l2EncoderVal = 0;
     public static final double l1EncoderVal = 0;
     public static final double degreesPerEncoderTick=360;
-    public static final double minDegrees = 0;
-    public static final double maxDegrees = 0;
+    public static final Rotation2d minDegrees = new Rotation2d();
+    public static final Rotation2d maxDegrees = new Rotation2d();
+  
   }
 
 

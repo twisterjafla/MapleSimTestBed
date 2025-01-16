@@ -1,5 +1,7 @@
 package frc.robot.subsystems.wrist;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import frc.robot.Constants;
 
 public class simWrist implements wristInterface{
@@ -17,7 +19,7 @@ public class simWrist implements wristInterface{
     }
 
     @Override
-    public double getCurrentLocation() {
+    public double getCurrentLocationEncoder() {
         return setpoint;
     }
 
@@ -32,13 +34,14 @@ public class simWrist implements wristInterface{
     }
 
     @Override
-    public void setSetpointInDegrees(double setPoint) {
-        setSetpoint(setPoint*Constants.wristConstants.degreesPerEncoderTick);
+    public void setSetpointInDegrees(Rotation2d setPoint) {
+        setSetpoint(setPoint.getDegrees()*Constants.wristConstants.degreesPerEncoderTick);
     }
 
     @Override
-    public double getcurrentLocationDeg() {
-        return getSetpoint()/Constants.wristConstants.degreesPerEncoderTick;
+    public Rotation2d getcurrentLocation() {
+        return Rotation2d.fromDegrees(getSetpoint()/Constants.wristConstants.degreesPerEncoderTick);
     }
-    
+
+
 }

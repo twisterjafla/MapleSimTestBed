@@ -8,6 +8,8 @@ import org.ironmaple.simulation.IntakeSimulation;
 
 
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -103,6 +105,12 @@ public class simIntake extends SubsystemBase implements intakeInterface{
     @Override 
     public void reset(){
         stop();
+    }
+
+    @Override
+    public Translation3d getTranslation(){
+        Rotation2d rotation = SystemManager.wrist.getcurrentLocation();
+        return new Translation3d(Math.cos(rotation.getRadians())*Constants.intakeConstants.intakeLength, 0 ,Math.sin(rotation.getRadians())*Constants.intakeConstants.intakeLength).plus(SystemManager.elevator.getTranslation());
     }
 
 }

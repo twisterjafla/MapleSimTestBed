@@ -23,7 +23,7 @@ private Pose3d pose = new Pose3d(-1000, -1000, -1000, new Rotation3d());
     private Set<CoralSimScoreLocation> scoreLocations = new HashSet<>();
 
     
-    private Supplier<Pose3d> relativeClawPoseSupplier;
+    
 
     public enum CoralSimLocation {
         INTAKE,
@@ -104,10 +104,10 @@ private Pose3d pose = new Pose3d(-1000, -1000, -1000, new Rotation3d());
     private CoralSimLocation location = CoralSimLocation.CLAW;
     private Timer timer = new Timer();
 
-    public CoralSim(Supplier<Pose3d> relativeClawPoseSupplier) {
+    public CoralSim() {
 
         
-        this.relativeClawPoseSupplier = relativeClawPoseSupplier;
+        
 
     }
 
@@ -115,7 +115,7 @@ private Pose3d pose = new Pose3d(-1000, -1000, -1000, new Rotation3d());
     public void periodic() {
         switch (location) {
             case CLAW -> {
-                Pose3d relativeCoralPose = relativeClawPoseSupplier.get()
+                Pose3d relativeCoralPose = SystemManager.getIntakePosit()
                         .plus(new Transform3d(0.143, 0, 0, new Rotation3d()));
                 pose = new Pose3d(SystemManager.getSwervePose())
                         .plus(new Transform3d(relativeCoralPose.getTranslation(), relativeCoralPose.getRotation()))

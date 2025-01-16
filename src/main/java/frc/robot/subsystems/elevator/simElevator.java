@@ -1,9 +1,10 @@
 package frc.robot.subsystems.elevator;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import frc.robot.Constants;
 
-public class elevatorSim implements elevatorInterface{
+public class simElevator implements elevatorInterface{
 
     public double setpoint=0;
 
@@ -18,9 +19,8 @@ public class elevatorSim implements elevatorInterface{
     }
 
     @Override
-    public Translation2d getPosit() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPosit'");
+    public Translation3d getTranslation() {
+        return new Translation3d(getHeight()*Math.cos(Constants.elevatorConstants.angle.getRadians()), 0, getHeight()*Math.sin(Constants.elevatorConstants.angle.getRadians()));
     }
 
     @Override
