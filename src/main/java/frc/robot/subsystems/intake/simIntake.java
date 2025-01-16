@@ -24,8 +24,6 @@ public class simIntake extends SubsystemBase implements intakeInterface{
     }
     
     intakeState state;
-    double intakeSpeed=Constants.intakeConstants.intakeSpeed;
-    double outtakeSpeed=Constants.intakeConstants.outtakeSpeed;
     BooleanSupplier stopTrigger=()->{return false;};
 
     public simIntake(){
@@ -95,6 +93,16 @@ public class simIntake extends SubsystemBase implements intakeInterface{
     public void stop(){
         state=intakeState.resting;
         stopTrigger=()->true;
+    }
+
+    @Override 
+    public intakeState getState(){
+        return state;
+    }
+
+    @Override 
+    public void reset(){
+        stop();
     }
 
 }

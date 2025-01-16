@@ -111,22 +111,28 @@ public final class Constants
   }
 
   public static class elevatorConstants{
-    public static double l4EncoderVal = 0;
-    public static double l3EncoderVal = 0;
-    public static double l2EncoderVal = 0;
-    public static double l1EncoderVal = 0;
+    public static final double l4EncoderVal = 0;
+    public static final double l3EncoderVal = 0;
+    public static final double l2EncoderVal = 0;
+    public static final double l1EncoderVal = 0;
+    public static final double encoderToMeters =1;
+    public static final double maxEncoderHeight = 6;
+    public static final double angle = 0;
   }
 
   public static class wristConstants{
-    public static double l4EncoderVal = 0;
-    public static double l3EncoderVal = 0;
-    public static double l2EncoderVal = 0;
-    public static double l1EncoderVal = 0;
+    public static final double l4EncoderVal = 0;
+    public static final double l3EncoderVal = 0;
+    public static final double l2EncoderVal = 0;
+    public static final double l1EncoderVal = 0;
+    public static final double degreesPerEncoderTick=360;
+    public static final double minDegrees = 0;
+    public static final double maxDegrees = 0;
   }
 
 
   public static class cameraConstants{
-    public static Transform3d frontAprilTagCameraTrans = new Transform3d();
+    public static  Transform3d frontAprilTagCameraTrans = new Transform3d();
   }
 
 // Since AutoBuilder is configured, we can use it to build pathfinding commands
