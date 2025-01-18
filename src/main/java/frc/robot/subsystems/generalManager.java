@@ -107,4 +107,9 @@ public class generalManager extends SubsystemBase{
             start();
         }
     }
+
+
+    public boolean isScoringState() {
+        return state==generalState.L1 || state==generalState.L2 || state==generalState.L3 || state==generalState.L4;
+    }
 }

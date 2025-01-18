@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.generalManager;
 import frc.robot.subsystems.elevator.elevatorInterface;
 import frc.robot.subsystems.elevator.simElevator;
 import frc.robot.subsystems.intake.intakeInterface;
@@ -38,7 +39,7 @@ public class SystemManager{
     public static aprilTagInterface aprilTag;
     public static wristInterface wrist;
     public static elevatorInterface elevator;
-    
+    public static generalManager mechMananger;
     
     public static void SystemManagerInit(){
         swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),  "swerve"));
@@ -81,7 +82,10 @@ public class SystemManager{
 
         }
 
+
+        mechMananger= new generalManager();
     }
+
 
     public static Pose2d getSwervePose(){
         return swerve.getPose();
