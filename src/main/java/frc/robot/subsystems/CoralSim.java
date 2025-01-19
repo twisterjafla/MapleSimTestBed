@@ -174,27 +174,27 @@ private Pose3d pose = new Pose3d(-1000, -1000, -1000, new Rotation3d());
     //     });
     // }
 
-    public void prepProj(GamePieceProjectile proj){
-        double lowScore=999;
-        int lowScoreRow=0;
-        int lowScoreCol=0;
-        int i=0;
-        int j=0;
-        for (Translation3d[] row:targets){
+    // public void prepProj(GamePieceProjectile proj){
+    //     double lowScore=999;
+    //     int lowScoreRow=0;
+    //     int lowScoreCol=0;
+    //     int i=0;
+    //     int j=0;
+    //     for (Translation3d[] row:targets){
 
-            for (Translation3d target: row){
-                if (getDistance(proj.getPose3d(), new Pose3d(target, new Rotation3d()))<lowScore){
-                    lowScore=getDistance(proj.getPose3d(), new Pose3d(target, new Rotation3d()));
-                    lowScoreRow=j;
-                    lowScoreCol=i;
-                }
-                i++;
-            }
-            i=0;
-            j++;
-        }
-        proj.withTargetPosition(()->targets[lowScoreRow][lowScoreCol]);
-    }
+    //         for (Translation3d target: row){
+    //             if (getDistance(proj.getPose3d(), new Pose3d(target, new Rotation3d()))<lowScore){
+    //                 lowScore=getDistance(proj.getPose3d(), new Pose3d(target, new Rotation3d()));
+    //                 lowScoreRow=j;
+    //                 lowScoreCol=i;
+    //             }
+    //             i++;
+    //         }
+    //         i=0;
+    //         j++;
+    //     }
+    //     proj.withTargetPosition(()->targets[lowScoreRow][lowScoreCol]);
+    // }
 
 
 

@@ -4,6 +4,13 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.states.intaking;
+import frc.robot.commands.states.scoreL1;
+import frc.robot.commands.states.scoreL2;
+import frc.robot.commands.states.scoreL3;
+import frc.robot.commands.states.scoreL4;
+import frc.robot.commands.states.starting;
 
 public class FieldPosits {
     public static class StaringGamePeices{
@@ -24,4 +31,44 @@ public class FieldPosits {
         public static final Pose3d rightRight= new Pose3d(1.3, 0.3, 0.95, new Rotation3d());
 
     }
+
+    // enum poles {
+    //     1,
+    //     2,
+    //     3,
+    //     4,
+    //     5,
+    //     6,
+    //     7,
+    //     8,
+    //     9,
+    //     10,
+    //     11
+    
+    // }
+
+    public static enum reefPole{
+        A,
+        B,
+        C,
+        D,
+        E,
+        F,
+        G,
+        H,
+        I,
+        J,
+        K,
+        L
+      }
+      
+    public static enum reefLevel{
+        L1,
+        L2,
+        L3,
+        L4
+    }
+
+
+    
 }
