@@ -2,9 +2,12 @@ package frc.robot.subsystems;
 
 import java.util.Optional;
 import java.util.function.Supplier;
+
+import frc.robot.Utils.warningManager;
 import frc.robot.commands.states.*;
 import com.ctre.phoenix.sensors.PigeonIMU.GeneralStatus;
 
+import edu.wpi.first.util.function.BooleanConsumer;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -33,7 +36,10 @@ public class generalManager extends SubsystemBase{
 
 
     generalState state;
-    Alert weirdStatAlert = new Alert("Warning, a state was sheduled in generalManager that did not use the correct callback. generalManager caught this issue and resolved it but strange bugs may still occur", AlertType.kError);
+    
+    BooleanConsumer externalCallback=null;
+    
+    
     public generalManager(){
       start();
     }
@@ -42,7 +48,7 @@ public class generalManager extends SubsystemBase{
     @Override
     public void periodic(){
         if (!CommandScheduler.getInstance().isScheduled(state.state)){
-            weirdStatAlert.set(true);
+            warningManager.throwAlert(warningManager.badGeneralRoutine);
             start();
         }
     }
@@ -107,10 +113,19 @@ public class generalManager extends SubsystemBase{
         if (!wasInterupted){
             start();
         }
+        if (externalCallback!=null){
+            externalCallback.accept(wasInterupted);
+            externalCallback=null;
+        }
     }
 
 
     public boolean isScoringState() {
         return state==generalState.L1 || state==generalState.L2 || state==generalState.L3 || state==generalState.L4;
+    }
+
+
+    public void setExternalEndCallback(BooleanConsumer callback){
+        externalCallback=callback;
     }
 }

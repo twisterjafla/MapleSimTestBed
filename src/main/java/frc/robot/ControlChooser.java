@@ -30,14 +30,13 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Utils.BetterTrigger;
 import frc.robot.Utils.utillFunctions;
-
+import frc.robot.commands.auto.IntakePeiceCommand;
+import frc.robot.commands.auto.ScorePiece;
 //import frc.robot.commands.swervedrive.drivebase.FakeDrive;
 import frc.robot.commands.intake.outtakeCommand;
 import frc.robot.commands.sim.CreateCoral;
 import frc.robot.commands.swervedrive.AdditionalCommands;
 import frc.robot.commands.swervedrive.QuickSwapCommand;
-import frc.robot.commands.swervedrive.auto.IntakePeiceCommand;
-import frc.robot.commands.swervedrive.auto.ScorePiece;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
 
 public class ControlChooser {
@@ -174,15 +173,7 @@ public class ControlChooser {
         return loop;
     }
 
-    public Command getAutoAction(){
-        if (SystemManager.intake.hasPeice()){
-            return new ScorePiece(utillFunctions.getBestScorePosit());
-        }
-        else{
-            return new IntakePeiceCommand(utillFunctions.getBestIntakePosit());
-        }
 
-    }
 
 }
 

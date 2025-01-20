@@ -9,8 +9,8 @@ import frc.robot.FieldPosits.reefPole;
 
 public class scoringPosit {
 
-    reefLevel level;
-    reefPole pole;
+    public reefLevel level;
+    public reefPole pole;
     public scoringPosit(reefLevel level, reefPole pole){
         this.pole=pole;
         this.level=level;
