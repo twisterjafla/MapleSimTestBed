@@ -39,7 +39,7 @@ public class SystemManager{
     public static aprilTagInterface aprilTag;
     public static wristInterface wrist;
     public static elevatorInterface elevator;
-    public static generalManager mechMananger;
+    public static generalManager mechManager;
     
     public static void SystemManagerInit(){
         swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),  "swerve"));
@@ -83,7 +83,7 @@ public class SystemManager{
         }
 
 
-        mechMananger= new generalManager();
+        mechManager= new generalManager();
     }
 
 
@@ -97,5 +97,9 @@ public class SystemManager{
 
     public static Pose3d getIntakePosit(){
         return new Pose3d(getSwervePose()).plus(new Transform3d(intake.getTranslation(), new Rotation3d()));
+    }
+
+    public static void mechManagerEndCallback(boolean wasInterupted){
+        mechManager.endCallback(wasInterupted);
     }
 }

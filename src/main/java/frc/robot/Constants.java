@@ -122,6 +122,7 @@ public final class Constants
     public static final double encoderToMeters =1;
     public static final double maxEncoderHeight = 6;
     public static final Rotation2d angle = new Rotation2d(Math.toRadians(70));
+    public static final double intakePosit = 0;
   }
 
   public static class wristConstants{
@@ -132,6 +133,7 @@ public final class Constants
     public static final double degreesPerEncoderTick=360;
     public static final Rotation2d minDegrees = new Rotation2d();
     public static final Rotation2d maxDegrees = new Rotation2d();
+    public static final double intakePosit = 0;
   
   }
 

@@ -3,10 +3,11 @@ package frc.robot.subsystems.intake;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Utils.scoringPosit;
 import frc.robot.subsystems.intake.simIntake.intakeState;
 
-public interface intakeInterface {
+public interface intakeInterface extends Subsystem{
     // public void intake();
     // public void outtake();
     public boolean hasPeice();

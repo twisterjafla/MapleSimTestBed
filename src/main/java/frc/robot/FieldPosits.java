@@ -6,10 +6,10 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.states.intaking;
-import frc.robot.commands.states.scoreL1;
-import frc.robot.commands.states.scoreL2;
-import frc.robot.commands.states.scoreL3;
-import frc.robot.commands.states.scoreL4;
+import frc.robot.commands.states.scoreL1Config;
+import frc.robot.commands.states.scoreL2Config;
+import frc.robot.commands.states.scoreL3Config;
+import frc.robot.commands.states.scoreL4Config;
 import frc.robot.commands.states.starting;
 
 public class FieldPosits {

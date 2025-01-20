@@ -15,10 +15,11 @@ public class generalManager extends SubsystemBase{
     public enum generalState{
         intake(new intaking()),
         start(new starting()),
-        L1(new scoreL1()),
-        L2(new scoreL2()),
-        L3(new scoreL3()),
-        L4(new scoreL4());
+        L1(new scoreL1Config()),
+        L2(new scoreL2Config()),
+        L3(new scoreL3Config()),
+        L4(new scoreL4Config()),
+        outtake(new outtaking());
 
         Command state;
         private generalState(Command command){
