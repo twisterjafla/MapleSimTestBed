@@ -2,6 +2,7 @@ package frc.robot.commands.states;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.SystemManager;
+import frc.robot.subsystems.generalManager;
 
 public class outtaking extends Command{
     public outtaking(){
@@ -26,7 +27,7 @@ public class outtaking extends Command{
     @Override 
     public void end(boolean wasInterupted){
         SystemManager.intake.stop();
-        SystemManager.mechManagerEndCallback(wasInterupted);
+        generalManager.endCallback(wasInterupted);
         
     }
     

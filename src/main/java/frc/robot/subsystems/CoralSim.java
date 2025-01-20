@@ -118,14 +118,14 @@ private Pose3d pose = new Pose3d(-1000, -1000, -1000, new Rotation3d());
 
     @Override
     public void periodic() {
-        if (SystemManager.mechManager.isScoringState()){
+        if (generalManager.isScoringState()){
             Pose3d relativeCoralPose = SystemManager.getIntakePosit()
                     .plus(new Transform3d(0.143, 0, 0, new Rotation3d()));
             pose = new Pose3d(SystemManager.getSwervePose())
                     .plus(new Transform3d(relativeCoralPose.getTranslation(), relativeCoralPose.getRotation()))
                     .plus(new Transform3d(0, 0, 0, new Rotation3d(0, Math.PI / 2.0, 0)));
         }
-        else if (SystemManager.mechManager.state==generalState.intake){
+        else if (generalManager.state==generalState.intake){
             Pose2d drivetrainPose = SystemManager.getSwervePose();
             Pose3d topPose = new Pose3d(drivetrainPose)
                     .plus(new Transform3d(-0.26, 0, 0.69, new Rotation3d(0, Math.PI / 4.0, 0)));

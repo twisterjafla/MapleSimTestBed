@@ -6,19 +6,21 @@ import frc.robot.Utils.utillFunctions;
 import frc.robot.commands.auto.IntakePeiceCommand;
 import frc.robot.commands.auto.ScorePiece;
 
-public class autoManager {
+public class autoManager{
 
-    boolean hasControl=false;
-    Command currentRoutine=null;
-    public autoManager(){
+    public static boolean hasControl=false;
+    public static Command currentRoutine=null;
+    public static void autoManagerInit(){
 
     }
 
-
+    
  
+    public static void periodic(){
 
+    }
 
-    public Command getAutoAction(){
+    public static Command getAutoAction(){
         if (SystemManager.intake.hasPeice()){
             return new ScorePiece(utillFunctions.getBestScorePosit());
         }
@@ -28,7 +30,7 @@ public class autoManager {
 
     }
 
-    public void resetAutoAction(){
-        
+    public static void resetAutoAction(){
+        getAutoAction().schedule();
     }
 }

@@ -3,6 +3,7 @@ package frc.robot.commands.states;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.SystemManager;
+import frc.robot.subsystems.generalManager;
 
 
 public class scoreL2Config extends Command{
@@ -29,6 +30,6 @@ public class scoreL2Config extends Command{
 
     @Override
     public void end(boolean wasInterupted){
-        SystemManager.mechManagerEndCallback(wasInterupted);
+        generalManager.endCallback(wasInterupted);
     }
 }

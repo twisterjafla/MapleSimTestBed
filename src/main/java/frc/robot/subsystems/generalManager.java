@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class generalManager extends SubsystemBase{
+public class generalManager{
     public enum generalState{
         intake(new intaking()),
         start(new starting()),
@@ -35,25 +35,25 @@ public class generalManager extends SubsystemBase{
     }
 
 
-    generalState state;
+    public static generalState state;
     
-    BooleanConsumer externalCallback=null;
+    public static BooleanConsumer externalCallback=null;
     
     
-    public generalManager(){
+    public static void generalManagerInit(){
       start();
     }
 
 
-    @Override
-    public void periodic(){
+    
+    public static void periodic(){
         if (!CommandScheduler.getInstance().isScheduled(state.state)){
             warningManager.throwAlert(warningManager.badGeneralRoutine);
             start();
         }
     }
 
-    public void scoreAt(int level){
+    public static void scoreAt(int level){
         switch (level) {
             case 1:
                 scoreL1();
@@ -72,44 +72,44 @@ public class generalManager extends SubsystemBase{
         }
     }
 
-    public void scoreL1(){
+    public static void scoreL1(){
         startState(generalState.L1);
     }
-    public void scoreL2(){
+    public static void scoreL2(){
         startState(generalState.L2);
     }
     
-    public void scoreL3(){
+    public static void scoreL3(){
         startState(generalState.L3);
     }
 
-    public void scoreL4(){
+    public static void scoreL4(){
         startState(generalState.L4);
     }
 
 
-    public void intake(){
+    public static void intake(){
         startState(generalState.intake);
     }
 
-    public void start(){
+    public static void start(){
         startState(generalState.start);
     }
 
-    public void startState(generalState state){
-        this.state=state;
+    public static void startState(generalState state){
+        generalManager.state=state;
         CommandScheduler.getInstance().schedule(state.state);
     }
 
-    public Command getStateCommand(){
+    public static Command getStateCommand(){
         return state.state;
     }
 
-    public generalState getState(){
+    public static generalState getState(){
         return state;
     }
 
-    public void endCallback(boolean wasInterupted){
+    public static void endCallback(boolean wasInterupted){
         if (!wasInterupted){
             start();
         }
@@ -120,12 +120,12 @@ public class generalManager extends SubsystemBase{
     }
 
 
-    public boolean isScoringState() {
+    public static boolean isScoringState() {
         return state==generalState.L1 || state==generalState.L2 || state==generalState.L3 || state==generalState.L4;
     }
 
 
-    public void setExternalEndCallback(BooleanConsumer callback){
+    public static void setExternalEndCallback(BooleanConsumer callback){
         externalCallback=callback;
     }
 }
