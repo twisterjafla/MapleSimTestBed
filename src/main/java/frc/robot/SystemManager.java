@@ -63,6 +63,10 @@ public class SystemManager{
         else{
         }
 
+        if (Constants.simConfigs.elevatorShouldBeSim){
+            elevator= new simElevator();
+        }
+
         if (Constants.simConfigs.wristShouldBeSim){
             wrist= new simWrist();
         }
@@ -70,9 +74,7 @@ public class SystemManager{
 
         }
 
-        if (Constants.simConfigs.elevatorShouldBeSim){
-            elevator= new simElevator();
-        }
+        
 
         if (!RobotBase.isReal()){
             AIRobotInSimulation.startOpponentRobotSimulations();

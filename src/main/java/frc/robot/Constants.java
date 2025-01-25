@@ -126,6 +126,7 @@ public final class Constants
     public static final double intakePosit = 0;
     public static final double tolerence = 0.05;
     public static final double speedForSim =0.02;
+    public static final double compressedLen = 0.889;
   }
 
   public static class wristConstants{

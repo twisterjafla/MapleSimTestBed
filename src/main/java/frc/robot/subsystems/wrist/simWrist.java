@@ -2,12 +2,26 @@ package frc.robot.subsystems.wrist;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
+import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
+import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.robot.Constants;
+import frc.robot.SystemManager;
 
 public class simWrist implements wristInterface{
 
     public double setpoint;
     public double position;
+
+
+
+
+    public simWrist(){
+    }
+
 
     @Override
     public void setSetpoint(double setpoint) {
@@ -25,6 +39,8 @@ public class simWrist implements wristInterface{
         else{
             position-=Constants.wristConstants.speedForSim;
         }
+        
+
     }
 
 
