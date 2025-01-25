@@ -2,6 +2,7 @@ package frc.robot.commands.states;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.SystemManager;
+import frc.robot.Utils.warningManager;
 import frc.robot.subsystems.generalManager;
 
 public class outtaking extends Command{
@@ -16,6 +17,14 @@ public class outtaking extends Command{
         }
         
         SystemManager.intake.outtake();
+    }
+
+    @Override
+    public void execute(){
+        if (generalManager.getStateCommand()!=this){
+            warningManager.throwAlert(warningManager.generalRoutineCalledManualy);
+            cancel();
+        }
     }
 
 

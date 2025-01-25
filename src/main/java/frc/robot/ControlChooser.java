@@ -35,9 +35,13 @@ import frc.robot.commands.auto.ScorePiece;
 //import frc.robot.commands.swervedrive.drivebase.FakeDrive;
 import frc.robot.commands.intake.outtakeCommand;
 import frc.robot.commands.sim.CreateCoral;
+import frc.robot.commands.states.intaking;
+import frc.robot.commands.states.outtaking;
+import frc.robot.commands.states.scoreL4Config;
 import frc.robot.commands.swervedrive.AdditionalCommands;
 import frc.robot.commands.swervedrive.QuickSwapCommand;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
+import frc.robot.subsystems.generalManager;
 
 public class ControlChooser {
     //Map<String, Consumer<ControlChooser>> schemes= new HashMap<>();
@@ -123,10 +127,11 @@ public class ControlChooser {
            ,SystemManager.swerve, loop);
        //setDefaultCommand(SystemManager.swerve.driveCommand(()->0, ()->0, ()->xbox1.getLeftX(), ()->xbox1.getLeftY()), SystemManager.swerve, loop);
        xbox1.b(loop).onTrue(new CreateCoral("leftMid"));
-       //xbox1.a(loop).onTrue(new intakeCommand());
-       xbox1.x(loop).onTrue(new outtakeCommand());
-       xbox1.y(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(5.8,3.8, new Rotation2d(Math.PI))));
-       xbox1.a(loop).onTrue(SystemManager.swerve.testDrive());      
+       xbox1.a(loop).onTrue(new InstantCommand(()->generalManager.intake()));
+       xbox1.x(loop).onTrue(new InstantCommand(()->generalManager.scoreL4()));
+       xbox1.y(loop).onTrue(new InstantCommand(()->generalManager.outtake()));
+       //xbox1.y(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(5.8,3.8, new Rotation2d(Math.PI))));
+       //xbox1.a(loop).onTrue(SystemManager.swerve.testDrive());      
        
         // // xbox1.b().whileTrue(
         // //     Commands.deferredProxy(() -> SystemManager.swerve.driveToPose(

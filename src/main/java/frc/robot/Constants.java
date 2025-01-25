@@ -115,10 +115,10 @@ public final class Constants
   }
 
   public static class elevatorConstants{
-    public static final double l4EncoderVal = 0;
-    public static final double l3EncoderVal = 0;
-    public static final double l2EncoderVal = 0;
-    public static final double l1EncoderVal = 0;
+    public static final double l4EncoderVal = 6;
+    public static final double l3EncoderVal = 3.4;
+    public static final double l2EncoderVal = 2;
+    public static final double l1EncoderVal = 1;
     public static final double encoderToMeters =1;
     public static final double maxEncoderHeight = 6;
     public static final Rotation2d angle = new Rotation2d(Math.toRadians(70));

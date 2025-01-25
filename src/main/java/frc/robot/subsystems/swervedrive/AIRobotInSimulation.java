@@ -126,69 +126,7 @@ public class AIRobotInSimulation implements Subsystem {
         return instances[index];
     }
 
-    /**placeholder action */
-    private static Command shootAtSpeaker(int index) {
-        return Commands.runOnce(() -> SimulatedArena.getInstance()
-                .addGamePieceProjectile(new NoteOnFly(
-                                instances[index]
-                                        .driveSimulation
-                                        .getActualPoseInSimulationWorld()
-                                        .getTranslation(),
-                                new Translation2d(0.3, 0),
-                                instances[index].driveSimulation.getActualSpeedsFieldRelative(),
-                                instances[index]
-                                        .driveSimulation
-                                        .getActualPoseInSimulationWorld()
-                                        .getRotation(),
-                                0.5,
-                                10,
-                                Math.toRadians(60))
-                        .asSpeakerShotNote(() -> {})));
-    }
-
-
-    /**placeholder action */
-    private static Command feedShotLow() {
-        final int index = 3;
-        return Commands.runOnce(() -> SimulatedArena.getInstance()
-                .addGamePieceProjectile(new NoteOnFly(
-                                instances[index]
-                                        .driveSimulation
-                                        .getActualPoseInSimulationWorld()
-                                        .getTranslation(),
-                                new Translation2d(0.3, 0),
-                                instances[index].driveSimulation.getActualSpeedsFieldRelative(),
-                                instances[index]
-                                        .driveSimulation
-                                        .getActualPoseInSimulationWorld()
-                                        .getRotation(),
-                                0.5,
-                                10,
-                                Math.toRadians(20))
-                        .enableBecomeNoteOnFieldAfterTouchGround()));
-    }
-
     
-    /**placeholder action */
-    private static Command feedShotHigh() {
-        final int index = 4;
-        return Commands.runOnce(() -> SimulatedArena.getInstance()
-                .addGamePieceProjectile(new NoteOnFly(
-                                instances[index]
-                                        .driveSimulation
-                                        .getActualPoseInSimulationWorld()
-                                        .getTranslation(),
-                                new Translation2d(0.3, 0),
-                                instances[index].driveSimulation.getActualSpeedsFieldRelative(),
-                                instances[index]
-                                        .driveSimulation
-                                        .getActualPoseInSimulationWorld()
-                                        .getRotation(),
-                                0.5,
-                                10,
-                                Math.toRadians(55))
-                        .enableBecomeNoteOnFieldAfterTouchGround()));
-    }
 
     public final SelfControlledSwerveDriveSimulation driveSimulation;
     private final int id;

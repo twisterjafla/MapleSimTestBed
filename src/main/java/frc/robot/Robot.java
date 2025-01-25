@@ -59,8 +59,7 @@ public class Robot extends TimedRobot
   {
     instance = this;
     SystemManager.SystemManagerInit();
-    SmartDashboard.putString("testBox", "test");
-  
+   
   }
 
   public static Robot getInstance()
@@ -223,7 +222,6 @@ StructPublisher<Pose2d> robotPublisher = NetworkTableInstance.getDefault().getSt
 
 
 
-
   // StructArrayPublisher<Pose3d> algaePoses = NetworkTableInstance.getDefault()
   // .getStructArrayTopic("AlgaePoses", Pose3d.struct)
   // .publish();
@@ -256,6 +254,7 @@ public void simulationPeriodic() {
   algeaPublisher.set(SimulatedArena.getInstance().getGamePiecesArrayByType("Algae"));
   coralPublisher.set(SimulatedArena.getInstance().getGamePiecesArrayByType("Coral"));
   robotPublisher.set(SystemManager.getSwervePose());
+  
   // opponentRobotsPublisher.set(AIRobotInSimulation.getOpponentRobotPoses());
   // teamRobotsPublisher.set(AIRobotInSimulation.getAlliancePartnerRobotPoses());
   if (SystemManager.fakeBot!=null){

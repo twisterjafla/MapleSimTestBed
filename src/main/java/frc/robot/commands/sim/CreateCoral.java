@@ -1,7 +1,7 @@
 package frc.robot.commands.sim;
 
 import org.ironmaple.simulation.SimulatedArena;
-import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeCoral;
+import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeCoralOnField;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -49,6 +49,6 @@ public class CreateCoral extends InstantCommand{
 
     @Override
     public void execute(){
-        SimulatedArena.getInstance().addGamePiece(new ReefscapeCoral(dropSpot.toPose2d()));
+        SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralOnField(dropSpot.toPose2d()));
     }
 }

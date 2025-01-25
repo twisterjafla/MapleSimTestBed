@@ -10,6 +10,7 @@ import com.ctre.phoenix.sensors.PigeonIMU.GeneralStatus;
 import edu.wpi.first.util.function.BooleanConsumer;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -51,6 +52,8 @@ public class generalManager{
             warningManager.throwAlert(warningManager.badGeneralRoutine);
             start();
         }
+
+        SmartDashboard.putString("general state", state.state.getName());
     }
 
     public static void scoreAt(int level){
@@ -90,6 +93,10 @@ public class generalManager{
 
     public static void intake(){
         startState(generalState.intake);
+    }
+
+    public static void outtake(){
+        startState(generalState.outtake);
     }
 
     public static void start(){
