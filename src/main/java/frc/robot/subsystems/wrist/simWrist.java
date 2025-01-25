@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SystemManager;
 
-public class simWrist implements wristInterface{
+public class simWrist extends SubsystemBase implements wristInterface{
 
     public double setpoint;
     public double position;
@@ -24,7 +25,7 @@ public class simWrist implements wristInterface{
 
 
     @Override
-    public void setSetpoint(double setpoint) {
+    public void setSetpointRaw(double setpoint) {
         this.setpoint=setpoint;
     }
 
@@ -39,8 +40,7 @@ public class simWrist implements wristInterface{
         else{
             position-=Constants.wristConstants.speedForSim;
         }
-        
-
+        SmartDashboard.putNumber("wristEncoder", position);
     }
 
 
@@ -65,13 +65,13 @@ public class simWrist implements wristInterface{
     }
 
     @Override
-    public void setSetpointInDegrees(Rotation2d setPoint) {
-        setSetpoint(setPoint.getDegrees()*Constants.wristConstants.degreesPerEncoderTick);
+    public void setSetpoint(double setPoint) {
+        setSetpointRaw(setPoint/Constants.wristConstants.degreesPerEncoderTick);
     }
 
     @Override
     public Rotation2d getcurrentLocation() {
-        return Rotation2d.fromDegrees(getSetpoint()/Constants.wristConstants.degreesPerEncoderTick);
+        return Rotation2d.fromDegrees(position*Constants.wristConstants.degreesPerEncoderTick);
     }
 
 

@@ -130,9 +130,9 @@ public final class Constants
   }
 
   public static class wristConstants{
-    public static final double l4EncoderVal = 0;
-    public static final double l3EncoderVal = 55;
-    public static final double l2EncoderVal = 55;
+    public static final double l4EncoderVal = 290;
+    public static final double l3EncoderVal = 0;
+    public static final double l2EncoderVal = 0;
     public static final double l1EncoderVal = 0;
     public static final double degreesPerEncoderTick=360;
     public static final Rotation2d minDegrees = new Rotation2d();

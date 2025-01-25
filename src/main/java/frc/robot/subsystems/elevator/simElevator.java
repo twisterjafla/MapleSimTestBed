@@ -75,6 +75,7 @@ public class simElevator  extends SubsystemBase implements elevatorInterface{
 
         elevator.setLength(getHeight()+Constants.elevatorConstants.fromRobotCenter.getZ());
         wrist.setAngle(SystemManager.wrist.getcurrentLocation().getDegrees());
+        SmartDashboard.putNumber("wristVal", SystemManager.wrist.getcurrentLocation().getDegrees());
     }
 
 
