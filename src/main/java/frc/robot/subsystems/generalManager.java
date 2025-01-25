@@ -1,8 +1,11 @@
 package frc.robot.subsystems;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Supplier;
 
+import frc.robot.SystemManager;
 import frc.robot.Utils.warningManager;
 import frc.robot.commands.states.*;
 import com.ctre.phoenix.sensors.PigeonIMU.GeneralStatus;
@@ -13,6 +16,7 @@ import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class generalManager{
@@ -23,7 +27,8 @@ public class generalManager{
         L2(new scoreL2Config()),
         L3(new scoreL3Config()),
         L4(new scoreL4Config()),
-        outtake(new outtaking());
+        outtake(new outtaking()),
+        resting(new resting());
 
         Command state;
         private generalState(Command command){
@@ -41,19 +46,34 @@ public class generalManager{
     public static BooleanConsumer externalCallback=null;
     
     
+        
+    public static Set<Subsystem> subsystems = new HashSet<>();
+    
+    
+    
+
     public static void generalManagerInit(){
       start();
+      subsystems.add(SystemManager.wrist);
+      subsystems.add(SystemManager.intake);
+      subsystems.add(SystemManager.elevator);
     }
 
 
     
     public static void periodic(){
-        if (!CommandScheduler.getInstance().isScheduled(state.state)){
+        if (state!=null&&!CommandScheduler.getInstance().isScheduled(state.state)){
             warningManager.throwAlert(warningManager.badGeneralRoutine);
-            start();
+            state=null;
         }
 
+        if (state==null){
+            resting();
+        }
+        
         SmartDashboard.putString("general state", state.state.getName());
+        
+
     }
 
     public static void scoreAt(int level){
@@ -99,6 +119,10 @@ public class generalManager{
         startState(generalState.outtake);
     }
 
+    public static void resting(){
+        startState(generalState.resting);
+    }
+
     public static void start(){
         startState(generalState.start);
     }
@@ -117,9 +141,7 @@ public class generalManager{
     }
 
     public static void endCallback(boolean wasInterupted){
-        if (!wasInterupted){
-            start();
-        }
+        
         if (externalCallback!=null){
             externalCallback.accept(wasInterupted);
             externalCallback=null;

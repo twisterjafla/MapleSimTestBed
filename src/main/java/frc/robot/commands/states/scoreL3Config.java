@@ -9,7 +9,7 @@ import frc.robot.subsystems.generalManager;
 
 public class scoreL3Config extends Command{
     public scoreL3Config(){
-        addRequirements(SystemManager.wrist, SystemManager.elevator, SystemManager.intake);
+        addRequirements(generalManager.subsystems);
     }
 
     @Override

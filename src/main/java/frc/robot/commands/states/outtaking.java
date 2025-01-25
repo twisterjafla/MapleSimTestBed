@@ -7,7 +7,7 @@ import frc.robot.subsystems.generalManager;
 
 public class outtaking extends Command{
     public outtaking(){
-        addRequirements(SystemManager.elevator, SystemManager.wrist, SystemManager.intake);
+        addRequirements(generalManager.subsystems);
     }
 
     @Override

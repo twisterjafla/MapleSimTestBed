@@ -11,7 +11,7 @@ public class intaking extends Command{
     public boolean isInIntakingFase;
 
     public intaking(){
-        addRequirements(SystemManager.elevator, SystemManager.wrist, SystemManager.intake);
+        addRequirements(generalManager.subsystems);
 
     }
 

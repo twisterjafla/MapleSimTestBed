@@ -10,7 +10,7 @@ import frc.robot.subsystems.wrist.wristInterface;
 public class scoreL1Config extends Command{
     
     public scoreL1Config(){
-        addRequirements(SystemManager.wrist, SystemManager.elevator, SystemManager.intake);
+        addRequirements(generalManager.subsystems);
     }
 
     @Override

@@ -11,7 +11,7 @@ import frc.robot.subsystems.generalManager;
 
 public class scoreL4Config extends Command{
     public scoreL4Config(){
-        addRequirements(SystemManager.wrist, SystemManager.elevator, SystemManager.intake);
+        addRequirements(generalManager.subsystems);
     }
 
     @Override

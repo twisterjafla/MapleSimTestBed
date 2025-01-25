@@ -8,7 +8,7 @@ import frc.robot.subsystems.generalManager;
 
 public class starting extends Command{
     public starting(){
-        addRequirements(SystemManager.intake, SystemManager.elevator, SystemManager.wrist);
+        addRequirements(generalManager.subsystems);
 
     }
 
