@@ -66,6 +66,11 @@
       "/SmartDashboard/VisionSystemSim-main/Sim Field": "Field2d"
     },
     "windows": {
+      "/SmartDashboard/Control chooser": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
         "bottom": 1476,
         "height": 8.210550308227539,
@@ -73,11 +78,6 @@
         "right": 2961,
         "top": 79,
         "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/SendableChooser[1]": {
         "window": {
           "visible": true
         }
@@ -95,6 +95,9 @@
         }
       },
       "SmartDashboard": {
+        "Control chooser": {
+          "open": true
+        },
         "Field": {
           "double[]##v_/SmartDashboard/Field/Bot Chara": {
             "open": false
@@ -107,15 +110,15 @@
           },
           "double[]##v_/SmartDashboard/Field/XModules": {
             "open": false
-          },
-          "open": false
+          }
         },
         "bot chara map": {
           "double[]##v_/SmartDashboard/bot chara map/Robot": {
             "open": false
           },
           "open": false
-        }
+        },
+        "open": true
       }
     }
   },

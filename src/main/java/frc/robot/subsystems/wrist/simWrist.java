@@ -7,6 +7,7 @@ import frc.robot.Constants;
 public class simWrist implements wristInterface{
 
     public double setpoint;
+    public double position;
 
     @Override
     public void setSetpoint(double setpoint) {
@@ -14,8 +15,22 @@ public class simWrist implements wristInterface{
     }
 
     @Override
+    public void periodic(){
+        if (Math.abs(setpoint-position)<Constants.wristConstants.speedForSim){
+            position=setpoint;
+        }
+        else if (setpoint>position){
+            position+=Constants.wristConstants.speedForSim;
+        }
+        else{
+            position-=Constants.wristConstants.speedForSim;
+        }
+    }
+
+
+    @Override
     public boolean isAtSetpoint() {
-        return true;
+        return Math.abs(setpoint-position)<Constants.wristConstants.tolerence;
     }
 
     @Override
