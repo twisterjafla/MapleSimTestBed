@@ -100,7 +100,7 @@ public class SystemManager{
     }
 
     public static Pose3d getIntakePosit(){
-        return new Pose3d(getSwervePose()).plus(new Transform3d(intake.getTranslation(), new Rotation3d( 0, SystemManager.wrist.getcurrentLocation().getRadians()+Constants.elevatorConstants.angle.getRadians(), Math.PI)));
+        return new Pose3d(getSwervePose()).plus(new Transform3d(intake.getTranslation(), new Rotation3d( 0, SystemManager.wrist.getcurrentLocation().getRadians()+Constants.elevatorConstants.angle.getRadians()+Math.PI/2, Math.PI)));
     }
 
     

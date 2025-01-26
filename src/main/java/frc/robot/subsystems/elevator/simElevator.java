@@ -38,7 +38,7 @@ public class simElevator  extends SubsystemBase implements elevatorInterface{
 
     @Override
     public Translation3d getTranslation() {
-        return new Translation3d(getHeight()*Math.cos(Constants.elevatorConstants.angle.getRadians()), 0, getHeight()*Math.sin(Constants.elevatorConstants.angle.getRadians())).plus(Constants.elevatorConstants.fromRobotCenter);
+        return new Translation3d(getHeight()*Math.cos(Constants.elevatorConstants.angle.getRadians()), 0, getHeight()*Math.sin(Constants.elevatorConstants.angle.getRadians()));
     }
 
     @Override

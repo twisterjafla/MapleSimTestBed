@@ -150,7 +150,11 @@ public class simIntake extends SubsystemBase implements intakeInterface{
     @Override
     public Translation3d getTranslation(){
         Rotation2d rotation = SystemManager.wrist.getcurrentLocation();
-        return new Translation3d(Math.cos(rotation.getRadians())*Constants.intakeConstants.intakeLength, 0 ,Math.sin(rotation.getRadians())*Constants.intakeConstants.intakeLength).plus(SystemManager.elevator.getTranslation());
+        return new Translation3d(
+            Math.sin(rotation.getRadians()+Constants.elevatorConstants.angle.getRadians())*Constants.intakeConstants.intakeLength,
+            0,
+            Math.cos(rotation.getRadians()+(Constants.elevatorConstants.angle.getRadians()))*Constants.intakeConstants.intakeLength)
+        .plus(SystemManager.elevator.getTranslation());
     }
 
 }
