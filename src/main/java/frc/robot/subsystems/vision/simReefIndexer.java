@@ -1,11 +1,14 @@
 package frc.robot.subsystems.vision;
 
+import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeReefSimulation;
+
 public class simReefIndexer implements reefIndexerInterface{
+
+    public boolean[][] reefState = new boolean[12][4]
 
     @Override
     public boolean[][] getFullReefState() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFullReefState'");
+        ReefscapeReefSimulation.getInstance();
     }
 
     @Override
