@@ -15,7 +15,7 @@ import frc.robot.Utils.scoringPosit;
 import frc.robot.subsystems.intake.intakeInterface;
 import frc.robot.subsystems.intake.simIntake.intakeState;
 
-public class Intake extends SubsystemBase implements intakeInterface{ 
+public class realIntake extends SubsystemBase implements intakeInterface{ 
 
 
 	intakeState state;
