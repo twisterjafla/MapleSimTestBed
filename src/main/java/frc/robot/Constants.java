@@ -111,9 +111,11 @@ public final class Constants
   }
 
   public static class intakeConstants{
-    public static final double intakeSpeed=1;
-    public static final double outtakeSpeed=-1;
+    public static final double intakeSpeed=0.3;
+    public static final double outtakeSpeed=-0.3;
     public static final double intakeLength=0.2;
+    public static final int RightIntake = 50;
+    public static final int LeftIntake = 50;
   }
 
   public static class elevatorConstants{
