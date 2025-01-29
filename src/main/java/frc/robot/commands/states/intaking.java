@@ -12,7 +12,6 @@ public class intaking extends Command{
 
     public intaking(){
         addRequirements(generalManager.subsystems);
-
     }
 
     @Override

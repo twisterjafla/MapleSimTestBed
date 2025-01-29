@@ -102,6 +102,8 @@ public final class Constants
     public static final boolean aprilTagShouldBeSim=true||!RobotBase.isReal();
     public static final boolean wristShouldBeSim=true||!RobotBase.isReal();
     public static final boolean elevatorShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean reefIndexerShouldBeSim=true||!RobotBase.isReal();
+
   }
   public static class controllerIDs{
     public static final int commandXboxController1ID=0;

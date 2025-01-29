@@ -83,6 +83,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   private final SwerveDrive swerveDrive;
   public final PathConstraints constraints;
+  public RobotConfig config = null;
 
 
   /**
@@ -188,7 +189,11 @@ public class SwerveSubsystem extends SubsystemBase
    * Setup AutoBuilder for PathPlanner.
    */
   public void setupPathPlanner(){
+    //new RobotConfig(Constants.driveConstants.robotMass, Constants.driveConstants.MOI, getPathplannerStyleConfig(), swerveDrive.swerveDriveConfiguration.getTrackwidth()),
+
      try {
+        config  = RobotConfig.fromGUISettings();
+
         AutoBuilder.configure(
             this::getPose, // Robot pose supplier
             this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
@@ -200,7 +205,7 @@ public class SwerveSubsystem extends SubsystemBase
                 Constants.AutonConstants.ANGLE_PID // Rotation PID constants
             ),
             //new RobotConfig(Constants.driveConstants.robotMass, Constants.driveConstants.MOI, getPathplannerStyleConfig(), swerveDrive.swerveDriveConfiguration.getTrackwidth()),
-            RobotConfig.fromGUISettings(),
+            config,
             () -> {
               // Boolean supplier that controls when the path will be mirrored for the red alliance
               // This will flip the path being followed to the red side of the field.
