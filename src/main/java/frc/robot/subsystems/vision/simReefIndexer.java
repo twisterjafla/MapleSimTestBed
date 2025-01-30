@@ -26,7 +26,6 @@ public class simReefIndexer implements reefIndexerInterface{
 
     @Override
     public boolean getIsClosed(int row, int level) {
-        // TODO Auto-generated method stub
         return ReefscapeReefSimulation.getInstance().get().getBranches(DriverStation.getAlliance().get())[row][level]>0;
     }
 
