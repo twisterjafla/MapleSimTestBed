@@ -5,7 +5,6 @@ import frc.robot.Constants;
 import frc.robot.SystemManager;
 import frc.robot.Utils.warningManager;
 import frc.robot.subsystems.generalManager;
-import frc.robot.subsystems.wrist.wristInterface;
 
 public class scoreL1Config extends Command{
     

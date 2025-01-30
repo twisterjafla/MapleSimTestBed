@@ -6,13 +6,9 @@ import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 import frc.robot.SystemManager;
-import frc.robot.Utils.scoringPosit;
-import frc.robot.subsystems.intake.intakeInterface;
 import frc.robot.subsystems.intake.simIntake.intakeState;
 
 public class realIntake extends SubsystemBase implements intakeInterface{ 
