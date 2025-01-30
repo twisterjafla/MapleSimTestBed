@@ -23,12 +23,13 @@ public class FieldPosits {
      * THESE ARE NOT GRAB POINTS FOR THE ROBOT. THESE POINTS TELL MAPLE SIM WHERE TO SPAWN CORAL AND ARE NOT ACCESABLE BY ROBOT
      */
     public static class coralSpawnPoints{
-        public static final Pose3d leftLeft= new Pose3d(1.3, 7.7, 0.95, new Rotation3d());
-        public static final Pose3d leftMid= new Pose3d(0.8, 7.3, 0.95, new Rotation3d());
-        public static final Pose3d leftRight= new Pose3d(0.4, 7.1, 0.95, new Rotation3d());
-        public static final Pose3d rightLeft= new Pose3d(0.4, 1, 0.95, new Rotation3d());
-        public static final Pose3d rightMid= new Pose3d(0.8, 0.7, 0.95, new Rotation3d());
-        public static final Pose3d rightRight= new Pose3d(1.3, 0.3, 0.95, new Rotation3d());
+        public static final Pose2d leftLeft= new Pose2d(1.3, 7.7, new Rotation2d());
+        public static final Pose2d leftMid= new Pose2d(0.8, 7.3, new Rotation2d());
+        public static final Pose2d leftRight= new Pose2d(0.4, 7.1, new Rotation2d());
+        public static final Pose2d rightLeft= new Pose2d(0.4, 1, new Rotation2d());
+        public static final Pose2d rightMid= new Pose2d(0.8, 0.7, new Rotation2d());
+        public static final Pose2d rightRight= new Pose2d(1.3, 0.3, new Rotation2d());
+        public static final Pose2d[] coralSpawnPoints = {leftLeft, leftMid, leftRight, rightLeft, rightMid, rightRight};
 
     }
 

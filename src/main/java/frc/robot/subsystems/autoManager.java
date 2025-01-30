@@ -7,7 +7,9 @@ import com.pathplanner.lib.pathfinding.LocalADStar;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.FieldPosits;
 import frc.robot.SystemManager;
 import frc.robot.FieldPosits.reefLevel;
@@ -55,8 +57,10 @@ public class autoManager{
                 SystemManager.swerve.getRobotVelocity(),
                 SystemManager.swerve.getPitch(),
                 SystemManager.swerve.config);
+
+                
             if (scoringPosit.getPointValForItem(SystemManager.reefIndexer.getHighestLevelForRow(posit.getRowAsIndex()))/newPath.getTotalTimeSeconds()>winningScore){
-                winningScore=newPath.getTotalTimeSeconds();
+                winningScore=scoringPosit.getPointValForItem(SystemManager.reefIndexer.getHighestLevelForRow(posit.getRowAsIndex()))/newPath.getTotalTimeSeconds();
                 winningPose = posit;
             }
         }
@@ -65,7 +69,22 @@ public class autoManager{
         return new scoringPosit(reefLevel.CreateFromLevel(SystemManager.reefIndexer.getHighestLevelForRow(winningPose.getRowAsIndex())),winningPose);
     }
     public static Pose2d getBestIntakePosit(){
-        return null;
+        double bestTime=180;
+        Pose2d bestPose=null;
+        for (Pose2d pose: FieldPosits.coralSpawnPoints.coralSpawnPoints){
+            pathBuilder.setGoalPosition(pose.getTranslation());
+            PathPlannerTrajectory newPath = pathBuilder.getCurrentPath(SystemManager.swerve.constraints, new GoalEndState(utillFunctions.mpsToMph(Constants.AutonConstants.colisionSpeed), pose.getRotation())).generateTrajectory(
+                SystemManager.swerve.getRobotVelocity(),
+                SystemManager.swerve.getPitch(),
+                SystemManager.swerve.config);
+
+            if(newPath.getTotalTimeSeconds()<bestTime){
+                bestPose=pose;
+                bestTime=newPath.getTotalTimeSeconds();
+            }
+        }
+
+        return bestPose;
     }
     
 }

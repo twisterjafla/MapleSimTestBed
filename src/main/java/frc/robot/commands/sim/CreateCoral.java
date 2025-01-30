@@ -3,12 +3,13 @@ package frc.robot.commands.sim;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeCoralOnField;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.FieldPosits;
 
 public class CreateCoral extends InstantCommand{
-    public Pose3d dropSpot;
+    public Pose2d dropSpot;
 
     /**
      * 
@@ -42,13 +43,13 @@ public class CreateCoral extends InstantCommand{
 
     }
 
-    public CreateCoral(Pose3d posit){
+    public CreateCoral(Pose2d posit){
         dropSpot=posit;
     }
 
 
     @Override
     public void execute(){
-        SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralOnField(dropSpot.toPose2d()));
+        SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralOnField(dropSpot));
     }
 }

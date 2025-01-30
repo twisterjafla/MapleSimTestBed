@@ -71,6 +71,7 @@ public final class Constants
     public static final PIDConstants TRANSLATION_PID = new PIDConstants(10, 0, 0);
 
     public static final PIDConstants ANGLE_PID       = new PIDConstants(5, 0, 0);
+    public static final double colisionSpeed = 2;
   
   }
 
@@ -120,11 +121,11 @@ public final class Constants
 
   public static class elevatorConstants{
     public static final double l4EncoderVal = 1.42;
-    public static final double l3EncoderVal = 0.8;
-    public static final double l2EncoderVal = 0.6;
+    public static final double l3EncoderVal = 1.353;
+    public static final double l2EncoderVal = 1.1;
     public static final double l1EncoderVal = 0.4;
     public static final double encoderToMeters =1;
-    public static final double maxEncoderHeight = 1.336;
+    public static final double maxEncoderHeight = l4EncoderVal;
     public static final Rotation2d angle = new Rotation2d(Math.toRadians(70));
     public static final Translation3d fromRobotCenter = new Translation3d(-0.2, 0, 0.5);
     public static final double intakePosit = 0;
