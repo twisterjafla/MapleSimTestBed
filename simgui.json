@@ -155,12 +155,7 @@
       "open": true
     },
     "Server": {
-      "Publishers": {
-        "open": false
-      },
-      "Subscribers": {
-        "open": false
-      }
+      "open": true
     },
     "visible": true
   }

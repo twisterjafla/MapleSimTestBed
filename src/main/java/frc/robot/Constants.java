@@ -111,6 +111,8 @@ public final class Constants
     public static final double intakeLength=0.2;
     public static final int RightIntake = 50;
     public static final int LeftIntake = 50;
+    public static final double coralLenght = 0.3;
+    public static final double coralWidth = 0.11;
   }
 
   public static class elevatorConstants{
@@ -119,26 +121,28 @@ public final class Constants
     public static final double l2EncoderVal = 1.1;
     public static final double l1EncoderVal = 0.4;
     public static final double encoderToMeters =1;
-    public static final double maxEncoderHeight = l4EncoderVal;
+    public static final double maxHeight = l4EncoderVal;
     public static final Rotation2d angle = new Rotation2d(Math.toRadians(70));
     public static final Translation3d fromRobotCenter = new Translation3d(-0.2, 0, 0.5);
     public static final double intakePosit = 0;
     public static final double tolerence = 0.05;
     public static final double speedForSim =0.02;
     public static final double compressedLen = 0.889;
+    
   }
 
   public static class wristConstants{
-    public static final double l4EncoderVal = 290;
+    public static final double l4EncoderVal = -55;
     public static final double l3EncoderVal = 0;
     public static final double l2EncoderVal = 0;
     public static final double l1EncoderVal = 0;
+    public static final double restingPosit = 0;
     public static final double degreesPerEncoderTick=360;
     public static final Rotation2d minDegrees = new Rotation2d();
     public static final Rotation2d maxDegrees = new Rotation2d();
     public static final double intakePosit = 0;
     public static final double tolerence = 5;
-    public static final double speedForSim=5;
+    public static final double speedForSim=0.5;
   
   }
 

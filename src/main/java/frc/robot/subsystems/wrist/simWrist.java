@@ -5,11 +5,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import frc.robot.Utils.warningManager;
+import frc.robot.subsystems.wristElevatorControllManager;
+
 public class simWrist extends SubsystemBase implements wristInterface{
 
-    public double setpoint;
-    public double position;
-
+    private double setpoint;
+    private double position;
+    private double goal;
+    protected wristElevatorControllManager manager;
 
 
 
@@ -24,15 +28,29 @@ public class simWrist extends SubsystemBase implements wristInterface{
 
     @Override
     public void periodic(){
-        if (Math.abs(setpoint-position)<Constants.wristConstants.speedForSim){
-            position=setpoint;
+        if (manager==null){
+            warningManager.throwAlert(warningManager.noWristElevatorManagerSet);
+            return;
         }
-        else if (setpoint>position){
-            position+=Constants.wristConstants.speedForSim;
+
+        if (manager.getState()==wristElevatorControllManager.wristElevatorControllState.wrist||manager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
+            goal=setpoint;
         }
         else{
-            position-=Constants.wristConstants.speedForSim;
+            goal=Constants.wristConstants.restingPosit;
         }
+
+        if (Math.abs(goal-position)<Constants.wristConstants.speedForSim/Constants.wristConstants.degreesPerEncoderTick){
+            position=goal;
+        }
+        else if (goal>position){
+            position+=Constants.wristConstants.speedForSim/Constants.wristConstants.degreesPerEncoderTick;
+        }
+        else{
+            position-=Constants.wristConstants.speedForSim/Constants.wristConstants.degreesPerEncoderTick;
+        }
+
+
         SmartDashboard.putNumber("wristEncoder", position);
     }
 
@@ -65,6 +83,17 @@ public class simWrist extends SubsystemBase implements wristInterface{
     @Override
     public Rotation2d getcurrentLocation() {
         return Rotation2d.fromDegrees(position*Constants.wristConstants.degreesPerEncoderTick);
+    }
+
+
+    @Override
+    public void setManager(wristElevatorControllManager manager){
+        this.manager=manager;
+    }
+
+    @Override
+    public boolean atLegalNonControlState(){
+        return Math.abs(getcurrentLocation().getDegrees())<Constants.wristConstants.tolerence;
     }
 
 

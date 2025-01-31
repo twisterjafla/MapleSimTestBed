@@ -45,6 +45,8 @@ public class simIntake extends SubsystemBase implements intakeInterface{
 
     @Override 
     public void periodic(){
+        
+
         if (stopTrigger.getAsBoolean()){
             stop();
         }
@@ -87,7 +89,7 @@ public class simIntake extends SubsystemBase implements intakeInterface{
                 // Obtain robot position from drive simulation
                 SystemManager.getRealPoseMaple().getTranslation(),
                 // The scoring mechanism is installed at (0.46, 0) (meters) on the robot
-                new Translation2d(0.35, 0),
+                new Translation2d(getTranslation().getX(), getTranslation().getY()),
                 // Obtain robot speed from drive simulation
                 SystemManager.swerve.getMapleSimDrive().get().getDriveTrainSimulatedChassisSpeedsFieldRelative(),
                 // Obtain robot facing from drive simulation
@@ -146,9 +148,9 @@ public class simIntake extends SubsystemBase implements intakeInterface{
     public Translation3d getTranslation(){
         Rotation2d rotation = SystemManager.wrist.getcurrentLocation();
         return new Translation3d(
-            Math.sin(rotation.getRadians()+Constants.elevatorConstants.angle.getRadians())*Constants.intakeConstants.intakeLength,
+            Math.sin(-rotation.getRadians()+Math.toRadians(20))*Constants.intakeConstants.intakeLength+Constants.intakeConstants.coralLenght/2,
             0,
-            Math.cos(rotation.getRadians()+(Constants.elevatorConstants.angle.getRadians()))*Constants.intakeConstants.intakeLength)
+            Math.cos(-rotation.getRadians()+Math.toRadians(20))*Constants.intakeConstants.intakeLength-Constants.intakeConstants.coralWidth/2)
         .plus(SystemManager.elevator.getTranslation());
     }
 

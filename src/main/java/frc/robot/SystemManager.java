@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.autoManager;
 import frc.robot.subsystems.generalManager;
+import frc.robot.subsystems.wristElevatorControllManager;
 import frc.robot.subsystems.elevator.elevatorInterface;
 import frc.robot.subsystems.elevator.simElevator;
 import frc.robot.subsystems.intake.intakeInterface;
@@ -44,6 +45,7 @@ public class SystemManager{
     public static wristInterface wrist;
     public static elevatorInterface elevator;
     public static reefIndexerInterface reefIndexer;
+    public static wristElevatorControllManager wristManager;
     
     public static void SystemManagerInit(){
         swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),  "swerve"));
@@ -96,10 +98,24 @@ public class SystemManager{
 
         }
 
+        wristManager = new wristElevatorControllManager();
+        elevator.setManager(wristManager);
+        wrist.setManager(wristManager);
+        wristManager.addSystems(wrist, elevator);
 
         generalManager.generalManagerInit();
         autoManager.autoManagerInit();
+        System.out.println("sytems started up");
     }
+
+
+    /**Calls periodic on all the systems that do not inherit subststem base. this function should be called in robot periodic*/
+    public static void periodic(){
+        wristManager.periodic();
+        generalManager.periodic();
+        autoManager.periodic();
+    }
+
 
 
     public static Pose2d getSwervePose(){
@@ -114,5 +130,4 @@ public class SystemManager{
         return new Pose3d(getSwervePose()).plus(new Transform3d(intake.getTranslation(), new Rotation3d( 0, SystemManager.wrist.getcurrentLocation().getRadians()+Constants.elevatorConstants.angle.getRadians()+Math.PI/2, Math.PI)));
     }
 
-    
 }
