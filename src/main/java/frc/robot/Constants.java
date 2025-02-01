@@ -125,7 +125,7 @@ public final class Constants
     public static final double encoderToMeters =1;
     public static final double maxHeight = l4EncoderVal;
     public static final Rotation2d angle = new Rotation2d(Math.toRadians(70));
-    public static final Translation3d fromRobotCenter = new Translation3d(-0.2, 0, 0.5);
+    public static final Translation3d fromRobotCenter = new Translation3d(0.0584454, 0, 0.583565 );
     public static final double intakePosit = 0;
     public static final double tolerence = 0.05;
     public static final double speedForSim =0.02;
