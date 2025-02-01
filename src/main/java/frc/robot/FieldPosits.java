@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 
 public class FieldPosits {
     public static class StaringGamePeices{
@@ -37,6 +38,10 @@ public class FieldPosits {
         public static final Pose2d J = new Pose2d();
         public static final Pose2d K = new Pose2d();
         public static final Pose2d L = new Pose2d();
+        public static final Translation2d L1 = new Translation2d();
+        public static final Translation2d L2 = new Translation2d();
+        public static final Translation2d L3 = new Translation2d(0, -0.0508);
+        public static final Translation2d L4 = new Translation2d(0, -0.1905);
         public static final Pose2d[] scoringPosits = {A, B, C, D, E, F, G, H, I, J, K, L};
         public static final reefPole[] scoringPoles = {
             reefPole.A,
@@ -174,6 +179,20 @@ public class FieldPosits {
                     return 3;
                 case L4:
                     return 4;
+                default:
+                    throw new Error("This case is imposible to reach because all enum options are handled but needs to exist so java can be sure the function will always return a value.If you are seeing this as a user somthing has gone DEEPLY DEEPLY WRONG, maybe burn your code in mount doom");
+            }
+        }
+        public Translation2d getTranslation(){
+            switch (this){
+                case L1:
+                    return FieldPosits.scoringPosits.L1;
+                case L2:
+                    return FieldPosits.scoringPosits.L1;
+                case L3:
+                    return FieldPosits.scoringPosits.L1;
+                case L4:
+                    return FieldPosits.scoringPosits.L1;
                 default:
                     throw new Error("This case is imposible to reach because all enum options are handled but needs to exist so java can be sure the function will always return a value.If you are seeing this as a user somthing has gone DEEPLY DEEPLY WRONG, maybe burn your code in mount doom");
             }

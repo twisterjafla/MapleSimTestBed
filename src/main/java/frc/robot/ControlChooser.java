@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Utils.BetterTrigger;
 
 //import frc.robot.commands.swervedrive.drivebase.FakeDrive;
@@ -22,6 +23,7 @@ import frc.robot.commands.sim.CreateCoral;
 import frc.robot.commands.swervedrive.AdditionalCommands;
 import frc.robot.commands.swervedrive.QuickSwapCommand;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
+import frc.robot.subsystems.autoManager;
 import frc.robot.subsystems.generalManager;
 
 public class ControlChooser {
@@ -157,8 +159,7 @@ public class ControlChooser {
 
     private EventLoop getAutoTestControl(){
         EventLoop loop = new EventLoop();
-        setDefaultCommand(new QuickSwapCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)),
-            AdditionalCommands.SwappingAuto, ()->xbox1.getHID().getAButton()), SystemManager.swerve, loop);
+        new Trigger(loop, xbox1.leftTrigger(0.75)).onTrue(new InstantCommand(()->autoManager.giveControl())).onFalse(new InstantCommand(()->autoManager.takeControl()));
         return loop;
     }
 

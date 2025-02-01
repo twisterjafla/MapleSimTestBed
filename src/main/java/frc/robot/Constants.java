@@ -71,6 +71,7 @@ public final class Constants
 
     public static final double widthOfMapMeters=8;
     public static final double heightOfMapMeters=8.9;
+    public static final double bonusScore=1;
   
   }
 

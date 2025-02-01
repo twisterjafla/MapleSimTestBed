@@ -2,6 +2,8 @@ package frc.robot.Utils;
 
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.FieldPosits.reefLevel;
 import frc.robot.FieldPosits.reefPole;
@@ -18,7 +20,27 @@ public class scoringPosit {
 
     @Deprecated
     public Pose2d getNeededPose(){
-        return pole.getScorePosit();
+        return pole.getScorePosit().plus(new Transform2d(level.getTranslation(), new Rotation2d()));
+    }
+
+    public int getPointValForItem() {
+        if (DriverStation.isAutonomous()){
+            switch (level){
+                case L4: return 7;
+                case L3: return 6;
+                case L2: return 4;
+                case L1: return 3;
+            }
+        }
+        else{
+            switch(level){
+                case L4: return 5;
+                case L3: return 4;
+                case L2: return 3;
+                case L1: return 2;
+            }
+        }
+        return 0;
     }
 
     public static int getPointValForItem(int level) {
@@ -39,7 +61,7 @@ public class scoringPosit {
             }
         }
         return 0;
-    }
+    } 
 
 
 }

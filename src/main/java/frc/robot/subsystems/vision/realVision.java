@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class realVision extends SubsystemBase implements aprilTagInterface, reefIndexerInterface {
     private final StructSubscriber<Pose3d> robotPoseSubscriber;
-    private final BooleanArraySubscriber reefSubscriber;
+    //private final BooleanArraySubscriber reefSubscriber;
     
         public realVision() {
             boolean[][] reefDefaultList = {{false}, {false}};
@@ -27,8 +27,8 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
             NetworkTableInstance inst = NetworkTableInstance.getDefault();
             StructTopic<Pose3d> robotPoseTopic = inst.getStructTopic("RobotValues", Pose3d.struct);
             this.robotPoseSubscriber = robotPoseTopic.subscribe(robotDefaultPose, PubSubOption.keepDuplicates(true));
-            StructTopic<Array> reefTopic = inst.getStructTopic("ReefValues", );
-            this.reefSubscriber = reefTopic.subscribe(reefDefaultList, PubSubOption.keepDuplicates(true));
+            //StructTopic<Array> reefTopic = inst.getStructTopic("ReefValues");
+            //this.reefSubscriber = reefTopic.subscribe(reefDefaultList, PubSubOption.keepDuplicates(true));
 
         }
     
@@ -38,7 +38,8 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
 
         @Override
         public boolean[][] getFullReefState() {
-            return this.reefSubscriber.get();
+            //return this.reefSubscriber.get();
+            return null;
         }
 
         @Override
