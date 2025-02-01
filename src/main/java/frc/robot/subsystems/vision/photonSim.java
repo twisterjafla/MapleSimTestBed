@@ -37,7 +37,7 @@ public class photonSim extends SubsystemBase implements aprilTagInterface{
 
         PhotonCamera camera = new PhotonCamera("cameraName");
 
-// The simulation of this camera. Its values used in real robot code will be updated.
+        // The simulation of this camera. Its values used in real robot code will be updated.
         PhotonCameraSim cameraSim = new PhotonCameraSim(camera, cameraProp);
 
 
