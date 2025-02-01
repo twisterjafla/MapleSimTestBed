@@ -1,15 +1,11 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.FieldPosits;
 import frc.robot.SystemManager;
-import frc.robot.FieldPosits.reefLevel;
-import frc.robot.FieldPosits.reefPole;
 import frc.robot.Utils.scoringPosit;
 import frc.robot.Utils.warningManager;
 import frc.robot.subsystems.autoManager;
 import frc.robot.subsystems.generalManager;
-import frc.robot.subsystems.generalManager.generalState;
 
 public class ScorePiece extends Command{
     scoringPosit posit;

@@ -1,21 +1,19 @@
 package frc.robot.subsystems.wrist;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.util.Color8Bit;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.SystemManager;
 
-public class simWrist implements wristInterface{
+import frc.robot.Utils.warningManager;
+import frc.robot.subsystems.wristElevatorControllManager;
 
-    public double setpoint;
-    public double position;
+public class simWrist extends SubsystemBase implements wristInterface{
 
+    private double setpoint;
+    private double position;
+    private double goal;
+    protected wristElevatorControllManager manager;
 
 
 
@@ -24,23 +22,36 @@ public class simWrist implements wristInterface{
 
 
     @Override
-    public void setSetpoint(double setpoint) {
+    public void setSetpointRaw(double setpoint) {
         this.setpoint=setpoint;
     }
 
     @Override
     public void periodic(){
-        if (Math.abs(setpoint-position)<Constants.wristConstants.speedForSim){
-            position=setpoint;
+        if (manager==null){
+            warningManager.throwAlert(warningManager.noWristElevatorManagerSet);
+            return;
         }
-        else if (setpoint>position){
-            position+=Constants.wristConstants.speedForSim;
+
+        if (manager.getState()==wristElevatorControllManager.wristElevatorControllState.wrist||manager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
+            goal=setpoint;
         }
         else{
-            position-=Constants.wristConstants.speedForSim;
+            goal=Constants.wristConstants.restingPosit;
         }
-        
 
+        if (Math.abs(goal-position)<Constants.wristConstants.speedForSim/Constants.wristConstants.degreesPerEncoderTick){
+            position=goal;
+        }
+        else if (goal>position){
+            position+=Constants.wristConstants.speedForSim/Constants.wristConstants.degreesPerEncoderTick;
+        }
+        else{
+            position-=Constants.wristConstants.speedForSim/Constants.wristConstants.degreesPerEncoderTick;
+        }
+
+
+        SmartDashboard.putNumber("wristEncoder", position);
     }
 
 
@@ -65,13 +76,24 @@ public class simWrist implements wristInterface{
     }
 
     @Override
-    public void setSetpointInDegrees(Rotation2d setPoint) {
-        setSetpoint(setPoint.getDegrees()*Constants.wristConstants.degreesPerEncoderTick);
+    public void setSetpoint(double setPoint) {
+        setSetpointRaw(setPoint/Constants.wristConstants.degreesPerEncoderTick);
     }
 
     @Override
     public Rotation2d getcurrentLocation() {
-        return Rotation2d.fromDegrees(getSetpoint()/Constants.wristConstants.degreesPerEncoderTick);
+        return Rotation2d.fromDegrees(position*Constants.wristConstants.degreesPerEncoderTick);
+    }
+
+
+    @Override
+    public void setManager(wristElevatorControllManager manager){
+        this.manager=manager;
+    }
+
+    @Override
+    public boolean atLegalNonControlState(){
+        return Math.abs(getcurrentLocation().getDegrees())<Constants.wristConstants.tolerence;
     }
 
 

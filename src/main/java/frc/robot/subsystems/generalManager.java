@@ -1,23 +1,18 @@
 package frc.robot.subsystems;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import frc.robot.SystemManager;
 import frc.robot.Utils.warningManager;
 import frc.robot.commands.states.*;
-import com.ctre.phoenix.sensors.PigeonIMU.GeneralStatus;
 
 import edu.wpi.first.util.function.BooleanConsumer;
-import edu.wpi.first.wpilibj.Alert;
-import edu.wpi.first.wpilibj.Alert.AlertType;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class generalManager{
     public enum generalState{

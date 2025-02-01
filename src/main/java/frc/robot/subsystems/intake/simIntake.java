@@ -1,6 +1,5 @@
 package frc.robot.subsystems.intake;
 
-import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Radian;
@@ -11,11 +10,9 @@ import org.ironmaple.simulation.IntakeSimulation;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeCoralOnFly;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -24,8 +21,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SystemManager;
-import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.Distance;
 
 public class simIntake extends SubsystemBase implements intakeInterface{
     IntakeSimulation intakeSim;
@@ -50,6 +45,8 @@ public class simIntake extends SubsystemBase implements intakeInterface{
 
     @Override 
     public void periodic(){
+        
+
         if (stopTrigger.getAsBoolean()){
             stop();
         }
@@ -92,7 +89,7 @@ public class simIntake extends SubsystemBase implements intakeInterface{
                 // Obtain robot position from drive simulation
                 SystemManager.getRealPoseMaple().getTranslation(),
                 // The scoring mechanism is installed at (0.46, 0) (meters) on the robot
-                new Translation2d(0.35, 0),
+                new Translation2d(getTranslation().getX(), getTranslation().getY()),
                 // Obtain robot speed from drive simulation
                 SystemManager.swerve.getMapleSimDrive().get().getDriveTrainSimulatedChassisSpeedsFieldRelative(),
                 // Obtain robot facing from drive simulation
@@ -150,7 +147,11 @@ public class simIntake extends SubsystemBase implements intakeInterface{
     @Override
     public Translation3d getTranslation(){
         Rotation2d rotation = SystemManager.wrist.getcurrentLocation();
-        return new Translation3d(Math.cos(rotation.getRadians())*Constants.intakeConstants.intakeLength, 0 ,Math.sin(rotation.getRadians())*Constants.intakeConstants.intakeLength).plus(SystemManager.elevator.getTranslation());
+        return new Translation3d(
+            Math.sin(-rotation.getRadians()+Math.toRadians(20))*Constants.intakeConstants.intakeLength+Constants.intakeConstants.coralLenght/2,
+            0,
+            Math.cos(-rotation.getRadians()+Math.toRadians(20))*Constants.intakeConstants.intakeLength-Constants.intakeConstants.coralWidth/2)
+        .plus(SystemManager.elevator.getTranslation());
     }
 
 }

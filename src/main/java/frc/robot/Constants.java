@@ -4,22 +4,16 @@
 
 package frc.robot;
 
-import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
 
-import com.pathplanner.lib.config.ModuleConfig;
-import com.pathplanner.lib.config.RobotConfig;
-import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.config.PIDConstants;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.PubSubOption;
 import edu.wpi.first.networktables.PubSubOptions;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import swervelib.math.Matter;
 
 /**
@@ -73,6 +67,7 @@ public final class Constants
     public static final PIDConstants TRANSLATION_PID = new PIDConstants(10, 0, 0);
 
     public static final PIDConstants ANGLE_PID       = new PIDConstants(5, 0, 0);
+    public static final double colisionSpeed = 2;
   
   }
 
@@ -104,6 +99,8 @@ public final class Constants
     public static final boolean aprilTagShouldBeSim=true||!RobotBase.isReal();
     public static final boolean wristShouldBeSim=true||!RobotBase.isReal();
     public static final boolean elevatorShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean reefIndexerShouldBeSim=true||!RobotBase.isReal();
+
   }
   public static class controllerIDs{
     public static final int commandXboxController1ID=0;
@@ -111,37 +108,43 @@ public final class Constants
   }
 
   public static class intakeConstants{
-    public static final double intakeSpeed=1;
-    public static final double outtakeSpeed=-1;
+    public static final double intakeSpeed=0.3;
+    public static final double outtakeSpeed=-0.3;
     public static final double intakeLength=0.2;
+    public static final int RightIntake = 50;
+    public static final int LeftIntake = 50;
+    public static final double coralLenght = 0.3;
+    public static final double coralWidth = 0.11;
   }
 
   public static class elevatorConstants{
     public static final double l4EncoderVal = 1.42;
-    public static final double l3EncoderVal = 0.8;
-    public static final double l2EncoderVal = 0.6;
+    public static final double l3EncoderVal = 1.353;
+    public static final double l2EncoderVal = 1.1;
     public static final double l1EncoderVal = 0.4;
     public static final double encoderToMeters =1;
-    public static final double maxEncoderHeight = 1.336;
+    public static final double maxHeight = l4EncoderVal;
     public static final Rotation2d angle = new Rotation2d(Math.toRadians(70));
     public static final Translation3d fromRobotCenter = new Translation3d(-0.2, 0, 0.5);
     public static final double intakePosit = 0;
     public static final double tolerence = 0.05;
     public static final double speedForSim =0.02;
     public static final double compressedLen = 0.889;
+    
   }
 
   public static class wristConstants{
-    public static final double l4EncoderVal = 0;
-    public static final double l3EncoderVal = 55;
-    public static final double l2EncoderVal = 55;
+    public static final double l4EncoderVal = -55;
+    public static final double l3EncoderVal = 0;
+    public static final double l2EncoderVal = 0;
     public static final double l1EncoderVal = 0;
+    public static final double restingPosit = 0;
     public static final double degreesPerEncoderTick=360;
     public static final Rotation2d minDegrees = new Rotation2d();
     public static final Rotation2d maxDegrees = new Rotation2d();
     public static final double intakePosit = 0;
     public static final double tolerence = 5;
-    public static final double speedForSim=5;
+    public static final double speedForSim=0.5;
   
   }
 
