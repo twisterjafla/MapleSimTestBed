@@ -26,6 +26,7 @@ import frc.robot.subsystems.swervedrive.AIRobotInSimulation;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.aprilTagInterface;
 import frc.robot.subsystems.vision.photonSim;
+import frc.robot.subsystems.vision.realVision;
 import frc.robot.subsystems.vision.reefIndexerInterface;
 import frc.robot.subsystems.vision.simReefIndexer;
 import frc.robot.subsystems.wrist.simWrist;
@@ -46,6 +47,7 @@ public class SystemManager{
     public static elevatorInterface elevator;
     public static reefIndexerInterface reefIndexer;
     public static wristElevatorControllManager wristManager;
+    public static realVision realVisTemp;
     
     public static void SystemManagerInit(){
         swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),  "swerve"));
@@ -67,6 +69,8 @@ public class SystemManager{
             aprilTag= new photonSim();
         }
         else{
+            realVisTemp = new realVision();
+            aprilTag=realVisTemp;
         }
 
         if (Constants.simConfigs.elevatorShouldBeSim){
@@ -84,7 +88,12 @@ public class SystemManager{
             reefIndexer= new simReefIndexer();
         }
         else{
-
+            if (realVisTemp != null){
+                reefIndexer=realVisTemp;
+            }
+            else{
+                reefIndexer = new realVision();
+            }
         }
 
         

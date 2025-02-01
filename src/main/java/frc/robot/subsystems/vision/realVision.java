@@ -10,11 +10,11 @@ import edu.wpi.first.networktables.StructTopic;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
-public class reefDetection extends SubsystemBase implements aprilTagInterface {
+public class realVision extends SubsystemBase implements aprilTagInterface, reefIndexerInterface {
     private final StructSubscriber<Pose3d> robotPoseSubscriber;
     private final BooleanArraySubscriber reefSubscriber;
     
-        public reefDetection() {
+        public realVision() {
             boolean[] reefDefaultList = {false};
             Pose3d robotDefaultPose = new Pose3d();
     
@@ -32,5 +32,35 @@ public class reefDetection extends SubsystemBase implements aprilTagInterface {
 
         public boolean[] getReef() {
             return this.reefSubscriber.get();
+        }
+
+        @Override
+        public boolean[][] getFullReefState() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getFullReefState'");
+        }
+
+        @Override
+        public boolean getIsClosed(int row, int level) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getIsClosed'");
+        }
+
+        @Override
+        public int getHighestLevelForRow(int row) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getHighestLevelForRow'");
+        }
+
+        @Override
+        public boolean hasAlgea(int row, int level) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'hasAlgea'");
+        }
+
+        @Override
+        public boolean[][] getAlgeaPosits() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getAlgeaPosits'");
         }
 }
