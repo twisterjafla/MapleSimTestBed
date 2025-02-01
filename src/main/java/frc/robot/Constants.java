@@ -68,6 +68,9 @@ public final class Constants
 
     public static final PIDConstants ANGLE_PID       = new PIDConstants(5, 0, 0);
     public static final double colisionSpeed = 2;
+
+    public static final double widthOfMapMeters=8;
+    public static final double heightOfMapMeters=8.9;
   
   }
 
