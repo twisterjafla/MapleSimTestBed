@@ -18,10 +18,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class realVision extends SubsystemBase implements aprilTagInterface, reefIndexerInterface {
     private final StructSubscriber<Pose3d> robotPoseSubscriber;
-    //private final BooleanArraySubscriber reefSubscriber;
+
+    private final BooleanArraySubscriber reefSubscriber;
+    private final StructSubscriber algeaSubscriber;
     
         public realVision() {
             boolean[][] reefDefaultList = {{false}, {false}};
+            boolean[][] algeaDefaultList = {{false}, {false}};
             Pose3d robotDefaultPose = new Pose3d();
     
             NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -29,9 +32,14 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
             this.robotPoseSubscriber = robotPoseTopic.subscribe(robotDefaultPose, PubSubOption.keepDuplicates(true));
             //StructTopic<Array> reefTopic = inst.getStructTopic("ReefValues");
             //this.reefSubscriber = reefTopic.subscribe(reefDefaultList, PubSubOption.keepDuplicates(true));
+            StructTopic<Array> reefTopic = inst.getStructTopic("ReefValues", StructTopic<Array>);
+            this.reefSubscriber = reefTopic.subscribe(reefDefaultList, PubSubOption.keepDuplicates(true));
+            StructTopic<Array> algeaTopic = inst.getStructTopic("AlgeaValues", StructTopic<Array>);
+            this.algeaSubscriber = algeaTopic.subscribe(algeaDefaultList, PubSubOption.keepDuplicates(true));
 
         }
-    
+        
+        @Override
         public Pose3d getPose() {
             return this.robotPoseSubscriber.get();
         }
@@ -43,26 +51,48 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
         }
 
         @Override
+        public boolean[][] getAlgeaPosits() {
+            return this.algeaSubscriber.get()
+        }
+
+        @Override
         public boolean getIsClosed(int row, int level) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getIsClosed'");
+            reefList = this.getFullReefState()
+            reefInLevel = reefList[row][level]
+            if (!reefInLevel) {
+                return True
+            }
+            else {
+                return False
+            }
         }
 
         @Override
         public int getHighestLevelForRow(int row) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getHighestLevelForRow'");
+            if (!getIsClosed(row, 4)){
+                return 4;
+            }
+            if (!getIsClosed(row, 3)){
+                return 3;
+            }
+            if (!getIsClosed(row, 2)){
+                return 2;
+            }
+            return 1;
         }
 
         @Override
         public boolean hasAlgea(int row, int level) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'hasAlgea'");
+            algeaList = this.getAlgeaPosits()
+            algeaInLevel = algeaList[level][row]
+            if (!algeaInLevel) {
+                return True
+            }
+            else {
+                return False
+            }
+            
         }
 
-        @Override
-        public boolean[][] getAlgeaPosits() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getAlgeaPosits'");
-        }
+
 }
