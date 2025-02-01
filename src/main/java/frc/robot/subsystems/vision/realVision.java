@@ -1,10 +1,16 @@
 package frc.robot.subsystems.vision;
 
+import java.lang.reflect.Array;
+
+import com.google.flatbuffers.Struct;
+
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.networktables.BooleanArraySubscriber;
 import edu.wpi.first.networktables.BooleanArrayTopic;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.PubSubOption;
+import edu.wpi.first.networktables.StructArrayTopic;
 import edu.wpi.first.networktables.StructSubscriber;
 import edu.wpi.first.networktables.StructTopic;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,14 +21,14 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
     private final BooleanArraySubscriber reefSubscriber;
     
         public realVision() {
-            boolean[] reefDefaultList = {false};
+            boolean[][] reefDefaultList = {{false}, {false}};
             Pose3d robotDefaultPose = new Pose3d();
     
             NetworkTableInstance inst = NetworkTableInstance.getDefault();
-            StructTopic<Pose3d> robotPose3d = inst.getStructTopic("RobotPose", Pose3d.struct);
-            this.robotPoseSubscriber = robotPose3d.subscribe(robotDefaultPose, PubSubOption.keepDuplicates(true));
-            BooleanArrayTopic reefList = inst.getBooleanArrayTopic("ReefValues");
-            this.reefSubscriber = reefList.subscribe(reefDefaultList, PubSubOption.keepDuplicates(true));
+            StructTopic<Pose3d> robotPoseTopic = inst.getStructTopic("RobotValues", Pose3d.struct);
+            this.robotPoseSubscriber = robotPoseTopic.subscribe(robotDefaultPose, PubSubOption.keepDuplicates(true));
+            StructTopic<Array> reefTopic = inst.getStructTopic("ReefValues", );
+            this.reefSubscriber = reefTopic.subscribe(reefDefaultList, PubSubOption.keepDuplicates(true));
 
         }
     
@@ -30,14 +36,9 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
             return this.robotPoseSubscriber.get();
         }
 
-        public boolean[] getReef() {
-            return this.reefSubscriber.get();
-        }
-
         @Override
         public boolean[][] getFullReefState() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getFullReefState'");
+            return this.reefSubscriber.get();
         }
 
         @Override
