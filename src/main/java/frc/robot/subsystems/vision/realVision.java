@@ -5,6 +5,7 @@ import java.lang.reflect.Array;
 import com.google.flatbuffers.Struct;
 
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.networktables.BooleanArrayEntry;
 import edu.wpi.first.networktables.BooleanArraySubscriber;
 import edu.wpi.first.networktables.BooleanArrayTopic;
 import edu.wpi.first.networktables.NetworkTable;
@@ -32,10 +33,11 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
             this.robotPoseSubscriber = robotPoseTopic.subscribe(robotDefaultPose, PubSubOption.keepDuplicates(true));
             //StructTopic<Array> reefTopic = inst.getStructTopic("ReefValues");
             //this.reefSubscriber = reefTopic.subscribe(reefDefaultList, PubSubOption.keepDuplicates(true));
-            StructTopic<Array> reefTopic = inst.getStructTopic("ReefValues", StructTopic<Array>);
+            StructArrayTopic<Array> reefTopic = inst.getStructTopic("ReefValues", StructTopic<Array>);
             this.reefSubscriber = reefTopic.subscribe(reefDefaultList, PubSubOption.keepDuplicates(true));
             StructTopic<Array> algeaTopic = inst.getStructTopic("AlgeaValues", StructTopic<Array>);
             this.algeaSubscriber = algeaTopic.subscribe(algeaDefaultList, PubSubOption.keepDuplicates(true));
+            
 
         }
         
@@ -46,25 +48,20 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
 
         @Override
         public boolean[][] getFullReefState() {
-            //return this.reefSubscriber.get();
-            return null;
+            return this.reefSubscriber.get();
+    
         }
 
         @Override
         public boolean[][] getAlgeaPosits() {
-            return this.algeaSubscriber.get()
+            return algeaSubscriber.get();
         }
 
         @Override
         public boolean getIsClosed(int row, int level) {
-            reefList = this.getFullReefState()
-            reefInLevel = reefList[row][level]
-            if (!reefInLevel) {
-                return True
-            }
-            else {
-                return False
-            }
+            boolean[][] reefList = getFullReefState();
+            return !reefList[row][level];
+            
         }
 
         @Override
@@ -83,14 +80,9 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
 
         @Override
         public boolean hasAlgea(int row, int level) {
-            algeaList = this.getAlgeaPosits()
-            algeaInLevel = algeaList[level][row]
-            if (!algeaInLevel) {
-                return True
-            }
-            else {
-                return False
-            }
+            boolean[][] algeaList = this.getAlgeaPosits();
+            return !algeaList[level][row];
+
             
         }
 
