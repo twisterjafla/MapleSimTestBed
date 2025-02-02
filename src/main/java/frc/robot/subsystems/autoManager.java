@@ -18,6 +18,7 @@ import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
@@ -37,6 +38,7 @@ public class autoManager{
     public static Command currentRoutine=null;
     public static LocalADStar pathBuilder = new LocalADStar();
     public static Node[][] map;
+    public static boolean[][] legalityMap;
     public static JSONObject jsonMap ;
     protected static double tileSize;
     protected static double width;
@@ -55,34 +57,41 @@ public class autoManager{
         length=(double)jsonMap.get("length");
         tileSize=(double)jsonMap.get("nodeSizeMeters"); 
 
+        legalityMap = new boolean[(int)Math.ceil(width/tileSize)][(int)Math.ceil(length/tileSize)];
+        JSONArray grid = (JSONArray)jsonMap.get("grid");
+        for (int i=0; i<legalityMap.length; i++){
+            System.out.println(grid.size());
+            System.out.println(legalityMap.length);
+            JSONArray row = (JSONArray)grid.get(i);
+            for (int j=0; j<legalityMap[i].length; j++){
+                System.out.println(row.size());
+                System.out.println(legalityMap[i].length);
+                System.out.println();
+                legalityMap[i][j] = (boolean)row.get(j);
+                  
+            }
+        }
     }
 
     public static void refreshMap(){
-        map = new Node[(int)Math.ceil(length/tileSize)][(int)Math.ceil(width/tileSize)];
+        map = new Node[(int)Math.ceil(width/tileSize)][(int)Math.ceil(length/tileSize)];
 
-        JSONArray grid = (JSONArray)jsonMap.get("grid");
+        
         for (int i=0; i<map.length; i++){
-            System.out.println(grid.size());
-            JSONArray row = (JSONArray)grid.get(i);
             for (int j=0; j<map[i].length; j++){
-                System.out.println(row.size());
-
-                if ((boolean)row.get(j)){
-                    map[i][j]=new Node(i, j, map, false, Node.defaultValue);
-                }
-                else{
-                    map[i][j]=new Node(i, j, map, true, Node.defaultValue);
-                } 
-            }
+                map[i][j]=new Node(i, j, map, legalityMap[i][j], Node.defaultValue);
+            }          
         }
     }
  
     public static void periodic(){
         if (currentRoutine!=null){
-            if (CommandScheduler.getInstance().isScheduled(currentRoutine)){
+            if (!CommandScheduler.getInstance().isScheduled(currentRoutine)){
                 currentRoutine=null;
             }
         }
+
+
         if (hasControllSupplier!=null){
             if (hasControllSupplier.getAsBoolean()!=hasControl){
                 if (hasControllSupplier.getAsBoolean()==false){
@@ -93,11 +102,21 @@ public class autoManager{
                 }
             }
         }
+
+
         if (hasControl){
             if (currentRoutine==null){
                 currentRoutine=getAutoAction();
                 currentRoutine.schedule();
             }
+        }
+
+        if (currentRoutine==null){
+            SmartDashboard.putString("autoRoutine", "null");
+            
+        }
+        else{
+            SmartDashboard.putString("autoRoutine", currentRoutine.getName());
         }
     }
 
@@ -243,7 +262,7 @@ public class autoManager{
         Node[][] host;
         boolean isLegal;
         double score;
-        Node[] friends;
+        Node[] friends = new Node[8];
         boolean friendsPoped=false;
 
         public Node(double x, double y, Node[][] host){
