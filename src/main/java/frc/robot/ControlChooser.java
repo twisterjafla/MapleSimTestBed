@@ -160,6 +160,7 @@ public class ControlChooser {
     private EventLoop getAutoTestControl(){
         EventLoop loop = new EventLoop();
         new Trigger(loop, xbox1.leftTrigger(0.75)).onTrue(new InstantCommand(()->autoManager.giveControl())).onFalse(new InstantCommand(()->autoManager.takeControl()));
+        xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(FieldPosits.scoringPosits.A));
         return loop;
     }
 

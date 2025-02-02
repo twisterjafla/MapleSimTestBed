@@ -59,6 +59,7 @@ public class simIntake extends SubsystemBase implements intakeInterface{
         
 
         SmartDashboard.putBoolean("hasCoral", hasPeice());
+        SmartDashboard.putBoolean("intakeIsRunning", state==intakeState.intaking);
 
         if (hasPeice()){
             coralPose = SystemManager.getIntakePosit();
@@ -84,22 +85,42 @@ public class simIntake extends SubsystemBase implements intakeInterface{
     public void outtakeInternal(){
         if (hasPeice()){
             intakeSim.obtainGamePieceFromIntake();
-            SimulatedArena.getInstance()
-            .addGamePieceProjectile(new ReefscapeCoralOnFly(
-                // Obtain robot position from drive simulation
-                SystemManager.getRealPoseMaple().getTranslation(),
-                // The scoring mechanism is installed at (0.46, 0) (meters) on the robot
-                new Translation2d(getTranslation().getX(), getTranslation().getY()),
-                // Obtain robot speed from drive simulation
-                SystemManager.swerve.getMapleSimDrive().get().getDriveTrainSimulatedChassisSpeedsFieldRelative(),
-                // Obtain robot facing from drive simulation
-                SystemManager.getRealPoseMaple().getRotation(),
-                // The height at which the coral is ejected
-                Meters.of(SystemManager.getIntakePosit().getZ()),
-                // The initial speed of the coral
-                MetersPerSecond.of(2),
-                // The coral is ejected at a 35-degree slope
-                Radian.of(-SystemManager.getIntakePosit().getRotation().getY())));
+            if (SystemManager.elevator.atLegalNonControlState()){
+                SimulatedArena.getInstance()
+                .addGamePieceProjectile(new ReefscapeCoralOnFly(
+                    // Obtain robot position from drive simulation
+                    SystemManager.getRealPoseMaple().getTranslation(),
+                    // The scoring mechanism is installed at (0.46, 0) (meters) on the robot
+                    new Translation2d(getTranslation().getX()+Constants.sim.l4CoralDropCheatX, getTranslation().getY()),
+                    // Obtain robot speed from drive simulation
+                    SystemManager.swerve.getMapleSimDrive().get().getDriveTrainSimulatedChassisSpeedsFieldRelative(),
+                    // Obtain robot facing from drive simulation
+                    SystemManager.getRealPoseMaple().getRotation(),
+                    // The height at which the coral is ejected
+                    Meters.of(SystemManager.getIntakePosit().getZ()),
+                    // The initial speed of the coral
+                    MetersPerSecond.of(0),
+                    // The coral is ejected at a 35-degree slope
+                    Radian.of(-Math.PI/2)));
+            }
+            else{
+                SimulatedArena.getInstance()
+                .addGamePieceProjectile(new ReefscapeCoralOnFly(
+                    // Obtain robot position from drive simulation
+                    SystemManager.getRealPoseMaple().getTranslation(),
+                    // The scoring mechanism is installed at (0.46, 0) (meters) on the robot
+                    new Translation2d(getTranslation().getX(), getTranslation().getY()),
+                    // Obtain robot speed from drive simulation
+                    SystemManager.swerve.getMapleSimDrive().get().getDriveTrainSimulatedChassisSpeedsFieldRelative(),
+                    // Obtain robot facing from drive simulation
+                    SystemManager.getRealPoseMaple().getRotation(),
+                    // The height at which the coral is ejected
+                    Meters.of(SystemManager.getIntakePosit().getZ()),
+                    // The initial speed of the coral
+                    MetersPerSecond.of(2),
+                    // The coral is ejected at a 35-degree slope
+                    Radian.of(-SystemManager.getIntakePosit().getRotation().getY())));
+            }
         }
     }
 
@@ -148,9 +169,9 @@ public class simIntake extends SubsystemBase implements intakeInterface{
     public Translation3d getTranslation(){
         Rotation2d rotation = SystemManager.wrist.getcurrentLocation();
         return new Translation3d(
-            Math.sin(-rotation.getRadians()+Math.toRadians(20))*Constants.intakeConstants.intakeLength+Constants.intakeConstants.coralLenght/2,
+            Math.sin(-rotation.getRadians()+Math.toRadians(20))*Constants.intakeConstants.coralFromWristLen+Constants.intakeConstants.coralLenght/2,
             0,
-            Math.cos(-rotation.getRadians()+Math.toRadians(20))*Constants.intakeConstants.intakeLength-Constants.intakeConstants.coralWidth/2)
+            Math.cos(-rotation.getRadians()+Math.toRadians(20))*Constants.intakeConstants.coralFromWristLen)
         .plus(SystemManager.elevator.getTranslation());
     }
 

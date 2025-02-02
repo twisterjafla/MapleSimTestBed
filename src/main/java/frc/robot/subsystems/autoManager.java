@@ -17,6 +17,8 @@ import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 
 import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -43,6 +45,7 @@ public class autoManager{
     protected static double tileSize;
     protected static double width;
     protected static double length;
+    protected static StructPublisher<Pose2d> bestPosePublisher = NetworkTableInstance.getDefault().getStructTopic("bestPose", Pose2d.struct).publish();
     public static void autoManagerInit() {
         try{
             jsonMap = (JSONObject) new JSONParser().parse(new FileReader(Filesystem.getDeployDirectory()+ "/pathplanner/navgridAStar.json"));
@@ -61,34 +64,23 @@ public class autoManager{
         map = new Node[(int)Math.ceil(width/tileSize)][(int)Math.ceil(length/tileSize)];
         JSONArray grid = (JSONArray)jsonMap.get("grid");
         for (int i=0; i<map.length; i++){
-            System.out.println(grid.size());
-            System.out.println(map.length);
             JSONArray row = (JSONArray)grid.get(i);
             for (int j=0; j<map[i].length; j++){
-                System.out.println(row.size());
-                System.out.println(map[i].length);
-                System.out.println();
-                map[i][j] = map[i][j]=new Node(i, j, map, (boolean)row.get(j), Node.defaultValue);
+                map[i][j] = map[i][j]=new Node(i/tileSize, j/tileSize, map, !(boolean)row.get(j), Node.defaultValue);
                 
                   
             }
         }
-    }
 
-    public static void refreshMap(){
-        // map = new Node[(int)Math.ceil(width/tileSize)][(int)Math.ceil(length/tileSize)];
-
+        map[0][0].popFreinds();
         
-        for (int i=0; i<map.length; i++){
-            for (int j=0; j<map[i].length; j++){
-                map[i][j].reset();
-            }          
-        }
     }
+
+
  
     public static void periodic(){
         if (currentRoutine!=null){
-            if (!CommandScheduler.getInstance().isScheduled(currentRoutine)){
+            if (!currentRoutine.isScheduled()){
                 currentRoutine=null;
             }
         }
@@ -147,13 +139,18 @@ public class autoManager{
     }
 
 
-    public static void reMakeMap(Pose2d startPoint){
-        refreshMap();
-        
-        Node start = getMapPoint(startPoint);
-        start.popFreinds();
+    public static void resetMap(Pose2d startingPose){
+        resetMap();
+        getMapPoint(startingPose).start();
+    }
 
+    public static void resetMap(){
 
+        for (int i=0; i<map.length; i++){
+            for (int j=0; j<map[i].length; j++){
+                map[i][j].reset();
+            }          
+        }
     }
 
     public static Node getMapPoint(Pose2d pose){
@@ -183,64 +180,39 @@ public class autoManager{
 
     }
 
+    @Deprecated
     public static void resetAutoAction(){
+        System.out.println("Auto reset");
         getAutoAction().schedule();
     }
 
     public static scoringPosit getBestScorePosit(){
+        resetMap(SystemManager.getSwervePose());
+        
         scoringPosit winningPole=null;
-        double winningScore=10000;
+        double winningScore=0;
         for(reefPole pole:FieldPosits.scoringPosits.scoringPoles){
             scoringPosit currentPosit = new scoringPosit(reefLevel.CreateFromLevel(SystemManager.reefIndexer.getHighestLevelForRow(pole.getRowAsIndex())), pole);
-            if (currentPosit.getPointValForItem()/getMapPoint(pole.getScorePosit()).score*2+Constants.AutonConstants.bonusScore<winningScore){
+            if (currentPosit.getPointValForItem()/(getMapPoint(currentPosit.getScorePose()).score*2+Constants.AutonConstants.bonusScore)>winningScore){
                 winningPole=currentPosit;
-                winningScore=getMapPoint(pole.getScorePosit()).score;
+                winningScore=currentPosit.getPointValForItem()/(getMapPoint(pole.getScorePosit()).score*2+Constants.AutonConstants.bonusScore);
             }
         }
         if (winningPole==null){
             throw new Error("Auto manager was not able to find a path to any reef pole");
         }
+        bestPosePublisher.set(winningPole.getScorePose());
+        // SmartDashboard.putNumber("winningPositScore", getMapPoint(winningPole.getScorePose()).score);
+        // SmartDashboard.putBoolean("winning posit had freinds", getMapPoint(winningPole.getScorePose()).friendsPoped);
+        SmartDashboard.putNumber("scoring level", winningPole.level.getasInt());
+        SmartDashboard.putNumber("highest open", SystemManager.reefIndexer.getHighestLevelForRow(winningPole.pole.getRowAsIndex()));
+        SmartDashboard.putBoolean("l4 is closed", SystemManager.reefIndexer.getIsClosed(winningPole.pole.getRowAsIndex(), 3));
         return winningPole;
 
-
-
-        // reefPole winningPose=null;
-        // double winningScore=180;
-        // for (reefPole posit: FieldPosits.scoringPosits.scoringPoles){
-        //     pathBuilder.setGoalPosition(posit.getScorePosit().getTranslation());
-        //     PathPlannerTrajectory newPath = pathBuilder.getCurrentPath(SystemManager.swerve.constraints, new GoalEndState(0, posit.getScorePosit().getRotation())).generateTrajectory(
-        //         SystemManager.swerve.getRobotVelocity(),
-        //         SystemManager.swerve.getPitch(),
-        //         SystemManager.swerve.config);
-
-
-        //     if (scoringPosit.getPointValForItem(SystemManager.reefIndexer.getHighestLevelForRow(posit.getRowAsIndex()))/newPath.getTotalTimeSeconds()>winningScore){
-        //         winningScore=scoringPosit.getPointValForItem(SystemManager.reefIndexer.getHighestLevelForRow(posit.getRowAsIndex()))/newPath.getTotalTimeSeconds();
-        //         winningPose = posit;
-        //     }
-        // }
-
-
-        // return new scoringPosit(reefLevel.CreateFromLevel(SystemManager.reefIndexer.getHighestLevelForRow(winningPose.getRowAsIndex())),winningPose);
     }
     public static Pose2d getBestIntakePosit(){
-        // double bestTime=180;
-        // Pose2d bestPose=null;
-        // for (Pose2d pose: FieldPosits.coralSpawnPoints.coralSpawnPoints){
-        //     pathBuilder.setGoalPosition(pose.getTranslation());
-        //     PathPlannerTrajectory newPath = pathBuilder.getCurrentPath(SystemManager.swerve.constraints, new GoalEndState(utillFunctions.mpsToMph(Constants.AutonConstants.colisionSpeed), pose.getRotation())).generateTrajectory(
-        //         SystemManager.swerve.getRobotVelocity(),
-        //         SystemManager.swerve.getPitch(),
-        //         SystemManager.swerve.config);
 
-        //     if(newPath.getTotalTimeSeconds()<bestTime){
-        //         bestPose=pose;
-        //         bestTime=newPath.getTotalTimeSeconds();
-        //     }
-        // }
-
-        // return bestPose;
-        reMakeMap(SystemManager.getSwervePose());
+        resetMap(SystemManager.getSwervePose());
         Pose2d bestPose = null;
         double bestScore=100000;
 
@@ -253,6 +225,7 @@ public class autoManager{
         if (bestPose==null){
             throw new Error("Auto manager was not able to find a path to any intake station");
         }
+        bestPosePublisher.set(bestPose);
         return bestPose;
 
 
@@ -260,6 +233,8 @@ public class autoManager{
     
     public static class Node{
         public static double defaultValue=10000;
+        public static int friendCount=0;
+        public static int updateCount=0;
         double x, y;
         Node[][] host;
         boolean isLegal;
@@ -280,42 +255,57 @@ public class autoManager{
         }
 
         public void popFreinds(){
+            friendCount++;
+            SmartDashboard.putNumber("friendCount", friendCount);
+            
             int count=0;
             for (int i=-1; i<2; i++){
-                for (int j=-1; i<2; i++){
+                for (int j=-1; j<2; j++){
                     if (i==0 && j==0){
                         continue;
                     }
-                    if (i>=0 && i<map.length){
-                        if (j>=0&& j<map[j].length){
-                            friends[count]=map[i][j];
-                            
+                    int a=(int)(x*tileSize)+i;
+                    int b = (int)(y*tileSize)+j;
+                    if (a>=0 && a<map.length){
+                        if (b>=0&& b<map[1].length){
+                            friends[count]=map[a][b];  
                         }
+
                         else{
                             friends[count]=null;
                         }
                     }
+
                     else{
                         friends[count]=null;
                     }
+
+                    count++;
                 }
-                count++;
+               
             }
+            
+            
             friendsPoped=true;
             for (Node friend: friends){
-                if (!friendsPoped){
-                    friend.popFreinds();
+                if (friend!=null){
+                    if (!friend.friendsPoped){
+                        friend.popFreinds();
+                    }
                 }
             }
         }
 
         public void update(){
+            // updateCount++;
+            // SmartDashboard.putNumber("update count", updateCount);
             for (Node friend: friends){
                 if (friend!=null&&friend.isLegal){
                     if (friend.score>score+getLength(this, friend)){
                         friend.score=score+getLength(this, friend);
                         friend.update();
                     }
+                    
                 }   
             }
         }

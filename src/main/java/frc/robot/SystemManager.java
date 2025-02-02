@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.autoManager;
 import frc.robot.subsystems.generalManager;
 import frc.robot.subsystems.wristElevatorControllManager;
@@ -137,6 +138,14 @@ public class SystemManager{
 
     public static Pose3d getIntakePosit(){
         return new Pose3d(getSwervePose()).plus(new Transform3d(intake.getTranslation(), new Rotation3d( 0, SystemManager.wrist.getcurrentLocation().getRadians()+Constants.elevatorConstants.angle.getRadians()+Math.PI/2, Math.PI)));
+    }
+
+    public static boolean hasPeice(){
+        return intake.hasPeice();
+    }
+
+    public static Command driveToPose(Pose2d pose){
+        return swerve.driveToPose(pose);
     }
 
 }

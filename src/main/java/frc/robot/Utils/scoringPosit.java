@@ -18,9 +18,13 @@ public class scoringPosit {
 
     }
 
-    @Deprecated
-    public Pose2d getNeededPose(){
+    
+    public Pose2d getScorePose(){
         return pole.getScorePosit().plus(new Transform2d(level.getTranslation(), new Rotation2d()));
+    }
+
+    public scoringPosit clone(){
+        return new scoringPosit(level, pole);
     }
 
     public int getPointValForItem() {

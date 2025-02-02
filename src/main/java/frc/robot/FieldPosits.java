@@ -15,12 +15,12 @@ public class FieldPosits {
      * THESE ARE NOT GRAB POINTS FOR THE ROBOT. THESE POINTS TELL MAPLE SIM WHERE TO SPAWN CORAL AND ARE NOT ACCESABLE BY ROBOT
      */
     public static class IntakePoints{
-        public static final Pose2d leftLeft= new Pose2d(1.547, 7.339, Rotation2d.fromDegrees(125));
-        public static final Pose2d leftMid= new Pose2d(1.164, 7.053, Rotation2d.fromDegrees(125));
-        public static final Pose2d leftRight= new Pose2d(0.639, 6.69, Rotation2d.fromDegrees(125));
-        public static final Pose2d rightLeft= new Pose2d(0.697, 1.325, Rotation2d.fromDegrees(-125));
-        public static final Pose2d rightMid= new Pose2d(1.154, 0.987, Rotation2d.fromDegrees(-125));
-        public static final Pose2d rightRight= new Pose2d(1.587, 0.667, Rotation2d.fromDegrees(-125));
+        public static final Pose2d leftLeft= new Pose2d(1.547, 7.339, Rotation2d.fromDegrees(-55));
+        public static final Pose2d leftMid= new Pose2d(1.164, 7.053, Rotation2d.fromDegrees(-55));
+        public static final Pose2d leftRight= new Pose2d(0.639, 6.69, Rotation2d.fromDegrees(-55));
+        public static final Pose2d rightLeft= new Pose2d(0.697, 1.325, Rotation2d.fromDegrees(55));
+        public static final Pose2d rightMid= new Pose2d(1.154, 0.987, Rotation2d.fromDegrees(55));
+        public static final Pose2d rightRight= new Pose2d(1.587, 0.667, Rotation2d.fromDegrees(55));
         public static final Pose2d[] coralSpawnPoints = {leftLeft, leftMid, leftRight, rightLeft, rightMid, rightRight};
 
     }
@@ -40,8 +40,8 @@ public class FieldPosits {
         public static final Pose2d L = new Pose2d(3.985, 2.825, Rotation2d.fromDegrees(60));
         public static final Translation2d L1 = new Translation2d();
         public static final Translation2d L2 = new Translation2d();
-        public static final Translation2d L3 = new Translation2d(0, -0.0508);
-        public static final Translation2d L4 = new Translation2d(0, -0.1905);
+        public static final Translation2d L3 = new Translation2d(-0.0533654, 0);
+        public static final Translation2d L4 = new Translation2d(-0.2857754, 0);
         public static final Pose2d[] scoringPosits = {A, B, C, D, E, F, G, H, I, J, K, L};
         public static final reefPole[] scoringPoles = {
             reefPole.A,
@@ -160,10 +160,10 @@ public class FieldPosits {
         
         public static reefLevel CreateFromLevel(int level){
             switch (level){
-                case 0: return reefLevel.L1;
-                case 1: return reefLevel.L2;
-                case 2: return reefLevel.L3;
-                case 3: return reefLevel.L4;
+                case 1: return reefLevel.L1;
+                case 2: return reefLevel.L2;
+                case 3: return reefLevel.L3;
+                case 4: return reefLevel.L4;
                 default:
                     throw new Error("you tried to make a pole of an invalid level DUMBASS");
             }
@@ -188,11 +188,11 @@ public class FieldPosits {
                 case L1:
                     return FieldPosits.scoringPosits.L1;
                 case L2:
-                    return FieldPosits.scoringPosits.L1;
+                    return FieldPosits.scoringPosits.L2;
                 case L3:
-                    return FieldPosits.scoringPosits.L1;
+                    return FieldPosits.scoringPosits.L3;
                 case L4:
-                    return FieldPosits.scoringPosits.L1;
+                    return FieldPosits.scoringPosits.L4;
                 default:
                     throw new Error("This case is imposible to reach because all enum options are handled but needs to exist so java can be sure the function will always return a value.If you are seeing this as a user somthing has gone DEEPLY DEEPLY WRONG, maybe burn your code in mount doom");
             }

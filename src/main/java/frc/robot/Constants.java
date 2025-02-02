@@ -9,6 +9,7 @@ import com.pathplanner.lib.config.PIDConstants;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.PubSubOption;
@@ -94,6 +95,8 @@ public final class Constants
   }
   public static class sim{
     public static double targetTolerence =0.2;
+    public static double l4CoralDropCheatX=0.08;
+    public static double l4CoralDropCheatY=0.1;
     //DriveTrainSimulationConfig simConfig= new DriveTrainSimulationConfig(55, 1, 0.05, 1, 0.05, null, null);
   }
 
@@ -114,9 +117,10 @@ public final class Constants
   public static class intakeConstants{
     public static final double intakeSpeed=0.3;
     public static final double outtakeSpeed=-0.3;
-    public static final double intakeLength=0.2;
+    public static final double intakeLength=0.245745;
     public static final int RightIntake = 50;
     public static final int LeftIntake = 50;
+    public static final double coralFromWristLen = 0.0715772;
     public static final double coralLenght = 0.3;
     public static final double coralWidth = 0.11;
   }
@@ -128,7 +132,7 @@ public final class Constants
     public static final double l1EncoderVal = 0.4;
     public static final double encoderToMeters =1;
     public static final double maxHeight = l4EncoderVal;
-    public static final Rotation2d angle = new Rotation2d(Math.toRadians(70));
+    public static final Rotation2d angle = Rotation2d.fromDegrees(70);
     public static final Translation3d fromRobotCenter = new Translation3d(0.0584454, 0, 0.583565 );
     public static final double intakePosit = 0;
     public static final double tolerence = 0.05;
@@ -138,7 +142,7 @@ public final class Constants
   }
 
   public static class wristConstants{
-    public static final double l4EncoderVal = -55;
+    public static final double l4EncoderVal = -15;
     public static final double l3EncoderVal = 0;
     public static final double l2EncoderVal = 0;
     public static final double l1EncoderVal = 0;
