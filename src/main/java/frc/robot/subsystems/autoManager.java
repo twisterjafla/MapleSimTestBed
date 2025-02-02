@@ -38,7 +38,7 @@ public class autoManager{
     public static Command currentRoutine=null;
     public static LocalADStar pathBuilder = new LocalADStar();
     public static Node[][] map;
-    public static boolean[][] legalityMap;
+    //public static boolean[][] legalityMap;
     public static JSONObject jsonMap ;
     protected static double tileSize;
     protected static double width;
@@ -57,29 +57,31 @@ public class autoManager{
         length=(double)jsonMap.get("length");
         tileSize=(double)jsonMap.get("nodeSizeMeters"); 
 
-        legalityMap = new boolean[(int)Math.ceil(width/tileSize)][(int)Math.ceil(length/tileSize)];
+        // legalityMap = new boolean[(int)Math.ceil(width/tileSize)][(int)Math.ceil(length/tileSize)];
+        map = new Node[(int)Math.ceil(width/tileSize)][(int)Math.ceil(length/tileSize)];
         JSONArray grid = (JSONArray)jsonMap.get("grid");
-        for (int i=0; i<legalityMap.length; i++){
+        for (int i=0; i<map.length; i++){
             System.out.println(grid.size());
-            System.out.println(legalityMap.length);
+            System.out.println(map.length);
             JSONArray row = (JSONArray)grid.get(i);
-            for (int j=0; j<legalityMap[i].length; j++){
+            for (int j=0; j<map[i].length; j++){
                 System.out.println(row.size());
-                System.out.println(legalityMap[i].length);
+                System.out.println(map[i].length);
                 System.out.println();
-                legalityMap[i][j] = (boolean)row.get(j);
+                map[i][j] = map[i][j]=new Node(i, j, map, (boolean)row.get(j), Node.defaultValue);
+                
                   
             }
         }
     }
 
     public static void refreshMap(){
-        map = new Node[(int)Math.ceil(width/tileSize)][(int)Math.ceil(length/tileSize)];
+        // map = new Node[(int)Math.ceil(width/tileSize)][(int)Math.ceil(length/tileSize)];
 
         
         for (int i=0; i<map.length; i++){
             for (int j=0; j<map[i].length; j++){
-                map[i][j]=new Node(i, j, map, legalityMap[i][j], Node.defaultValue);
+                map[i][j].reset();
             }          
         }
     }
@@ -242,7 +244,7 @@ public class autoManager{
         Pose2d bestPose = null;
         double bestScore=100000;
 
-        for (Pose2d point: FieldPosits.coralSpawnPoints.coralSpawnPoints){
+        for (Pose2d point: FieldPosits.IntakePoints.coralSpawnPoints){
             if (getMapPoint(point).score<bestScore){
                 bestPose=point;
                 bestScore=getMapPoint(point).score;
@@ -325,6 +327,10 @@ public class autoManager{
         public void start(){
             score=0;
             update();
+        }
+
+        public void reset(){
+            score=defaultValue;
         }
 
     

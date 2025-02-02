@@ -18,22 +18,22 @@ public class CreateCoral extends InstantCommand{
     public CreateCoral(String posit){
         switch (posit){
             case "leftLeft":
-                dropSpot=FieldPosits.coralSpawnPoints.leftLeft;
+                dropSpot=FieldPosits.IntakePoints.leftLeft;
                 break;
             case "leftMid":
-                dropSpot=FieldPosits.coralSpawnPoints.leftMid;
+                dropSpot=FieldPosits.IntakePoints.leftMid;
                 break;
             case "leftRight":
-                dropSpot=FieldPosits.coralSpawnPoints.leftRight;
+                dropSpot=FieldPosits.IntakePoints.leftRight;
                 break;
             case "rightLeft":
-                dropSpot=FieldPosits.coralSpawnPoints.rightLeft;
+                dropSpot=FieldPosits.IntakePoints.rightLeft;
                 break;
             case "rightMid":
-                dropSpot=FieldPosits.coralSpawnPoints.rightMid;
+                dropSpot=FieldPosits.IntakePoints.rightMid;
                 break;
             case "rightRight":
-                dropSpot=FieldPosits.coralSpawnPoints.rightRight;
+                dropSpot=FieldPosits.IntakePoints.rightRight;
                 break;
             default:
                 throw new Error("Tried to instantiate a coral creator with an invalid string " + posit);

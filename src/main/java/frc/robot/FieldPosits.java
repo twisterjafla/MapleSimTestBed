@@ -14,30 +14,30 @@ public class FieldPosits {
     /**
      * THESE ARE NOT GRAB POINTS FOR THE ROBOT. THESE POINTS TELL MAPLE SIM WHERE TO SPAWN CORAL AND ARE NOT ACCESABLE BY ROBOT
      */
-    public static class coralSpawnPoints{
-        public static final Pose2d leftLeft= new Pose2d(1.3, 7.7, new Rotation2d());
-        public static final Pose2d leftMid= new Pose2d(0.8, 7.3, new Rotation2d());
-        public static final Pose2d leftRight= new Pose2d(0.4, 7.1, new Rotation2d());
-        public static final Pose2d rightLeft= new Pose2d(0.4, 1, new Rotation2d());
-        public static final Pose2d rightMid= new Pose2d(0.8, 0.7, new Rotation2d());
-        public static final Pose2d rightRight= new Pose2d(1.3, 0.3, new Rotation2d());
+    public static class IntakePoints{
+        public static final Pose2d leftLeft= new Pose2d(1.547, 7.339, Rotation2d.fromDegrees(125));
+        public static final Pose2d leftMid= new Pose2d(1.164, 7.053, Rotation2d.fromDegrees(125));
+        public static final Pose2d leftRight= new Pose2d(0.639, 6.69, Rotation2d.fromDegrees(125));
+        public static final Pose2d rightLeft= new Pose2d(0.697, 1.325, Rotation2d.fromDegrees(-125));
+        public static final Pose2d rightMid= new Pose2d(1.154, 0.987, Rotation2d.fromDegrees(-125));
+        public static final Pose2d rightRight= new Pose2d(1.587, 0.667, Rotation2d.fromDegrees(-125));
         public static final Pose2d[] coralSpawnPoints = {leftLeft, leftMid, leftRight, rightLeft, rightMid, rightRight};
 
     }
 
     public static class scoringPosits{
-        public static final Pose2d A = new Pose2d();
-        public static final Pose2d B = new Pose2d();
-        public static final Pose2d C = new Pose2d();
-        public static final Pose2d D = new Pose2d();
-        public static final Pose2d E = new Pose2d();
-        public static final Pose2d F = new Pose2d();
-        public static final Pose2d G = new Pose2d();
-        public static final Pose2d H = new Pose2d();
-        public static final Pose2d I = new Pose2d();
-        public static final Pose2d J = new Pose2d();
-        public static final Pose2d K = new Pose2d();
-        public static final Pose2d L = new Pose2d();
+        public static final Pose2d A = new Pose2d(4.989, 2.825, Rotation2d.fromDegrees(120));
+        public static final Pose2d B = new Pose2d(5.285, 2.992, Rotation2d.fromDegrees(120));
+        public static final Pose2d C = new Pose2d(5.774, 3.861, Rotation2d.fromDegrees(180));
+        public static final Pose2d D = new Pose2d(5.774, 4.189, Rotation2d.fromDegrees(180));
+        public static final Pose2d E = new Pose2d(5.278, 5.059, Rotation2d.fromDegrees(-120));
+        public static final Pose2d F = new Pose2d(4.989, 5.225, Rotation2d.fromDegrees(-120));
+        public static final Pose2d G = new Pose2d(3.985, 5.225, Rotation2d.fromDegrees(-60));
+        public static final Pose2d H = new Pose2d(3.7, 5.060, Rotation2d.fromDegrees(-60));
+        public static final Pose2d I = new Pose2d(3.197, 4.189, Rotation2d.fromDegrees(0));
+        public static final Pose2d J = new Pose2d(3.197, 3.861, Rotation2d.fromDegrees(0));
+        public static final Pose2d K = new Pose2d(3.7, 2.992, Rotation2d.fromDegrees(60));
+        public static final Pose2d L = new Pose2d(3.985, 2.825, Rotation2d.fromDegrees(60));
         public static final Translation2d L1 = new Translation2d();
         public static final Translation2d L2 = new Translation2d();
         public static final Translation2d L3 = new Translation2d(0, -0.0508);
