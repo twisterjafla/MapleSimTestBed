@@ -22,6 +22,8 @@ import frc.robot.subsystems.elevator.simElevator;
 import frc.robot.subsystems.intake.intakeInterface;
 import frc.robot.subsystems.intake.realIntake;
 import frc.robot.subsystems.intake.simIntake;
+import frc.robot.subsystems.lidar.lidarInterface;
+import frc.robot.subsystems.lidar.simLidar;
 import frc.robot.subsystems.swervedrive.AIRobotInSimulation;
 //import frc.robot.subsystems.swervedrive.FakeBotSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -48,6 +50,7 @@ public class SystemManager{
     public static elevatorInterface elevator;
     public static reefIndexerInterface reefIndexer;
     public static wristElevatorControllManager wristManager;
+    public static lidarInterface lidar;
     //public static realVision realVisTemp;
     
     public static void SystemManagerInit(){
@@ -95,6 +98,13 @@ public class SystemManager{
             // else{
             //     reefIndexer = new realVision();
             // }
+        }
+
+        if (Constants.simConfigs.lidarShouldBeSim){
+            lidar=new simLidar();
+        }
+        else{
+            
         }
 
         

@@ -170,7 +170,7 @@ public class SwerveSubsystem extends SubsystemBase
 
   @Override
   public void simulationPeriodic(){
-    repopObstacles();
+    Pathfinding.setDynamicObstacles(SystemManager.lidar.fetchObsticles(), swerveDrive.getPose().getTranslation());
   }
 
   /**
@@ -466,17 +466,17 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.drive(velocity);
   }
 
-  public void repopObstacles(){
-    List<Pair<Translation2d, Translation2d>> obstacles = new ArrayList<>();
+  // public void repopObstacles(){
+  //   List<Pair<Translation2d, Translation2d>> obstacles = new ArrayList<>();
 
-    List<Pair<Translation2d, Translation2d>> fakeBotHitBoxes = SystemManager.fakeBot.getTrajHitboxes();
-    for (Pair<Translation2d, Translation2d> pair:fakeBotHitBoxes){
-      obstacles.add(pair);
-    }
+  //   List<Pair<Translation2d, Translation2d>> fakeBotHitBoxes = SystemManager.fakeBot.getTrajHitboxes();
+  //   for (Pair<Translation2d, Translation2d> pair:fakeBotHitBoxes){
+  //     obstacles.add(pair);
+  //   }
 
 
-    Pathfinding.setDynamicObstacles(obstacles, swerveDrive.getPose().getTranslation());
-  }
+  //   Pathfinding.setDynamicObstacles(obstacles, swerveDrive.getPose().getTranslation());
+  // }
 
 
   @Override
