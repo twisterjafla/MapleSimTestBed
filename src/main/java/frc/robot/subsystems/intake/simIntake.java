@@ -117,7 +117,7 @@ public class simIntake extends SubsystemBase implements intakeInterface{
                     // The height at which the coral is ejected
                     Meters.of(SystemManager.getIntakePosit().getZ()),
                     // The initial speed of the coral
-                    MetersPerSecond.of(2),
+                    MetersPerSecond.of(-2),
                     // The coral is ejected at a 35-degree slope
                     Radian.of(-SystemManager.getIntakePosit().getRotation().getY())));
             }

@@ -128,16 +128,16 @@ public final class Constants
 
   public static class elevatorConstants{
     public static final double l4EncoderVal = 1.42;
-    public static final double l3EncoderVal = 1.353;
-    public static final double l2EncoderVal = 1.1;
-    public static final double l1EncoderVal = 0.4;
+    public static final double l3EncoderVal = 0.762381;
+    public static final double l2EncoderVal = 0.414528;
+    public static final double l1EncoderVal = 0;
     public static final double encoderToMeters =1;
     public static final double maxHeight = l4EncoderVal;
     public static final Rotation2d angle = Rotation2d.fromDegrees(70);
     public static final Translation3d fromRobotCenter = new Translation3d(0.0584454, 0, 0.583565 );
     public static final double intakePosit = 0;
     public static final double tolerence = 0.05;
-    public static final double speedForSim =0.02;
+    public static final double speedForSim =0.03;
     public static final double compressedLen = 0.889;
     
   }
@@ -153,7 +153,7 @@ public final class Constants
     public static final Rotation2d maxDegrees = new Rotation2d();
     public static final double intakePosit = 0;
     public static final double tolerence = 5;
-    public static final double speedForSim=0.5;
+    public static final double speedForSim=5;
   
   }
 

@@ -1,5 +1,6 @@
 package frc.robot.commands.auto;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.SystemManager;
 import frc.robot.Utils.scoringPosit;
@@ -45,6 +46,7 @@ public class ScorePiece extends Command{
             generalManager.outtake();
             generalManager.setExternalEndCallback(this::intakeIsFinishedCall);
         }
+        SmartDashboard.putNumber("reef pole", posit.pole.getRowAsIndex());
     }
    
 

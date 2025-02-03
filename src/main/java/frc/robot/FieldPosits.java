@@ -26,18 +26,19 @@ public class FieldPosits {
     }
 
     public static class scoringPosits{
-        public static final Pose2d A = new Pose2d(4.989, 2.825, Rotation2d.fromDegrees(120));
-        public static final Pose2d B = new Pose2d(5.285, 2.992, Rotation2d.fromDegrees(120));
-        public static final Pose2d C = new Pose2d(5.774, 3.861, Rotation2d.fromDegrees(180));
-        public static final Pose2d D = new Pose2d(5.774, 4.189, Rotation2d.fromDegrees(180));
-        public static final Pose2d E = new Pose2d(5.278, 5.059, Rotation2d.fromDegrees(-120));
-        public static final Pose2d F = new Pose2d(4.989, 5.225, Rotation2d.fromDegrees(-120));
-        public static final Pose2d G = new Pose2d(3.985, 5.225, Rotation2d.fromDegrees(-60));
-        public static final Pose2d H = new Pose2d(3.7, 5.060, Rotation2d.fromDegrees(-60));
-        public static final Pose2d I = new Pose2d(3.197, 4.189, Rotation2d.fromDegrees(0));
-        public static final Pose2d J = new Pose2d(3.197, 3.861, Rotation2d.fromDegrees(0));
-        public static final Pose2d K = new Pose2d(3.7, 2.992, Rotation2d.fromDegrees(60));
-        public static final Pose2d L = new Pose2d(3.985, 2.825, Rotation2d.fromDegrees(60));
+        public static final Pose2d A = new Pose2d(3.197, 4.189, Rotation2d.fromDegrees(0));
+        public static final Pose2d B = new Pose2d(3.197, 3.861, Rotation2d.fromDegrees(0));
+        public static final Pose2d C = new Pose2d(3.7, 2.992, Rotation2d.fromDegrees(60));
+        public static final Pose2d D = new Pose2d(3.985, 2.825, Rotation2d.fromDegrees(60));
+        public static final Pose2d E = new Pose2d(4.989, 2.825, Rotation2d.fromDegrees(120));
+        public static final Pose2d F = new Pose2d(5.285, 2.992, Rotation2d.fromDegrees(120));
+        public static final Pose2d G = new Pose2d(5.774, 3.861, Rotation2d.fromDegrees(180));
+        public static final Pose2d H = new Pose2d(5.774, 4.189, Rotation2d.fromDegrees(180));
+        public static final Pose2d I = new Pose2d(5.278, 5.059, Rotation2d.fromDegrees(-120));
+        public static final Pose2d J = new Pose2d(4.989, 5.225, Rotation2d.fromDegrees(-120));
+        public static final Pose2d K = new Pose2d(3.985, 5.225, Rotation2d.fromDegrees(-60));
+        public static final Pose2d L = new Pose2d(3.7, 5.060, Rotation2d.fromDegrees(-60));
+        
         public static final Translation2d L1 = new Translation2d();
         public static final Translation2d L2 = new Translation2d();
         public static final Translation2d L3 = new Translation2d(-0.0533654, 0);

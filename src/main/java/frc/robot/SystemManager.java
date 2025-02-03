@@ -134,6 +134,7 @@ public class SystemManager{
         wristManager.periodic();
         generalManager.periodic();
         autoManager.periodic();
+        reefIndexer.periodic();
     }
 
 
