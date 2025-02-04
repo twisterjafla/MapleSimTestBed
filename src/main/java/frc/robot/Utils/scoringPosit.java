@@ -15,9 +15,9 @@ public class scoringPosit {
     public scoringPosit(reefLevel level, reefPole pole){
         this.pole=pole;
         this.level=level;
-
     }
 
+    
     
     public Pose2d getScorePose(){
         return pole.getScorePosit().plus(new Transform2d(level.getTranslation(), new Rotation2d()));

@@ -2,28 +2,19 @@
 package frc.robot.subsystems.intake;
 import java.util.function.BooleanSupplier;
 
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SystemManager;
-import frc.robot.Utils.scoringPosit;
-import frc.robot.subsystems.intake.simIntake.intakeState;
 
-//TODO fix compile errors
+public class realIntake extends SubsystemBase implements intakeInterface { 
 
-//TODO implement interface and subsystem extentions properly
-public class Intake implements extends intakeInterface { 
-
-	public static enum intakeState {
-		intaking,
-		outtaking,
-		resting;
-	}
 	intakeState state;
+
 	CANSparkMax IntakeLeader = new CANSparkMax(Constants.intakeConstants.LeftIntake, MotorType.kBrushless);
 	CANSparkMax IntakeFollow = new CANSparkMax(Constants.intakeConstants.RightIntake, MotorType.kBrushless);
 
@@ -39,10 +30,12 @@ public class Intake implements extends intakeInterface {
 	public void intake() {
 		intakeUntil(()->hasPeice());
 	}
+
 	
 	@Override
 	public boolean hasPeice() {
-		return scoringPosit.hasPiece();
+		//return scoringPosit.hasPeice();
+		return false;
 	}
 	
 	@Override
@@ -50,7 +43,6 @@ public class Intake implements extends intakeInterface {
 		state=intakeState.intaking;
 		stopTrigger=trigger;
 	}
-
 
 	@Override
 	public void outtake() {
@@ -97,7 +89,6 @@ public class Intake implements extends intakeInterface {
 	public intakeState getState() {
 		return state;
 	}
-
 
 	//TODO update get translation
 	@Override
