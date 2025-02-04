@@ -1,4 +1,4 @@
-@ -0,0 +1,97 @@
+
 package frc.robot.subsystems.intake;
 import java.util.function.BooleanSupplier;
 
@@ -13,6 +13,9 @@ import frc.robot.SystemManager;
 import frc.robot.Utils.scoringPosit;
 import frc.robot.subsystems.intake.simIntake.intakeState;
 
+//TODO fix compile errors
+
+//TODO implement interface and subsystem extentions properly
 public class Intake implements extends intakeInterface { 
 
 	public static enum intakeState {
@@ -62,9 +65,12 @@ public class Intake implements extends intakeInterface {
 
 	@Override
 	public void periodic(){
+
 		if (stopTrigger.getAsBoolean()){
 		    stop();					   // Stop Intake Motor
 		}
+
+
 		if (state == intakeState.intaking){
 		    IntakeLeader.set(Constants.intakeConstants.intakeSpeed); // Start Intake Motor
 		}
@@ -74,6 +80,8 @@ public class Intake implements extends intakeInterface {
 		}
 	}
 	
+
+	//TODO should change state, not just motor speed
 	@Override
 	public void stop() {
 		IntakeLeader.stopMotor();
@@ -90,6 +98,8 @@ public class Intake implements extends intakeInterface {
 		return state;
 	}
 
+
+	//TODO update get translation
 	@Override
 	public Translation3d getTranslation() {
 		Rotation2d rotation = SystemManager.wrist.getcurrentLocation();

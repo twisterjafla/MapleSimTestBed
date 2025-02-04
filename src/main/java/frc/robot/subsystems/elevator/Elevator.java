@@ -1,6 +1,7 @@
 package frc.robot.subsystems.elevator;
 import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -9,10 +10,15 @@ import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import frc.robot.Constants;
 import frc.robot.subsystems.wristElevatorControllManager;
 
+
+//TODO fix syntax errors
 public class Elevator implements elevatorInterface {
     
     public double setpoint = 0;
     public RelativeEncoder encoder;
+
+
+    //TODO use the right kind of motor controller
     Talon elevatorMaster = new Talon(Constants.elevatorConstants.LeftMotor);
     Talon elevatorFollow = new Talon(Constants.elevatorConstants.RightMotor);
 
@@ -24,15 +30,17 @@ public class Elevator implements elevatorInterface {
         elevatorMaster.setInverted(false);
         elevatorFollow.setInverted(true);
 
+
+        //TODO use cancoder instead of inbuilt
         encoder = elevatorMaster.getEncoder();
 
     }
 
-    @Override
-    public void setSetpoint(double setpoint) {
-        this.setpoint=setpoint;
-    }
+    //TODO make the elevator actualy move. For now just use a pid loop. later we will swap to a trapozoidal using motion magic but thats gonna be a whole thing.
+    //TODO REMEBER TO USE THE MANAGER SO WE DONT CRUNCH THE INTAKE PLEASE.
 
+
+    //TODO reimplement using tolerence
     @Override
     public boolean isAtSetpoint() {
         encoder.getPosition();
@@ -43,6 +51,8 @@ public class Elevator implements elevatorInterface {
             return false;
         }
     }
+
+
 
     @Override
     public double getEncoderVal() {
@@ -58,9 +68,11 @@ public class Elevator implements elevatorInterface {
         setpoint = 0;
     }
 
+
+
     @Override
-    public void setSetpointInMeters(double setpoint) {
-        setSetpoint(setpoint * Constants.elevatorConstants.encoderTicksPerMeter);
+    public void setSetpoint(double setpoint) {
+        setSetpointRaw(setpoint * Constants.elevatorConstants.encoderTicksPerMeter);
     }
 
     @Override
@@ -73,5 +85,16 @@ public class Elevator implements elevatorInterface {
     }
     public boolean atLegalNonControlState(){
         return Math.abs(getHeight()-Constants.elevatorConstants.maxHeight)<Constants.elevatorConstants.tolerence;
+    }
+
+    @Override
+    public void setSetpointRaw(double setpoint) {
+        this.setpoint=setpoint;
+    }
+
+    @Override
+    public Translation3d getTranslation() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTranslation'");
     }
 }
