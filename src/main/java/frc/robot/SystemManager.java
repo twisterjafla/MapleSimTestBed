@@ -3,6 +3,8 @@ package frc.robot;
 import java.io.File;
 
 import org.ironmaple.simulation.SimulatedArena;
+import org.ironmaple.simulation.drivesims.AbstractDriveTrainSimulation;
+import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -27,6 +29,7 @@ import frc.robot.subsystems.lidar.simLidar;
 import frc.robot.subsystems.swervedrive.AIRobotInSimulation;
 //import frc.robot.subsystems.swervedrive.FakeBotSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.swervedrive.realSimulatedDriveTrain;
 import frc.robot.subsystems.vision.aprilTagInterface;
 import frc.robot.subsystems.vision.photonSim;
 //import frc.robot.subsystems.vision.realVision;
@@ -51,6 +54,7 @@ public class SystemManager{
     public static reefIndexerInterface reefIndexer;
     public static wristElevatorControllManager wristManager;
     public static lidarInterface lidar;
+    public static realSimulatedDriveTrain simButRealTrain=null;
     //public static realVision realVisTemp;
     
     public static void SystemManagerInit(){
@@ -63,7 +67,11 @@ public class SystemManager{
 
 
         if (Constants.simConfigs.intakeShouldBeSim){
+            if (RobotBase.isReal()){
+                simButRealTrain = new realSimulatedDriveTrain(DriveTrainSimulationConfig.Default(), getSwervePose());
+            }
             intake=new simIntake();
+            
         }
         else{
             intake = new realIntake();
@@ -112,9 +120,7 @@ public class SystemManager{
         if (!RobotBase.isReal()){
             AIRobotInSimulation.startOpponentRobotSimulations();
             fakeBot=AIRobotInSimulation.getRobotAtIndex(0);
-            simFeild = SimulatedArena.getInstance();
             // Overrides the default simulation
-            SimulatedArena.overrideInstance(simFeild); 
 
         }
 
@@ -135,6 +141,9 @@ public class SystemManager{
         generalManager.periodic();
         autoManager.periodic();
         reefIndexer.periodic();
+        if (simButRealTrain!=null){
+            simButRealTrain.periodic();
+        }
     }
 
 
