@@ -38,6 +38,8 @@ public class FieldPosits {
         public static final Pose2d J = new Pose2d(4.989, 5.225, Rotation2d.fromDegrees(-120));
         public static final Pose2d K = new Pose2d(3.985, 5.225, Rotation2d.fromDegrees(-60));
         public static final Pose2d L = new Pose2d(3.7, 5.060, Rotation2d.fromDegrees(-60));
+
+        public static final Pose2d resetBecausePathplannerIsDumb = new Pose2d(4.733, 1.133, new Rotation2d());
         
         public static final Translation2d L1 = new Translation2d();
         public static final Translation2d L2 = new Translation2d();

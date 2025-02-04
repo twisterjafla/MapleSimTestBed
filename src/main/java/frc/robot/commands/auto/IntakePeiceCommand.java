@@ -5,8 +5,11 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants;
 import frc.robot.SystemManager;
 import frc.robot.Utils.scoringPosit;
+import frc.robot.Utils.utillFunctions;
 import frc.robot.Utils.warningManager;
 import frc.robot.commands.sim.CreateCoral;
 import frc.robot.subsystems.autoManager;
@@ -15,6 +18,8 @@ import frc.robot.subsystems.generalManager;
 public class IntakePeiceCommand extends Command{
     Pose2d intakePose;
     boolean mechIsFinished=false;
+    boolean driveIsFinished=false;
+    boolean coralHasBeenSpawned=false;
     Command driveCommand;
     Command mechCommand;
 
@@ -27,16 +32,18 @@ public class IntakePeiceCommand extends Command{
 
     @Override
     public void initialize(){
-        if (!RobotBase.isReal()){
-            new CreateCoral(intakePose).schedule();
-        }
+        // if (!RobotBase.isReal()){
+        //     new CreateCoral(intakePose).schedule();
+        // }
         generalManager.intake();
         driveCommand=SystemManager.driveToPose(intakePose);
         driveCommand.schedule();
         mechCommand=generalManager.getStateCommand();
         generalManager.setExternalEndCallback(this::mechIsFinishedCall);
         mechIsFinished=false;
-        SmartDashboard.putBoolean("auto intake is running", true);
+        driveIsFinished=false;
+        coralHasBeenSpawned=false;
+        
     }
 
 
@@ -46,6 +53,20 @@ public class IntakePeiceCommand extends Command{
         //     autoManager.resetAutoAction();
             
         // }
+        if (!driveCommand.isScheduled()){
+            if (utillFunctions.pythagorean(SystemManager.getSwervePose().getX(), intakePose.getX(), SystemManager.getSwervePose().getY(), intakePose.getY())
+            >=Constants.AutonConstants.autoDriveTolerence){
+                driveCommand.schedule();
+            }
+            else{
+                driveIsFinished=true;
+            }
+        }
+        
+        if (mechIsFinished&&driveIsFinished&&!RobotBase.isReal()&&!coralHasBeenSpawned){
+            coralHasBeenSpawned=true;
+            new WaitCommand(Constants.AutonConstants.humanPlayerBeingBad).andThen(new CreateCoral(intakePose.plus(Constants.AutonConstants.intakeCoralOffset))).schedule();
+    }
 
     }
 
@@ -56,6 +77,7 @@ public class IntakePeiceCommand extends Command{
             warningManager.throwAlert(warningManager.autoInternalCancled);
         }
         mechIsFinished=true;
+
     }
 
 

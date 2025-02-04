@@ -45,6 +45,9 @@ public class autoManager{
     protected static double tileSize;
     protected static double width;
     protected static double length;
+    //static int resetCount=0;
+    public static int cycleCount=0;
+    public static int score=0;
     protected static StructPublisher<Pose2d> bestPosePublisher = NetworkTableInstance.getDefault().getStructTopic("bestPose", Pose2d.struct).publish();
     public static void autoManagerInit() {
         try{
@@ -79,6 +82,9 @@ public class autoManager{
 
  
     public static void periodic(){
+        SmartDashboard.putNumber("Cycle count", cycleCount);
+        SmartDashboard.putNumber("Score", score);
+
         if (currentRoutine!=null){
             if (!currentRoutine.isScheduled()){
                 currentRoutine=null;
@@ -136,6 +142,7 @@ public class autoManager{
 
     public static void setControlBooleanSuplier(BooleanSupplier supplier){
         hasControllSupplier=supplier;
+        
     }
 
 
@@ -145,6 +152,8 @@ public class autoManager{
     }
 
     public static void resetMap(){
+        // resetCount++;
+        // SmartDashboard.putNumber("reset count", resetCount);
 
         for (int i=0; i<map.length; i++){
             for (int j=0; j<map[i].length; j++){
@@ -164,10 +173,10 @@ public class autoManager{
  
 
     public static Pair<Integer, Integer> poseToMap(Pose2d pose){
-        if (pose.getX()>width || pose.getY()>length){
+        if (pose.getY()>width || pose.getX()>length){
             return null;
         }
-        return new Pair<Integer, Integer>((int)Math.round(pose.getX()/tileSize), (int)Math.round(pose.getY()/tileSize));
+        return new Pair<Integer, Integer>((int)Math.round(pose.getY()/tileSize), (int)Math.round(pose.getX()/tileSize));
     }
 
     public static Command getAutoAction(){
@@ -203,10 +212,11 @@ public class autoManager{
         }
         bestPosePublisher.set(winningPole.getScorePose());
         // SmartDashboard.putNumber("winningPositScore", getMapPoint(winningPole.getScorePose()).score);
+        // SmartDashboard.putBoolean("winningLegality", getMapPoint(winningPole.getScorePose()).isLegal);
         // SmartDashboard.putBoolean("winning posit had freinds", getMapPoint(winningPole.getScorePose()).friendsPoped);
-        SmartDashboard.putNumber("scoring level", winningPole.level.getasInt());
-        SmartDashboard.putNumber("highest open", SystemManager.reefIndexer.getHighestLevelForRow(winningPole.pole.getRowAsIndex()));
-        SmartDashboard.putBoolean("l4 is closed", SystemManager.reefIndexer.getIsClosed(winningPole.pole.getRowAsIndex(), 3));
+        //SmartDashboard.putNumber("scoring level", winningPole.level.getasInt());
+        //SmartDashboard.putNumber("highest open", SystemManager.reefIndexer.getHighestLevelForRow(winningPole.pole.getRowAsIndex()));
+        //SmartDashboard.putBoolean("l4 is closed", SystemManager.reefIndexer.getIsClosed(winningPole.pole.getRowAsIndex(), 3));
         return winningPole;
 
     }
@@ -311,7 +321,7 @@ public class autoManager{
         }
 
         public static double getLength(Node nodeA, Node NodeB){
-            return Math.sqrt(Math.pow(Math.abs(nodeA.x-NodeB.x), 2)+Math.pow(Math.abs(nodeA.y-NodeB.y), 2));
+            return utillFunctions.pythagorean(nodeA.x, NodeB.x, nodeA.y, NodeB.y);
         }
 
         public void start(){

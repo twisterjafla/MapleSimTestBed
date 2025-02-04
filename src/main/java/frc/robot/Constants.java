@@ -8,6 +8,7 @@ package frc.robot;
 import com.pathplanner.lib.config.PIDConstants;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -73,6 +74,12 @@ public final class Constants
     public static final double widthOfMapMeters=8;
     public static final double heightOfMapMeters=8.9;
     public static final double bonusScore=1;
+
+    public static final double autoDriveTolerence  = 0.1;
+    public static final double distanceWithinPathplannerDontWork = 0.5;
+
+    public static final double humanPlayerBeingBad = 0.5;
+    public static final Transform2d intakeCoralOffset = new Transform2d(-0.5, 0, new Rotation2d());
   
   }
 
@@ -128,7 +135,7 @@ public final class Constants
 
   public static class elevatorConstants{
     public static final double l4EncoderVal = 1.42;
-    public static final double l3EncoderVal = 0.762381;
+    public static final double l3EncoderVal = 0.702381;
     public static final double l2EncoderVal = 0.414528;
     public static final double l1EncoderVal = 0;
     public static final double encoderToMeters =1;

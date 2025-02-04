@@ -1,5 +1,6 @@
 package frc.robot.subsystems.intake;
 
+import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Radian;
@@ -117,9 +118,9 @@ public class simIntake extends SubsystemBase implements intakeInterface{
                     // The height at which the coral is ejected
                     Meters.of(SystemManager.getIntakePosit().getZ()),
                     // The initial speed of the coral
-                    MetersPerSecond.of(-2),
+                    MetersPerSecond.of(2),
                     // The coral is ejected at a 35-degree slope
-                    Radian.of(-SystemManager.getIntakePosit().getRotation().getY())));
+                    Degrees.of(-35)));
             }
         }
     }

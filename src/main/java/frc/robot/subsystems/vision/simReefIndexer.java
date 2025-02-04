@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class simReefIndexer implements reefIndexerInterface{
 
-    IntegerArrayPublisher reefBranch = NetworkTableInstance.getDefault().getIntegerArrayTopic("branch 10 ").publish();
+    
     int heartBeat=0;
 
     @Override
@@ -64,6 +64,11 @@ public class simReefIndexer implements reefIndexerInterface{
             return 2;
         }
         return 1;
+    }
+
+    @Override
+    public void resetSIMONLY(){
+        ReefscapeReefSimulation.getInstance().get().clearReef();
     }
 
  

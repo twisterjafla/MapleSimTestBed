@@ -28,23 +28,7 @@ public class scoringPosit {
     }
 
     public int getPointValForItem() {
-        if (DriverStation.isAutonomous()){
-            switch (level){
-                case L4: return 7;
-                case L3: return 6;
-                case L2: return 4;
-                case L1: return 3;
-            }
-        }
-        else{
-            switch(level){
-                case L4: return 5;
-                case L3: return 4;
-                case L2: return 3;
-                case L1: return 2;
-            }
-        }
-        return 0;
+       return getPointValForItem(level.getasInt());
     }
 
     public static int getPointValForItem(int level) {
