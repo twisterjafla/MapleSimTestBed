@@ -6,6 +6,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.intake.simIntake.intakeState;
 
+
 public interface intakeInterface extends Subsystem{
     // public void intake();
     // public void outtake();

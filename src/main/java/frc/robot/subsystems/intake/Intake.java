@@ -2,27 +2,30 @@
 package frc.robot.subsystems.intake;
 import java.util.function.BooleanSupplier;
 
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 import frc.robot.SystemManager;
 import frc.robot.Utils.scoringPosit;
 import frc.robot.subsystems.intake.simIntake.intakeState;
+import frc.robot.subsystems.intake.simIntake;
 
 //TODO fix compile errors
 
 //TODO implement interface and subsystem extentions properly
-public class Intake implements extends intakeInterface { 
+public class Intake extends SubsystemBase implements intakeInterface { 
 
-	public static enum intakeState {
-		intaking,
-		outtaking,
-		resting;
-	}
+	// public static enum intakeState {
+	// 	intaking,
+	// 	outtaking,
+	// 	resting;
+	// }
 	intakeState state;
 	CANSparkMax IntakeLeader = new CANSparkMax(Constants.intakeConstants.LeftIntake, MotorType.kBrushless);
 	CANSparkMax IntakeFollow = new CANSparkMax(Constants.intakeConstants.RightIntake, MotorType.kBrushless);
@@ -42,7 +45,8 @@ public class Intake implements extends intakeInterface {
 	
 	@Override
 	public boolean hasPeice() {
-		return scoringPosit.hasPiece();
+		return false;
+		// return scoringPosit.hasPeice();
 	}
 	
 	@Override
