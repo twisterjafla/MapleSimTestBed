@@ -26,13 +26,6 @@ import frc.robot.SystemManager;
 public class simIntake extends SubsystemBase implements intakeInterface{
     IntakeSimulation intakeSim;
     
-
-    public static enum intakeState{
-        intaking,
-        outtaking,
-        resting;
-    }
-    
     private Pose3d coralPose = new Pose3d(-1000, -1000, -1000, new Rotation3d());
     StructPublisher<Pose3d> heldCoralPublisher = NetworkTableInstance.getDefault().getStructTopic("heldCoral", Pose3d.struct).publish();
 

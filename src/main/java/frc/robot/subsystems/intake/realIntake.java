@@ -12,20 +12,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 import frc.robot.SystemManager;
-import frc.robot.Utils.scoringPosit;
-import frc.robot.subsystems.intake.simIntake.intakeState;
-import frc.robot.subsystems.intake.simIntake;
 
-//TODO fix compile errors
+public class realIntake extends SubsystemBase implements intakeInterface { 
 
-//TODO implement interface and subsystem extentions properly
-public class Intake extends SubsystemBase implements intakeInterface { 
-
-	// public static enum intakeState {
-	// 	intaking,
-	// 	outtaking,
-	// 	resting;
-	// }
 	intakeState state;
 	CANSparkMax IntakeLeader = new CANSparkMax(Constants.intakeConstants.LeftIntake, MotorType.kBrushless);
 	CANSparkMax IntakeFollow = new CANSparkMax(Constants.intakeConstants.RightIntake, MotorType.kBrushless);

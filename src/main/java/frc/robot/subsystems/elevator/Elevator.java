@@ -1,4 +1,8 @@
 package frc.robot.subsystems.elevator;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.geometry.Translation3d;
@@ -19,19 +23,24 @@ public class Elevator implements elevatorInterface {
 
 
     //TODO use the right kind of motor controller
-    Talon elevatorMaster = new Talon(Constants.elevatorConstants.LeftMotor);
-    Talon elevatorFollow = new Talon(Constants.elevatorConstants.RightMotor);
+    // Kraken motor in phoenix 6 library
+    TalonFX elevatorMaster = new TalonFX(Constants.elevatorConstants.LeftMotor);
+    TalonFXConfiguration elevatorMasterConfig =  new TalonFXConfiguration();
+
+    TalonFX elevatorFollow = new TalonFX(Constants.elevatorConstants.RightMotor);
+    TalonFXConfiguration elevatorFollowConfig =  new TalonFXConfiguration();
 
     wristElevatorControllManager manager;
     public void initElevator() {
-
+        elevatorMasterConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
     
-        elevatorMaster.addFollower(elevatorFollow);
-        elevatorMaster.setInverted(false);
-        elevatorFollow.setInverted(true);
+        // elevatorMaster.addFollower(elevatorFollow);
+        // elevatorMaster.setInverted(false);
+        // elevatorFollow.setInverted(true);
 
 
         //TODO use cancoder instead of inbuilt
+        CANCoder thingy = new CANCoder(Constants.elevatorConstants.LeftMotor);
         encoder = elevatorMaster.getEncoder();
 
     }

@@ -19,8 +19,8 @@ import frc.robot.subsystems.generalManager;
 import frc.robot.subsystems.wristElevatorControllManager;
 import frc.robot.subsystems.elevator.elevatorInterface;
 import frc.robot.subsystems.elevator.simElevator;
-import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.intakeInterface;
+import frc.robot.subsystems.intake.realIntake;
 //import frc.robot.subsystems.intake.realIntake;
 import frc.robot.subsystems.intake.simIntake;
 import frc.robot.subsystems.lidar.lidarInterface;
@@ -67,7 +67,7 @@ public class SystemManager{
             intake=new simIntake();
         }
         else{
-            intake = new Intake();
+            intake = new realIntake();
         }
 
         if (Constants.simConfigs.aprilTagShouldBeSim){
