@@ -64,6 +64,8 @@ public class SystemManager{
         
         feild = new Field2d();
         SmartDashboard.putData("Field", feild);
+        SimulatedArena.ALLOW_CREATION_ON_REAL_ROBOT=Constants.simConfigs.robotCanBeSimOnReal;
+
 
 
         if (Constants.simConfigs.intakeShouldBeSim){
@@ -132,7 +134,6 @@ public class SystemManager{
         generalManager.generalManagerInit();
         autoManager.autoManagerInit();
         System.out.println("sytems started up");
-        SimulatedArena.ALLOW_CREATION_ON_REAL_ROBOT=Constants.simConfigs.robotCanBeSimOnReal;
     }
 
 
