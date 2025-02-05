@@ -115,6 +115,7 @@ public final class Constants
     public static final boolean elevatorShouldBeSim=true||!RobotBase.isReal();
     public static final boolean reefIndexerShouldBeSim=true||!RobotBase.isReal();
     public static final boolean lidarShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean robotCanBeSimOnReal=true;
 
   }
   public static class controllerIDs{

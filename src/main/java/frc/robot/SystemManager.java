@@ -126,6 +126,7 @@ public class SystemManager{
         generalManager.generalManagerInit();
         autoManager.autoManagerInit();
         System.out.println("sytems started up");
+        SimulatedArena.ALLOW_CREATION_ON_REAL_ROBOT=Constants.simConfigs.robotCanBeSimOnReal;
     }
 
 
