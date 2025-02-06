@@ -142,9 +142,7 @@ public class SystemManager{
         generalManager.periodic();
         autoManager.periodic();
         reefIndexer.periodic();
-        if (simButRealTrain!=null){
-            simButRealTrain.periodic();
-        }
+    
     }
 
 
