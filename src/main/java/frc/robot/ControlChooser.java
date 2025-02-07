@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Utils.BetterTrigger;
 import frc.robot.Utils.utillFunctions;
+import frc.robot.commands.auto.smallAutoDrive;
 //import frc.robot.commands.swervedrive.drivebase.FakeDrive;
 import frc.robot.commands.sim.CreateCoral;
 
@@ -115,6 +116,7 @@ public class ControlChooser {
        xbox1.x(loop).onTrue(new InstantCommand(()->generalManager.scoreL3()));
        xbox1.b(loop).onTrue(new InstantCommand(()->generalManager.scoreL2()));
        xbox1.a(loop).onTrue(new InstantCommand(()->generalManager.scoreL1()));
+       xbox1.leftBumper(loop).onTrue(new smallAutoDrive(Constants.driveConstants.startingPosit));
        xbox1.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.outtake()));
        //xbox1.y(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(5.8,3.8, new Rotation2d(Math.PI))));
        //xbox1.a(loop).onTrue(SystemManager.swerve.testDrive());      
@@ -160,8 +162,9 @@ public class ControlChooser {
     private EventLoop getAutoTestControl(){
         EventLoop loop = new EventLoop();
         new Trigger(loop, xbox1.leftTrigger(0.75)).onTrue(new InstantCommand(()->autoManager.giveControl())).onFalse(new InstantCommand(()->autoManager.takeControl()));
-        xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(FieldPosits.scoringPosits.A));
+        xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(FieldPosits.scoringPosits.F));
         xbox1.x(loop).onTrue(new InstantCommand(()->SystemManager.reefIndexer.resetSIMONLY()));
+       
         return loop;
     }
 

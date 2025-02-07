@@ -1,6 +1,10 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.units.DistanceUnit;
+import edu.wpi.first.units.LinearVelocityUnit;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -36,7 +40,7 @@ public class IntakePeiceCommand extends Command{
         //     new CreateCoral(intakePose).schedule();
         // }
         generalManager.intake();
-        driveCommand=SystemManager.driveToPose(intakePose);
+        driveCommand=SystemManager.swerve.driveToPose(intakePose, LinearVelocity.ofBaseUnits(Constants.AutonConstants.colisionSpeed, LinearVelocityUnit.combine(Units.Meters, Units.Second)));
         driveCommand.schedule();
         mechCommand=generalManager.getStateCommand();
         generalManager.setExternalEndCallback(this::mechIsFinishedCall);
@@ -55,7 +59,14 @@ public class IntakePeiceCommand extends Command{
         // }
         if (!driveCommand.isScheduled()){
             if (utillFunctions.pythagorean(SystemManager.getSwervePose().getX(), intakePose.getX(), SystemManager.getSwervePose().getY(), intakePose.getY())
-            >=Constants.AutonConstants.autoDriveTolerence){
+                >=Constants.AutonConstants.autoDriveIntakeTolerence){
+                if (
+                    utillFunctions.pythagorean(SystemManager.getSwervePose().getX(), intakePose.getX(),
+                    SystemManager.getSwervePose().getY(), intakePose.getY())
+                    <=Constants.AutonConstants.distanceWithinPathplannerDontWork){
+
+                    driveCommand= new smallAutoDrive(intakePose);
+                }
                 driveCommand.schedule();
             }
             else{

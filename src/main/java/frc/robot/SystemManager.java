@@ -163,8 +163,6 @@ public class SystemManager{
         return intake.hasPeice();
     }
 
-    public static Command driveToPose(Pose2d pose){
-        return swerve.driveToPose(pose);
-    }
+    
 
 }
