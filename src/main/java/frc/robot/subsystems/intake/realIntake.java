@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SystemManager;
@@ -17,6 +18,18 @@ public class realIntake extends SubsystemBase implements intakeInterface{
 	intakeState state;
 	CANSparkMax IntakeLeader = new CANSparkMax(Constants.intakeConstants.LeftIntake, MotorType.kBrushless);
 	CANSparkMax IntakeFollow = new CANSparkMax(Constants.intakeConstants.RightIntake, MotorType.kBrushless);
+	DigitalInput frontBeambrake = new DigitalInput(Constants.intakeConstants.frontBeamBrakePort);
+	DigitalInput backBeambrake = new DigitalInput(Constants.intakeConstants.backBeamBrakePort);
+	
+	hasPeiceState peiceState=hasPeiceState.full;
+
+
+	private enum hasPeiceState{
+		intaking,
+		full,
+		empty,
+		starting
+	}
 
 	BooleanSupplier stopTrigger=()->{return false;};
 
@@ -34,9 +47,48 @@ public class realIntake extends SubsystemBase implements intakeInterface{
 	@Deprecated
 	@Override
 	public boolean hasPeice() {
-		return true;
+		return peiceState==hasPeiceState.full;
 	}
 	
+	public void checkForPiece(){
+
+		//starting
+		if (peiceState==hasPeiceState.starting){
+			if(frontBeambrake.get()){
+				peiceState=hasPeiceState.full;
+			}
+			else{
+				peiceState=hasPeiceState.empty;
+			}
+		}
+
+		//empty
+		else if (peiceState==hasPeiceState.empty){
+			if (backBeambrake.get()){
+				peiceState=hasPeiceState.intaking;
+			}
+		}
+
+		//intakeing
+		else if(peiceState==hasPeiceState.intaking){
+			if (!backBeambrake.get()){
+				if (frontBeambrake.get()){
+					peiceState=hasPeiceState.full;
+				}
+				else{
+					peiceState=hasPeiceState.empty;
+				}
+			}
+		}
+
+		//full
+		else if(peiceState==hasPeiceState.full){
+			if(!frontBeambrake.get()){
+				peiceState=hasPeiceState.empty;
+			}
+		}
+	}
+
 	@Override
 	public void intakeUntil(BooleanSupplier trigger) {
 		state=intakeState.intaking;

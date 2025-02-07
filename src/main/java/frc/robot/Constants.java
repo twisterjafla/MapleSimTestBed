@@ -137,6 +137,9 @@ public final class Constants
     public static final double coralFromWristLen = 0.0715772;
     public static final double coralLenght = 0.3;
     public static final double coralWidth = 0.11;
+
+    public static final int frontBeamBrakePort=50;
+    public static final int backBeamBrakePort=50;
   }
 
   public static class elevatorConstants{
