@@ -48,6 +48,7 @@ public class simIntake extends SubsystemBase implements intakeInterface{
         else{
             intakeSim= IntakeSimulation.InTheFrameIntake("Coral", SystemManager.swerve.getMapleSimDrive().get(), Meters.of(0.7), IntakeSimulation.IntakeSide.BACK, 1);
         }
+        intakeSim.addGamePieceToIntake();
     }
 
     @Override 

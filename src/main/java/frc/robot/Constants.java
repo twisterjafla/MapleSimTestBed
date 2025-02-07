@@ -7,6 +7,7 @@ package frc.robot;
 
 import com.pathplanner.lib.config.PIDConstants;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -50,6 +51,7 @@ public final class Constants
     public static final double maxSpeed  = 4.6;
     public static final Matter chassis    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(3)), robotMass);
     public static final double MOI = 6.884;
+     public static final Pose2d startingPosit =  new Pose2d(7.182, 3.822, Rotation2d.fromDegrees(180));
  
 
     public static enum driveType {

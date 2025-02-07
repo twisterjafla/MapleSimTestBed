@@ -59,7 +59,7 @@ public class SystemManager{
     
     public static void SystemManagerInit(){
         swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),  "swerve"));
-        swerve.resetOdometry(new Pose2d(3.,3, new Rotation2d()));
+        swerve.resetOdometry(Constants.driveConstants.startingPosit);
         //swerveReff = new SwerveSubsystemReff(new File(Filesystem.getDeployDirectory(),  "swerve/falcon"));
         
         feild = new Field2d();

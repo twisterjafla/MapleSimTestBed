@@ -47,7 +47,7 @@ public class autoManager{
     protected static double length;
     //static int resetCount=0;
     public static int cycleCount=0;
-    public static int score=0;
+    public static int score=3;
     protected static StructPublisher<Pose2d> bestPosePublisher = NetworkTableInstance.getDefault().getStructTopic("bestPose", Pose2d.struct).publish();
     public static void autoManagerInit() {
         try{

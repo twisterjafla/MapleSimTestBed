@@ -5,6 +5,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 
 public class FieldPosits {
+   
+
     public static class StaringGamePeices{
         public static final Pose2d leftStack= new Pose2d(1.2, 5.8, new Rotation2d());
         public static final Pose2d midStack = new Pose2d(1.2, 4, new Rotation2d());
