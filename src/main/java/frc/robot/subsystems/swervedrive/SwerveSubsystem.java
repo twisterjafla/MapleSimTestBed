@@ -31,6 +31,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -189,8 +191,8 @@ public class SwerveSubsystem extends SubsystemBase
             //this::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             (speeds, feedforwards) -> drive(speeds),
             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                Constants.AutonConstants.TRANSLATION_PID, // Translation PID constants
-                Constants.AutonConstants.ANGLE_PID // Rotation PID constants
+                Constants.AutonConstants.translationPID, // Translation PID constants
+                Constants.AutonConstants.anglePID // Rotation PID constants
             ),
             //new RobotConfig(Constants.driveConstants.robotMass, Constants.driveConstants.MOI, getPathplannerStyleConfig(), swerveDrive.swerveDriveConfiguration.getTrackwidth()),
             config,
@@ -263,19 +265,25 @@ public class SwerveSubsystem extends SubsystemBase
    * @param pose Target {@link Pose2d} to go to.
    * @return PathFinding command
    */
-  public Command driveToPose(Pose2d pose)
-  {
-// Create the constraints to use while pathfinding
-    // PathConstraints constraints = new PathConstraints(
-    //     swerveDrive.getMaximumChassisVelocity(), 4.0,
-    //     swerveDrive.getMaximumChassisAngularVelocity(), Units.degreesToRadians(720));
-
-// Since AutoBuilder is configured, we can use it to build pathfinding commands
+  public Command driveToPose(Pose2d pose){
     return AutoBuilder.pathfindToPose(
         pose,
         constraints
                                      );
   }
+
+
+    /**
+   * Use PathPlanner Path finding to go to a point on the field.
+   *
+   * @param pose Target {@link Pose2d} to go to.
+   * @param velocity Target velocity at the end of the path
+   * @return PathFinding command
+   */
+  public Command driveToPose(Pose2d pose, LinearVelocity velocity){
+    return AutoBuilder.pathfindToPose(pose, constraints, velocity);
+  }
+
 
   /**
    * Command to drive the robot using translative values and heading as a setpoint.
@@ -444,6 +452,18 @@ public class SwerveSubsystem extends SubsystemBase
                       rotation,
                       fieldRelative,
                       false); // Open loop is disabled since it shouldn't be used most of the time.
+  }
+
+
+  public void drive(double speed, Rotation2d driveAngle, Rotation2d rotationGoal){
+
+    driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(
+            -(driveAngle.getCos()*speed )* swerveDrive.getMaximumChassisVelocity(),
+            (driveAngle.getSin()*speed) * swerveDrive.getMaximumChassisVelocity(), 
+            rotationGoal.getRadians(),
+            swerveDrive.getOdometryHeading().getRadians(),
+            swerveDrive.getMaximumChassisVelocity()));
+
   }
 
   /**
@@ -716,4 +736,5 @@ public class SwerveSubsystem extends SubsystemBase
   public Pose2d getMapleSimPose(){
     return getMapleSimDrive().get().getSimulatedDriveTrainPose();
   }
+
 }

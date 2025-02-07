@@ -15,8 +15,8 @@ public class realSimulatedDriveTrain extends SwerveDriveSimulation{
 
     //public realSimulatedDriveTrain(){}
 
-
-    public void periodic(){
+    @Override
+    public void simulationSubTick(){
         this.setSimulationWorldPose(SystemManager.getSwervePose());
     }
 }

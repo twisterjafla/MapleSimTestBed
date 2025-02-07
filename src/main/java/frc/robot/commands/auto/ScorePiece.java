@@ -32,7 +32,7 @@ public class ScorePiece extends Command{
         generalManager.scoreAt(posit.level.getasInt());
 
 
-        driveCommand=SystemManager.driveToPose(posit.getScorePose());
+        driveCommand=SystemManager.swerve.driveToPose(posit.getScorePose());
         driveCommand.schedule();
 
         mechCommand=generalManager.getStateCommand();
@@ -48,7 +48,14 @@ public class ScorePiece extends Command{
     public void execute() {
         if (!driveCommand.isScheduled()){
             if (utillFunctions.pythagorean(SystemManager.getSwervePose().getX(), posit.getScorePose().getX(), SystemManager.getSwervePose().getY(), posit.getScorePose().getY())
-            >=Constants.AutonConstants.autoDriveTolerence){
+                >=Constants.AutonConstants.autoDriveScoreTolerence){
+                if (
+                    utillFunctions.pythagorean(SystemManager.getSwervePose().getX(), posit.getScorePose().getX(),
+                    SystemManager.getSwervePose().getY(), posit.getScorePose().getY())
+                    <=Constants.AutonConstants.distanceWithinPathplannerDontWork){
+
+                    driveCommand= new smallAutoDrive(posit.getScorePose());
+                }
                 driveCommand.schedule();
             }
             else{

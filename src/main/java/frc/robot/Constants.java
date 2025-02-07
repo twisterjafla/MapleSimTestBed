@@ -7,6 +7,7 @@ package frc.robot;
 
 import com.pathplanner.lib.config.PIDConstants;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -50,6 +51,7 @@ public final class Constants
     public static final double maxSpeed  = 4.6;
     public static final Matter chassis    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(3)), robotMass);
     public static final double MOI = 6.884;
+    public static final Pose2d startingPosit =  new Pose2d(7.182, 3.822, Rotation2d.fromDegrees(180));
  
 
     public static enum driveType {
@@ -66,20 +68,23 @@ public final class Constants
   {
 
     // public static final PIDConstants TRANSLATION_PID = new PIDConstants(10, 0, 0.5);
-    public static final PIDConstants TRANSLATION_PID = new PIDConstants(10, 0, 0);
+    public static final PIDConstants translationPID = new PIDConstants(10, 0, 0);
+    public static final PIDConstants smallAutoPID = new PIDConstants(1.0, 0, 0.1);
 
-    public static final PIDConstants ANGLE_PID       = new PIDConstants(5, 0, 0);
-    public static final double colisionSpeed = 2;
+    public static final PIDConstants anglePID       = new PIDConstants(5, 0, 0);
+    public static final double colisionSpeed = 0;
 
     public static final double widthOfMapMeters=8;
     public static final double heightOfMapMeters=8.9;
     public static final double bonusScore=1;
 
-    public static final double autoDriveTolerence  = 0.1;
+    public static final double autoDriveScoreTolerence  = 0.01;
+    public static final double autoDriveIntakeTolerence = 0.1;
     public static final double distanceWithinPathplannerDontWork = 0.5;
 
     public static final double humanPlayerBeingBad = 0.5;
-    public static final Transform2d intakeCoralOffset = new Transform2d(-0.5, 0, new Rotation2d());
+    public static final Transform2d intakeCoralOffset = new Transform2d(-0.47, 0, new Rotation2d());
+    public static final int autoDriveCorrectCount = 3;
   
   }
 
