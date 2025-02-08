@@ -153,6 +153,9 @@ public class SystemManager{
     }
 
     public static Pose2d getRealPoseMaple(){
+        if (RobotBase.isReal()){
+            return getSwervePose();
+        }
         return swerve.getMapleSimPose();
     }
 
