@@ -28,13 +28,13 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
 
         public realVision() {
             // Default values just in case no values are grabbed
-            boolean[][] reefDefaultList = {false, false, false, false};
-            boolean[][] algeaDefaultList = {false, false};
+            boolean[] reefDefaultList = {false, false, false};
+            boolean[] algeaDefaultList = {false, false};
             Pose3d robotDefaultPose = new Pose3d();
 
             NetworkTableInstance inst = NetworkTableInstance.getDefault();
-            this.reefLevelSubscribers = new ArrayList<>();
-            this.algeaLevelSubscribers = new ArrayList<>();
+            this.reefLevelSubscribers = new ArrayList<BooleanArraySubscriber>();
+            this.algeaLevelSubscribers = new ArrayList<BooleanArraySubscriber>();
 
             // Loops through and add the reef subscriber to the list
             for (int i = 2; i < 5; i++) {
@@ -46,7 +46,7 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
             // Same thing as the reef one
             for (int i = 2; i < 4; i++) {
                 BooleanArrayTopic algeaLevel = inst.getBooleanArrayTopic("ReefLevel" + Integer.toString(i));
-                BooleanArraySubscriber algeaSubscriber = reefLevel.subscribe();
+                BooleanArraySubscriber algeaSubscriber = algeaLevel.subscribe(algeaDefaultList, PubSubOption.keepDuplicates(true));
                 this.algeaLevelSubscribers.add(algeaSubscriber);
             }
     
@@ -63,14 +63,14 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
 
         @Override
         public boolean[][] getFullReefState() {
-            ArrayList<ArrayList<Boolean>> reefArray = {this.reefLevelSubscribers.get(0), this.reefLevelSubscribers.get(1), this.reefLevelSubscribers.get(2)};
+            boolean[][] reefArray = {this.reefLevelSubscribers.get(0).get(), this.reefLevelSubscribers.get(1).get(), this.reefLevelSubscribers.get(2).get()};
             return reefArray;
     
         }
 
         @Override
         public boolean[][] getAlgeaPosits() {
-            ArrayList<ArrayList<Boolean>> algeaArray = {this.algeaLevelSubscribers.get(0), this.algeaLevelSubscribers.get(1), this.algeaLevelSubscribers.get(2)};
+            boolean[][] algeaArray = {this.algeaLevelSubscribers.get(0).get(), this.algeaLevelSubscribers.get(1).get(), this.algeaLevelSubscribers.get(2).get()};
             return algeaArray;
         }
 
@@ -101,6 +101,12 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
                 return 2;
             }
             return 1;
+        }
+
+        @Override
+        public void resetSIMONLY() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'resetSIMONLY'");
         }
 
 }
