@@ -5,6 +5,9 @@
 package frc.robot;
 
 
+import com.ctre.phoenix6.configs.MotionMagicConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.pathplanner.lib.config.PIDConstants;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -155,6 +158,31 @@ public final class Constants
     public static final double tolerence = 0.05;
     public static final double speedForSim =0.03;
     public static final double compressedLen = 0.889;
+
+    public static final int leftMotorID=50;
+    public static final int rightMotorID=50;
+
+
+    // in init function
+    public static final TalonFXConfiguration talonFXConfigs = new TalonFXConfiguration();
+
+    // set slot 0 gains
+    public static final Slot0Configs slot0Configs = new Slot0Configs()
+        .withKS( 0.25) // Add 0.25 V output to overcome static friction
+        .withKV(0.12) // A velocity target of 1 rps results in 0.12 V output
+        .withKA(0.01) // An acceleration of 1 rps/s requires 0.01 V output
+        .withKP(4.8) // A position error of 2.5 rotations results in 12 V output
+        .withKI(0) // no output for integrated error
+        .withKD(0.1) // A velocity error of 1 rps results in 0.1 V output
+    ;
+
+    // set Motion Magic settings
+    MotionMagicConfigs motionMagicConfigs = new MotionMagicConfigs()
+        .withMotionMagicAcceleration(160)// Target acceleration of 160 rps/s (0.5 seconds)
+        .withMotionMagicCruiseVelocity(80)// Target cruise velocity of 80 rps
+        .withMotionMagicJerk(1600)// Target jerk of 1600 rps/s/s (0.1 seconds)
+    ;
+
     
   }
 
