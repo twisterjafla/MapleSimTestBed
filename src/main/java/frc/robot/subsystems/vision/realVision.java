@@ -20,35 +20,39 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class realVision extends SubsystemBase implements aprilTagInterface, reefIndexerInterface {
     private final StructSubscriber<Pose3d> robotPoseSubscriber;
-
-    private final BooleanArraySubscriber reefSubscriber;
-     ArrayList<BooleanArraySubscriber> reefLevelSubscribers;
-    private final StructSubscriber algeaSubscriber;
+    private ArrayList<BooleanArraySubscriber> reefLevelSubscribers;
+    private ArrayList<BooleanArraySubscriber> algeaLevelSubscribers;
     
 
 
 
         public realVision() {
-            boolean[][] reefDefaultList = {{false}, {false}};
-            boolean[][] algeaDefaultList = {{false}, {false}};
+            // Default values just in case no values are grabbed
+            boolean[][] reefDefaultList = {false, false, false, false};
+            boolean[][] algeaDefaultList = {false, false};
             Pose3d robotDefaultPose = new Pose3d();
-            NetworkTableInstance inst = NetworkTableInstance.getDefault();
 
+            NetworkTableInstance inst = NetworkTableInstance.getDefault();
+            this.reefLevelSubscribers = new ArrayList<>();
+            this.algeaLevelSubscribers = new ArrayList<>();
+
+            // Loops through and add the reef subscriber to the list
             for (int i = 2; i < 5; i++) {
                 BooleanArrayTopic reefLevel = inst.getBooleanArrayTopic("ReefLevel" + Integer.toString(i));
+                BooleanArraySubscriber reefSubscriber = reefLevel.subscribe(reefDefaultList, PubSubOption.keepDuplicates(true));
+                this.reefLevelSubscribers.add(reefSubscriber);
+            }
 
+            // Same thing as the reef one
+            for (int i = 2; i < 4; i++) {
+                BooleanArrayTopic algeaLevel = inst.getBooleanArrayTopic("ReefLevel" + Integer.toString(i));
+                BooleanArraySubscriber algeaSubscriber = reefLevel.subscribe();
+                this.algeaLevelSubscribers.add(algeaSubscriber);
             }
     
-            
+            // Gets the robot's position's subscriber
             StructTopic<Pose3d> robotPoseTopic = inst.getStructTopic("RobotValues", Pose3d.struct);
             this.robotPoseSubscriber = robotPoseTopic.subscribe(robotDefaultPose, PubSubOption.keepDuplicates(true));
-            //StructTopic<Array> reefTopic = inst.getStructTopic("ReefValues");
-            //this.reefSubscriber = reefTopic.subscribe(reefDefaultList, PubSubOption.keepDuplicates(true));
-            StructArrayTopic<Array> reefTopic = inst.getStructTopic("ReefValues", StructTopic<Array>);
-            this.reefSubscriber = reefTopic.subscribe(reefDefaultList, PubSubOption.keepDuplicates(true));
-            StructTopic<Array> algeaTopic = inst.getStructTopic("AlgeaValues", StructTopic<Array>);
-            this.algeaSubscriber = algeaTopic.subscribe(algeaDefaultList, PubSubOption.keepDuplicates(true));
-            
 
         }
         
@@ -59,19 +63,29 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
 
         @Override
         public boolean[][] getFullReefState() {
-            return this.reefSubscriber.get();
+            ArrayList<ArrayList<Boolean>> reefArray = {this.reefLevelSubscribers.get(0), this.reefLevelSubscribers.get(1), this.reefLevelSubscribers.get(2)};
+            return reefArray;
     
         }
 
         @Override
         public boolean[][] getAlgeaPosits() {
-            return algeaSubscriber.get();
+            ArrayList<ArrayList<Boolean>> algeaArray = {this.algeaLevelSubscribers.get(0), this.algeaLevelSubscribers.get(1), this.algeaLevelSubscribers.get(2)};
+            return algeaArray;
         }
 
         @Override
         public boolean getIsClosed(int row, int level) {
             boolean[][] reefList = getFullReefState();
             return !reefList[row][level];
+            
+        }
+
+        @Override
+        public boolean hasAlgea(int row, int level) {
+            boolean[][] algeaList = this.getAlgeaPosits();
+            return !algeaList[level][row];
+
             
         }
 
@@ -88,14 +102,5 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
             }
             return 1;
         }
-
-        @Override
-        public boolean hasAlgea(int row, int level) {
-            boolean[][] algeaList = this.getAlgeaPosits();
-            return !algeaList[level][row];
-
-            
-        }
-
 
 }
