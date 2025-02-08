@@ -41,10 +41,6 @@ public class simReefIndexer implements reefIndexerInterface{
         return returnable;
     }
 
-    public void periodic(){
-        getFullReefState();
-    }
-
     @Override
     public boolean getIsClosed(int row, int level) {
         SmartDashboard.putNumber("reef pole requested", row);

@@ -6,7 +6,7 @@ public interface reefIndexerInterface {
     public int getHighestLevelForRow(int row);
     public boolean hasAlgea(int row, int level);
     public boolean[][] getAlgeaPosits();
-    public void periodic();
+
     public void resetSIMONLY();
     
 }
