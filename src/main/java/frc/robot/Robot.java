@@ -43,6 +43,7 @@ public class Robot extends TimedRobot
   private        Command m_autonomousCommand;
   ControlChooser controlChooser;
   SendableChooser<Integer> controlChooserTest = new SendableChooser<Integer>();
+  int heartBeat=0;
   
 
   //private RobotContainer m_robotContainer;
@@ -97,6 +98,8 @@ public class Robot extends TimedRobot
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     SystemManager.periodic();
+    heartBeat++;
+    SmartDashboard.putNumber("heartbeat", heartBeat);
 
     
   }

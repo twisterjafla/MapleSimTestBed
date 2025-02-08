@@ -64,7 +64,8 @@ public class autoManager{
         tileSize=(double)jsonMap.get("nodeSizeMeters"); 
 
         // legalityMap = new boolean[(int)Math.ceil(width/tileSize)][(int)Math.ceil(length/tileSize)];
-        map = new Node[(int)Math.ceil(width/tileSize)][(int)Math.ceil(length/tileSize)];
+        map = new Node[(int)Math.ceil(width/tileSize)][(int)Math.ceil(length/(tileSize
+        ))];
         JSONArray grid = (JSONArray)jsonMap.get("grid");
         for (int i=0; i<map.length; i++){
             JSONArray row = (JSONArray)grid.get(i);

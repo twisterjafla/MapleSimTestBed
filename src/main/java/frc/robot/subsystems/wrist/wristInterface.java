@@ -10,7 +10,7 @@ public interface wristInterface extends Subsystem{
     public boolean isAtSetpoint();
     
     public double getCurrentLocationEncoder();
-    public Rotation2d getcurrentLocation();
+    public Rotation2d getCurrentLocation();
     public double getSetpoint();
     public void reset();
     

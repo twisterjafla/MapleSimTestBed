@@ -16,6 +16,7 @@ import edu.wpi.first.networktables.StructArrayTopic;
 import edu.wpi.first.networktables.StructSubscriber;
 import edu.wpi.first.networktables.StructTopic;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.SystemManager;
 
 
 public class realVision extends SubsystemBase implements aprilTagInterface, reefIndexerInterface {
@@ -58,7 +59,10 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
         
         @Override
         public Pose3d getPose() {
-            return this.robotPoseSubscriber.get();
+            if (robotPoseSubscriber.get()== new Pose3d()){
+                return new Pose3d(SystemManager.swerve.getPose());
+            }
+            return robotPoseSubscriber.get();
         }
 
         @Override

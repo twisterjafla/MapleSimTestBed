@@ -1,23 +1,31 @@
 package frc.robot.subsystems.wrist;
 
+import static edu.wpi.first.units.Units.Degrees;
+
+import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix6.hardware.core.CoreCANcoder;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
 import frc.robot.Utils.warningManager;
 import frc.robot.subsystems.wristElevatorControllManager;
+import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-public class simWrist extends SubsystemBase implements wristInterface{
+
+public class realWrist implements wristInterface{
+
 
     private double setpoint;
-    private double position;
     private double goal;
     protected wristElevatorControllManager manager;
+    protected CoreCANcoder wristEncoder = new CoreCANcoder(Constants.wristConstants.CANCoderID);
+    protected SparkFlex wristMotor = new SparkFlex(Constants.wristConstants.motorID, MotorType.kBrushless);
 
 
-
-    public simWrist(){
+    @Deprecated
+    public realWrist(){
     }
 
 
@@ -26,6 +34,8 @@ public class simWrist extends SubsystemBase implements wristInterface{
         this.setpoint=setpoint;
     }
 
+
+    @Deprecated
     @Override
     public void periodic(){
         if (manager==null){
@@ -40,29 +50,19 @@ public class simWrist extends SubsystemBase implements wristInterface{
             goal=Constants.wristConstants.restingPosit;
         }
 
-        if (Math.abs(goal-position)<Constants.wristConstants.speedForSim/Constants.wristConstants.degreesPerEncoderTick){
-            position=goal;
-        }
-        else if (goal>position){
-            position+=Constants.wristConstants.speedForSim/Constants.wristConstants.degreesPerEncoderTick;
-        }
-        else{
-            position-=Constants.wristConstants.speedForSim/Constants.wristConstants.degreesPerEncoderTick;
-        }
 
-
-        SmartDashboard.putNumber("wristEncoder", position);
     }
 
 
     @Override
     public boolean isAtSetpoint() {
-        return Math.abs(setpoint-position)<Constants.wristConstants.tolerence;
+        return Math.abs(setpoint-getCurrentLocation().getDegrees())<Constants.wristConstants.tolerence;
     }
+
 
     @Override
     public double getCurrentLocationEncoder() {
-        return position;
+        return wristEncoder.getAbsolutePosition().getValue().in(edu.wpi.first.units.Units.Degrees);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class simWrist extends SubsystemBase implements wristInterface{
 
     @Override
     public Rotation2d getCurrentLocation() {
-        return Rotation2d.fromDegrees(position*Constants.wristConstants.degreesPerEncoderTick);
+        return Rotation2d.fromDegrees(getCurrentLocationEncoder()*Constants.wristConstants.degreesPerEncoderTick);
     }
 
 
@@ -95,6 +95,4 @@ public class simWrist extends SubsystemBase implements wristInterface{
     public boolean atLegalNonControlState(){
         return Math.abs(getCurrentLocation().getDegrees())<Constants.wristConstants.tolerence;
     }
-
-
 }

@@ -101,7 +101,7 @@ public class simIntake extends SubsystemBase implements intakeInterface{
                     // The scoring mechanism is installed at (0.46, 0) (meters) on the robot
                     new Translation2d(getTranslation().getX()+Constants.sim.l4CoralDropCheatX, getTranslation().getY()),
                     // Obtain robot speed from drive simulation
-                    SystemManager.swerve.getMapleSimDrive().get().getDriveTrainSimulatedChassisSpeedsFieldRelative(),
+                    SystemManager.swerve.getFieldVelocity(),
                     // Obtain robot facing from drive simulation
                     SystemManager.getRealPoseMaple().getRotation(),
                     // The height at which the coral is ejected
@@ -119,7 +119,7 @@ public class simIntake extends SubsystemBase implements intakeInterface{
                     // The scoring mechanism is installed at (0.46, 0) (meters) on the robot
                     new Translation2d(getTranslation().getX(), getTranslation().getY()),
                     // Obtain robot speed from drive simulation
-                    SystemManager.swerve.getMapleSimDrive().get().getDriveTrainSimulatedChassisSpeedsFieldRelative(),
+                    SystemManager.swerve.getFieldVelocity(),
                     // Obtain robot facing from drive simulation
                     SystemManager.getRealPoseMaple().getRotation(),
                     // The height at which the coral is ejected
@@ -175,7 +175,7 @@ public class simIntake extends SubsystemBase implements intakeInterface{
 
     @Override
     public Translation3d getTranslation(){
-        Rotation2d rotation = SystemManager.wrist.getcurrentLocation();
+        Rotation2d rotation = SystemManager.wrist.getCurrentLocation();
         return new Translation3d(
             Math.sin(-rotation.getRadians()+Math.toRadians(20))*Constants.intakeConstants.coralFromWristLen+Constants.intakeConstants.coralLenght/2,
             0,

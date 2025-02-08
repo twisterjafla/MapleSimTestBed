@@ -1,8 +1,8 @@
 package frc.robot.subsystems.intake;
 import java.util.function.BooleanSupplier;
 
-import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -16,8 +16,8 @@ public class realIntake extends SubsystemBase implements intakeInterface{
 
 
 	intakeState state;
-	CANSparkMax IntakeLeader = new CANSparkMax(Constants.intakeConstants.LeftIntake, MotorType.kBrushless);
-	CANSparkMax IntakeFollow = new CANSparkMax(Constants.intakeConstants.RightIntake, MotorType.kBrushless);
+	SparkMax intakeTop = new SparkMax(Constants.intakeConstants.LeftIntake, MotorType.kBrushless);
+	SparkMax intakeBottom = new SparkMax(Constants.intakeConstants.RightIntake, MotorType.kBrushless);
 	DigitalInput frontBeambrake = new DigitalInput(Constants.intakeConstants.frontBeamBrakePort);
 	DigitalInput backBeambrake = new DigitalInput(Constants.intakeConstants.backBeamBrakePort);
 	
@@ -34,9 +34,8 @@ public class realIntake extends SubsystemBase implements intakeInterface{
 	BooleanSupplier stopTrigger=()->{return false;};
 
 	public void InitIntake() {
-		IntakeFollow.follow(IntakeLeader);
-		IntakeFollow.setInverted(true);
-		IntakeLeader.setInverted(false);
+		intakeBottom.setInverted(true);
+		intakeTop.setInverted(false);
 	}
 
 	@Override
@@ -113,17 +112,22 @@ public class realIntake extends SubsystemBase implements intakeInterface{
 		    stop();					   // Stop Intake Motor
 		}
 		if (state == intakeState.intaking){
-		    IntakeLeader.set(Constants.intakeConstants.intakeSpeed); // Start Intake Motor
+		    intakeTop.set(Constants.intakeConstants.intakeSpeed); // Start Intake Motor
+			intakeBottom.set(Constants.intakeConstants.intakeSpeed);
 		}
 		else if (state == intakeState.outtaking){
-		    IntakeLeader.set(Constants.intakeConstants.outtakeSpeed); // Start OutTake Motor
-			outtake();
+		    intakeTop.set(Constants.intakeConstants.outtakeSpeed); // Start OutTake Motor
+			intakeBottom.set(Constants.intakeConstants.outtakeSpeed);
+		}
+		else{
+			intakeTop.set(0);
+			intakeBottom.set(0);
 		}
 	}
 	
 	@Override
 	public void stop() {
-		IntakeLeader.stopMotor();
+		intakeTop.stopMotor();
 	}
 
 	@Override
@@ -139,7 +143,7 @@ public class realIntake extends SubsystemBase implements intakeInterface{
 
 	@Override
 	public Translation3d getTranslation() {
-		Rotation2d rotation = SystemManager.wrist.getcurrentLocation();
+		Rotation2d rotation = SystemManager.wrist.getCurrentLocation();
         return new Translation3d(Math.cos(rotation.getRadians())*Constants.intakeConstants.intakeLength, 0 ,Math.sin(rotation.getRadians())*Constants.intakeConstants.intakeLength).plus(SystemManager.elevator.getTranslation());
 	}
 }

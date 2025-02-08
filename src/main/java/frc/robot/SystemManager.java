@@ -32,6 +32,7 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.realSimulatedDriveTrain;
 import frc.robot.subsystems.vision.aprilTagInterface;
 import frc.robot.subsystems.vision.photonSim;
+import frc.robot.subsystems.vision.realVision;
 //import frc.robot.subsystems.vision.realVision;
 import frc.robot.subsystems.vision.reefIndexerInterface;
 import frc.robot.subsystems.vision.simReefIndexer;
@@ -55,10 +56,11 @@ public class SystemManager{
     public static wristElevatorControllManager wristManager;
     public static lidarInterface lidar;
     public static realSimulatedDriveTrain simButRealTrain=null;
-    //public static realVision realVisTemp;
+    public static realVision realVisTemp=null;
     
     public static void SystemManagerInit(){
         swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),  "swerve"));
+        
         swerve.resetOdometry(Constants.driveConstants.startingPosit);
         //swerveReff = new SwerveSubsystemReff(new File(Filesystem.getDeployDirectory(),  "swerve/falcon"));
         
@@ -83,8 +85,8 @@ public class SystemManager{
             aprilTag= new photonSim();
         }
         else{
-            // realVisTemp = new realVision();
-            // aprilTag=realVisTemp;
+            realVisTemp = new realVision();
+            aprilTag=realVisTemp;
         }
 
         if (Constants.simConfigs.elevatorShouldBeSim){
@@ -102,12 +104,12 @@ public class SystemManager{
             reefIndexer= new simReefIndexer();
         }
         else{
-            // if (realVisTemp != null){
-            //     reefIndexer=realVisTemp;
-            // }
-            // else{
-            //     reefIndexer = new realVision();
-            // }
+            if (realVisTemp != null){
+                reefIndexer=realVisTemp;
+            }
+            else{
+                reefIndexer = new realVision();
+            }
         }
 
         if (Constants.simConfigs.lidarShouldBeSim){
@@ -160,12 +162,14 @@ public class SystemManager{
     }
 
     public static Pose3d getIntakePosit(){
-        return new Pose3d(getSwervePose()).plus(new Transform3d(intake.getTranslation(), new Rotation3d( 0, SystemManager.wrist.getcurrentLocation().getRadians()+Constants.elevatorConstants.angle.getRadians()+Math.PI/2, Math.PI)));
+        return new Pose3d(getSwervePose()).plus(new Transform3d(intake.getTranslation(), new Rotation3d( 0, SystemManager.wrist.getCurrentLocation().getRadians()+Constants.elevatorConstants.angle.getRadians()+Math.PI/2, Math.PI)));
     }
 
     public static boolean hasPeice(){
         return intake.hasPeice();
     }
+
+
 
     
 
