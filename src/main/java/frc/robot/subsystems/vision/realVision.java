@@ -22,7 +22,7 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
     private final StructSubscriber<Pose3d> robotPoseSubscriber;
 
     private final BooleanArraySubscriber reefSubscriber;
-    private ArrayList<ArrayList<Boolean>> reefLevels;
+     ArrayList<BooleanArraySubscriber> reefLevelSubscribers;
     private final StructSubscriber algeaSubscriber;
     
 
@@ -33,8 +33,6 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
             boolean[][] algeaDefaultList = {{false}, {false}};
             Pose3d robotDefaultPose = new Pose3d();
             NetworkTableInstance inst = NetworkTableInstance.getDefault();
-
-            
 
             for (int i = 2; i < 5; i++) {
                 BooleanArrayTopic reefLevel = inst.getBooleanArrayTopic("ReefLevel" + Integer.toString(i));
