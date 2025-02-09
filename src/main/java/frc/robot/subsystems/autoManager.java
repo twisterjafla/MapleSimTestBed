@@ -2,6 +2,9 @@ package frc.robot.subsystems;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.function.BooleanSupplier;
 
 import org.json.simple.JSONArray;
@@ -85,6 +88,7 @@ public class autoManager{
     public static void periodic(){
         SmartDashboard.putNumber("Cycle count", cycleCount);
         SmartDashboard.putNumber("Score", score);
+        SmartDashboard.putNumber("updateCount", Node.updateCount);
 
         if (currentRoutine!=null){
             if (!currentRoutine.isScheduled()){
@@ -246,6 +250,8 @@ public class autoManager{
         public static double defaultValue=10000;
         public static int friendCount=0;
         public static int updateCount=0;
+        public static List<Node> que = new LinkedList<Node>();
+
         double x, y;
         Node[][] host;
         boolean isLegal;
@@ -310,11 +316,29 @@ public class autoManager{
         public void update(){
             // updateCount++;
             // SmartDashboard.putNumber("update count", updateCount);
+
+
+            // for (Node friend: friends){
+            //     if (friend!=null&&friend.isLegal){
+                    
+            //         if (friend.score<score+getLength(this, friend)){
+            //             score=friend.score+getLength(this, friend);
+            //         }
+                    
+            //     }   
+            // }
+
+            updateCount++;
+            
+            
             for (Node friend: friends){
                 if (friend!=null&&friend.isLegal){
+                    
                     if (friend.score>score+getLength(this, friend)){
-                        friend.score=score+getLength(this, friend);
-                        friend.update();
+                        friend.score=this.score+getLength(this, friend);
+                        if (!que.contains(friend)){
+                            que.add(friend);
+                        }
                     }
                     
                 }   
@@ -327,11 +351,22 @@ public class autoManager{
 
         public void start(){
             score=0;
-            update();
+            updateCount=0;
+            que.clear();
+            que.add(this);
+            manage();
         }
 
         public void reset(){
             score=defaultValue;
+        }
+
+        public static void manage(){
+            
+            while(que.size()!=0){
+                
+                que.remove(0).update();;
+            }
         }
 
     

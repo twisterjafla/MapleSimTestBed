@@ -72,7 +72,7 @@ public final class Constants
 
     // public static final PIDConstants TRANSLATION_PID = new PIDConstants(10, 0, 0.5);
     public static final PIDConstants translationPID = new PIDConstants(10, 0, 0);
-    public static final PIDConstants smallAutoPID = new PIDConstants(0., 0, 0);
+    public static final PIDConstants smallAutoPID = new PIDConstants(0.7, 0, 0);
 
     public static final PIDConstants anglePID       = new PIDConstants(5, 0, 0);
     public static final double colisionSpeed = 0;
@@ -197,7 +197,7 @@ public final class Constants
     public static final Rotation2d minDegrees = new Rotation2d();
     public static final Rotation2d maxDegrees = new Rotation2d();
     
-    public static final double tolerence = 2;
+    public static final double tolerence = 1;
     public static final double speedForSim=5;
     public static final int CANCoderID=50;
     public static final int CANCoderOffset=0;
