@@ -55,6 +55,8 @@ public class IntakePeiceCommand extends Command{
     @Override
     public void execute() {
         //restarts the drive command if it finished early
+        SmartDashboard.putBoolean("Drive is finished", driveIsFinished);
+        SmartDashboard.putBoolean("coralHasBeenSpawned", coralHasBeenSpawned);
         if (!driveCommand.isScheduled()){
             if (utillFunctions.pythagorean(SystemManager.getSwervePose().getX(), intakePose.getX(), SystemManager.getSwervePose().getY(), intakePose.getY())
                 >=Constants.AutonConstants.autoDriveIntakeTolerence){
@@ -74,7 +76,7 @@ public class IntakePeiceCommand extends Command{
 
 
         //spawns a coral if the robot is simulated and the time is apropreate
-        if (mechIsFinished&&driveIsFinished&&Constants.simConfigs.intakeShouldBeSim&&!coralHasBeenSpawned){
+        if (driveIsFinished&&Constants.simConfigs.intakeShouldBeSim&&!coralHasBeenSpawned){
             coralHasBeenSpawned=true;
             new WaitCommand(Constants.AutonConstants.humanPlayerBeingBad).andThen(new CreateCoral(intakePose.plus(Constants.AutonConstants.intakeCoralOffset))).schedule();
     }

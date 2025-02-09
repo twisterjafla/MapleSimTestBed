@@ -202,6 +202,36 @@ public class FieldPosits {
                     throw new Error("This case is imposible to reach because all enum options are handled but needs to exist so java can be sure the function will always return a value.If you are seeing this as a user somthing has gone DEEPLY DEEPLY WRONG, maybe burn your code in mount doom");
             }
         }
+
+        public Rotation2d getWristVal(){
+            switch (this){
+                case L1:
+                    return Constants.wristConstants.l1EncoderVal;
+                case L2:
+                    return Constants.wristConstants.l2EncoderVal;
+                case L3:
+                    return Constants.wristConstants.l3EncoderVal;
+                case L4:
+                    return Constants.wristConstants.l4EncoderVal;
+                default:
+                    throw new Error("This case is imposible to reach because all enum options are handled but needs to exist so java can be sure the function will always return a value.If you are seeing this as a user somthing has gone DEEPLY DEEPLY WRONG, maybe burn your code in mount doom");
+            }
+        }
+
+        public double getElevatorValue(){
+            switch (this){
+                case L1:
+                    return Constants.elevatorConstants.l1EncoderVal;
+                case L2:
+                    return Constants.elevatorConstants.l2EncoderVal;
+                case L3:
+                    return Constants.elevatorConstants.l3EncoderVal;
+                case L4:
+                    return Constants.elevatorConstants.l4EncoderVal;
+                default:
+                    throw new Error("This case is imposible to reach because all enum options are handled but needs to exist so java can be sure the function will always return a value.If you are seeing this as a user somthing has gone DEEPLY DEEPLY WRONG, maybe burn your code in mount doom");
+            }
+        }
     }
 
 

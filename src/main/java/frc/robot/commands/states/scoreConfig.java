@@ -3,22 +3,29 @@ package frc.robot.commands.states;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.SystemManager;
+import frc.robot.FieldPosits.reefLevel;
 import frc.robot.Utils.warningManager;
 import frc.robot.subsystems.generalManager;
 
 
-public class scoreL2Config extends Command{
+public class scoreConfig extends Command{
+    protected reefLevel scoreLevel;
 
-    /**Creates a command to configure mechs to l2. DOES NOT ACTUALY OUTTAKE */
-    public scoreL2Config(){
+
+    /**
+     * Creates a command to configure mechs to specified level. DOES NOT ACTUALY OUTTAKE 
+     * @param level the level to configure
+     */
+    public scoreConfig(reefLevel level){
+        scoreLevel=level;
         addRequirements(generalManager.subsystems);
     }
 
     /**initalizes the command */
     @Override
     public void initialize(){
-        SystemManager.wrist.setSetpoint(Constants.wristConstants.l2EncoderVal);
-        SystemManager.elevator.setSetpoint(Constants.elevatorConstants.l2EncoderVal);
+        SystemManager.wrist.setSetpoint(scoreLevel.getWristVal());
+        SystemManager.elevator.setSetpoint(scoreLevel.getElevatorValue());
         SystemManager.intake.stop();
     }
 
@@ -32,6 +39,7 @@ public class scoreL2Config extends Command{
         }
     }
 
+    /**returns true when the mec is configured to the requested level */
     @Override
     public boolean isFinished(){
         return SystemManager.wrist.isAtSetpoint() && SystemManager.elevator.isAtSetpoint();

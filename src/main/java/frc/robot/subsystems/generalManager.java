@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import frc.robot.SystemManager;
+import frc.robot.FieldPosits.reefLevel;
 import frc.robot.Utils.warningManager;
 import frc.robot.commands.states.*;
 
@@ -18,10 +19,10 @@ public class generalManager{
     public enum generalState{
         intake(new intaking()),
         start(new starting()),
-        L1(new scoreL1Config()),
-        L2(new scoreL2Config()),
-        L3(new scoreL3Config()),
-        L4(new scoreL4Config()),
+        L1(new scoreConfig(reefLevel.L1)),
+        L2(new scoreConfig(reefLevel.L2)),
+        L3(new scoreConfig(reefLevel.L3)),
+        L4(new scoreConfig(reefLevel.L4)),
         outtake(new outtaking()),
         resting(new resting());
 
