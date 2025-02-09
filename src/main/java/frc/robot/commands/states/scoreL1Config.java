@@ -8,10 +8,12 @@ import frc.robot.subsystems.generalManager;
 
 public class scoreL1Config extends Command{
     
+    /**Creates a command to configure mechs to l1. DOES NOT ACTUALY OUTTAKE */
     public scoreL1Config(){
         addRequirements(generalManager.subsystems);
     }
 
+    /**initalizes the command */
     @Override
     public void initialize(){
         SystemManager.wrist.setSetpoint(Constants.wristConstants.l1EncoderVal);
@@ -19,6 +21,7 @@ public class scoreL1Config extends Command{
         SystemManager.intake.stop();
     }
 
+    /**called ever rio cycle while the command is scheduled*/
     @Override 
     public void execute(){
         if (generalManager.getStateCommand()!=this){
@@ -27,11 +30,17 @@ public class scoreL1Config extends Command{
         }
     }
 
+    /**@return true once the mechs are at the proper position */
     @Override
     public boolean isFinished(){
-        return SystemManager.wrist.isAtSetpoint() && SystemManager.wrist.isAtSetpoint();
+        return SystemManager.wrist.isAtSetpoint() && SystemManager.elevator.isAtSetpoint();
     }
 
+
+    /**
+     * command called when the command finishes
+     * @param wasInterupted wether or not the command was cancled
+    */
     @Override
     public void end(boolean wasInterupted){
         generalManager.endCallback(wasInterupted);

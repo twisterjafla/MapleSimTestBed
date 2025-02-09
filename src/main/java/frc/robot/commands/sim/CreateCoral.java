@@ -42,11 +42,17 @@ public class CreateCoral extends InstantCommand{
 
     }
 
+
+    /**
+     * contstructs a command that makes a coral at the entered pose2d
+     * @param posit the pose to spawn the coral
+     */
     public CreateCoral(Pose2d posit){
         dropSpot=posit;
     }
 
 
+    /**runs once every time the command is sheduled */
     @Override
     public void execute(){
         SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralOnField(dropSpot));

@@ -28,17 +28,18 @@ public class IntakePeiceCommand extends Command{
     Command mechCommand;
 
 
-
+    /**
+     * initalize a command to intake a peice
+     * @param intakePose the pose for the robot to intake from
+     */
     public IntakePeiceCommand(Pose2d intakePose){
         this.intakePose=intakePose;
         //addRequirements(SystemManager.swerve);
     }
 
+    /**initalizes the command */
     @Override
     public void initialize(){
-        // if (!RobotBase.isReal()){
-        //     new CreateCoral(intakePose).schedule();
-        // }
         generalManager.intake();
         driveCommand=SystemManager.swerve.driveToPose(intakePose, LinearVelocity.ofBaseUnits(Constants.AutonConstants.colisionSpeed, LinearVelocityUnit.combine(Units.Meters, Units.Second)));
         driveCommand.schedule();
@@ -50,13 +51,10 @@ public class IntakePeiceCommand extends Command{
         
     }
 
-
+    /**called ever rio cycle while the command is scheduled*/
     @Override
     public void execute() {
-        // if (mechIsFinished==mechCommand.isScheduled()){
-        //     autoManager.resetAutoAction();
-            
-        // }
+        //restarts the drive command if it finished early
         if (!driveCommand.isScheduled()){
             if (utillFunctions.pythagorean(SystemManager.getSwervePose().getX(), intakePose.getX(), SystemManager.getSwervePose().getY(), intakePose.getY())
                 >=Constants.AutonConstants.autoDriveIntakeTolerence){
@@ -73,8 +71,10 @@ public class IntakePeiceCommand extends Command{
                 driveIsFinished=true;
             }
         }
-        
-        if (mechIsFinished&&driveIsFinished&&!RobotBase.isReal()&&!coralHasBeenSpawned){
+
+
+        //spawns a coral if the robot is simulated and the time is apropreate
+        if (mechIsFinished&&driveIsFinished&&Constants.simConfigs.intakeShouldBeSim&&!coralHasBeenSpawned){
             coralHasBeenSpawned=true;
             new WaitCommand(Constants.AutonConstants.humanPlayerBeingBad).andThen(new CreateCoral(intakePose.plus(Constants.AutonConstants.intakeCoralOffset))).schedule();
     }
@@ -82,20 +82,32 @@ public class IntakePeiceCommand extends Command{
     }
 
 
+    /**
+     * function to be called when the mech is in its proper state
+     * @param wasInterupted wether or not the intake routine was cancled
+     */
     public void mechIsFinishedCall(boolean wasInterupted){
         if (wasInterupted){
-            //autoManager.resetAutoAction();
+            cancel();
             warningManager.throwAlert(warningManager.autoInternalCancled);
         }
         mechIsFinished=true;
 
     }
 
-
+    /**
+     * @return true once a peice has been aquired
+     */
+    @Override
     public boolean isFinished(){
         return SystemManager.hasPeice();
     }
 
+
+    /**
+     * command called when the command finishes
+     * @param wasInterupted wether or not the command was cancled
+    */
     @Override
     public void end(boolean wasInterupted){
         SmartDashboard.putBoolean("auto intake is running", false);

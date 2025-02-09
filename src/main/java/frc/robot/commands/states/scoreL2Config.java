@@ -8,10 +8,13 @@ import frc.robot.subsystems.generalManager;
 
 
 public class scoreL2Config extends Command{
+
+    /**Creates a command to configure mechs to l2. DOES NOT ACTUALY OUTTAKE */
     public scoreL2Config(){
         addRequirements(generalManager.subsystems);
     }
 
+    /**initalizes the command */
     @Override
     public void initialize(){
         SystemManager.wrist.setSetpoint(Constants.wristConstants.l2EncoderVal);
@@ -19,6 +22,8 @@ public class scoreL2Config extends Command{
         SystemManager.intake.stop();
     }
 
+
+    /**called ever rio cycle while the command is scheduled*/
     @Override 
     public void execute(){
         if (generalManager.getStateCommand()!=this){
@@ -29,9 +34,14 @@ public class scoreL2Config extends Command{
 
     @Override
     public boolean isFinished(){
-        return SystemManager.wrist.isAtSetpoint() && SystemManager.wrist.isAtSetpoint();
+        return SystemManager.wrist.isAtSetpoint() && SystemManager.elevator.isAtSetpoint();
     }
 
+
+    /**
+     * command called when the command finishes
+     * @param wasInterupted wether or not the command was cancled
+    */
     @Override
     public void end(boolean wasInterupted){
         generalManager.endCallback(wasInterupted);

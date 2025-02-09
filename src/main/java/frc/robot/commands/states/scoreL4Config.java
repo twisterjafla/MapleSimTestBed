@@ -10,10 +10,13 @@ import frc.robot.subsystems.generalManager;
 
 
 public class scoreL4Config extends Command{
+
+    /**Creates a command to configure mechs to l4. DOES NOT ACTUALY OUTTAKE */
     public scoreL4Config(){
         addRequirements(generalManager.subsystems);
     }
 
+    /**initalizes the command */
     @Override
     public void initialize(){
         SystemManager.wrist.setSetpoint(Constants.wristConstants.l4EncoderVal);
@@ -22,6 +25,7 @@ public class scoreL4Config extends Command{
         SmartDashboard.putString("l4 started", "true");
     }
 
+    /**called ever rio cycle while the command is scheduled*/
     @Override 
     public void execute(){
         if (generalManager.getStateCommand()!=this){
@@ -35,6 +39,11 @@ public class scoreL4Config extends Command{
         return SystemManager.elevator.isAtSetpoint() && SystemManager.wrist.isAtSetpoint();
     }
 
+
+    /**
+     * command called when the command finishes
+     * @param wasInterupted wether or not the command was cancled
+    */
     @Override
     public void end(boolean wasInterupted){
         generalManager.endCallback(wasInterupted);

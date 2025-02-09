@@ -12,9 +12,7 @@ public class starting extends Command{
 
     }
 
-
-
-
+    /**initalizes the command */
     @Override
     public void initialize(){
         SystemManager.wrist.setSetpoint(Constants.wristConstants.intakePosit);
@@ -22,6 +20,8 @@ public class starting extends Command{
         SystemManager.intake.stop();
     }
 
+
+    /**called ever rio cycle while the command is scheduled*/
     @Override
     public void execute(){
         if (generalManager.getStateCommand()!=this){
