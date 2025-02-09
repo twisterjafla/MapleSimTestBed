@@ -7,6 +7,8 @@ import frc.robot.Utils.warningManager;
 import frc.robot.subsystems.generalManager;
 
 public class starting extends Command{
+
+    /**creates a command that will bring the robot back to its starting config */
     public starting(){
         addRequirements(generalManager.subsystems);
 
@@ -30,6 +32,7 @@ public class starting extends Command{
         }
     }
 
+    /**returns true once the bot has reached the starting config */
     @Override 
     public boolean isFinished(){
         return SystemManager.wrist.isAtSetpoint()&&SystemManager.elevator.isAtSetpoint();

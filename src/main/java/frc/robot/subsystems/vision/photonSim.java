@@ -16,6 +16,11 @@ import frc.robot.SystemManager;
 
 public class photonSim extends SubsystemBase implements aprilTagInterface{
     VisionSystemSim visionSim;
+
+    /**
+     * creates a new simulated vision system. 
+     * While it is possible to have simulated vision running on the real robot it is not recomended since the system does nothing and takes up a lot of proccesing time
+    */
     public photonSim(){
         visionSim = new VisionSystemSim("main");
         //AprilTagFieldLayout tagLayout = AprilTagFields
@@ -55,7 +60,7 @@ public class photonSim extends SubsystemBase implements aprilTagInterface{
         return visionSim.getRobotPose();
     }
 
- 
+    /**periodic call that updates the vision sim */
     @Override
     public void periodic(){
         visionSim.update(SystemManager.getRealPoseMaple());

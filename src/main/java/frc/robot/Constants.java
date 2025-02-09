@@ -32,44 +32,44 @@ import swervelib.math.Matter;
  */
 public final class Constants
 {
-
+    /**
+     * Converts inches into meters
+     * @param inches the number of inches
+     * @return the number of meters
+     */
     private static double inchesToMeters(double inches){
         return inches*0.0254;
     }
 
 
-  public static final double LOOP_TIME  = 0.02; //s, 20ms + 110ms sprk max velocity lag
-  public static final int blinkinPort = 0;
+    public static final double LOOP_TIME  = 0.02; //s, 20ms + 110ms sprk max velocity lag
+    public static final int blinkinPort = 0;
+
+    /**the constants for the drive train */
+    public static final class driveConstants {
+      public static final double driveFrictionVoltage = 0.25;
+      public static final double steerFrictionVoltage = 0.25;
+      public static final double totalWidth=inchesToMeters(27);
+      public static final double totalHeight=inchesToMeters(27);
+      public static final double chassisWidth=inchesToMeters(27);
+      public static final double chassisHeight=inchesToMeters(27);
+      public static final double steerInertia = 0.025;
+      public static final double wheelRadusInMeters = inchesToMeters(2);
+      public static final double robotMass = 50;//(33) * 0.453592; // 32lbs * kg per pound
+      public static final double maxSpeed  = 4.6;
+      public static final Matter chassis    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(3)), robotMass);
+      public static final double MOI = 6.884;
+      public static final Pose2d startingPosit =  new Pose2d(7.182, 3.822, Rotation2d.fromDegrees(180));
+    public static final double wheelLockTime = 10;
+  
 
 
-  public static final class driveConstants {
-    public static final double driveFrictionVoltage = 0.25;
-    public static final double steerFrictionVoltage = 0.25;
-    public static final double totalWidth=inchesToMeters(27);
-    public static final double totalHeight=inchesToMeters(27);
-    public static final double chassisWidth=inchesToMeters(27);
-    public static final double chassisHeight=inchesToMeters(27);
-    public static final double steerInertia = 0.025;
-    public static final double wheelRadusInMeters = inchesToMeters(2);
-    public static final double robotMass = 50;//(33) * 0.453592; // 32lbs * kg per pound
-    public static final double maxSpeed  = 4.6;
-    public static final Matter chassis    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(3)), robotMass);
-    public static final double MOI = 6.884;
-    public static final Pose2d startingPosit =  new Pose2d(7.182, 3.822, Rotation2d.fromDegrees(180));
- 
-
-    public static enum driveType {
-        GENERIC,
-        CTRE_ON_RIO,
-        CTRE_ON_CANIVORE
-    }
 
   }
   
-      // Maximum speed of the robot in meters per second, used to limit acceleration.
-
-  public static final class AutonConstants
-  {
+   
+  /**the constants for automation */
+  public static final class AutonConstants{
 
     // public static final PIDConstants TRANSLATION_PID = new PIDConstants(10, 0, 0.5);
     public static final PIDConstants translationPID = new PIDConstants(10, 0, 0);
@@ -92,16 +92,8 @@ public final class Constants
   
   }
 
-  public static final class DrivebaseConstants
-  {
-
-    // Hold time on motor brakes when disabled
-    public static final double WHEEL_LOCK_TIME = 10; // seconds
-  }
-
-  public static class OperatorConstants
-  {
-
+  /**constants for the controls */
+  public static class OperatorConstants{
     // Joystick Deadband
     public static final double LEFT_X_DEADBAND  = 0.1;
     public static final double LEFT_Y_DEADBAND  = 0.1;
@@ -109,13 +101,16 @@ public final class Constants
     public static final double TURN_CONSTANT    = 6;
     public static final int[] supportedPOV={0,90,180,270};
   }
+
+  /**Constants used for sim */
   public static class sim{
     public static double targetTolerence =0.2;
     public static double l4CoralDropCheatX=0.08;
     public static double l4CoralDropCheatY=0.1;
-    //DriveTrainSimulationConfig simConfig= new DriveTrainSimulationConfig(55, 1, 0.05, 1, 0.05, null, null);
+    
   }
 
+  /**constants to control wether or not a spesific system should be simulated */
   public static class simConfigs{
     public static final boolean driveShouldBeSim=false||!RobotBase.isReal();
     public static final boolean intakeShouldBeSim=true||!RobotBase.isReal();
@@ -128,11 +123,14 @@ public final class Constants
     public static final boolean robotCanBeSimOnReal=true;
 
   }
+
+  /**ids of all used controlers */
   public static class controllerIDs{
     public static final int commandXboxController1ID=0;
     public static final int commandXboxController2ID=1;
   }
 
+  /**constants for the intake */
   public static class intakeConstants{
     public static final double intakeSpeed=0.3;
     public static final double outtakeSpeed=-0.3;
@@ -147,6 +145,7 @@ public final class Constants
     public static final int backBeamBrakePort=50;
   }
 
+  /**constants for the elevator */
   public static class elevatorConstants{
     public static final double l4EncoderVal = 1.42;
     public static final double l3EncoderVal = 0.702381;
@@ -188,6 +187,7 @@ public final class Constants
     
   }
 
+  /**constants for the wrist */
   public static class wristConstants{
     public static final Rotation2d l4EncoderVal = Rotation2d.fromDegrees(-15);
     public static final Rotation2d l3EncoderVal = Rotation2d.fromDegrees(0);
@@ -208,12 +208,10 @@ public final class Constants
   
   }
 
-
+  //constants used for the simulated camera
   public static class cameraConstants{
     public static Transform3d frontAprilTagCameraTrans = new Transform3d();
 
   }
-
-// Since AutoBuilder is configured, we can use it to build pathfinding commands
 
 }

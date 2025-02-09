@@ -13,9 +13,7 @@ public class FieldPosits {
         public static final Pose2d rightStack = new Pose2d(1.2, 2.2, new Rotation2d());
     }
 
-    /**
-     * THESE ARE NOT GRAB POINTS FOR THE ROBOT. THESE POINTS TELL MAPLE SIM WHERE TO SPAWN CORAL AND ARE NOT ACCESABLE BY ROBOT
-     */
+    /**The positions a robot can use to intake coral */
     public static class IntakePoints{
         public static final Pose2d leftLeft= new Pose2d(1.547, 7.339, Rotation2d.fromDegrees(-55));
         public static final Pose2d leftMid= new Pose2d(1.164, 7.053, Rotation2d.fromDegrees(-55));
@@ -27,6 +25,7 @@ public class FieldPosits {
 
     }
 
+    /** the possible scoring positions for a robot */
     public static class scoringPosits{
         public static final Pose2d A = new Pose2d(3.197, 4.189, Rotation2d.fromDegrees(0));
         public static final Pose2d B = new Pose2d(3.197, 3.861, Rotation2d.fromDegrees(0));
@@ -65,21 +64,7 @@ public class FieldPosits {
         };
     }
 
-    // enum poles {
-    //     1,
-    //     2,
-    //     3,
-    //     4,
-    //     5,
-    //     6,
-    //     7,
-    //     8,
-    //     9,
-    //     10,
-    //     11
-    
-    // }
-
+    /**enum to encapsulate and provide basic information about scoring on a reef pole */
     public static enum reefPole{
         A,
         B,
@@ -94,6 +79,10 @@ public class FieldPosits {
         K,
         L;
 
+        /**
+         * @return the scoring posit needed to score on this level. 
+         * \This value will be the position to score l1 or 2. to get the l3 and l4 scoring posits simply apply the l4 or l4 translation 
+         */
         public Pose2d getScorePosit() {
             switch (this) {
                 case A:
@@ -125,6 +114,7 @@ public class FieldPosits {
             }
         }
 
+        /**returns this row as an index starting with 0 for A and ending with 11 for L */
         public int getRowAsIndex() {
             switch (this) {
                 case A:
@@ -157,12 +147,18 @@ public class FieldPosits {
         }
       }
       
+    /**enum to encapsulate and provide information about scoring on a level of the reef */
     public static enum reefLevel{
         L1,
         L2,
         L3,
         L4;
         
+        /**
+         * creates a reefLevel from a number
+         * @param level the level to make a pole on. THIS DOES NOT USE THE INDEX VALUE, IT USES THE NAME VALUE. aka if level is set to 1 a l1 reef level will be returned
+         * @return a reef level of the specified level
+         */
         public static reefLevel CreateFromLevel(int level){
             switch (level){
                 case 1: return reefLevel.L1;
@@ -174,6 +170,10 @@ public class FieldPosits {
             }
         }
 
+        /**
+         * get the level number of a reef level.  THIS DOES NOT USE THE INDEX VALUE, IT USES THE NAME VALUE. aka a L1 reef level will return 1 not 0.
+         * @return the level number of the reef
+         */
         public int getasInt(){
             switch (this){
                 case L1:
@@ -188,6 +188,8 @@ public class FieldPosits {
                     throw new Error("This case is imposible to reach because all enum options are handled but needs to exist so java can be sure the function will always return a value.If you are seeing this as a user somthing has gone DEEPLY DEEPLY WRONG, maybe burn your code in mount doom");
             }
         }
+
+        /**@return the scoring translation for scoring at a particular level. this can be added to the scoring pose provided by reefPole to get a fully acurate scoring position*/
         public Translation2d getTranslation(){
             switch (this){
                 case L1:
@@ -203,6 +205,7 @@ public class FieldPosits {
             }
         }
 
+        /**returns the wrist value needed for this level in the form of a rotation 2d */
         public Rotation2d getWristVal(){
             switch (this){
                 case L1:
@@ -218,6 +221,7 @@ public class FieldPosits {
             }
         }
 
+        /**returns the elevator value needed for this level */
         public double getElevatorValue(){
             switch (this){
                 case L1:

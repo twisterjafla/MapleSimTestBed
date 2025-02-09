@@ -64,21 +64,28 @@ public class SystemManager{
     public static realVision realVisTemp=null;
     public static blinkinInterface blinkin;
     
+    /**inializes the system manager along with all the systems on the robot */
     public static void SystemManagerInit(){
+
+        //creates the swerve drive. Do to the complexity of the swerve system it handles simulation differently and so does not need a if else block
         swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),  "swerve"));
-        
         swerve.resetOdometry(Constants.driveConstants.startingPosit);
-        //swerveReff = new SwerveSubsystemReff(new File(Filesystem.getDeployDirectory(),  "swerve/falcon"));
+       
         
         feild = new Field2d();
         SmartDashboard.putData("Field", feild);
+
+
         SimulatedArena.ALLOW_CREATION_ON_REAL_ROBOT=Constants.simConfigs.robotCanBeSimOnReal;
 
 
-
+        //Initalizes all the systems
+        //Each block should inialize one system as ether real of imaginary based on the constants value 
+        
+        //Intake
         if (Constants.simConfigs.intakeShouldBeSim){
             if (RobotBase.isReal()){
-                simButRealTrain = new realSimulatedDriveTrain(DriveTrainSimulationConfig.Default(), getSwervePose());
+                simButRealTrain = new realSimulatedDriveTrain();
             }
             intake=new simIntake();
         }
@@ -86,7 +93,7 @@ public class SystemManager{
             intake = new realIntake();
         }
 
-
+        //April tags
         if (Constants.simConfigs.aprilTagShouldBeSim){
             aprilTag= new photonSim();
         }
@@ -95,7 +102,7 @@ public class SystemManager{
             aprilTag=realVisTemp;
         }
 
-
+        //Elevator
         if (Constants.simConfigs.elevatorShouldBeSim){
             elevator= new simElevator();
         }
@@ -103,7 +110,7 @@ public class SystemManager{
             elevator = new realElevator();
         }
 
-
+        //Wrist
         if (Constants.simConfigs.wristShouldBeSim){
             wrist= new simWrist();
         }
@@ -111,7 +118,7 @@ public class SystemManager{
             wrist = new realWrist();
         }
 
-
+        //Reef indexer
         if (Constants.simConfigs.reefIndexerShouldBeSim){
             reefIndexer= new simReefIndexer();
         }
@@ -124,7 +131,7 @@ public class SystemManager{
             }
         }
 
-
+        //Lidar
         if (Constants.simConfigs.lidarShouldBeSim){
             lidar=new simLidar();
         }
@@ -132,7 +139,7 @@ public class SystemManager{
             
         }
 
-
+        //Blinkin
         if(Constants.simConfigs.blinkinShouldBeSim){
             blinkin = new simBlinkin();
         }
@@ -141,7 +148,7 @@ public class SystemManager{
         }
 
         
-
+        //creates an imaginary robot
         if (!RobotBase.isReal()){
             AIRobotInSimulation.startOpponentRobotSimulations();
             fakeBot=AIRobotInSimulation.getRobotAtIndex(0);
@@ -149,14 +156,13 @@ public class SystemManager{
 
         }
 
+        //inializes and distributes the managers
         wristManager = new wristElevatorControllManager();
         elevator.setManager(wristManager);
         wrist.setManager(wristManager);
         wristManager.addSystems(wrist, elevator);
-
         generalManager.generalManagerInit();
         autoManager.autoManagerInit();
-        System.out.println("sytems started up");
     }
 
 
@@ -165,16 +171,14 @@ public class SystemManager{
         wristManager.periodic();
         generalManager.periodic();
         autoManager.periodic();
-        
-    
     }
 
-
-
+    /**@return the current pose of the robot*/
     public static Pose2d getSwervePose(){
         return swerve.getPose();
     }
 
+    /**@return the pose of the simulated maplesim drive. If the drivetain is real than the function will just return the pose estimators pose */
     public static Pose2d getRealPoseMaple(){
         if (RobotBase.isReal()){
             return getSwervePose();
@@ -182,13 +186,13 @@ public class SystemManager{
         return swerve.getMapleSimPose();
     }
 
+
+    /**returns the pose3 of a coral in the intake */
     public static Pose3d getIntakePosit(){
         return new Pose3d(getSwervePose()).plus(new Transform3d(intake.getTranslation(), new Rotation3d( 0, SystemManager.wrist.getCurrentLocationR2D().getRadians()+Constants.elevatorConstants.angle.getRadians()+Math.PI/2, Math.PI)));
     }
 
-    public static boolean hasPeice(){
-        return intake.hasPeice();
-    }
+
 
 
 

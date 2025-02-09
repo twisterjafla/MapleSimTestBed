@@ -139,24 +139,7 @@ public class SwerveSubsystem extends SubsystemBase
   }
 
 
-  public Command testDrive(){
-    
-    try {
-      return AutoBuilder.followPath(PathPlannerPath.fromPathFile("test"));
-    } catch (FileVersionException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (ParseException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    
 
-    return null;
-  }
 
   /**
    * Setup the photon vision class.
@@ -225,27 +208,6 @@ public class SwerveSubsystem extends SubsystemBase
 
   }
 
-
-  /**
-   * Aim the robot at the target returned by PhotonVision.
-   *
-   * @param camera {@link PhotonCamera} to communicate with.
-   * @return A {@link Command} which will run the alignment.
-   */
-  public Command aimAtTarget(PhotonCamera camera)
-  {
-
-    return run(() -> {
-      PhotonPipelineResult result = camera.getLatestResult();
-      if (result.hasTargets())
-      {
-        drive(getTargetSpeeds(0,
-                              0,
-                              Rotation2d.fromDegrees(result.getBestTarget()
-                                                           .getYaw()))); // Not sure if this will work, more math may be required.
-      }
-    });
-  }
 
   /**
    * Get the path follower with events.
@@ -388,6 +350,9 @@ public class SwerveSubsystem extends SubsystemBase
                                  );
   }
 
+  /**
+   * @return an optional that contains the maple sim drive train if one exists
+   */
   public Optional<SwerveDriveSimulation>getMapleSimDrive(){
     return swerveDrive.getMapleSimDrive();
   }
@@ -455,6 +420,12 @@ public class SwerveSubsystem extends SubsystemBase
   }
 
 
+  /**
+   * drive command used for small auto drive. While it can be used outside of that its kinda jank and the other drives should be used instead
+   * @param speed The speed at which the robot should drive from -1 to 1.
+   * @param driveAngle the angle that the robot should drive twords.
+   * @param rotationGoal the rotation that the robot should try and acheave
+   */
   public void drive(double speed, Rotation2d driveAngle, Rotation2d rotationGoal){
 
     driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(
@@ -486,17 +457,7 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.drive(velocity);
   }
 
-  // public void repopObstacles(){
-  //   List<Pair<Translation2d, Translation2d>> obstacles = new ArrayList<>();
 
-  //   List<Pair<Translation2d, Translation2d>> fakeBotHitBoxes = SystemManager.fakeBot.getTrajHitboxes();
-  //   for (Pair<Translation2d, Translation2d> pair:fakeBotHitBoxes){
-  //     obstacles.add(pair);
-  //   }
-
-
-  //   Pathfinding.setDynamicObstacles(obstacles, swerveDrive.getPose().getTranslation());
-  // }
 
 
   @Override
@@ -733,6 +694,8 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.addVisionMeasurement(new Pose2d(3, 3, Rotation2d.fromDegrees(65)), Timer.getFPGATimestamp());
   }
 
+
+  /**@return the pose measured by the maple sim drive train*/
   public Pose2d getMapleSimPose(){
     return getMapleSimDrive().get().getSimulatedDriveTrainPose();
   }

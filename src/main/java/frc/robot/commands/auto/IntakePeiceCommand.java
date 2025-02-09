@@ -102,7 +102,7 @@ public class IntakePeiceCommand extends Command{
      */
     @Override
     public boolean isFinished(){
-        return SystemManager.hasPeice();
+        return SystemManager.intake.hasPeice();
     }
 
 

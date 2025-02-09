@@ -67,8 +67,8 @@ public class realWrist implements wristInterface{
     }
 
     @Override
-    public double getSetpoint() {
-        return setpoint;
+    public Rotation2d getSetpoint() {
+        return Rotation2d.fromDegrees(setpoint);
     }
 
     @Override

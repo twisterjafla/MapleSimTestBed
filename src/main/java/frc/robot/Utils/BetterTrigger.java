@@ -16,7 +16,11 @@ public class BetterTrigger extends Trigger{
     private final EventLoop m_loop;
 
    
-
+    /**
+     * creates a trigger object that fixes some of the internal jank in the original WPIlib trigger
+     * @param loop the loop that this trigger should attacht too
+     * @param condition the condition this trigger will use internaly
+     */
     public BetterTrigger(EventLoop loop, BooleanSupplier condition) {
         super(loop, condition);
         m_loop = requireNonNullParam(loop, "loop", "Trigger");
@@ -24,10 +28,7 @@ public class BetterTrigger extends Trigger{
     }
 
     /**
-     * Creates a new trigger based on the given condition.
-     *
-     * <p>Polled by the default scheduler button loop.
-     *
+     * creates a trigger object that fixes some of the internal jank in the original WPIlib trigger
      * @param condition the condition represented by this trigger
      */
     public BetterTrigger(BooleanSupplier condition) {
@@ -38,11 +39,8 @@ public class BetterTrigger extends Trigger{
 
 
   /**
-   * Starts the command whenever the condition is true
-   *
-   * <p>Doesn't re-start the command if it ends while the condition is still `true`. If the command
-   * should restart, see {@link edu.wpi.first.wpilibj2.command.RepeatCommand}.
-   *
+   * Starts the command whenever the condition is true and the command isnt running. The command will be cancled whenever the trigger changes to false.
+   * Will restart the command if it ends and the condition is still true
    * @param command the command to start
    * @return this trigger, so calls can be chained
    */
@@ -68,15 +66,12 @@ public class BetterTrigger extends Trigger{
     return this;
   }
 
+ 
   /**
-   * Starts the given command when the condition changes to `false` and cancels it when the
-   * condition changes to `true`.
-   *
-   * <p>Doesn't re-start the command if it ends while the condition is still `false`. If the command
-   * should restart, see {@link edu.wpi.first.wpilibj2.command.RepeatCommand}.
-   *
-   * @param command the command to start
-   * @return this trigger, so calls can be chained
+   * Starts the command whenever the condition is false and the command isnt running. The command will be cancled whenever the trigger changes to true.
+   * Will restart the command if it ends and the condition is still false.
+   * @param command the command to start.
+   * @return this trigger, so calls can be chained.
    */
   public Trigger whileFalse(Command command) {
     requireNonNullParam(command, "command", "whileFalse");

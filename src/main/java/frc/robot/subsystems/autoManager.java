@@ -52,6 +52,9 @@ public class autoManager{
     public static int cycleCount=0;
     public static int score=3;
     protected static StructPublisher<Pose2d> bestPosePublisher = NetworkTableInstance.getDefault().getStructTopic("bestPose", Pose2d.struct).publish();
+
+
+    /**initalizes the auto manager. this mmust be called before the auto manager is used */
     public static void autoManagerInit() {
         try{
             jsonMap = (JSONObject) new JSONParser().parse(new FileReader(Filesystem.getDeployDirectory()+ "/pathplanner/navgridAStar.json"));
@@ -73,7 +76,7 @@ public class autoManager{
         for (int i=0; i<map.length; i++){
             JSONArray row = (JSONArray)grid.get(i);
             for (int j=0; j<map[i].length; j++){
-                map[i][j] = map[i][j]=new Node(i/tileSize, j/tileSize, map, !(boolean)row.get(j), Node.defaultValue);
+                map[i][j] = map[i][j]=new Node(i/tileSize, j/tileSize, map, !(boolean)row.get(j));
                 
                   
             }
@@ -84,7 +87,7 @@ public class autoManager{
     }
 
 
- 
+    /**handles the periodic tasks of the auto manager. should be called every cycle */
     public static void periodic(){
         SmartDashboard.putNumber("Cycle count", cycleCount);
         SmartDashboard.putNumber("Score", score);
@@ -125,6 +128,11 @@ public class autoManager{
         }
     }
 
+
+    /**
+     * swaps wether or not the auto manager has control
+     * @param isGift wether or not the auto manager should gain control
+     */
     public static void swapControl(boolean isGift){
         if (isGift){
             giveControl();
@@ -134,10 +142,12 @@ public class autoManager{
         }
     }
 
+    /**gives the auto manager control */
     public static void giveControl(){
         hasControl=true;
     }
 
+    /**takes control away from the auto manager */
     public static void takeControl(){
         hasControl=false;
         if (currentRoutine!=null){
@@ -145,20 +155,28 @@ public class autoManager{
         }
     }
 
+    /**
+     * sets a supplier that the auto manager will use to determine if it has control. Note if this function is used the giveControl and take control methods may not work as intended.
+     * @param supplier the supplier to determine wether the auto manager has control
+     */
     public static void setControlBooleanSuplier(BooleanSupplier supplier){
-        hasControllSupplier=supplier;
-        
+        hasControllSupplier=supplier;    
     }
 
 
-    public static void resetMap(Pose2d startingPose){
+    /**
+     * resets the internal A* map and recalcs paths using the starting pose
+     * @param startingPose the pose to start the pathplanner on
+     */
+    protected static void resetMap(Pose2d startingPose){
         resetMap();
         getMapPoint(startingPose).start();
     }
 
-    public static void resetMap(){
-        // resetCount++;
-        // SmartDashboard.putNumber("reset count", resetCount);
+    /**
+     * resets the map but does not start a path.
+     */
+    protected static void resetMap(){
 
         for (int i=0; i<map.length; i++){
             for (int j=0; j<map[i].length; j++){
@@ -167,7 +185,13 @@ public class autoManager{
         }
     }
 
-    public static Node getMapPoint(Pose2d pose){
+
+    /**
+     * fetches the closest node to the pose.
+     * @param pose pose to check
+     * @return the closest node to the pose
+     */
+    protected static Node getMapPoint(Pose2d pose){
         Pair<Integer, Integer> posit = poseToMap(pose);
         if (posit==null){
             return null;
@@ -176,7 +200,11 @@ public class autoManager{
     }
 
  
-
+    /**
+     * turns a pose into a int pair that can be used to index the internal map
+     * @param pose the pose to map
+     * @return a pair of ints representing the first and second index
+     */
     public static Pair<Integer, Integer> poseToMap(Pose2d pose){
         if (pose.getY()>width || pose.getX()>length){
             return null;
@@ -184,6 +212,8 @@ public class autoManager{
         return new Pair<Integer, Integer>((int)Math.round(pose.getY()/tileSize), (int)Math.round(pose.getX()/tileSize));
     }
 
+
+    /** @return the best auto action to take at the frame called in the form of a command*/
     public static Command getAutoAction(){
         if (SystemManager.intake.hasPeice()){
             return new ScorePiece(getBestScorePosit());
@@ -194,12 +224,10 @@ public class autoManager{
 
     }
 
-    @Deprecated
-    public static void resetAutoAction(){
-        System.out.println("Auto reset");
-        getAutoAction().schedule();
-    }
-
+    /**
+     * 
+     * @return The best place to score in terms of points/time
+     */
     public static scoringPosit getBestScorePosit(){
         resetMap(SystemManager.getSwervePose());
         
@@ -225,6 +253,10 @@ public class autoManager{
         return winningPole;
 
     }
+
+    /**
+     * @return the best position to intake from in terms of time.
+     */
     public static Pose2d getBestIntakePosit(){
 
         resetMap(SystemManager.getSwervePose());
@@ -246,6 +278,7 @@ public class autoManager{
 
     }
     
+    /**class to represent a node in an aStar grid */
     public static class Node{
         public static double defaultValue=10000;
         public static int friendCount=0;
@@ -255,22 +288,37 @@ public class autoManager{
         double x, y;
         Node[][] host;
         boolean isLegal;
-        double score;
+        double score=defaultValue;
         Node[] friends = new Node[8];
         boolean friendsPoped=false;
 
+
+        /**
+         * creates a node
+         * @param x the x position of the node in terms of list index
+         * @param y the y position of the node in terms of list index
+         * @param host The grid containing this node
+         */
         public Node(double x, double y, Node[][] host){
-            this(x,y,host,true, defaultValue);
+            this(x,y,host,true);
         }
 
-        public Node(double x, double y, Node[][] host, boolean isLegal, double score){
+        /**
+         * creates a node
+         * @param x the x position of the node in terms of list index
+         * @param y the y position of the node in terms of list index
+         * @param host The grid containing this node
+         * @param isLegal Wether or not the node is a legal place for a robot to be
+         */
+        public Node(double x, double y, Node[][] host, boolean isLegal){
             this.x=x;
             this.y=y;
             this.host=host;
             this.isLegal=isLegal;
-            this.score = score;
+
         }
 
+        /**populates this node with its freinds. this function is recursive and so can generate the entire grid out of just one call */
         public void popFreinds(){
             friendCount++;
             SmartDashboard.putNumber("friendCount", friendCount);
@@ -313,21 +361,8 @@ public class autoManager{
             }
         }
 
+        /**updates this node based off its freind list */
         public void update(){
-            // updateCount++;
-            // SmartDashboard.putNumber("update count", updateCount);
-
-
-            // for (Node friend: friends){
-            //     if (friend!=null&&friend.isLegal){
-                    
-            //         if (friend.score<score+getLength(this, friend)){
-            //             score=friend.score+getLength(this, friend);
-            //         }
-                    
-            //     }   
-            // }
-
             updateCount++;
             
             
@@ -345,10 +380,17 @@ public class autoManager{
             }
         }
 
+        /**
+         * A handy function to make the calcualtion of the distance between two points easer
+         * @param nodeA the first node
+         * @param NodeB the second node
+         * @return The distance between the two nodes
+         */
         public static double getLength(Node nodeA, Node NodeB){
             return utillFunctions.pythagorean(nodeA.x, NodeB.x, nodeA.y, NodeB.y);
         }
 
+        /**starts a pathplanning algorithm using this node as the starting point */
         public void start(){
             score=0;
             updateCount=0;
@@ -357,21 +399,18 @@ public class autoManager{
             manage();
         }
 
+        //resets this node to the default value
         public void reset(){
             score=defaultValue;
         }
 
+
+        /**the internal function that handles pathplanning */
         public static void manage(){
-            
             while(que.size()!=0){
-                
                 que.remove(0).update();;
             }
         }
-
-    
-
     }
-
 
 }

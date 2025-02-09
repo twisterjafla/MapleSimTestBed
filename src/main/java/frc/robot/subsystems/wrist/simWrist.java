@@ -63,8 +63,8 @@ public class simWrist extends SubsystemBase implements wristInterface{
     }
 
     @Override
-    public double getSetpoint() {
-        return setpoint;
+    public Rotation2d getSetpoint() {
+        return Rotation2d.fromDegrees(setpoint);
     }
 
     @Override

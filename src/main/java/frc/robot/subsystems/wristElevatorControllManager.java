@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.SystemManager;
 import frc.robot.subsystems.elevator.elevatorInterface;
 import frc.robot.subsystems.wrist.wristInterface;
-
+/**class to manage the interactions between the elevator and the wrist */
 public class wristElevatorControllManager{
 
 
@@ -21,6 +21,7 @@ public class wristElevatorControllManager{
     protected wristInterface wrist;
     protected elevatorInterface elevator;
 
+    
     public wristElevatorControllManager(){
         this(wristElevatorControllState.resting);
     }
@@ -29,36 +30,25 @@ public class wristElevatorControllManager{
         state=startingState;
     }
 
-    // public void giveElevatorControl(){
-    //     state=wristElevatorControllState.elevator;
-    //     // SystemManager.wrist.elevatorGotControl();
-    //     // SystemManager.elevator.elevatorGotControl();
-    // }
-
-    // public void giveWristControl(){
-    //     state=wristElevatorControllState.wrist;
-    //     // SystemManager.wrist.elevatorGotControl();
-    //     // SystemManager.elevator.wristGotControl();
-    // }
-    // public void giveNetherControl(){
-    //     state=wristElevatorControllState.resin;
-    //     // SystemManager.wrist.elevatorGotControl();
-    //     // SystemManager.elevator.wristGotControl();
-    // }
-    
+    /**@return the current state in terms of a wristElevatorControllState*/
     public wristElevatorControllState getState(){
         return state;
     }
 
+    /**adds the wrist and elevator to be used by the manager */
     public void addSystems(wristInterface wrist, elevatorInterface elevator){
         this.elevator=elevator;
         this.wrist=wrist;
     }
 
+
+    /**Updates the wrist elevevator manager. should be called every rio cycle */
     public void periodic(){
-        
+        if (wrist==null||elevator==null){
+            return;
+        }
 
-
+        //elevator state
         if (state == wristElevatorControllState.elevator){
             if (!wrist.atLegalNonControlState()){
                 state=wristElevatorControllState.fixWrist;
@@ -73,6 +63,7 @@ public class wristElevatorControllManager{
             }
         }
 
+        //wrist state
         else if(state==wristElevatorControllState.wrist){
             if(!elevator.atLegalNonControlState()){
                 state=wristElevatorControllState.fixElevator;
@@ -92,19 +83,21 @@ public class wristElevatorControllManager{
         }
 
 
-
+        //fix elevator state
         else if(state==wristElevatorControllState.fixElevator){
             if (elevator.atLegalNonControlState()){
                 state=wristElevatorControllState.resting;
             }
         }
 
+        //fix wrist state
         else if(state==wristElevatorControllState.fixWrist){
             if(wrist.atLegalNonControlState()){
                 state=wristElevatorControllState.resting;
             }
         }
 
+        //resting state
         else if (state==wristElevatorControllState.resting){
             if (!elevator.isAtSetpoint()){
                 if (!wrist.atLegalNonControlState()){

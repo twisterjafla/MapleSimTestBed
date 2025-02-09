@@ -109,8 +109,7 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
 
         @Override
         public void resetSIMONLY() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'resetSIMONLY'");
+            throw new Error("This function is only allowed on simulated robots and should only be used for debugging reasons");
         }
 
 }

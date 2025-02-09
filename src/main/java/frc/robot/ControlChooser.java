@@ -37,7 +37,7 @@ public class ControlChooser {
     
 
     
-
+    /**creates a control chooser */
     ControlChooser(){
         
         xbox1=new CommandXboxController(Constants.controllerIDs.commandXboxController1ID);
@@ -46,50 +46,42 @@ public class ControlChooser {
         chooser.setDefaultOption("default", CommandScheduler.getInstance().getDefaultButtonLoop());
 
         if (!RobotBase.isReal()){
-
-            chooser.addOption("testControl", getTestControl());
-            chooser.addOption("autoTestControll", getAutoTestControl());
-
-            //chooser.addOption("testControl", getTestControl());
-
+            //for schemes too unsafe to run on the real bot
         }
+
+
         chooser.addOption("autoTestControll", getAutoTestControl());
-
         chooser.addOption("testControl", getTestControl());
-
-
-
         chooser.addOption("StandardXboxControl", standardXboxControl());
         chooser.addOption("demoControl", demoControl());
         
-        //chooser.initSendable(new SendableBuilderImpl());
+        
         chooser.onChange((EventLoop scheme)->{changeControl(scheme);});
-        //changeControl(CommandScheduler.getInstance().getDefaultButtonLoop());
         changeControl(chooser.getSelected());
         
-
-        //warmUpSystem(SystemManager.swerve );
         SmartDashboard.putData("Control chooser", chooser);
        
     }
 
 
-
+    /**
+     * changes the control shceme to the scheme specified
+     * @param scheme the scheme to change too
+     */
     public void changeControl(EventLoop scheme){
         CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().setActiveButtonLoop(scheme);
 
     }
+
+    /**restarts the control chooser */
     public void restart(){
         changeControl(chooser.getSelected());
-        
     }
 
-    public void cancel(){
-        changeControl(new EventLoop());
-    }
+    
 
-
+    //returns an xbox controllers pov buttons in terms of degrees
     public static int getPOVForTest(CommandXboxController controller){
         for (int pov: Constants.OperatorConstants.supportedPOV){
             if (controller.pov(pov).getAsBoolean()){
@@ -100,48 +92,40 @@ public class ControlChooser {
 
     }
 
+    /**
+     * configures a default command that can run on a loop.
+     * @param defaultCommand the command to make the default
+     * @param subsystem the subystem this command is the default for
+     * @param loop the loop to attach the default command too
+     */
     public static void setDefaultCommand(Command defaultCommand, Subsystem subsystem, EventLoop loop){
         new BetterTrigger(loop, ()->((CommandScheduler.getInstance().requiring(subsystem)==null||CommandScheduler.getInstance().requiring(subsystem)==defaultCommand))).whileTrue(defaultCommand);
     }
 
+
+    /**@return a new test control loop*/
     private EventLoop getTestControl(){
         EventLoop loop = new EventLoop();
         setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->-xbox1.getLeftY(), ()->-xbox1.getLeftX(), ()->{
             if(utillFunctions.pythagorean(xbox1.getRightX(), xbox1.getRightY())>=0.2)return Math.atan2(-xbox1.getRightX(), -xbox1.getRightY())/Math.PI; return SystemManager.swerve.getHeading().getRadians()/Math.PI;})
            ,SystemManager.swerve, loop);
-       //setDefaultCommand(SystemManager.swerve.driveCommand(()->0, ()->0, ()->xbox1.getLeftX(), ()->xbox1.getLeftY()), SystemManager.swerve, loop);
-       xbox1.b(loop).onTrue(new CreateCoral("leftMid"));
-       xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
+       
+
+       
        xbox1.y(loop).onTrue(new InstantCommand(()->generalManager.scoreL4()));
        xbox1.x(loop).onTrue(new InstantCommand(()->generalManager.scoreL3()));
        xbox1.b(loop).onTrue(new InstantCommand(()->generalManager.scoreL2()));
        xbox1.a(loop).onTrue(new InstantCommand(()->generalManager.scoreL1()));
+
+       xbox1.leftTrigger(0.4, loop).onTrue(new CreateCoral("leftMid"));
+       xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
        xbox1.leftBumper(loop).onTrue(new smallAutoDrive(Constants.driveConstants.startingPosit));
        xbox1.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.outtake()));
-       //xbox1.y(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(5.8,3.8, new Rotation2d(Math.PI))));
-       //xbox1.a(loop).onTrue(SystemManager.swerve.testDrive());      
-       
-        // // xbox1.b().whileTrue(
-        // //     Commands.deferredProxy(() -> SystemManager.swerve.driveToPose(
-        // //                             new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))
-        // //                         ));
 
-        
-        // xbox1.y(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
-        // //xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(15,1.2, new Rotation2d(Math.PI))));
-
-        // // if (!RobotBase.isReal()){
-        // //     testController.x().onTrue(SystemManager.fakeBot.driveToPose(new Pose2d(2,4, new Rotation2d(0))));
-        // // }
-        // // setDefaultCommand(new FakeDrive(SystemManager.fakeBot, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> Math.PI/180 * getPOVForTest(xbox1)), SystemManager.fakeBot, loop);
-        // xbox1.x(loop).whileTrue(new AutoDefenceForFakeBot(new Pose2d(2,4, new Rotation2d(0))));
-        // setDefaultCommand(new QuickSwapCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)),
-        //     AdditionalCommands.SwappingAuto, ()->xbox1.getHID().getAButton()), SystemManager.swerve, loop);
-
-        // xbox1.b(loop).onTrue(new InstantCommand(()->{changeControl(getTestControl());}));
         return loop;
     }
 
+    /**@return a new standardXboxControl loop */
     private EventLoop standardXboxControl(){
         EventLoop loop = new EventLoop();
         setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->-xbox1.getLeftY(), ()->-xbox1.getLeftX(), ()->{
@@ -155,6 +139,7 @@ public class ControlChooser {
         return loop;
     }
 
+    /**@return a new demo control loop */
     private EventLoop demoControl(){
         EventLoop loop  = new EventLoop();
         setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)),SystemManager.swerve, loop);
@@ -162,11 +147,11 @@ public class ControlChooser {
         return loop;
     }
 
+    /**@return a new auto test control loop */
     private EventLoop getAutoTestControl(){
         EventLoop loop = new EventLoop();
-        //new Trigger(loop, xbox1.leftTrigger(0.75)).onTrue(new InstantCommand(()->autoManager.giveControl())).onFalse(new InstantCommand(()->autoManager.takeControl()));
-        xbox1.leftBumper(loop).onTrue(new InstantCommand(()->autoManager.giveControl())).onFalse(new InstantCommand(()->autoManager.takeControl()));
-
+        new Trigger(loop, xbox1.leftTrigger(0.75)).onTrue(new InstantCommand(()->autoManager.giveControl())).onFalse(new InstantCommand(()->autoManager.takeControl()));
+        
         xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(FieldPosits.scoringPosits.F));
         xbox1.x(loop).onTrue(new InstantCommand(()->SystemManager.reefIndexer.resetSIMONLY()));
        
