@@ -9,6 +9,8 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.networktables.BooleanArrayEntry;
 import edu.wpi.first.networktables.BooleanArraySubscriber;
 import edu.wpi.first.networktables.BooleanArrayTopic;
+import edu.wpi.first.networktables.DoubleSubscriber;
+import edu.wpi.first.networktables.DoubleTopic;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.PubSubOption;
@@ -21,6 +23,7 @@ import frc.robot.SystemManager;
 
 public class realVision extends SubsystemBase implements aprilTagInterface, reefIndexerInterface {
     private final StructSubscriber<Pose3d> robotPoseSubscriber;
+    private final DoubleSubscriber robotPoseTimestamp;
     private ArrayList<BooleanArraySubscriber> reefLevelSubscribers;
     private ArrayList<BooleanArraySubscriber> algeaLevelSubscribers;
     
@@ -53,6 +56,9 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
     
             // Gets the robot's position's subscriber
             StructTopic<Pose3d> robotPoseTopic = inst.getStructTopic("RobotValues", Pose3d.struct);
+            DoubleTopic robotTimestampTopic = inst.getDoubleTopic("RobotPoseTimestamp");
+
+            robotPoseTimestamp = robotTimestampTopic.subscribe(0, PubSubOption.keepDuplicates(true));
             this.robotPoseSubscriber = robotPoseTopic.subscribe(robotDefaultPose, PubSubOption.keepDuplicates(true));
 
         }
@@ -110,6 +116,11 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
         @Override
         public void resetSIMONLY() {
             throw new Error("This function is only allowed on simulated robots and should only be used for debugging reasons");
+        }
+
+        @Override
+        public double getMostRecentPoseTimestamp() {
+            return robotPoseTimestamp.get();
         }
 
 }

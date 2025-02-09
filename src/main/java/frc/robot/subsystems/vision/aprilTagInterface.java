@@ -6,4 +6,8 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 public interface aprilTagInterface extends Subsystem{
     /**@return the pose estimated by the vision system */
     Pose3d getPose();
+
+    /**@return the time stamp for the most resent pose fetched from the vision system */
+    double getMostRecentPoseTimestamp();
+    
 }
