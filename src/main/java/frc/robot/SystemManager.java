@@ -19,7 +19,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.autoManager;
 import frc.robot.subsystems.generalManager;
 import frc.robot.subsystems.wristElevatorControllManager;
+import frc.robot.subsystems.blinkin.blinkinInterface;
+import frc.robot.subsystems.blinkin.realBlinkin;
+import frc.robot.subsystems.blinkin.simBlinkin;
 import frc.robot.subsystems.elevator.elevatorInterface;
+import frc.robot.subsystems.elevator.realElevator;
 import frc.robot.subsystems.elevator.simElevator;
 import frc.robot.subsystems.intake.intakeInterface;
 import frc.robot.subsystems.intake.realIntake;
@@ -36,6 +40,7 @@ import frc.robot.subsystems.vision.realVision;
 //import frc.robot.subsystems.vision.realVision;
 import frc.robot.subsystems.vision.reefIndexerInterface;
 import frc.robot.subsystems.vision.simReefIndexer;
+import frc.robot.subsystems.wrist.realWrist;
 import frc.robot.subsystems.wrist.simWrist;
 import frc.robot.subsystems.wrist.wristInterface;
 
@@ -57,6 +62,7 @@ public class SystemManager{
     public static lidarInterface lidar;
     public static realSimulatedDriveTrain simButRealTrain=null;
     public static realVision realVisTemp=null;
+    public static blinkinInterface blinkin;
     
     public static void SystemManagerInit(){
         swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),  "swerve"));
@@ -75,11 +81,11 @@ public class SystemManager{
                 simButRealTrain = new realSimulatedDriveTrain(DriveTrainSimulationConfig.Default(), getSwervePose());
             }
             intake=new simIntake();
-            
         }
         else{
             intake = new realIntake();
         }
+
 
         if (Constants.simConfigs.aprilTagShouldBeSim){
             aprilTag= new photonSim();
@@ -89,16 +95,22 @@ public class SystemManager{
             aprilTag=realVisTemp;
         }
 
+
         if (Constants.simConfigs.elevatorShouldBeSim){
             elevator= new simElevator();
         }
+        else{
+            elevator = new realElevator();
+        }
+
 
         if (Constants.simConfigs.wristShouldBeSim){
             wrist= new simWrist();
         }
         else{
-
+            wrist = new realWrist();
         }
+
 
         if (Constants.simConfigs.reefIndexerShouldBeSim){
             reefIndexer= new simReefIndexer();
@@ -112,11 +124,20 @@ public class SystemManager{
             }
         }
 
+
         if (Constants.simConfigs.lidarShouldBeSim){
             lidar=new simLidar();
         }
         else{
             
+        }
+
+
+        if(Constants.simConfigs.blinkinShouldBeSim){
+            blinkin = new simBlinkin();
+        }
+        else{
+            blinkin = new realBlinkin();
         }
 
         
