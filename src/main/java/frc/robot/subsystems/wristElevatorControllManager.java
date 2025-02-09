@@ -17,33 +17,27 @@ public class wristElevatorControllManager{
     }
 
 
-    protected wristElevatorControllState state;
-    protected wristInterface wrist;
-    protected elevatorInterface elevator;
+    protected static wristElevatorControllState state = wristElevatorControllState.resting;
+    protected static wristInterface wrist;
+    protected static elevatorInterface elevator;
 
     
-    public wristElevatorControllManager(){
-        this(wristElevatorControllState.resting);
-    }
 
-    public wristElevatorControllManager(wristElevatorControllState startingState){
-        state=startingState;
-    }
 
     /**@return the current state in terms of a wristElevatorControllState*/
-    public wristElevatorControllState getState(){
+    public static wristElevatorControllState getState(){
         return state;
     }
 
     /**adds the wrist and elevator to be used by the manager */
-    public void addSystems(wristInterface wrist, elevatorInterface elevator){
-        this.elevator=elevator;
-        this.wrist=wrist;
+    public static void addSystems(wristInterface newWrist, elevatorInterface newElevator){
+        elevator=newElevator;
+        wrist=newWrist;
     }
 
 
     /**Updates the wrist elevevator manager. should be called every rio cycle */
-    public void periodic(){
+    public static void periodic(){
         if (wrist==null||elevator==null){
             return;
         }

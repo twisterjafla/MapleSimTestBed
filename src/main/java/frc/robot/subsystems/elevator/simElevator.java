@@ -19,7 +19,7 @@ public class simElevator  extends SubsystemBase implements elevatorInterface{
     public double position=0;
     protected double goal=0;
     
-    protected wristElevatorControllManager manager;
+   
 
     public Mechanism2d mech = new Mechanism2d(0,0);//Constants.elevatorConstants.fromRobotCenter.getX(), Constants.elevatorConstants.fromRobotCenter.getZ());//0.86, 1.75);
     public MechanismRoot2d root = mech.getRoot("elevatorRoot", Constants.elevatorConstants.fromRobotCenter.getX(), Constants.elevatorConstants.fromRobotCenter.getY());
@@ -70,12 +70,10 @@ public class simElevator  extends SubsystemBase implements elevatorInterface{
     @Override
     public void periodic(){
 
-        if (manager==null){
-            warningManager.throwAlert(warningManager.noWristElevatorManagerSet);
-            return;
-        }
 
-        if (manager.getState()==wristElevatorControllManager.wristElevatorControllState.elevator||manager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
+        if (wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.elevator||
+            wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
+
             goal=setpoint;
         }
         else{
@@ -98,10 +96,6 @@ public class simElevator  extends SubsystemBase implements elevatorInterface{
         SmartDashboard.putNumber("wristVal", SystemManager.wrist.getCurrentLocationR2D().getDegrees());
     }
 
-    @Override
-    public void setManager(wristElevatorControllManager manager){
-        this.manager=manager;
-    }
 
     @Override
     public boolean atLegalNonControlState(){

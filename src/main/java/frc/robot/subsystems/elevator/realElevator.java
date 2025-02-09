@@ -23,8 +23,7 @@ public class realElevator  extends SubsystemBase implements elevatorInterface{
     public double position=0;
     protected double goal=0;
     
-    protected wristElevatorControllManager manager;
-
+    
     protected TalonFX leftMotor = new TalonFX(Constants.elevatorConstants.leftMotorID);
     protected TalonFX rightMotor = new TalonFX(Constants.elevatorConstants.rightMotorID);
 
@@ -83,12 +82,10 @@ public class realElevator  extends SubsystemBase implements elevatorInterface{
     @Override
     public void periodic(){
 
-        if (manager==null){
-            warningManager.throwAlert(warningManager.noWristElevatorManagerSet);
-            return;
-        }
 
-        if (manager.getState()==wristElevatorControllManager.wristElevatorControllState.elevator||manager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
+
+        if (wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.elevator||
+            wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
             goal=setpoint;
         }
         else{
@@ -101,13 +98,6 @@ public class realElevator  extends SubsystemBase implements elevatorInterface{
         rightMotor.setControl(motionVoltage.withPosition(goal));
 
 
-    }
-
-
-
-    @Override
-    public void setManager(wristElevatorControllManager manager){
-        this.manager=manager;
     }
 
     @Override

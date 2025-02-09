@@ -21,7 +21,7 @@ public class realWrist implements wristInterface{
 
     private double setpoint;
     private double goal;
-    protected wristElevatorControllManager manager;
+
     protected CoreCANcoder wristEncoder = new CoreCANcoder(Constants.wristConstants.CANCoderID);
     protected SparkFlex wristMotor = new SparkFlex(Constants.wristConstants.motorID, MotorType.kBrushless);
     protected PIDController wristPID = new PIDController(Constants.wristConstants.wristPID.kP, Constants.wristConstants.wristPID.kI, Constants.wristConstants.wristPID.kD);
@@ -36,12 +36,11 @@ public class realWrist implements wristInterface{
 
     @Override
     public void periodic(){
-        if (manager==null){
-            warningManager.throwAlert(warningManager.noWristElevatorManagerSet);
-            return;
-        }
 
-        if (manager.getState()==wristElevatorControllManager.wristElevatorControllState.wrist||manager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
+
+        if (wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.wrist||
+            wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
+                
             goal=setpoint;
         }
         else{
@@ -85,10 +84,7 @@ public class realWrist implements wristInterface{
     }
 
 
-    @Override
-    public void setManager(wristElevatorControllManager manager){
-        this.manager=manager;
-    }
+
 
     @Override
     public boolean atLegalNonControlState(){

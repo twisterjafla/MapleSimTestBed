@@ -58,7 +58,6 @@ public class SystemManager{
     public static wristInterface wrist;
     public static elevatorInterface elevator;
     public static reefIndexerInterface reefIndexer;
-    public static wristElevatorControllManager wristManager;
     public static lidarInterface lidar;
     public static realSimulatedDriveTrain simButRealTrain=null;
     public static realVision realVisTemp=null;
@@ -157,10 +156,11 @@ public class SystemManager{
         }
 
         //inializes and distributes the managers
-        wristManager = new wristElevatorControllManager();
-        elevator.setManager(wristManager);
-        wrist.setManager(wristManager);
-        wristManager.addSystems(wrist, elevator);
+        
+
+
+
+        wristElevatorControllManager.addSystems(wrist, elevator);
         generalManager.generalManagerInit();
         autoManager.autoManagerInit();
     }
@@ -168,7 +168,7 @@ public class SystemManager{
 
     /**Calls periodic on all the systems that do not inherit subststem base. this function should be called in robot periodic*/
     public static void periodic(){
-        wristManager.periodic();
+        wristElevatorControllManager.periodic();
         generalManager.periodic();
         autoManager.periodic();
     }

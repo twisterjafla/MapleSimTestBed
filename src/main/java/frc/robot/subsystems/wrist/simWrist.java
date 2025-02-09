@@ -13,7 +13,7 @@ public class simWrist extends SubsystemBase implements wristInterface{
     private double setpoint;
     private double position;
     private double goal;
-    protected wristElevatorControllManager manager;
+    
 
 
 
@@ -25,12 +25,12 @@ public class simWrist extends SubsystemBase implements wristInterface{
 
     @Override
     public void periodic(){
-        if (manager==null){
-            warningManager.throwAlert(warningManager.noWristElevatorManagerSet);
-            return;
-        }
 
-        if (manager.getState()==wristElevatorControllManager.wristElevatorControllState.wrist||manager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
+
+        if (
+            wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.wrist||
+            wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
+            
             goal=setpoint;
         }
         else{
@@ -81,10 +81,6 @@ public class simWrist extends SubsystemBase implements wristInterface{
     }
 
 
-    @Override
-    public void setManager(wristElevatorControllManager manager){
-        this.manager=manager;
-    }
 
     @Override
     public boolean atLegalNonControlState(){

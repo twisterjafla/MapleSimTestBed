@@ -28,11 +28,6 @@ public interface wristInterface extends Subsystem{
     /**resets the wrist to starting configs */
     public void reset();
     
-    /**
-     * sets the wrist elevator control manager to use
-     * @param manager the manager to be used
-     */
-    public void setManager(wristElevatorControllManager manager);
 
     /**@return wether or not the wrist is at a position at which the elevator can safely move */
     public boolean atLegalNonControlState();
