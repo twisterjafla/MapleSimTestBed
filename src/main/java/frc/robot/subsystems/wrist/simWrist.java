@@ -21,10 +21,7 @@ public class simWrist extends SubsystemBase implements wristInterface{
     }
 
 
-    @Override
-    public void setSetpointRaw(double setpoint) {
-        this.setpoint=setpoint;
-    }
+
 
     @Override
     public void periodic(){
@@ -37,17 +34,17 @@ public class simWrist extends SubsystemBase implements wristInterface{
             goal=setpoint;
         }
         else{
-            goal=Constants.wristConstants.restingPosit;
+            goal=Constants.wristConstants.restingPosit.getDegrees();
         }
 
-        if (Math.abs(goal-position)<Constants.wristConstants.speedForSim/Constants.wristConstants.degreesPerEncoderTick){
+        if (Math.abs(goal-position)<Constants.wristConstants.speedForSim){
             position=goal;
         }
         else if (goal>position){
-            position+=Constants.wristConstants.speedForSim/Constants.wristConstants.degreesPerEncoderTick;
+            position+=Constants.wristConstants.speedForSim;
         }
         else{
-            position-=Constants.wristConstants.speedForSim/Constants.wristConstants.degreesPerEncoderTick;
+            position-=Constants.wristConstants.speedForSim;
         }
 
 
@@ -61,7 +58,7 @@ public class simWrist extends SubsystemBase implements wristInterface{
     }
 
     @Override
-    public double getCurrentLocationEncoder() {
+    public double getCurrentLocation() {
         return position;
     }
 
@@ -75,14 +72,12 @@ public class simWrist extends SubsystemBase implements wristInterface{
         setpoint=0;
     }
 
-    @Override
-    public void setSetpoint(double setPoint) {
-        setSetpointRaw(setPoint/Constants.wristConstants.degreesPerEncoderTick);
-    }
+    
+
 
     @Override
-    public Rotation2d getCurrentLocation() {
-        return Rotation2d.fromDegrees(position*Constants.wristConstants.degreesPerEncoderTick);
+    public Rotation2d getCurrentLocationR2D() {
+        return Rotation2d.fromDegrees(position);
     }
 
 
@@ -93,8 +88,16 @@ public class simWrist extends SubsystemBase implements wristInterface{
 
     @Override
     public boolean atLegalNonControlState(){
-        return Math.abs(getCurrentLocation().getDegrees())<Constants.wristConstants.tolerence;
+        return Math.abs(getCurrentLocationR2D().getDegrees())<Constants.wristConstants.tolerence;
     }
+
+
+
+
+    @Override
+    public void setSetpoint(Rotation2d setpoint) {
+        this.setpoint=setpoint.getDegrees();
+        }
 
 
 }

@@ -5,6 +5,8 @@ import static edu.wpi.first.units.Units.Degrees;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix6.hardware.core.CoreCANcoder;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
@@ -22,20 +24,16 @@ public class realWrist implements wristInterface{
     protected wristElevatorControllManager manager;
     protected CoreCANcoder wristEncoder = new CoreCANcoder(Constants.wristConstants.CANCoderID);
     protected SparkFlex wristMotor = new SparkFlex(Constants.wristConstants.motorID, MotorType.kBrushless);
+    protected PIDController wristPID = new PIDController(Constants.wristConstants.wristPID.kP, Constants.wristConstants.wristPID.kI, Constants.wristConstants.wristPID.kD);
 
 
-    @Deprecated
     public realWrist(){
+        wristPID.setTolerance(Constants.wristConstants.tolerence);
     }
 
 
-    @Override
-    public void setSetpointRaw(double setpoint) {
-        this.setpoint=setpoint;
-    }
 
 
-    @Deprecated
     @Override
     public void periodic(){
         if (manager==null){
@@ -47,22 +45,25 @@ public class realWrist implements wristInterface{
             goal=setpoint;
         }
         else{
-            goal=Constants.wristConstants.restingPosit;
+            goal=Constants.wristConstants.restingPosit.getDegrees();
         }
 
+        wristPID.setSetpoint(goal);
+        wristMotor.set(wristPID.calculate(getCurrentLocation()));
+       
 
     }
 
 
     @Override
     public boolean isAtSetpoint() {
-        return Math.abs(setpoint-getCurrentLocation().getDegrees())<Constants.wristConstants.tolerence;
+        return Math.abs(setpoint-getCurrentLocationR2D().getDegrees())<Constants.wristConstants.tolerence;
     }
 
 
     @Override
-    public double getCurrentLocationEncoder() {
-        return wristEncoder.getAbsolutePosition().getValue().in(edu.wpi.first.units.Units.Degrees);
+    public double getCurrentLocation() {
+        return (wristEncoder.getAbsolutePosition().getValue().in(edu.wpi.first.units.Units.Degrees)+Constants.wristConstants.CANCoderOffset)%360;
     }
 
     @Override
@@ -75,14 +76,12 @@ public class realWrist implements wristInterface{
         setpoint=0;
     }
 
-    @Override
-    public void setSetpoint(double setPoint) {
-        setSetpointRaw(setPoint/Constants.wristConstants.degreesPerEncoderTick);
-    }
+    
+
 
     @Override
-    public Rotation2d getCurrentLocation() {
-        return Rotation2d.fromDegrees(getCurrentLocationEncoder()*Constants.wristConstants.degreesPerEncoderTick);
+    public Rotation2d getCurrentLocationR2D() {
+        return Rotation2d.fromDegrees(getCurrentLocation());
     }
 
 
@@ -93,6 +92,14 @@ public class realWrist implements wristInterface{
 
     @Override
     public boolean atLegalNonControlState(){
-        return Math.abs(getCurrentLocation().getDegrees())<Constants.wristConstants.tolerence;
+        return Math.abs(getCurrentLocationR2D().getDegrees())<Constants.wristConstants.tolerence;
+    }
+
+
+
+
+    @Override
+    public void setSetpoint(Rotation2d setpoint) {
+        this.setpoint=setpoint.getDegrees();
     }
 }

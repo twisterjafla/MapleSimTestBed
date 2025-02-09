@@ -175,7 +175,7 @@ public class simIntake extends SubsystemBase implements intakeInterface{
 
     @Override
     public Translation3d getTranslation(){
-        Rotation2d rotation = SystemManager.wrist.getCurrentLocation();
+        Rotation2d rotation = SystemManager.wrist.getCurrentLocationR2D();
         return new Translation3d(
             Math.sin(-rotation.getRadians()+Math.toRadians(20))*Constants.intakeConstants.coralFromWristLen+Constants.intakeConstants.coralLenght/2,
             0,

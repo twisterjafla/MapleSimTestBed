@@ -187,19 +187,22 @@ public final class Constants
   }
 
   public static class wristConstants{
-    public static final double l4EncoderVal = -15;
-    public static final double l3EncoderVal = 0;
-    public static final double l2EncoderVal = 0;
-    public static final double l1EncoderVal = 0;
-    public static final double restingPosit = 0;
-    public static final double degreesPerEncoderTick=360;
+    public static final Rotation2d l4EncoderVal = Rotation2d.fromDegrees(-15);
+    public static final Rotation2d l3EncoderVal = Rotation2d.fromDegrees(0);
+    public static final Rotation2d l2EncoderVal = Rotation2d.fromDegrees(0);
+    public static final Rotation2d l1EncoderVal = Rotation2d.fromDegrees(0);
+    public static final Rotation2d restingPosit = Rotation2d.fromDegrees(0);
+    public static final Rotation2d intakePosit = Rotation2d.fromDegrees(0);
+
     public static final Rotation2d minDegrees = new Rotation2d();
     public static final Rotation2d maxDegrees = new Rotation2d();
-    public static final double intakePosit = 0;
-    public static final double tolerence = 5;
+    
+    public static final double tolerence = 2;
     public static final double speedForSim=5;
     public static final int CANCoderID=50;
+    public static final int CANCoderOffset=0;
     public static final int motorID=50;
+    public static final PIDConstants wristPID = new PIDConstants(0.2, 0, 0.1);
   
   }
 

@@ -143,7 +143,7 @@ public class realIntake extends SubsystemBase implements intakeInterface{
 
 	@Override
 	public Translation3d getTranslation() {
-		Rotation2d rotation = SystemManager.wrist.getCurrentLocation();
+		Rotation2d rotation = SystemManager.wrist.getCurrentLocationR2D();
         return new Translation3d(Math.cos(rotation.getRadians())*Constants.intakeConstants.intakeLength, 0 ,Math.sin(rotation.getRadians())*Constants.intakeConstants.intakeLength).plus(SystemManager.elevator.getTranslation());
 	}
 }
