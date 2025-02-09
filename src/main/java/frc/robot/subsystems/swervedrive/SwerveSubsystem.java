@@ -462,9 +462,10 @@ public class SwerveSubsystem extends SubsystemBase
 
   @Override
   public void periodic(){
-    
-    swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getPose().toPose2d(), SystemManager.aprilTag.getMostRecentPoseTimestamp());
-    //postTrajectory();
+    if (!SystemManager.aprilTag.getPose().toPose2d().equals(new Pose2d())){
+      swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getPose().toPose2d(), SystemManager.aprilTag.getMostRecentPoseTimestamp());
+    }
+      //postTrajectory();
     
 
     // if (RobotBase.isReal()){

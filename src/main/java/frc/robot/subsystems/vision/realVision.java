@@ -65,9 +65,7 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
         
         @Override
         public Pose3d getPose() {
-            if (robotPoseSubscriber.get()== new Pose3d()){
-                return new Pose3d(SystemManager.swerve.getPose());
-            }
+
             return robotPoseSubscriber.get();
         }
 
