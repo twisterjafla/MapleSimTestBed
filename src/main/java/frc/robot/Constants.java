@@ -143,6 +143,7 @@ public final class Constants
 
     public static final int frontBeamBrakePort=50;
     public static final int backBeamBrakePort=50;
+    public static final double algeaTimerVal = 0.5;
   }
 
   /**constants for the elevator */
@@ -151,6 +152,10 @@ public final class Constants
     public static final double l3EncoderVal = 0.702381;
     public static final double l2EncoderVal = 0.414528;
     public static final double l1EncoderVal = 0;
+    public static final double highAlgea = 0;
+    public static final double lowAlgea = 0;
+
+
     public static final double encoderToMeters =1;
     public static final double maxHeight = l4EncoderVal;
     public static final Rotation2d angle = Rotation2d.fromDegrees(70);
@@ -195,6 +200,7 @@ public final class Constants
     public static final Rotation2d l1EncoderVal = Rotation2d.fromDegrees(0);
     public static final Rotation2d restingPosit = Rotation2d.fromDegrees(0);
     public static final Rotation2d intakePosit = Rotation2d.fromDegrees(0);
+    public static final Rotation2d algeaPosit = Rotation2d.fromDegrees(0);
 
     public static final Rotation2d minDegrees = new Rotation2d();
     public static final Rotation2d maxDegrees = new Rotation2d();

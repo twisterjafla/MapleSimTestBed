@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 
 public class FieldPosits {
@@ -62,6 +63,18 @@ public class FieldPosits {
             reefPole.L
 
         };
+    }
+
+    public static class algeaStuff{
+        public static final Translation2d highTrans = new Translation2d();
+        public static final Translation2d lowTrans = new Translation2d();
+        public static final Pose2d A = new Pose2d();
+        public static final Pose2d B = new Pose2d();
+        public static final Pose2d C = new Pose2d();
+        public static final Pose2d D = new Pose2d();
+        public static final Pose2d E = new Pose2d();
+        public static final Pose2d F = new Pose2d();
+
     }
 
     /**enum to encapsulate and provide basic information about scoring on a reef pole */
@@ -236,6 +249,87 @@ public class FieldPosits {
                     throw new Error("This case is imposible to reach because all enum options are handled but needs to exist so java can be sure the function will always return a value.If you are seeing this as a user somthing has gone DEEPLY DEEPLY WRONG, maybe burn your code in mount doom");
             }
         }
+
+
+        public enum algeaRemoval {
+            AH(0,false),
+            AL(0,true),
+            BH(1,false),
+            BL(1,true),
+            CH(2,false),
+            CL(2,true),
+            DH(3,false),
+            DL(3,true),
+            EH(4,false),
+            EL(4,true),
+            FH(5,false),
+            FL(5,true),
+            high(-1, false),
+            low(-1, false);
+
+
+            private algeaRemoval(int side, boolean isLow){
+                this.isLow=isLow;
+                this.side=side;
+
+            }
+
+            int side;
+            boolean isLow;
+
+            public double getElevatorValue(){
+                if (isLow){
+                    return Constants.elevatorConstants.lowAlgea;
+                }
+                else{
+                    return Constants.elevatorConstants.highAlgea;
+                }
+            }
+
+            public Rotation2d getWristValue(){
+                return Constants.wristConstants.algeaPosit;
+            }
+
+            public Translation2d geTranslation2d(){
+                if (side==-1){
+                    throw new Error("The user attempted to use a function reserved for 2d algea information on a 1d algea information enum");
+                }
+                if (isLow){
+                    return algeaStuff.lowTrans;
+                }
+                else{
+                    return algeaStuff.highTrans;
+                }
+            }
+
+            public Pose2d getPoseRaw(){
+                if (side==-1){
+                    throw new Error("The user attempted to use a function reserved for 2d algea information on a 1d algea information enum");
+                }
+                switch (side){
+                    case 0:
+                        return algeaStuff.A;
+                    case 1:
+                        return algeaStuff.B;
+                    case 2:
+                        return algeaStuff.C;
+                    case 3:
+                        return algeaStuff.D;
+                    case 4:
+                        return algeaStuff.E;
+                    case 5:
+                        return algeaStuff.F;
+                    default:
+                        throw new Error("This case is imposible to reach because all enum options are handled but needs to exist so java can be sure the function will always return a value.If you are seeing this as a user somthing has gone DEEPLY DEEPLY WRONG, maybe burn your code in mount doom");
+                }
+            }
+
+            public Pose2d getPose(){
+                return getPoseRaw().plus(new Transform2d(geTranslation2d(), new Rotation2d()));
+            }
+        }
+
+
     }
 
 
