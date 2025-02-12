@@ -21,6 +21,11 @@
           "open": false
         }
       },
+      "Talon FX (v6)[8]/Fwd Limit": {
+        "header": {
+          "open": false
+        }
+      },
       "Talon FX[50]": {
         "header": {
           "open": false
@@ -46,11 +51,28 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/AIRobotBehaviors/Opponent Robot 1 Behavior": "String Chooser",
+      "/SmartDashboard/Alerts": "Alerts",
+      "/SmartDashboard/Control chooser": "String Chooser",
+      "/SmartDashboard/Encoders": "Alerts",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/IMU": "Alerts",
+      "/SmartDashboard/JSON": "Alerts",
+      "/SmartDashboard/Motors": "Alerts",
       "/SmartDashboard/Pigeon 2 (v6) [13]": "Gyro",
-      "/SmartDashboard/navX-Sensor[4]": "Gyro"
+      "/SmartDashboard/SendableChooser[1]": "String Chooser",
+      "/SmartDashboard/SendableChooser[2]": "String Chooser",
+      "/SmartDashboard/Swerve Drive": "Alerts",
+      "/SmartDashboard/VisionSystemSim-main/Sim Field": "Field2d",
+      "/SmartDashboard/elevator": "Mechanism2d",
+      "/SmartDashboard/wrist": "Mechanism2d"
     },
     "windows": {
+      "/SmartDashboard/Control chooser": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
         "bottom": 1476,
         "height": 8.210550308227539,
@@ -65,6 +87,9 @@
     }
   },
   "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
     "transitory": {
       "PathPlanner": {
         "HotReload": {
@@ -72,11 +97,22 @@
         }
       },
       "SmartDashboard": {
+        "Control chooser": {
+          "open": true
+        },
         "Field": {
           "double[]##v_/SmartDashboard/Field/Bot Chara": {
             "open": false
           },
-          "open": true
+          "double[]##v_/SmartDashboard/Field/René DesCoded": {
+            "open": false
+          },
+          "double[]##v_/SmartDashboard/Field/Robot": {
+            "open": false
+          },
+          "double[]##v_/SmartDashboard/Field/XModules": {
+            "open": false
+          }
         },
         "bot chara map": {
           "double[]##v_/SmartDashboard/bot chara map/Robot": {
@@ -89,6 +125,14 @@
     }
   },
   "NetworkTables Info": {
+    "AdvantageScope@2": {
+      "Subscribers": {
+        "open": true
+      }
+    },
+    "Clients": {
+      "open": true
+    },
     "Connections": {
       "open": true
     },
@@ -100,6 +144,18 @@
         "open": false
       },
       "open": false
+    },
+    "DartClient_40640690@3": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
+    "Server": {
+      "open": true
     },
     "visible": true
   }
