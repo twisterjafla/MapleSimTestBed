@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import frc.robot.Utils.warningManager;
-import frc.robot.subsystems.wristElevatorControllManager;
+import frc.robot.subsystems.wristElevatorControlManager;
 
 public class simWrist extends SubsystemBase implements wristInterface{
 
@@ -28,8 +28,8 @@ public class simWrist extends SubsystemBase implements wristInterface{
 
 
         if (
-            wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.wrist||
-            wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
+            wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.wrist||
+            wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.resting){
             
             goal=setpoint;
         }

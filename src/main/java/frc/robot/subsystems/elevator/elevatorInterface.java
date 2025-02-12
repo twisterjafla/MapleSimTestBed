@@ -4,7 +4,7 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.subsystems.wristElevatorControllManager;
+import frc.robot.subsystems.wristElevatorControlManager;
 
 public interface elevatorInterface extends Subsystem {
 

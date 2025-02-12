@@ -11,7 +11,7 @@ import frc.robot.Constants;
 import frc.robot.SystemManager;
 
 import frc.robot.Utils.warningManager;
-import frc.robot.subsystems.wristElevatorControllManager;
+import frc.robot.subsystems.wristElevatorControlManager;
 
 public class simElevator  extends SubsystemBase implements elevatorInterface{
 
@@ -71,8 +71,8 @@ public class simElevator  extends SubsystemBase implements elevatorInterface{
     public void periodic(){
 
 
-        if (wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.elevator||
-            wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
+        if (wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.elevator||
+            wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.resting){
 
             goal=setpoint;
         }

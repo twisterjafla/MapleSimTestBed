@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.autoManager;
 import frc.robot.subsystems.generalManager;
-import frc.robot.subsystems.wristElevatorControllManager;
+import frc.robot.subsystems.wristElevatorControlManager;
 import frc.robot.subsystems.blinkin.blinkinInterface;
 import frc.robot.subsystems.blinkin.realBlinkin;
 import frc.robot.subsystems.blinkin.simBlinkin;
@@ -156,19 +156,15 @@ public class SystemManager{
         }
 
         //inializes and distributes the managers
-        
-
-
-
-        wristElevatorControllManager.addSystems(wrist, elevator);
+        wristElevatorControlManager.addSystems(wrist, elevator);
         generalManager.generalManagerInit();
         autoManager.autoManagerInit();
     }
 
 
-    /**Calls periodic on all the systems that do not inherit subststem base. this function should be called in robot periodic*/
+    /**Calls periodic on all the systems that do not inherit subsytstem base. this function should be called in robot periodic*/
     public static void periodic(){
-        wristElevatorControllManager.periodic();
+        wristElevatorControlManager.periodic();
         generalManager.periodic();
         autoManager.periodic();
     }

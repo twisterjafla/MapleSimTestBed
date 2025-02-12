@@ -15,7 +15,7 @@ import frc.robot.Constants;
 import frc.robot.SystemManager;
 import frc.robot.Constants.elevatorConstants;
 import frc.robot.Utils.warningManager;
-import frc.robot.subsystems.wristElevatorControllManager;
+import frc.robot.subsystems.wristElevatorControlManager;
 
 public class realElevator  extends SubsystemBase implements elevatorInterface{
     
@@ -32,7 +32,7 @@ public class realElevator  extends SubsystemBase implements elevatorInterface{
 
 
 
-    @Deprecated
+ 
     public realElevator(){
         
         leftMotor.getConfigurator().apply(Constants.elevatorConstants.slot0Configs);
@@ -84,8 +84,8 @@ public class realElevator  extends SubsystemBase implements elevatorInterface{
 
 
 
-        if (wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.elevator||
-            wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
+        if (wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.elevator||
+            wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.resting){
             goal=setpoint;
         }
         else{

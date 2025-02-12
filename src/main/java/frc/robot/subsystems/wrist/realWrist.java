@@ -11,7 +11,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Utils.warningManager;
-import frc.robot.subsystems.wristElevatorControllManager;
+import frc.robot.subsystems.wristElevatorControlManager;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -38,8 +38,8 @@ public class realWrist implements wristInterface{
     public void periodic(){
 
 
-        if (wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.wrist||
-            wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
+        if (wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.wrist||
+            wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.resting){
                 
             goal=setpoint;
         }

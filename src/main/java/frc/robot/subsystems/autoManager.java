@@ -289,7 +289,7 @@ public class autoManager{
         Node[][] host;
         boolean isLegal;
         double score=defaultValue;
-        Node[] friends = new Node[8];
+        Node[] Freinds = new Node[8];
         boolean friendsPoped=false;
 
 
@@ -333,16 +333,16 @@ public class autoManager{
                     int b = (int)(y*tileSize)+j;
                     if (a>=0 && a<map.length){
                         if (b>=0&& b<map[1].length){
-                            friends[count]=map[a][b];  
+                            Freinds[count]=map[a][b];  
                         }
 
                         else{
-                            friends[count]=null;
+                            Freinds[count]=null;
                         }
                     }
 
                     else{
-                        friends[count]=null;
+                        Freinds[count]=null;
                     }
 
                     count++;
@@ -352,7 +352,7 @@ public class autoManager{
             
             
             friendsPoped=true;
-            for (Node friend: friends){
+            for (Node friend: Freinds){
                 if (friend!=null){
                     if (!friend.friendsPoped){
                         friend.popFreinds();
@@ -366,7 +366,7 @@ public class autoManager{
             updateCount++;
             
             
-            for (Node friend: friends){
+            for (Node friend: Freinds){
                 if (friend!=null&&friend.isLegal){
                     
                     if (friend.score>score+getLength(this, friend)){

@@ -45,8 +45,7 @@ public class Robot extends TimedRobot{
     int heartBeat=0;
     
 
-    //private RobotContainer m_robotContainer;
-
+    
     private Timer disabledTimer;
 
     public Robot()
@@ -107,7 +106,7 @@ public class Robot extends TimedRobot{
     @Override
     public void disabledInit()
     {
-      //m_robotContainer.setMotorBrake(true);
+
       disabledTimer.reset();
       disabledTimer.start();
     }
@@ -119,7 +118,7 @@ public class Robot extends TimedRobot{
     {
       if (disabledTimer.hasElapsed(Constants.driveConstants.wheelLockTime))
       {
-        //m_robotContainer.setMotorBrake(false);
+      
         disabledTimer.stop();
       }
     }
@@ -131,14 +130,7 @@ public class Robot extends TimedRobot{
     public void autonomousInit()
     {
 
-      //m_robotContainer.setMotorBrake(true);
-      //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-      // schedule the autonomous command (example)
-      // if (m_autonomousCommand != null)
-      // {
-      //   m_autonomousCommand.schedule();
-      // }
       autoManager.giveControl();
     }
 
@@ -153,15 +145,11 @@ public class Robot extends TimedRobot{
     @Override
     public void teleopInit()
     {
-      // This makes sure that the autonomous stops running when
-      // teleop starts running. If you want the autonomous to
-      // continue until interrupted by another command, remove
-      // this line or comment it out.
+     
 
       controlChooser.restart();
       
-      // m_robotContainer.setDriveMode();
-      // m_robotContainer.setMotorBrake(true);
+
     }
 
     /**
@@ -200,10 +188,6 @@ public class Robot extends TimedRobot{
     StructArrayPublisher<Pose3d> algeaPublisher = NetworkTableInstance.getDefault()
     .getStructArrayTopic("algea", Pose3d.struct).publish();
 
-    // StructArrayPublisher<Pose2d> opponentRobotsPublisher = NetworkTableInstance.getDefault()
-    // .getStructArrayTopic("opponentRobots", Pose2d.struct).publish();
-    // StructArrayPublisher<Pose2d> teamRobotsPublisher = NetworkTableInstance.getDefault()
-    // .getStructArrayTopic("teamRobots", Pose2d.struct).publish();
     StructPublisher<Pose2d> opponentPublisher = NetworkTableInstance.getDefault().getStructTopic("René DesCoded", Pose2d.struct).publish();
 
   StructArrayPublisher<Pose3d> coralPublisher = NetworkTableInstance.getDefault()
@@ -213,10 +197,6 @@ public class Robot extends TimedRobot{
 
 
 
-    // StructArrayPublisher<Pose3d> algaePoses = NetworkTableInstance.getDefault()
-    // .getStructArrayTopic("AlgaePoses", Pose3d.struct)
-    // .publish();
-
     /**
      * This function is called once when the robot is first started up.
      */
@@ -225,9 +205,6 @@ public class Robot extends TimedRobot{
 
       SimulatedArena.getInstance().resetFieldForAuto();
       
-      // SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(FieldPosits.StaringGamePeices.leftStack.getTranslation()));
-      // SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(FieldPosits.StaringGamePeices.midStack.getTranslation()));
-      // SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(FieldPosits.StaringGamePeices.rightStack.getTranslation()));
       SmartDashboard.putBoolean("isSim", true);
       Logger.addDataReceiver(new NT4Publisher());
 
@@ -246,8 +223,7 @@ public class Robot extends TimedRobot{
     coralPublisher.set(SimulatedArena.getInstance().getGamePiecesArrayByType("Coral"));
     robotPublisher.set(SystemManager.getSwervePose());
     
-    // opponentRobotsPublisher.set(AIRobotInSimulation.getOpponentRobotPoses());
-    // teamRobotsPublisher.set(AIRobotInSimulation.getAlliancePartnerRobotPoses());
+    
     if (SystemManager.fakeBot!=null){
       opponentPublisher.set(SystemManager.fakeBot.driveSimulation.getActualPoseInSimulationWorld());
     }
