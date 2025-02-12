@@ -13,22 +13,15 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.autoManager;
-import frc.robot.subsystems.generalManager;
-
 import java.io.File;
 import java.io.IOException;
-
 import org.ironmaple.simulation.SimulatedArena;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
-
 import com.pathplanner.lib.commands.FollowPathCommand;
-
 import swervelib.parser.SwerveParser;
 
 /**
@@ -39,24 +32,17 @@ import swervelib.parser.SwerveParser;
 public class Robot extends TimedRobot{
 
     private static Robot   instance;
-    
     ControlChooser controlChooser;
-    
     int heartBeat=0;
-    
-
-    
     private Timer disabledTimer;
 
-    public Robot()
-    {
+
+    public Robot(){
       instance = this;
       SystemManager.SystemManagerInit();
-    
     }
 
-    public static Robot getInstance()
-    {
+    public static Robot getInstance(){
       return instance;
     }
 
@@ -64,18 +50,13 @@ public class Robot extends TimedRobot{
      * This function is run when the robot is first started up and should be used for any initialization code.
      */
     @Override
-    public void robotInit()
-    {
-
+    public void robotInit(){
       // Create a timer to disable motor brake a few seconds after disable.  This will let the robot stop
       // immediately when disabled, but then also let it be pushed more 
       disabledTimer = new Timer();
       FollowPathCommand.warmupCommand().schedule();
       this.controlChooser=new ControlChooser();
       DriverStation.silenceJoystickConnectionWarning(true);
-      
-     
-
     }
 
     /**
@@ -95,30 +76,22 @@ public class Robot extends TimedRobot{
       CommandScheduler.getInstance().run();
       SystemManager.periodic();
       heartBeat++;
-      SmartDashboard.putNumber("heartbeat", heartBeat);
-
-      
+      SmartDashboard.putNumber("heartbeat", heartBeat);  
     }
 
     /**
      * This function is called once each time the robot enters Disabled mode.
      */
     @Override
-    public void disabledInit()
-    {
-
+    public void disabledInit(){
       disabledTimer.reset();
       disabledTimer.start();
     }
 
-
-
     @Override
     public void disabledPeriodic()
     {
-      if (disabledTimer.hasElapsed(Constants.driveConstants.wheelLockTime))
-      {
-      
+      if (disabledTimer.hasElapsed(Constants.driveConstants.wheelLockTime)){
         disabledTimer.stop();
       }
     }

@@ -1,7 +1,6 @@
 package frc.robot.commands.states;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.SystemManager;
 import frc.robot.FieldPosits.reefLevel;
 import frc.robot.Utils.warningManager;
@@ -10,7 +9,6 @@ import frc.robot.subsystems.generalManager;
 
 public class scoreConfig extends Command{
     protected reefLevel scoreLevel;
-
 
     /**
      * Creates a command to configure mechs to specified level. DOES NOT ACTUALY OUTTAKE 

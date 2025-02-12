@@ -1,22 +1,17 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.units.DistanceUnit;
 import edu.wpi.first.units.LinearVelocityUnit;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.LinearVelocity;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.SystemManager;
-import frc.robot.Utils.scoringPosit;
 import frc.robot.Utils.utillFunctions;
 import frc.robot.Utils.warningManager;
 import frc.robot.commands.sim.CreateCoral;
-import frc.robot.subsystems.autoManager;
 import frc.robot.subsystems.generalManager;
 
 public class IntakePeiceCommand extends Command{

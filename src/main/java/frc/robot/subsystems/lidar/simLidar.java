@@ -1,13 +1,11 @@
 package frc.robot.subsystems.lidar;
 
-import java.lang.annotation.Retention;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.SystemManager;
 
 public class simLidar implements lidarInterface{

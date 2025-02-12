@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.SystemManager;
 import frc.robot.subsystems.elevator.elevatorInterface;
 import frc.robot.subsystems.wrist.wristInterface;
 /**class to manage the interactions between the elevator and the wrist */
