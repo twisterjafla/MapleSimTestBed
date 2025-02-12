@@ -11,7 +11,6 @@ public class starting extends Command{
     /**creates a command that will bring the robot back to its starting config */
     public starting(){
         addRequirements(generalManager.subsystems);
-
     }
 
     /**initalizes the command */
@@ -21,7 +20,6 @@ public class starting extends Command{
         SystemManager.elevator.setSetpoint(Constants.elevatorConstants.intakePosit);
         SystemManager.intake.stop();
     }
-
 
     /**called ever rio cycle while the command is scheduled*/
     @Override

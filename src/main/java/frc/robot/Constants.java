@@ -14,11 +14,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.networktables.PubSubOption;
-import edu.wpi.first.networktables.PubSubOptions;
 import edu.wpi.first.wpilibj.RobotBase;
 import swervelib.math.Matter;
 
@@ -44,6 +41,7 @@ public final class Constants
 
     public static final double LOOP_TIME  = 0.02; //s, 20ms + 110ms sprk max velocity lag
     public static final int blinkinPort = 0;
+    
 
     /**the constants for the drive train */
     public static final class driveConstants {
@@ -60,13 +58,8 @@ public final class Constants
       public static final Matter chassis    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(3)), robotMass);
       public static final double MOI = 6.884;
       public static final Pose2d startingPosit =  new Pose2d(7.182, 3.822, Rotation2d.fromDegrees(180));
-    public static final double wheelLockTime = 10;
-  
-
-
-
+      public static final double wheelLockTime = 10;
   }
-  
    
   /**the constants for automation */
   public static final class AutonConstants{
@@ -89,7 +82,6 @@ public final class Constants
     public static final double humanPlayerBeingBad = 0.5;
     public static final Transform2d intakeCoralOffset = new Transform2d(-0.47, 0, new Rotation2d());
     public static final int autoDriveCorrectCount = 3;
-  
   }
 
   /**constants for the controls */
@@ -107,7 +99,6 @@ public final class Constants
     public static double targetTolerence =0.2;
     public static double l4CoralDropCheatX=0.08;
     public static double l4CoralDropCheatY=0.1;
-    
   }
 
   /**constants to control wether or not a spesific system should be simulated */

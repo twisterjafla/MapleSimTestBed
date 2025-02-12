@@ -1,8 +1,6 @@
 package frc.robot.commands;
 
 import java.util.function.BooleanSupplier;
-
-import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
@@ -25,7 +23,6 @@ public class QuickSwapCommand extends Command{
         this.trueCommand=trueCommand;
         this.falseCommand=falseCommand;
 
-
         for (Subsystem subsystem: trueCommand.getRequirements()){
             addRequirements(subsystem);
         }
@@ -34,9 +31,7 @@ public class QuickSwapCommand extends Command{
                 addRequirements(subsystem);
             }
         }
-
     }
-
 
     /**
      * Creats a Command that will dynamicly swap between two other commands. 
@@ -93,12 +88,10 @@ public class QuickSwapCommand extends Command{
         return selected.isFinished();
     }
 
-
     /**Called when the command is finished. will call the end function of both child commands */
     @Override
     public void end(boolean WasInteruped){
         trueCommand.end(WasInteruped);
         falseCommand.end(WasInteruped);
     }
-
 }

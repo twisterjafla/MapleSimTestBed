@@ -11,7 +11,6 @@ public class resting extends Command{
         addRequirements(generalManager.subsystems);
     }
 
-
     /**called ever rio cycle while the command is scheduled*/
     @Override
     public void execute(){
@@ -20,7 +19,6 @@ public class resting extends Command{
             cancel();
         }
     }
-
 
     /**
      * command called when the command finishes

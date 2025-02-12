@@ -38,10 +38,7 @@ public class CreateCoral extends InstantCommand{
             default:
                 throw new Error("Tried to instantiate a coral creator with an invalid string " + posit);
         }
-            
-
     }
-
 
     /**
      * contstructs a command that makes a coral at the entered pose2d
@@ -50,7 +47,6 @@ public class CreateCoral extends InstantCommand{
     public CreateCoral(Pose2d posit){
         dropSpot=posit;
     }
-
 
     /**runs once every time the command is sheduled */
     @Override

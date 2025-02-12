@@ -1,17 +1,10 @@
 package frc.robot.subsystems.wrist;
 
-import static edu.wpi.first.units.Units.Degrees;
-
-import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix6.hardware.core.CoreCANcoder;
-
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.Utils.warningManager;
-import frc.robot.subsystems.wristElevatorControllManager;
+import frc.robot.subsystems.wristElevatorControlManager;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -37,10 +30,8 @@ public class realWrist implements wristInterface{
     @Override
     public void periodic(){
 
-
-        if (wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.wrist||
-            wristElevatorControllManager.getState()==wristElevatorControllManager.wristElevatorControllState.resting){
-                
+        if (wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.wrist||
+            wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.resting){     
             goal=setpoint;
         }
         else{
@@ -49,8 +40,6 @@ public class realWrist implements wristInterface{
 
         wristPID.setSetpoint(goal);
         wristMotor.set(wristPID.calculate(getCurrentLocation()));
-       
-
     }
 
 
@@ -58,7 +47,6 @@ public class realWrist implements wristInterface{
     public boolean isAtSetpoint() {
         return Math.abs(setpoint-getCurrentLocationR2D().getDegrees())<Constants.wristConstants.tolerence;
     }
-
 
     @Override
     public double getCurrentLocation() {

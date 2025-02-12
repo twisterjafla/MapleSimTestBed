@@ -2,22 +2,15 @@ package frc.robot.subsystems;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.opencv.core.Point;
-
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.pathfinding.LocalADStar;
-import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
-
 import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -25,7 +18,6 @@ import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
 import frc.robot.FieldPosits;
 import frc.robot.SystemManager;
@@ -289,7 +281,7 @@ public class autoManager{
         Node[][] host;
         boolean isLegal;
         double score=defaultValue;
-        Node[] friends = new Node[8];
+        Node[] Freinds = new Node[8];
         boolean friendsPoped=false;
 
 
@@ -333,16 +325,16 @@ public class autoManager{
                     int b = (int)(y*tileSize)+j;
                     if (a>=0 && a<map.length){
                         if (b>=0&& b<map[1].length){
-                            friends[count]=map[a][b];  
+                            Freinds[count]=map[a][b];  
                         }
 
                         else{
-                            friends[count]=null;
+                            Freinds[count]=null;
                         }
                     }
 
                     else{
-                        friends[count]=null;
+                        Freinds[count]=null;
                     }
 
                     count++;
@@ -352,7 +344,7 @@ public class autoManager{
             
             
             friendsPoped=true;
-            for (Node friend: friends){
+            for (Node friend: Freinds){
                 if (friend!=null){
                     if (!friend.friendsPoped){
                         friend.popFreinds();
@@ -366,7 +358,7 @@ public class autoManager{
             updateCount++;
             
             
-            for (Node friend: friends){
+            for (Node friend: Freinds){
                 if (friend!=null&&friend.isLegal){
                     
                     if (friend.score>score+getLength(this, friend)){

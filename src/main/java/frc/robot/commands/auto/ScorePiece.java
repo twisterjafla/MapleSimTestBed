@@ -8,7 +8,6 @@ import frc.robot.Constants;
 import frc.robot.SystemManager;
 import frc.robot.Utils.scoringPosit;
 import frc.robot.Utils.utillFunctions;
-import frc.robot.Utils.warningManager;
 import frc.robot.subsystems.autoManager;
 import frc.robot.subsystems.generalManager;
 
@@ -53,7 +52,7 @@ public class ScorePiece extends Command{
         driveIsFinished=false;
     }
 
-
+    
      /**called ever rio cycle while the command is scheduled*/
     @Override
     public void execute() {

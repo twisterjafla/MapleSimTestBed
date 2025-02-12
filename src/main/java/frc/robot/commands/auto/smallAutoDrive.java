@@ -3,16 +3,14 @@ package frc.robot.commands.auto;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.SystemManager;
-import frc.robot.Constants.AutonConstants;
 import frc.robot.Utils.utillFunctions;
-import swervelib.math.SwerveMath;
+
 
 public class smallAutoDrive extends Command{
     protected Pose2d pose;
@@ -44,8 +42,7 @@ public class smallAutoDrive extends Command{
         SmartDashboard.putNumber("smallDriveSpeed", speed);
         SmartDashboard.putNumber("smallDriveError", utillFunctions.pythagorean(pose.getX(), SystemManager.getSwervePose().getX(), pose.getY(), SystemManager.getSwervePose().getY()));
         SmartDashboard.putBoolean("smallDriveRunning", true);
-        goalPosePublisher.set(pose);
-        
+        goalPosePublisher.set(pose); 
     }
 
 

@@ -1,18 +1,12 @@
 package frc.robot.subsystems.vision;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import com.google.flatbuffers.Struct;
-
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.networktables.BooleanArrayEntry;
 import edu.wpi.first.networktables.BooleanArraySubscriber;
 import edu.wpi.first.networktables.BooleanArrayTopic;
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.PubSubOption;
-import edu.wpi.first.networktables.StructArrayTopic;
 import edu.wpi.first.networktables.StructSubscriber;
 import edu.wpi.first.networktables.StructTopic;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;

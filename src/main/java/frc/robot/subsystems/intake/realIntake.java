@@ -1,9 +1,7 @@
 package frc.robot.subsystems.intake;
 import java.util.function.BooleanSupplier;
-
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -14,15 +12,12 @@ import frc.robot.subsystems.intake.simIntake.intakeState;
 
 public class realIntake extends SubsystemBase implements intakeInterface{ 
 
-
 	intakeState state;
 	SparkMax intakeTop = new SparkMax(Constants.intakeConstants.LeftIntake, MotorType.kBrushless);
 	SparkMax intakeBottom = new SparkMax(Constants.intakeConstants.RightIntake, MotorType.kBrushless);
 	DigitalInput frontBeambrake = new DigitalInput(Constants.intakeConstants.frontBeamBrakePort);
 	DigitalInput backBeambrake = new DigitalInput(Constants.intakeConstants.backBeamBrakePort);
-	
 	hasPeiceState peiceState=hasPeiceState.full;
-
 
 	private enum hasPeiceState{
 		intaking,

@@ -1,10 +1,7 @@
 package frc.robot.subsystems.elevator;
 
-import java.util.function.BooleanSupplier;
-
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.subsystems.wristElevatorControllManager;
 
 public interface elevatorInterface extends Subsystem {
 

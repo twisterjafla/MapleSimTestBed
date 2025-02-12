@@ -1,19 +1,11 @@
 package frc.robot.subsystems.vision;
 
 import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeReefSimulation;
-
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.networktables.BooleanArrayPublisher;
-import edu.wpi.first.networktables.IntegerArrayPublisher;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class simReefIndexer implements reefIndexerInterface{
-
-    
-    int heartBeat=0;
+     int heartBeat=0;
 
     @Override
     public boolean[][] getFullReefState() {

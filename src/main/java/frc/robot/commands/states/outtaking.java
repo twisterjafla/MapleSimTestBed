@@ -40,7 +40,6 @@ public class outtaking extends Command{
         return !SystemManager.intake.hasPeice();
     }
 
-
     /**
      * command called when the command finishes
      * @param wasInterupted wether or not the command was cancled
@@ -48,8 +47,6 @@ public class outtaking extends Command{
     @Override 
     public void end(boolean wasInterupted){
         SystemManager.intake.stop();
-        generalManager.endCallback(wasInterupted);
-        
+        generalManager.endCallback(wasInterupted);      
     }
-    
 }
