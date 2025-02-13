@@ -1,3 +1,5 @@
+
+
 package frc.robot.commands.states;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -7,47 +9,33 @@ import frc.robot.FieldPosits.reefLevel.algeaRemoval;
 import frc.robot.SystemManager;
 import frc.robot.subsystems.generalManager;
 
-public class removeAlgea extends Command {
+public class removeAlgae extends Command {
     algeaRemoval level;
-    boolean isInAlgeaRemoval=false;
+    boolean isPrep=false;
     Timer algeaTimer= new Timer();
 
-    removeAlgea(algeaRemoval level){
+    removeAlgae(algeaRemoval level, boolean isPrep){
         this.level=level;
-        
+        this.isPrep=isPrep;
         addRequirements(generalManager.subsystems);
     }
 
     /**initalizes the command */
     @Override
     public void initialize(){
-        if (SystemManager.intake.hasPeice()){
-            cancel();
-        }
 
-        algeaTimer.reset();
-        isInAlgeaRemoval=false;
-        
-        
-        SystemManager.elevator.setSetpoint(level.getElevatorValue());
-        SystemManager.wrist.setSetpoint(level.getWristValue());
     }
 
 
     /**called ever rio cycle while the command is scheduled*/
     @Override
     public void execute(){
-        if (!isInAlgeaRemoval&&SystemManager.elevator.isAtSetpoint() && SystemManager.wrist.isAtSetpoint()){
-            SystemManager.intake.intakeUntil(()->!this.isScheduled());
-            algeaTimer.start();
-            isInAlgeaRemoval=true;
-        }    
     }
 
     /**@return true once the robot has aquired a peice */
     @Override
     public boolean isFinished(){
-        return isInAlgeaRemoval&&algeaTimer.get()>Constants.intakeConstants.algeaTimerVal;
+        return false;
     }
 
 
@@ -57,7 +45,6 @@ public class removeAlgea extends Command {
     */
     @Override
     public void end(boolean wasInterupted){
-        generalManager.endCallback(wasInterupted);
-        SystemManager.intake.stop();
     }
+
 }

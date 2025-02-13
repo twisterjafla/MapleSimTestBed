@@ -277,12 +277,21 @@ public class FieldPosits {
             int side;
             boolean isLow;
 
-            public double getElevatorValue(){
+            public double getElevatorPrepValue(){
                 if (isLow){
-                    return Constants.elevatorConstants.lowAlgea;
+                    return Constants.elevatorConstants.lowAlgeaPrep;
                 }
                 else{
-                    return Constants.elevatorConstants.highAlgea;
+                    return Constants.elevatorConstants.highAlgeaPrep;
+                }
+            }
+
+            public double getElevatorActValue(){
+                if (isLow){
+                    return Constants.elevatorConstants.lowAlgeaAct;
+                }
+                else{
+                    return Constants.elevatorConstants.highAlgeaAct;
                 }
             }
 

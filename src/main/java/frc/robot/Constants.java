@@ -143,8 +143,10 @@ public final class Constants
     public static final double l3EncoderVal = 0.702381;
     public static final double l2EncoderVal = 0.414528;
     public static final double l1EncoderVal = 0;
-    public static final double highAlgea = 0;
-    public static final double lowAlgea = 0;
+    public static final double highAlgeaPrep = 0;
+    public static final double lowAlgeaPrep = 0;
+    public static final double lowAlgeaAct = 0;
+    public static final double highAlgeaAct = 0;
 
 
     public static final double encoderToMeters =1;
