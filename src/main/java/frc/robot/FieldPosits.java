@@ -324,6 +324,19 @@ public class FieldPosits {
                         throw new Error("This case is imposible to reach because all enum options are handled but needs to exist so java can be sure the function will always return a value.If you are seeing this as a user somthing has gone DEEPLY DEEPLY WRONG, maybe burn your code in mount doom");
                 }
             }
+
+            public int getRow(){
+                if (side==-1){
+                    throw new Error("The user attempted to use a function reserved for 2d algea information on a 1d algea information enum");
+                }
+                return side;
+            }
+            public int getLevel(){
+                if (isLow){
+                    return 0;
+                }
+                return 1;
+            }
         }
 
 

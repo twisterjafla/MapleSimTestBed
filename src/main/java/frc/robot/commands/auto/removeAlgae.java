@@ -124,6 +124,9 @@ public class removeAlgae extends Command{
             driveCommand.cancel();
             
         }
+        if (!wasInterupted){
+            SystemManager.reefIndexer.freeAlgea(posit.getRow(), posit.getLevel());
+        }
 
         
     }   

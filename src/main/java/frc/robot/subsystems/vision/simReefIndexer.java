@@ -35,7 +35,6 @@ public class simReefIndexer extends SubsystemBase implements reefIndexerInterfac
                 //System.out.println(algae[i][j]);
                 if (algae[i][j]){
                     algaeRender[i*2+j] = FieldPosits.algaeRenderPosits[i][j];
-                    System.out.println(algae[i][j]);
                 }
                 else{
                     algaeRender[i*2+j] = new Pose3d();//FieldPosits.algaeRenderPosits[i][j];
