@@ -39,4 +39,7 @@ public interface reefIndexerInterface {
      */
     public void resetSIMONLY();
     
+    public boolean blockedByAlgae(int row, int level);
+    public boolean isOpenSmart(int row, int level);
+
 }

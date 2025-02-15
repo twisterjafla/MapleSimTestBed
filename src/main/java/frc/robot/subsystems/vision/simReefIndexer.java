@@ -35,7 +35,6 @@ public class simReefIndexer implements reefIndexerInterface{
 
     @Override
     public boolean getIsClosed(int row, int level) {
-        SmartDashboard.putNumber("reef pole requested", row);
     
         return getFullReefState()[row][level];
     }
@@ -70,6 +69,26 @@ public class simReefIndexer implements reefIndexerInterface{
     @Override 
     public boolean[][] getAlgeaPosits(){
         return new boolean[2][6];
+    }
+
+
+    @Override 
+    public boolean isOpenSmart(int row, int level){
+        return !getIsClosed(row, level)&&!blockedByAlgae(row, level);
+        
+    }
+
+    @Override
+    public boolean blockedByAlgae(int row, int level){
+        if (level==0||level==3){
+            return false;
+        }
+        else if (level==1){
+            return !hasAlgea((int)Math.floor(row/2), 0);
+        }
+        else{
+            return !hasAlgea((int)Math.floor(row/2), 1)&&!hasAlgea((int)Math.floor(row/2), 0);
+        }
     }
     
 }

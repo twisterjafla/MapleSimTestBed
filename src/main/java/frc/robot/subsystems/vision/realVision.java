@@ -106,4 +106,16 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
             throw new Error("This function is only allowed on simulated robots and should only be used for debugging reasons");
         }
 
+        @Override
+        public boolean blockedByAlgae(int row, int level) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'blockedByAlgae'");
+        }
+
+        @Override
+        public boolean isOpenSmart(int row, int level) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'isOpenSmart'");
+        }
+
 }
