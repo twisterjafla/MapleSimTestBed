@@ -30,13 +30,13 @@ import frc.robot.subsystems.swervedrive.realSimulatedDriveTrain;
 import frc.robot.subsystems.vision.aprilTagInterface;
 import frc.robot.subsystems.vision.photonSim;
 import frc.robot.subsystems.vision.realVision;
-import frc.robot.subsystems.CoralGUI.getCoralArray;
+import frc.robot.subsystems.CoralGUI.coralGUI;
 import frc.robot.subsystems.vision.reefIndexerInterface;
 import frc.robot.subsystems.vision.simReefIndexer;
 import frc.robot.subsystems.wrist.realWrist;
 import frc.robot.subsystems.wrist.simWrist;
 import frc.robot.subsystems.wrist.wristInterface;
-import frc.robot.subsystems.CoralGUI.getCoralArray;  // Add the import for getCoralArray class
+import frc.robot.subsystems.CoralGUI.coralGUI;  // Add the import for getCoralArray class
 
 public class SystemManager{
     public static SwerveSubsystem swerve;
@@ -56,7 +56,7 @@ public class SystemManager{
     public static blinkinInterface blinkin;
     
     // Add a Coral Array object for tracking
-    public static getCoralArray coralArray;
+    public static coralGUI coralArray;
 
     /** Initializes the system manager along with all the systems on the robot */
     public static void SystemManagerInit(){
@@ -142,7 +142,7 @@ public class SystemManager{
         autoManager.autoManagerInit();
 
         // Initialize Coral Array
-        coralArray = new getCoralArray();
+        coralArray = new coralGUI();
     }
 
     /** Calls periodic on all the systems that do not inherit subsystem base. This function should be called in robot periodic */
