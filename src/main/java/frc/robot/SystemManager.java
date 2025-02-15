@@ -10,9 +10,13 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.FieldPosits.reefLevel.algeaRemoval;
 import frc.robot.subsystems.autoManager;
 import frc.robot.subsystems.generalManager;
 import frc.robot.subsystems.wristElevatorControlManager;
+import frc.robot.subsystems.AlgaeRemover.algaeRemoverInterface;
+import frc.robot.subsystems.AlgaeRemover.realAlgaeRemover;
+import frc.robot.subsystems.AlgaeRemover.simAlgaeRemover;
 import frc.robot.subsystems.blinkin.blinkinInterface;
 import frc.robot.subsystems.blinkin.realBlinkin;
 import frc.robot.subsystems.blinkin.simBlinkin;
@@ -55,6 +59,7 @@ public class SystemManager{
     public static realSimulatedDriveTrain simButRealTrain=null;
     public static realVision realVisTemp=null;
     public static blinkinInterface blinkin;
+    public static algaeRemoverInterface algaeRemover;
     
     /**inializes the system manager along with all the systems on the robot */
     public static void SystemManagerInit(){
@@ -146,6 +151,13 @@ public class SystemManager{
             fakeBot=AIRobotInSimulation.getRobotAtIndex(0);
             // Overrides the default simulation
 
+        }
+
+        if (Constants.simConfigs.algaeRemoverShouldBeSim){
+            algaeRemover= new realAlgaeRemover();
+        }
+        else{
+            algaeRemover = new simAlgaeRemover();
         }
 
         //inializes and distributes the managers
