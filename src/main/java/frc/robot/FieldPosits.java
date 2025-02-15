@@ -1,7 +1,9 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 
@@ -13,6 +15,15 @@ public class FieldPosits {
         public static final Pose2d midStack = new Pose2d(1.2, 4, new Rotation2d());
         public static final Pose2d rightStack = new Pose2d(1.2, 2.2, new Rotation2d());
     }
+
+    public static final Pose3d[][] algaeRenderPosits = {
+        {new Pose3d(3.801, 4.025, 0.9, new Rotation3d()), new Pose3d(3.801, 4.025, 1.3, new Rotation3d())},
+        {new Pose3d(4.192, 3.439, 0.9, new Rotation3d()), new Pose3d(4.192, 3.439, 1.3, new Rotation3d())},
+        {new Pose3d(4.838, 3.409, 0.9, new Rotation3d()), new Pose3d(4.838, 3.409, 1.3, new Rotation3d())},
+        {new Pose3d(5.209, 4.025, 0.9, new Rotation3d()), new Pose3d(5.209, 4.025, 1.3, new Rotation3d())},
+        {new Pose3d(4.823, 4.611, 0.9, new Rotation3d()), new Pose3d(4.823, 4.611, 1.3, new Rotation3d())},
+        {new Pose3d(4.132, 4.626, 0.9, new Rotation3d()), new Pose3d(4.132, 4.626, 1.3, new Rotation3d())}
+     };
 
     /**The positions a robot can use to intake coral */
     public static class IntakePoints{

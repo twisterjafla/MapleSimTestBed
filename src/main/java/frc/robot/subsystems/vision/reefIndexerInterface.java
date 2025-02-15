@@ -42,4 +42,5 @@ public interface reefIndexerInterface {
     public boolean blockedByAlgae(int row, int level);
     public boolean isOpenSmart(int row, int level);
 
+    public void freeAlgea(int row, int level);
 }

@@ -118,4 +118,10 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
             throw new UnsupportedOperationException("Unimplemented method 'isOpenSmart'");
         }
 
+        @Override
+        public void freeAlgea(int row, int level) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'freeAlgea'");
+        }
+
 }
