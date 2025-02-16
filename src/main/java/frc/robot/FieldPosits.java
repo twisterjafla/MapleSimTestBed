@@ -1,5 +1,7 @@
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Rotation;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -79,12 +81,12 @@ public class FieldPosits {
     public static class algeaStuff{
         public static final Translation2d highTrans = new Translation2d();
         public static final Translation2d lowTrans = new Translation2d();
-        public static final Pose2d A = new Pose2d();
-        public static final Pose2d B = new Pose2d();
-        public static final Pose2d C = new Pose2d();
-        public static final Pose2d D = new Pose2d();
-        public static final Pose2d E = new Pose2d();
-        public static final Pose2d F = new Pose2d();
+        public static final Pose2d A = new Pose2d(3.2, 4.027, Rotation2d.fromDegrees(0));
+        public static final Pose2d B = new Pose2d(3.845, 2.911, Rotation2d.fromDegrees(60));
+        public static final Pose2d C = new Pose2d(5.132, 2.911, Rotation2d.fromDegrees(120));
+        public static final Pose2d D = new Pose2d(5.764, 4.027, Rotation2d.fromDegrees(180));
+        public static final Pose2d E = new Pose2d(5.139, 5.127, new Rotation2d(240));
+        public static final Pose2d F = new Pose2d(3.841, 5.123, Rotation2d.fromDegrees(300));
 
     }
 

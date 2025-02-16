@@ -154,10 +154,10 @@ public class SystemManager{
         }
 
         if (Constants.simConfigs.algaeRemoverShouldBeSim){
-            algaeRemover= new realAlgaeRemover();
+            algaeRemover= new simAlgaeRemover();
         }
         else{
-            algaeRemover = new simAlgaeRemover();
+            algaeRemover = new realAlgaeRemover();
         }
 
         //inializes and distributes the managers

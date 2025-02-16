@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class simAlgaeRemover extends SubsystemBase implements algaeRemoverInterface {
     boolean isRunning=false;
-    Timer runningTimer;
+    Timer runningTimer = new Timer();
     double RemoveTime=0.5;
     
     @Override
