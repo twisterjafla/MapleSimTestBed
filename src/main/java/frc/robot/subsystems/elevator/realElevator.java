@@ -4,6 +4,7 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -18,6 +19,7 @@ public class realElevator  extends SubsystemBase implements elevatorInterface{
     
     protected TalonFX leftMotor = new TalonFX(Constants.elevatorConstants.leftMotorID);
     protected TalonFX rightMotor = new TalonFX(Constants.elevatorConstants.rightMotorID);
+    protected PIDController elevatorPid = new PIDController(Constants.elevatorConstants.elevatorPID.kP, Constants.elevatorConstants.elevatorPID.kI, Constants.elevatorConstants.elevatorPID.kD);
 
      // create a Motion Magic request, voltage output
      final MotionMagicVoltage motionVoltage = new MotionMagicVoltage(0);
@@ -87,7 +89,8 @@ public class realElevator  extends SubsystemBase implements elevatorInterface{
 
        
         // set target position to 100 rotations
-        rightMotor.setControl(motionVoltage.withPosition(goal));
+        elevatorPid.setSetpoint(goal);
+        rightMotor.set(elevatorPid.calculate(getHeight())+Constants.elevatorConstants.g);
 
 
     }

@@ -150,6 +150,8 @@ public final class Constants
     public static final double tolerence = 0.05;
     public static final double speedForSim =0.03;
     public static final double compressedLen = 0.889;
+    public static final PIDConstants elevatorPID = new PIDConstants(0.1, 0, 0);
+    public static final double g=0;
 
     public static final int leftMotorID=50;
     public static final int rightMotorID=50;
