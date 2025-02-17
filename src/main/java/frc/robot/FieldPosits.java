@@ -85,8 +85,8 @@ public class FieldPosits {
         public static final Pose2d B = new Pose2d(3.845, 2.911, Rotation2d.fromDegrees(60));
         public static final Pose2d C = new Pose2d(5.132, 2.911, Rotation2d.fromDegrees(120));
         public static final Pose2d D = new Pose2d(5.764, 4.027, Rotation2d.fromDegrees(180));
-        public static final Pose2d E = new Pose2d(5.139, 5.127, new Rotation2d(240));
-        public static final Pose2d F = new Pose2d(3.841, 5.123, Rotation2d.fromDegrees(300));
+        public static final Pose2d E = new Pose2d(5.139, 5.127, Rotation2d.fromDegrees(-120));
+        public static final Pose2d F = new Pose2d(3.841, 5.123, Rotation2d.fromDegrees(-60));
 
     }
 
@@ -285,6 +285,45 @@ public class FieldPosits {
                 this.isLow=isLow;
                 this.side=side;
 
+            }
+            public static algeaRemoval makeFromNumbers(int side, int level){
+                if (level==0){
+                    switch (side){
+                        case 1:
+                            return AL;
+                        case 2:
+                            return BL;
+                        case 3:
+                            return CL;
+                        case 4:
+                            return DL;
+                        case 5:
+                            return EL;
+                        case 6:
+                            return FL;
+                        default:
+                            throw new Error("You tried to create a algea removal position with an invalid side: " + side);
+                    }
+                }
+                else if (level==1){
+                    switch (side){
+                        case 1:
+                            return AH;
+                        case 2:
+                            return BH;
+                        case 3:
+                            return CH;
+                        case 4:
+                            return DH;
+                        case 5:
+                            return EH;
+                        case 6:
+                            return FH;
+                        default:
+                            throw new Error("You tried to create a algea removal position with an invalid side: " + side);
+                    }
+                }
+                throw new Error("You tried to create an algae removal at an invalid level: " + level);
             }
 
             int side;

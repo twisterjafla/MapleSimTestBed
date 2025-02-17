@@ -124,4 +124,10 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
             throw new UnsupportedOperationException("Unimplemented method 'freeAlgea'");
         }
 
+        @Override
+        public int getAlgaeLevel(int row) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getAlgaeLevel'");
+        }
+
 }

@@ -13,7 +13,7 @@ public interface reefIndexerInterface {
     public boolean getIsClosed(int row, int level);
 
     /**
-     * @param row the row or reef collom to check. is 0 indexed
+     * @param row the row or reef collom to check. is 1 indexed
      * @returns the heighest available level for the row given */
     public int getHighestLevelForRow(int row);
     
@@ -43,4 +43,6 @@ public interface reefIndexerInterface {
     public boolean isOpenSmart(int row, int level);
 
     public void freeAlgea(int row, int level);
+
+    public int getAlgaeLevel(int row);
 }

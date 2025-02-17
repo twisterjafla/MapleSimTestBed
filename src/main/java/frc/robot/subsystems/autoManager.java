@@ -23,10 +23,12 @@ import frc.robot.FieldPosits;
 import frc.robot.SystemManager;
 import frc.robot.FieldPosits.reefLevel;
 import frc.robot.FieldPosits.reefPole;
+import frc.robot.FieldPosits.reefLevel.algeaRemoval;
 import frc.robot.Utils.scoringPosit;
 import frc.robot.Utils.utillFunctions;
 import frc.robot.commands.auto.IntakePeiceCommand;
 import frc.robot.commands.auto.ScorePiece;
+import frc.robot.commands.auto.removeAlgae;
 
 public class autoManager{
 
@@ -208,6 +210,10 @@ public class autoManager{
     /** @return the best auto action to take at the frame called in the form of a command*/
     public static Command getAutoAction(){
         if (SystemManager.intake.hasPeice()){
+            scoringPosit posit = getBestScorePosit();
+            if (SystemManager.reefIndexer.blockedByAlgae((int)posit.pole.getRowAsIndex(), posit.level.getasInt()-1)){
+                return new removeAlgae(algeaRemoval.makeFromNumbers((int)(posit.pole.getRowAsIndex())/2+1, (int)SystemManager.reefIndexer.getAlgaeLevel((posit.pole.getRowAsIndex())/2)-1));
+            }
             return new ScorePiece(getBestScorePosit());
         }
         else{
@@ -227,7 +233,11 @@ public class autoManager{
         double winningScore=0;
         for(reefPole pole:FieldPosits.scoringPosits.scoringPoles){
             scoringPosit currentPosit = new scoringPosit(reefLevel.CreateFromLevel(SystemManager.reefIndexer.getHighestLevelForRow(pole.getRowAsIndex())), pole);
-            if (currentPosit.getPointValForItem()/(getMapPoint(currentPosit.getScorePose()).score*2+Constants.AutonConstants.bonusScore)>winningScore){
+            double score = currentPosit.getPointValForItem()/(getMapPoint(currentPosit.getScorePose()).score*2+Constants.AutonConstants.bonusScore);
+            if (SystemManager.reefIndexer.blockedByAlgae(pole.getRowAsIndex(), SystemManager.reefIndexer.getHighestLevelForRow(pole.getRowAsIndex())-1)){
+                score = score*0.9;
+            }
+            if (score>winningScore){
                 winningPole=currentPosit;
                 winningScore=currentPosit.getPointValForItem()/(getMapPoint(pole.getScorePosit()).score*2+Constants.AutonConstants.bonusScore);
             }

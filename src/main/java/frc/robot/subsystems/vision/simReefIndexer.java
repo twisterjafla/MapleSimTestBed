@@ -101,12 +101,12 @@ public class simReefIndexer extends SubsystemBase implements reefIndexerInterfac
 
     @Override
     public boolean hasAlgea(int row, int level){
-        return false;
+        return algae[row][level];
     }
 
     @Override 
     public boolean[][] getAlgeaPosits(){
-        return new boolean[2][6];
+        return algae;
     }
 
 
@@ -122,16 +122,31 @@ public class simReefIndexer extends SubsystemBase implements reefIndexerInterfac
             return false;
         }
         else if (level==1){
-            return !hasAlgea((int)Math.floor(row/2), 0);
+            return hasAlgea((int)Math.floor(row/2), 0);
+        }
+        else if (level==2){
+            return hasAlgea((int)Math.floor(row/2), 1)||hasAlgea((int)Math.floor(row/2), 0);
         }
         else{
-            return !hasAlgea((int)Math.floor(row/2), 1)&&!hasAlgea((int)Math.floor(row/2), 0);
+            throw new Error("Attempted to get algae information about a level that doesnt exist. level number: " + level);
         }
     }
 
     @Override
     public void freeAlgea(int row, int level){
         algae[row][level]=false;
+    }
+
+
+    @Override
+    public int getAlgaeLevel(int row){
+        if(hasAlgea(row, 0)){
+            return 1;
+        }
+        else if (hasAlgea(row, 1)){
+            return 2;
+        }
+        return 0;
     }
 
     
