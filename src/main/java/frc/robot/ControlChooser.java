@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.FieldPosits.reefLevel.algeaRemoval;
 import frc.robot.Utils.BetterTrigger;
 import frc.robot.Utils.utillFunctions;
-import frc.robot.commands.auto.removeAlgae;
 import frc.robot.commands.auto.smallAutoDrive;
 import frc.robot.commands.sim.CreateCoral;
 import frc.robot.commands.swervedrive.AbsoluteFieldDrive;
@@ -117,7 +116,7 @@ public class ControlChooser {
        xbox1.b(loop).onTrue(new InstantCommand(()->generalManager.scoreL2()));
        xbox1.a(loop).onTrue(new InstantCommand(()->generalManager.scoreL1()));
 
-       xbox1.leftTrigger(0.4, loop).onTrue(new removeAlgae(algeaRemoval.AL));
+       //xbox1.leftTrigger(0.4, loop).onTrue(new removeAlgae(algeaRemoval.AL));
        xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
        xbox1.leftBumper(loop).onTrue(new smallAutoDrive(Constants.driveConstants.startingPosit));
        xbox1.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.outtake()));

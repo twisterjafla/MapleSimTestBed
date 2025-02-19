@@ -5,8 +5,8 @@ import frc.robot.SystemManager;
 import frc.robot.FieldPosits.reefLevel.algeaRemoval;
 import frc.robot.subsystems.generalManager;
 
-public class removeAlgae extends Command{
-    public removeAlgae(){
+public class removeAlgaeAct extends Command{
+    public removeAlgaeAct(){
         addRequirements(generalManager.subsystems);
     }
 

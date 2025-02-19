@@ -30,6 +30,7 @@ import frc.robot.commands.auto.IntakePeiceCommand;
 import frc.robot.commands.auto.ScorePiece;
 import frc.robot.commands.auto.removeAlgae;
 
+
 public class autoManager{
 
     public static boolean hasControl=false;

@@ -28,7 +28,7 @@ public class generalManager{
         L4(new scoreConfig(reefLevel.L4)),
         algaeLow( new removeAlgaeConfig(algeaRemoval.low)),
         algaeHigh(new removeAlgaeConfig(algeaRemoval.high)),
-        algaeRemoval(new removeAlgae()),
+        algaeRemoval(new removeAlgaeAct()),
         outtake(new outtaking()),
         resting(new resting());
 
