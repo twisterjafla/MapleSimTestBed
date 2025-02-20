@@ -17,7 +17,11 @@ public class coralGUI extends SubsystemBase {
     //NetworkTable coralF3;
     //NetworkTable coralF4;
     NetworkTable table = NetworkTableInstance.getDefault().getTable("GridData");
-    BooleanArraySubscriber l1 = table.getBooleanArrayTopic("CoralF1").subscribe(null,  PubSubOption.keepDuplicates(true));
+    boolean[] defaultVals={true, true, true, true, true, true, true, true, true, true, true, true};
+    BooleanArraySubscriber l1 = table.getBooleanArrayTopic("CoralF1").subscribe(defaultVals,  PubSubOption.keepDuplicates(true));
+    BooleanArraySubscriber l2 = table.getBooleanArrayTopic("CoralF2").subscribe(defaultVals,  PubSubOption.keepDuplicates(true));
+    BooleanArraySubscriber l3 = table.getBooleanArrayTopic("CoralF3").subscribe(defaultVals,  PubSubOption.keepDuplicates(true));
+    BooleanArraySubscriber l4 = table.getBooleanArrayTopic("CoralF4").subscribe(defaultVals,  PubSubOption.keepDuplicates(true));
 
     public coralGUI() {
         // Initialize the network table instance
