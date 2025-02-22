@@ -1,5 +1,6 @@
 package frc.robot.subsystems.CoralGUI;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.networktables.BooleanArrayPublisher;
 import edu.wpi.first.networktables.BooleanArraySubscriber;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -23,6 +24,12 @@ public class coralGUI extends SubsystemBase {
     BooleanArraySubscriber l3 = table.getBooleanArrayTopic("CoralF3").subscribe(defaultVals,  PubSubOption.keepDuplicates(true));
     BooleanArraySubscriber l4 = table.getBooleanArrayTopic("CoralF4").subscribe(defaultVals,  PubSubOption.keepDuplicates(true));
 
+    NetworkTable testTable  =  NetworkTableInstance.getDefault().getTable("gridTest");
+    BooleanArrayPublisher l1Test = testTable.getBooleanArrayTopic("CoralF1").publish(  PubSubOption.keepDuplicates(true));
+    BooleanArrayPublisher l2Test = testTable.getBooleanArrayTopic("CoralF2").publish(  PubSubOption.keepDuplicates(true));
+    BooleanArrayPublisher l3Test = testTable.getBooleanArrayTopic("CoralF3").publish(  PubSubOption.keepDuplicates(true));
+    BooleanArrayPublisher l4Test = testTable.getBooleanArrayTopic("CoralF4").publish(  PubSubOption.keepDuplicates(true));
+
     public coralGUI() {
         // Initialize the network table instance
         // inst = NetworkTableInstance.getDefault();
@@ -35,6 +42,15 @@ public class coralGUI extends SubsystemBase {
 
         // Update the coralArray with data from the network tables
         
+    }
+
+    @Override
+    public void periodic(){
+        boolean[][] coralArray = getGUIArray();
+        l1Test.set(coralArray[0]);
+        l2Test.set(coralArray[1]);
+        l3Test.set(coralArray[2]);
+        l4Test.set(coralArray[3]);
     }
 
     public boolean[][] getGUIArray(){
