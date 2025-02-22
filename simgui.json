@@ -114,8 +114,7 @@
             "open": true
           },
           "open": true
-        },
-        "open": true
+        }
       },
       "PathPlanner": {
         "HotReload": {
@@ -123,6 +122,9 @@
         }
       },
       "Pose2d##v_robot": {
+        "open": true
+      },
+      "Pose3d##v_heldCoral": {
         "open": true
       },
       "SmartDashboard": {
@@ -148,7 +150,8 @@
             "open": false
           },
           "open": false
-        }
+        },
+        "open": true
       }
     }
   },

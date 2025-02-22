@@ -19,10 +19,13 @@ public class coralGUI extends SubsystemBase {
     //NetworkTable coralF4;
     NetworkTable table = NetworkTableInstance.getDefault().getTable("GridData");
     boolean[] defaultVals={true, true, true, true, true, true, true, true, true, true, true, true};
+    boolean[] defaultIntakeVals = {true, true, true};
     BooleanArraySubscriber l1 = table.getBooleanArrayTopic("CoralF1").subscribe(defaultVals,  PubSubOption.keepDuplicates(true));
     BooleanArraySubscriber l2 = table.getBooleanArrayTopic("CoralF2").subscribe(defaultVals,  PubSubOption.keepDuplicates(true));
     BooleanArraySubscriber l3 = table.getBooleanArrayTopic("CoralF3").subscribe(defaultVals,  PubSubOption.keepDuplicates(true));
     BooleanArraySubscriber l4 = table.getBooleanArrayTopic("CoralF4").subscribe(defaultVals,  PubSubOption.keepDuplicates(true));
+    BooleanArraySubscriber leftIntake = table.getBooleanArrayTopic("IntakeL").subscribe(defaultIntakeVals, PubSubOption.keepDuplicates(true));
+    BooleanArraySubscriber rightIntake = table.getBooleanArrayTopic("IntakeR").subscribe(defaultIntakeVals, PubSubOption.keepDuplicates(true));
 
     NetworkTable testTable  =  NetworkTableInstance.getDefault().getTable("gridTest");
     BooleanArrayPublisher l1Test = testTable.getBooleanArrayTopic("CoralF1").publish(  PubSubOption.keepDuplicates(true));
@@ -62,6 +65,9 @@ public class coralGUI extends SubsystemBase {
         //     coralArray[0][i] = coralF1.getEntry(Integer.toString(i)).getString("0"); // Floor 1 (bottom)
         // }
         coralArray[0]=l1.get();
+        coralArray[1]=l2.get();
+        coralArray[2]=l3.get();
+        coralArray[3]=l4.get();
         return coralArray;
     }
 
@@ -74,5 +80,14 @@ public class coralGUI extends SubsystemBase {
         int floorIndex = 4 - floor;
         // Check if the value is 1
         return getGUIArray()[floorIndex][column - 1];
+    }
+    public boolean[] getIntakeList(){
+        boolean[] leftIntakeVals = leftIntake.get();
+        boolean[] rightIntakeVals =  rightIntake.get();
+        return new boolean[]{leftIntakeVals[0], leftIntakeVals[1], leftIntakeVals[2], rightIntakeVals[0], rightIntakeVals[1], rightIntakeVals[2]};
+    }
+
+    public boolean getIntakeStationAvail(int intakeStaton){
+        return getIntakeList()[intakeStaton];
     }
 }
