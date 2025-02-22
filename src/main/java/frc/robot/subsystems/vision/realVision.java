@@ -33,14 +33,14 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
 
             // Loops through and add the reef subscriber to the list
             for (int i = 2; i < 5; i++) {
-                BooleanArrayTopic reefLevel = inst.getBooleanArrayTopic("ReefLevel" + Integer.toString(i));
+                BooleanArrayTopic reefLevel = inst.getTable("CoralLocations")getBooleanArrayTopic("ReefLevel" + Integer.toString(i));
                 BooleanArraySubscriber reefSubscriber = reefLevel.subscribe(reefDefaultList, PubSubOption.keepDuplicates(true));
                 this.reefLevelSubscribers.add(reefSubscriber);
             }
 
             // Same thing as the reef one
             for (int i = 2; i < 4; i++) {
-                BooleanArrayTopic algeaLevel = inst.getBooleanArrayTopic("ReefLevel" + Integer.toString(i));
+                BooleanArrayTopic algeaLevel = inst.getTable("CoralLocations").getBooleanArrayTopic("algaeLevel" + Integer.toString(i));
                 BooleanArraySubscriber algeaSubscriber = algeaLevel.subscribe(algeaDefaultList, PubSubOption.keepDuplicates(true));
                 this.algeaLevelSubscribers.add(algeaSubscriber);
             }
@@ -61,14 +61,14 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
 
         @Override
         public boolean[][] getFullReefState() {
-            boolean[][] reefArray = {this.reefLevelSubscribers.get(0).get(), this.reefLevelSubscribers.get(1).get(), this.reefLevelSubscribers.get(2).get()};
+            boolean[][] reefArray = {this.reefLevelSubscribers.get(0).get(), this.reefLevelSubscribers.get(1).get(), this.reefLevelSubscribers.get(2).get(), this.reefLevelSubscribers.get(3).get()};
             return reefArray;
     
         }
 
         @Override
         public boolean[][] getAlgeaPosits() {
-            boolean[][] algeaArray = {this.algeaLevelSubscribers.get(0).get(), this.algeaLevelSubscribers.get(1).get(), this.algeaLevelSubscribers.get(2).get()};
+            boolean[][] algeaArray = {this.algeaLevelSubscribers.get(0).get(), this.algeaLevelSubscribers.get(1).get()};
             return algeaArray;
         }
 
