@@ -111,8 +111,14 @@ public class realIntake extends SubsystemBase implements intakeInterface{
 			intakeBottom.set(Constants.intakeConstants.intakeSpeed);
 		}
 		else if (state == intakeState.outtaking){
-		    intakeTop.set(Constants.intakeConstants.outtakeSpeed); // Start OutTake Motor
-			intakeBottom.set(Constants.intakeConstants.outtakeSpeed);
+			if (SystemManager.elevator.atLegalNonControlState()){
+				intakeTop.set(-Constants.intakeConstants.outtakeSpeed); // Start OutTake Motor
+				intakeBottom.set(Constants.intakeConstants.outtakeSpeed);
+			}
+			else{
+				intakeTop.set(Constants.intakeConstants.outtakeSpeed); // Start OutTake Motor
+				intakeBottom.set(-Constants.intakeConstants.outtakeSpeed);
+			}
 		}
 		else{
 			intakeTop.set(0);
