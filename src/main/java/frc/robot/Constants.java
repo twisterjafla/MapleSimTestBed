@@ -192,7 +192,7 @@ public final class Constants
     
     public static final double tolerence = 0.5;
     public static final double speedForSim=5;
-    public static final int CANCoderID=50;
+    public static final int CANCoderID=1;
     public static final int CANCoderOffset=0;
     public static final int motorID=50;
     public static final PIDConstants wristPID = new PIDConstants(0.2, 0, 0.1);

@@ -23,7 +23,7 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
 
         public realVision() {
             // Default values just in case no values are grabbed
-            boolean[] reefDefaultList = {false, false, false};
+            boolean[] reefDefaultList = {false, false, false, false};
             boolean[] algeaDefaultList = {false, false};
             Pose3d robotDefaultPose = new Pose3d();
 
@@ -46,14 +46,14 @@ public class realVision extends SubsystemBase implements aprilTagInterface, reef
             }
     
             // Gets the robot's position's subscriber
-            StructTopic<Pose3d> robotPoseTopic = inst.getStructTopic("RobotValues", Pose3d.struct);
+            StructTopic<Pose3d> robotPoseTopic = inst.getStructTopic("VisionRobotPose", Pose3d.struct);
             this.robotPoseSubscriber = robotPoseTopic.subscribe(robotDefaultPose, PubSubOption.keepDuplicates(true));
 
         }
         
         @Override
         public Pose3d getPose() {
-            if (robotPoseSubscriber.get()== new Pose3d()){
+            if (robotPoseSubscriber.get() == new Pose3d()){
                 return new Pose3d(SystemManager.swerve.getPose());
             }
             return robotPoseSubscriber.get();
