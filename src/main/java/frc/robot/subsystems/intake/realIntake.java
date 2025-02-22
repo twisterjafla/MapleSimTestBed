@@ -77,7 +77,7 @@ public class realIntake extends SubsystemBase implements intakeInterface{
 
 		//full
 		else if(peiceState==hasPeiceState.full){
-			if(!frontBeambrake.get()){
+			if(!frontBeambrake.get()&&!backBeambrake.get()){
 				peiceState=hasPeiceState.empty;
 			}
 		}
@@ -103,6 +103,7 @@ public class realIntake extends SubsystemBase implements intakeInterface{
 
 	@Override
 	public void periodic(){
+		checkForPiece();
 		if (stopTrigger.getAsBoolean()){
 		    stop();					   // Stop Intake Motor
 		}
