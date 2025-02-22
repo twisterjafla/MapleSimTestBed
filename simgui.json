@@ -45,6 +45,14 @@
         "header": {
           "open": false
         }
+      },
+      "window": {
+        "visible": false
+      }
+    },
+    "Timing": {
+      "window": {
+        "visible": false
       }
     }
   },
@@ -68,18 +76,24 @@
       "/SmartDashboard/wrist": "Mechanism2d"
     },
     "windows": {
+      "/FMSInfo": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Control chooser": {
         "window": {
           "visible": true
         }
       },
       "/SmartDashboard/Field": {
-        "bottom": 1476,
-        "height": 8.210550308227539,
-        "left": 150,
-        "right": 2961,
-        "top": 79,
-        "width": 16.541748046875,
+        "bottom": 1638,
+        "builtin": "2025 Reefscape",
+        "height": 8.051901817321777,
+        "left": 534,
+        "right": 3466,
+        "top": 291,
+        "width": 17.54825210571289,
         "window": {
           "visible": true
         }
@@ -91,10 +105,27 @@
       "open": false
     },
     "transitory": {
+      "GridData": {
+        "CoralF3": {
+          "open": true
+        },
+        "CoralF4": {
+          "double[]##v_/GridData/CoralF4/data": {
+            "open": true
+          },
+          "open": true
+        }
+      },
       "PathPlanner": {
         "HotReload": {
           "open": false
         }
+      },
+      "Pose2d##v_robot": {
+        "open": true
+      },
+      "Pose3d##v_heldCoral": {
+        "open": true
       },
       "SmartDashboard": {
         "Control chooser": {

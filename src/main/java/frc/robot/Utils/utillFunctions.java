@@ -26,4 +26,14 @@ public class utillFunctions {
     public static double pythagorean(double x1, double x2, double y1, double y2){
         return pythagorean(x1-x2, y1-y2);
     }
+
+    public static boolean[][] flipBoolArray(boolean[][] toFlip){
+        boolean[][]returnArr = new boolean[toFlip[0].length][toFlip.length];
+        for (int i=0; i<toFlip.length; i++){
+            for ( int j=0; j<returnArr.length; j++){
+                returnArr[j][i] = toFlip[i][j];
+            }
+        }
+        return returnArr;
+    }
 }

@@ -30,14 +30,13 @@ import frc.robot.subsystems.swervedrive.realSimulatedDriveTrain;
 import frc.robot.subsystems.vision.aprilTagInterface;
 import frc.robot.subsystems.vision.photonSim;
 import frc.robot.subsystems.vision.realVision;
-
+import frc.robot.subsystems.CoralGUI.coralGUI;
 import frc.robot.subsystems.vision.reefIndexerInterface;
 import frc.robot.subsystems.vision.simReefIndexer;
 import frc.robot.subsystems.wrist.realWrist;
 import frc.robot.subsystems.wrist.simWrist;
 import frc.robot.subsystems.wrist.wristInterface;
-
-
+import frc.robot.subsystems.CoralGUI.coralGUI;  // Add the import for getCoralArray class
 
 public class SystemManager{
     public static SwerveSubsystem swerve;
@@ -45,129 +44,120 @@ public class SystemManager{
     public static Field2d feild;
     public static SimulatedArena simFeild;
     public static AIRobotInSimulation fakeBot;
-    public static boolean hasNote=false;
+    public static boolean hasNote = false;
     public static intakeInterface intake;
     public static aprilTagInterface aprilTag;
     public static wristInterface wrist;
     public static elevatorInterface elevator;
     public static reefIndexerInterface reefIndexer;
     public static lidarInterface lidar;
-    public static realSimulatedDriveTrain simButRealTrain=null;
-    public static realVision realVisTemp=null;
+    public static realSimulatedDriveTrain simButRealTrain = null;
+    public static realVision realVisTemp = null;
     public static blinkinInterface blinkin;
     
-    /**inializes the system manager along with all the systems on the robot */
-    public static void SystemManagerInit(){
+    // Add a Coral Array object for tracking
+    public static coralGUI coralArray;
 
-        //creates the swerve drive. Do to the complexity of the swerve system it handles simulation differently and so does not need a if else block
+    /** Initializes the system manager along with all the systems on the robot */
+    public static void SystemManagerInit(){
+        // creates the swerve drive. Due to the complexity of the swerve system, it handles simulation differently and does not need an if-else block
         swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),  "swerve"));
         swerve.resetOdometry(Constants.driveConstants.startingPosit);
-       
         
         feild = new Field2d();
         SmartDashboard.putData("Field", feild);
 
+        SimulatedArena.ALLOW_CREATION_ON_REAL_ROBOT = Constants.simConfigs.robotCanBeSimOnReal;
 
-        SimulatedArena.ALLOW_CREATION_ON_REAL_ROBOT=Constants.simConfigs.robotCanBeSimOnReal;
-
-
-        //Initalizes all the systems
-        //Each block should inialize one system as ether real of imaginary based on the constants value 
+        // Initializes all the systems
+        // Each block should initialize one system as either real or imaginary based on the constants value 
         
-        //Intake
+        // Intake
         if (Constants.simConfigs.intakeShouldBeSim){
             if (RobotBase.isReal()){
                 simButRealTrain = new realSimulatedDriveTrain();
             }
-            intake=new simIntake();
-        }
-        else{
+            intake = new simIntake();
+        } else {
             intake = new realIntake();
         }
 
-        //April tags
+        // April tags
         if (Constants.simConfigs.aprilTagShouldBeSim){
-            aprilTag= new photonSim();
-        }
-        else{
+            aprilTag = new photonSim();
+        } else {
             realVisTemp = new realVision();
-            aprilTag=realVisTemp;
+            aprilTag = realVisTemp;
         }
 
-        //Elevator
+        // Elevator
         if (Constants.simConfigs.elevatorShouldBeSim){
-            elevator= new simElevator();
-        }
-        else{
+            elevator = new simElevator();
+        } else {
             elevator = new realElevator();
         }
 
-        //Wrist
+        // Wrist
         if (Constants.simConfigs.wristShouldBeSim){
-            wrist= new simWrist();
-        }
-        else{
+            wrist = new simWrist();
+        } else {
             wrist = new realWrist();
         }
 
-        //Reef indexer
+        // Reef indexer
         if (Constants.simConfigs.reefIndexerShouldBeSim){
-            reefIndexer= new simReefIndexer();
-        }
-        else{
+            reefIndexer = new simReefIndexer();
+        } else {
             if (realVisTemp != null){
-                reefIndexer=realVisTemp;
-            }
-            else{
+                reefIndexer = realVisTemp;
+            } else {
                 reefIndexer = new realVision();
             }
         }
 
-        //Lidar
+        // Lidar
         if (Constants.simConfigs.lidarShouldBeSim){
-            lidar=new simLidar();
-        }
-        else{
-            
+            lidar = new simLidar();
+        } else {
+            // Lidar initialization if not sim
         }
 
-        //Blinkin
+        // Blinkin
         if(Constants.simConfigs.blinkinShouldBeSim){
             blinkin = new simBlinkin();
-        }
-        else{
+        } else {
             blinkin = new realBlinkin();
         }
 
-        
-        //creates an imaginary robot
+        // Create an imaginary robot
         if (!RobotBase.isReal()){
             AIRobotInSimulation.startOpponentRobotSimulations();
-            fakeBot=AIRobotInSimulation.getRobotAtIndex(0);
+            fakeBot = AIRobotInSimulation.getRobotAtIndex(0);
             // Overrides the default simulation
-
         }
 
-        //inializes and distributes the managers
+        // Initialize and distribute the managers
         wristElevatorControlManager.addSystems(wrist, elevator);
         generalManager.generalManagerInit();
         autoManager.autoManagerInit();
+
+        // Initialize Coral Array
+        coralArray = new coralGUI();
     }
 
-
-    /**Calls periodic on all the systems that do not inherit subsytstem base. this function should be called in robot periodic*/
+    /** Calls periodic on all the systems that do not inherit subsystem base. This function should be called in robot periodic */
     public static void periodic(){
         wristElevatorControlManager.periodic();
         generalManager.periodic();
         autoManager.periodic();
     }
 
-    /**@return the current pose of the robot*/
+    /** @return the current pose of the robot */
     public static Pose2d getSwervePose(){
         return swerve.getPose();
     }
 
-    /**@return the pose of the simulated maplesim drive. If the drivetain is real than the function will just return the pose estimators pose */
+    /** @return the pose of the simulated maplesim drive. If the drivetrain is real, then the function will just return the pose estimator's pose */
     public static Pose2d getRealPoseMaple(){
         if (RobotBase.isReal()){
             return getSwervePose();
@@ -175,16 +165,8 @@ public class SystemManager{
         return swerve.getMapleSimPose();
     }
 
-
-    /**returns the pose3 of a coral in the intake */
+    /** Returns the pose3 of a coral in the intake */
     public static Pose3d getIntakePosit(){
-        return new Pose3d(getSwervePose()).plus(new Transform3d(intake.getTranslation(), new Rotation3d( 0, SystemManager.wrist.getCurrentLocationR2D().getRadians()+Constants.elevatorConstants.angle.getRadians()+Math.PI/2, Math.PI)));
+        return new Pose3d(getSwervePose()).plus(new Transform3d(intake.getTranslation(), new Rotation3d(0, SystemManager.wrist.getCurrentLocationR2D().getRadians() + Constants.elevatorConstants.angle.getRadians() + Math.PI / 2, Math.PI)));
     }
-
-
-
-
-
-    
-
 }
