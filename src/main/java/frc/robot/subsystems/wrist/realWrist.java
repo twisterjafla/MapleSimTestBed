@@ -50,7 +50,7 @@ public class realWrist implements wristInterface{
 
     @Override
     public double getCurrentLocation() {
-        return (wristEncoder.getAbsolutePosition().getValue().in(edu.wpi.first.units.Units.Degrees)+Constants.wristConstants.CANCoderOffset)%360;
+        return (wristEncoder.getAbsolutePosition().getValue().in(edu.wpi.first.units.Units.Degrees)-Constants.wristConstants.CANCoderOffset)%360;
     }
 
     @Override
