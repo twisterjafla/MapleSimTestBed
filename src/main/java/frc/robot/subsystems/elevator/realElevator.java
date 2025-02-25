@@ -32,7 +32,7 @@ public class realElevator  extends SubsystemBase implements elevatorInterface{
         leftMotor.getConfigurator().apply(Constants.elevatorConstants.slot0Configs);
         rightMotor.getConfigurator().apply(Constants.elevatorConstants.slot0Configs);
         
-        leftMotor.setControl(new Follower(Constants.elevatorConstants.rightMotorID, true));
+        rightMotor.setControl(new Follower(Constants.elevatorConstants.leftMotorID, true));
     }
 
     @Override

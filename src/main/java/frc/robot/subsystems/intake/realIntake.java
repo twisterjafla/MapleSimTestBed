@@ -16,7 +16,6 @@ public class realIntake extends SubsystemBase implements intakeInterface{
 	SparkMax intakeTop = new SparkMax(Constants.intakeConstants.LeftIntake, MotorType.kBrushless);
 	SparkMax intakeBottom = new SparkMax(Constants.intakeConstants.RightIntake, MotorType.kBrushless);
 	DigitalInput frontBeambrake = new DigitalInput(Constants.intakeConstants.frontBeamBrakePort);
-	DigitalInput backBeambrake = new DigitalInput(Constants.intakeConstants.backBeamBrakePort);
 	hasPeiceState peiceState=hasPeiceState.full;
 
 	private enum hasPeiceState{
@@ -58,26 +57,26 @@ public class realIntake extends SubsystemBase implements intakeInterface{
 
 		//empty
 		else if (peiceState==hasPeiceState.empty){
-			if (backBeambrake.get()){
-				peiceState=hasPeiceState.intaking;
+			if (frontBeambrake.get()){
+				peiceState=hasPeiceState.full;
 			}
 		}
 
 		//intakeing
-		else if(peiceState==hasPeiceState.intaking){
-			if (!backBeambrake.get()){
-				if (frontBeambrake.get()){
-					peiceState=hasPeiceState.full;
-				}
-				else{
-					peiceState=hasPeiceState.empty;
-				}
-			}
-		}
+		//else if(peiceState==hasPeiceState.intaking){
+		// 	if (!backBeambrake.get()){
+		// 		if (frontBeambrake.get()){
+		// 			peiceState=hasPeiceState.full;
+		// 		}
+		// 		else{
+		// 			peiceState=hasPeiceState.empty;
+		// 		}
+		// 	}
+		// }
 
 		//full
 		else if(peiceState==hasPeiceState.full){
-			if(!frontBeambrake.get()&&!backBeambrake.get()){
+			if(!frontBeambrake.get()){
 				peiceState=hasPeiceState.empty;
 			}
 		}

@@ -57,7 +57,7 @@ public final class Constants
       public static final double maxSpeed  = 4.6;
       public static final Matter chassis    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(3)), robotMass);
       public static final double MOI = 6.884;
-      public static final Pose2d startingPosit =  new Pose2d(7.182, 3.822, Rotation2d.fromDegrees(180));
+      public static final Pose2d startingPosit =  new Pose2d(7.182, 7.601, Rotation2d.fromDegrees(180));
       public static final double wheelLockTime = 10;
   }
    
@@ -66,7 +66,7 @@ public final class Constants
 
     // public static final PIDConstants TRANSLATION_PID = new PIDConstants(10, 0, 0.5);
     public static final PIDConstants translationPID = new PIDConstants(10, 0, 0);
-    public static final PIDConstants smallAutoPID = new PIDConstants(0.7, 0, 0);
+    public static final PIDConstants smallAutoPID = new PIDConstants(0.7, 0, 0.1);
 
     public static final PIDConstants anglePID       = new PIDConstants(5, 0, 0);
     public static final double colisionSpeed = 0;
@@ -126,13 +126,13 @@ public final class Constants
     public static final double intakeSpeed=0.3;
     public static final double outtakeSpeed=-0.3;
     public static final double intakeLength=0.245745;
-    public static final int RightIntake = 50;
-    public static final int LeftIntake = 50;
+    public static final int RightIntake = 9;
+    public static final int LeftIntake = 7;
     public static final double coralFromWristLen = 0.0715772;
     public static final double coralLenght = 0.3;
     public static final double coralWidth = 0.11;
 
-    public static final int frontBeamBrakePort=50;
+    public static final int frontBeamBrakePort=9;
     public static final int backBeamBrakePort=50;
   }
 
@@ -153,8 +153,8 @@ public final class Constants
     public static final PIDConstants elevatorPID = new PIDConstants(0.1, 0, 0);
     public static final double g=0;
 
-    public static final int leftMotorID=50;
-    public static final int rightMotorID=50;
+    public static final int leftMotorID=1;
+    public static final int rightMotorID=2;
 
 
     // in init function
@@ -194,10 +194,10 @@ public final class Constants
     
     public static final double tolerence = 0.5;
     public static final double speedForSim=5;
-    public static final int CANCoderID=1;
-    public static final int CANCoderOffset=0;
-    public static final int motorID=50;
-    public static final PIDConstants wristPID = new PIDConstants(0.2, 0, 0.1);
+    public static final int CANCoderID=3;
+    public static final double CANCoderOffset=-86.4;
+    public static final int motorID=8;
+    public static final PIDConstants wristPID = new PIDConstants(0.01, 0, 0.1);
   
   }
 
