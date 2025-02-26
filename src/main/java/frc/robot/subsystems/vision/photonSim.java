@@ -25,7 +25,7 @@ public class photonSim extends SubsystemBase implements aprilTagInterface{
         visionSim = new VisionSystemSim("main");
         //AprilTagFieldLayout tagLayout = AprilTagFields
 
-        visionSim.addAprilTags(AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape));
+        visionSim.addAprilTags(AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded));
         // A 640 x 480 camera with a 100 degree diagonal FOV.
         SimCameraProperties  cameraProp = new SimCameraProperties();  
         cameraProp.setCalibration(1280, 800, Rotation2d.fromDegrees(70));
