@@ -82,6 +82,10 @@ public class realElevator  extends SubsystemBase implements elevatorInterface{
             wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.resting){
             goal=setpoint;
         }
+        // quit if the wrist is having issues
+        else if(wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.fixWrist){
+            return;
+        }
         else{
             goal=Constants.elevatorConstants.maxHeight;
         }
