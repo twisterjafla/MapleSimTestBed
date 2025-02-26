@@ -27,6 +27,7 @@ import frc.robot.Utils.scoringPosit;
 import frc.robot.Utils.utillFunctions;
 import frc.robot.commands.auto.IntakePeiceCommand;
 import frc.robot.commands.auto.ScorePiece;
+import frc.robot.commands.auto.spin;
 
 public class autoManager{
 
@@ -208,10 +209,18 @@ public class autoManager{
     /** @return the best auto action to take at the frame called in the form of a command*/
     public static Command getAutoAction(){
         if (SystemManager.intake.hasPeice()){
-            return new ScorePiece(getBestScorePosit());
+            scoringPosit scorePose = getBestScorePosit();
+            if (scorePose==null){
+                return new spin();
+            }
+            return new ScorePiece(scorePose);
         }
         else{
-            return new IntakePeiceCommand(getBestIntakePosit());
+            Pose2d intakePosit = getBestIntakePosit();
+            if (intakePosit==null){
+                return new spin();
+            }
+            return new IntakePeiceCommand(intakePosit);
         }
 
     }
@@ -226,16 +235,19 @@ public class autoManager{
         scoringPosit winningPole=null;
         double winningScore=0;
         for(reefPole pole:FieldPosits.scoringPosits.scoringPoles){
-            scoringPosit currentPosit = new scoringPosit(reefLevel.CreateFromLevel(SystemManager.reefIndexer.getHighestLevelForRow(pole.getRowAsIndex())), pole);
+            int highLevel = getHighestLevelWithGuiIntegrated(pole.getRowAsIndex());
+            if (highLevel==-1){
+                continue;
+            }
+            scoringPosit currentPosit = new scoringPosit(reefLevel.CreateFromLevel(highLevel), pole);
             if (currentPosit.getPointValForItem()/(getMapPoint(currentPosit.getScorePose()).score*2+Constants.AutonConstants.bonusScore)>winningScore){
                 winningPole=currentPosit;
                 winningScore=currentPosit.getPointValForItem()/(getMapPoint(pole.getScorePosit()).score*2+Constants.AutonConstants.bonusScore);
             }
         }
-        if (winningPole==null){
-            throw new Error("Auto manager was not able to find a path to any reef pole");
+        if (winningPole!=null){
+            bestPosePublisher.set(winningPole.getScorePose());
         }
-        bestPosePublisher.set(winningPole.getScorePose());
         // SmartDashboard.putNumber("winningPositScore", getMapPoint(winningPole.getScorePose()).score);
         // SmartDashboard.putBoolean("winningLegality", getMapPoint(winningPole.getScorePose()).isLegal);
         // SmartDashboard.putBoolean("winning posit had freinds", getMapPoint(winningPole.getScorePose()).friendsPoped);
@@ -254,19 +266,34 @@ public class autoManager{
         resetMap(SystemManager.getSwervePose());
         Pose2d bestPose = null;
         double bestScore=100000;
-
+        int i = 0;
         for (Pose2d point: FieldPosits.IntakePoints.coralSpawnPoints){
+            if (!SystemManager.coralArray.getIntakeStationAvail(i)){
+                continue;
+            }
             if (getMapPoint(point).score<bestScore){
                 bestPose=point;
                 bestScore=getMapPoint(point).score;
             }
+            i++;
         }
-        if (bestPose==null){
-            throw new Error("Auto manager was not able to find a path to any intake station");
+        if (bestPose!=null){
+            bestPosePublisher.set(bestPose);
         }
-        bestPosePublisher.set(bestPose);
         return bestPose;
 
+
+    }
+
+    public static int getHighestLevelWithGuiIntegrated(int level){
+        boolean[] reefArr=SystemManager.reefIndexer.getFullReefState()[level];
+        boolean[] guiArr = utillFunctions.flipBoolArray(SystemManager.coralArray.getGUIArray())[level];
+        for (int i=3; i>=0;i--){
+            if (!reefArr[i]&&guiArr[i]){
+                return i+1;
+            }
+        }
+        return -1;
 
     }
     
