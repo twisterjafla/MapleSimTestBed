@@ -105,8 +105,8 @@ public final class Constants
   public static class simConfigs{
     public static final boolean driveShouldBeSim=false||!RobotBase.isReal();
     public static final boolean intakeShouldBeSim=true||!RobotBase.isReal();
-    public static final boolean aprilTagShouldBeSim=false||!RobotBase.isReal();
-    public static final boolean wristShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean aprilTagShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean wristShouldBeSim=false||!RobotBase.isReal();
     public static final boolean elevatorShouldBeSim=true||!RobotBase.isReal();
     public static final boolean reefIndexerShouldBeSim=true||!RobotBase.isReal();
     public static final boolean lidarShouldBeSim=true||!RobotBase.isReal();
@@ -195,9 +195,9 @@ public final class Constants
     public static final double tolerence = 0.5;
     public static final double speedForSim=5;
     public static final int CANCoderID=3;
-    public static final double CANCoderOffset=-86.4;
+    public static final double CANCoderOffset=5.4;
     public static final int motorID=8;
-    public static final PIDConstants wristPID = new PIDConstants(0.01, 0, 0.1);
+    public static final PIDConstants wristPID = new PIDConstants(0.2, 0, 0);
   
   }
 
