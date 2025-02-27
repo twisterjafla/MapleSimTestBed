@@ -54,4 +54,9 @@ public class realElevator  extends elevatorIO {
         updateRender();
 
     }
+
+    @Override
+    public double getEncoderVal() {
+        return rightMotor.getPosition().getValueAsDouble();
+    }
 }
