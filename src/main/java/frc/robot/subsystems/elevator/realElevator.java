@@ -32,7 +32,7 @@ public class realElevator  extends elevatorIO {
         leftMotor.getConfigurator().apply(Constants.elevatorConstants.slot0Configs);
         rightMotor.getConfigurator().apply(Constants.elevatorConstants.slot0Configs);
         
-        rightMotor.setControl(new Follower(Constants.elevatorConstants.leftMotorID, true));
+        leftMotor.setControl(new Follower(Constants.elevatorConstants.rightMotorID, true));
     }
     
     @Override

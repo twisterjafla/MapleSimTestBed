@@ -41,6 +41,7 @@ public final class Constants
 
     public static final double LOOP_TIME  = 0.02; //s, 20ms + 110ms sprk max velocity lag
     public static final int blinkinPort = 0;
+    public static final double kElevatorGearing = 0;
     
 
     /**the constants for the drive train */
@@ -105,7 +106,7 @@ public final class Constants
   public static class simConfigs{
     public static final boolean driveShouldBeSim=false||!RobotBase.isReal();
     public static final boolean intakeShouldBeSim=true||!RobotBase.isReal();
-    public static final boolean aprilTagShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean aprilTagShouldBeSim=false||!RobotBase.isReal();
     public static final boolean wristShouldBeSim=false||!RobotBase.isReal();
     public static final boolean elevatorShouldBeSim=true||!RobotBase.isReal();
     public static final boolean reefIndexerShouldBeSim=true||!RobotBase.isReal();
@@ -166,14 +167,19 @@ public final class Constants
         .withKS( 0.25) // Add 0.25 V output to overcome static friction
         .withKV(0.12) // A velocity target of 1 rps results in 0.12 V output
         .withKA(0.01) // An acceleration of 1 rps/s requires 0.01 V output
+        .withKG(0.7) // 
         .withKP(4.8) // A position error of 2.5 rotations results in 12 V output
         .withKI(0) // no output for integrated error
         .withKD(0.1) // A velocity error of 1 rps results in 0.1 V output
+        
     ;
+    public static final double drumRadius = 0.0046355;
+    public static final double mass = 6.80389;
+    public static final double gearRatio = 0.05;//1/20
     
 
     // set Motion Magic settings
-    MotionMagicConfigs motionMagicConfigs = new MotionMagicConfigs()
+    public static final MotionMagicConfigs motionMagicConfigs = new MotionMagicConfigs()
         .withMotionMagicAcceleration(160)// Target acceleration of 160 rps/s (0.5 seconds)
         .withMotionMagicCruiseVelocity(80)// Target cruise velocity of 80 rps
         .withMotionMagicJerk(1600)// Target jerk of 1600 rps/s/s (0.1 seconds)
