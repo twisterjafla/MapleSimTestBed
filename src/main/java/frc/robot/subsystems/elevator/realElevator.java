@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.wristElevatorControlManager;
 
-public class realElevator  extends SubsystemBase implements elevatorInterface{
+public class realElevator  extends elevatorIO {
     
-    public double setpoint=0;
+
     public double position=0;
     protected double goal=0;
     
@@ -34,48 +34,10 @@ public class realElevator  extends SubsystemBase implements elevatorInterface{
         
         rightMotor.setControl(new Follower(Constants.elevatorConstants.leftMotorID, true));
     }
-
-    @Override
-    public void setSetpointRaw(double setpoint) {
-        this.setpoint=setpoint;
-    }
-
-    @Override
-    public boolean isAtSetpoint() {
-        return Math.abs(setpoint-getEncoderVal())<Constants.elevatorConstants.tolerence;
-    }
-
-    @Override
-    public Translation3d getTranslation() {
-        return new Translation3d(getHeight()*Math.cos(Constants.elevatorConstants.angle.getRadians()), 0, getHeight()*Math.sin(Constants.elevatorConstants.angle.getRadians())).plus(Constants.elevatorConstants.fromRobotCenter);
-    }
-
-    @Deprecated
-    @Override
-    public double getEncoderVal() {
-        return rightMotor.getPosition().getValueAsDouble();
-    }
-
-    @Override
-    public void reset() {
-        setpoint=0;
-    }
-
-    @Override
-    public void setSetpoint(double setpoint) {
-       setSetpointRaw(setpoint*Constants.elevatorConstants.encoderToMeters);
-    }
-
-    @Override
-    public double getHeight() {
-        return getEncoderVal()/Constants.elevatorConstants.encoderToMeters;
-    }
-
-
     
     @Override
     public void periodic(){
-
+        
 
 
         if (wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.elevator||
@@ -93,17 +55,19 @@ public class realElevator  extends SubsystemBase implements elevatorInterface{
 
        
         // set target position to 100 rotations
+
         elevatorPid.setSetpoint(goal);
         rightMotor.set(elevatorPid.calculate(getHeight())+Constants.elevatorConstants.g);
+
+        //rightMotor.setControl(motionVoltage.withPosition(goal));
+        
+        updateRender();
 
 
     }
 
     @Override
-    public boolean atLegalNonControlState(){
-        return Math.abs(getHeight()-Constants.elevatorConstants.maxHeight)<Constants.elevatorConstants.tolerence;
+    public double getEncoderVal() {
+        return rightMotor.getPosition().getValueAsDouble();
     }
-
-
-
 }
