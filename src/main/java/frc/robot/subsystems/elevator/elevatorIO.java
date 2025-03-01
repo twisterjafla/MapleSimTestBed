@@ -57,7 +57,7 @@ public class elevatorIO extends SubsystemBase {
 
     /**@return the height of the elevator in meters. all measurments use the rotation point of the wrist for consistency*/
     public double getHeight(){
-        return getEncoderVal()/Constants.elevatorConstants.encoderToMeters;
+        return this.getEncoderVal()/Constants.elevatorConstants.encoderToMeters;
     };
 
     /**resets the elevator to its starting config */
@@ -73,6 +73,7 @@ public class elevatorIO extends SubsystemBase {
 
     /**updates the internal mechanism  */
     public void updateRender(){
+        
         elevator.setLength(getHeight()+Constants.elevatorConstants.fromRobotCenter.getZ());
         wrist.setAngle(SystemManager.wrist.getCurrentLocationR2D().getDegrees());
         SmartDashboard.putNumber("wristVal", SystemManager.wrist.getCurrentLocationR2D().getDegrees());

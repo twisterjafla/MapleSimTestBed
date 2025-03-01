@@ -3,6 +3,7 @@ package frc.robot.subsystems.wrist;
 import com.ctre.phoenix6.hardware.core.CoreCANcoder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.subsystems.wristElevatorControlManager;
 import com.revrobotics.spark.SparkFlex;
@@ -37,7 +38,11 @@ public class realWrist extends wristIO{
         }
 
         wristPID.setSetpoint(goal);
-        wristMotor.set(wristPID.calculate(getCurrentLocation()));
+        SmartDashboard.putNumber("Wrist goal", goal);
+        SmartDashboard.putNumber("Wrist location", getCurrentLocation());
+        double speed = wristPID.calculate(getCurrentLocation());
+        SmartDashboard.putNumber("wristSpeed", speed);
+        wristMotor.set(speed);
     }
 
     @Override
