@@ -142,7 +142,7 @@ public final class Constants
     public static final double l3EncoderVal = 0.702381;
     public static final double l2EncoderVal = 0.414528;
     public static final double l1EncoderVal = 0;
-    public static final double encoderToMeters =70.5; //1/141;
+    public static final double encoderToMeters =71.20389365; //1/141;
     public static final double maxHeight = l4EncoderVal;
     public static final Rotation2d angle = Rotation2d.fromDegrees(70);
     public static final Translation3d fromRobotCenter = new Translation3d(0.0584454, 0, 0.583565 );
