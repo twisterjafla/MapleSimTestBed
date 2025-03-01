@@ -35,6 +35,7 @@ public class simWrist extends wristIO{
         }
 
         SmartDashboard.putNumber("wristEncoder", position);
+        SmartDashboard.putNumber("WristencoderR2D", getCurrentLocationR2D().getDegrees());
     }
 
 

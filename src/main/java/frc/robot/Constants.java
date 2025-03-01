@@ -57,7 +57,7 @@ public final class Constants
       public static final double maxSpeed  = 4.6;
       public static final Matter chassis    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(3)), robotMass);
       public static final double MOI = 6.884;
-      public static final Pose2d startingPosit =  new Pose2d(7.182, 7.601, Rotation2d.fromDegrees(180));
+      public static final Pose2d startingPosit =  new Pose2d(7.182, 7.601, Rotation2d.fromDegrees(0));
       public static final double wheelLockTime = 10;
   }
    
@@ -66,7 +66,7 @@ public final class Constants
 
     // public static final PIDConstants TRANSLATION_PID = new PIDConstants(10, 0, 0.5);
     public static final PIDConstants translationPID = new PIDConstants(10, 0, 0);
-    public static final PIDConstants smallAutoPID = new PIDConstants(0.7, 0, 0.1);
+    public static final PIDConstants smallAutoPID = new PIDConstants(1.0, 0, 0.5);
 
     public static final PIDConstants anglePID       = new PIDConstants(5, 0, 0);
     public static final double colisionSpeed = 0;
@@ -107,7 +107,7 @@ public final class Constants
     public static final boolean intakeShouldBeSim=true||!RobotBase.isReal();
     public static final boolean aprilTagShouldBeSim=false||!RobotBase.isReal();
     public static final boolean wristShouldBeSim=true||!RobotBase.isReal();
-    public static final boolean elevatorShouldBeSim=false||!RobotBase.isReal();
+    public static final boolean elevatorShouldBeSim=true||!RobotBase.isReal();
     public static final boolean reefIndexerShouldBeSim=true||!RobotBase.isReal();
     public static final boolean lidarShouldBeSim=true||!RobotBase.isReal();
     public static final boolean blinkinShouldBeSim=true||!RobotBase.isReal();
@@ -197,7 +197,7 @@ public final class Constants
     public static final double tolerence = 0.5;
     public static final double speedForSim=5;
     public static final int CANCoderID=3;
-    public static final double CANCoderOffset=5.4;
+    public static final double CANCoderOffset=0;//5.4;
     public static final int motorID=8;
     public static final PIDConstants wristPID = new PIDConstants(0.005, 0, 0);
   

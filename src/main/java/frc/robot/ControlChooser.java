@@ -3,6 +3,8 @@ package frc.robot;
 
 import java.util.function.Consumer;
 
+import javax.xml.xpath.XPathVariableResolver;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -149,9 +151,14 @@ public class ControlChooser {
     /**@return a new auto test control loop */
     private EventLoop getAutoTestControl(){
         EventLoop loop = new EventLoop();
+
+        setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->-xbox1.getLeftY(), ()->-xbox1.getLeftX(), ()->{
+            if(utillFunctions.pythagorean(xbox1.getRightX(), xbox1.getRightY())>=0.2)return Math.atan2(-xbox1.getRightX(), -xbox1.getRightY())/Math.PI; return SystemManager.swerve.getHeading().getRadians()/Math.PI;})
+           ,SystemManager.swerve, loop);
         new Trigger(loop, xbox1.leftTrigger(0.75)).onTrue(new InstantCommand(()->autoManager.giveControl())).onFalse(new InstantCommand(()->autoManager.takeControl()));
         
-        xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(FieldPosits.scoringPosits.F));
+        xbox1.b(loop).whileTrue(SystemManager.swerve.driveToPose(Constants.driveConstants.startingPosit));
+        xbox1.y(loop).whileTrue(new smallAutoDrive(Constants.driveConstants.startingPosit));
         xbox1.x(loop).onTrue(new InstantCommand(()->SystemManager.reefIndexer.resetSIMONLY()));
        
         return loop;

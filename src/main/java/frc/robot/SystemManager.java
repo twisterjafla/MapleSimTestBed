@@ -140,6 +140,7 @@ public class SystemManager{
         wristElevatorControlManager.addSystems(wrist, elevator);
         generalManager.generalManagerInit();
         autoManager.autoManagerInit();
+        
 
         // Initialize Coral Array
         coralArray = new coralGUI();
