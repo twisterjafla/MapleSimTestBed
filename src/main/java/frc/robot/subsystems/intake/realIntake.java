@@ -15,6 +15,7 @@ public class realIntake extends intakeIO{
 	SparkMax intakeTop = new SparkMax(Constants.intakeConstants.LeftIntake, MotorType.kBrushless);
 	SparkMax intakeBottom = new SparkMax(Constants.intakeConstants.RightIntake, MotorType.kBrushless);
 	DigitalInput frontBeambrake = new DigitalInput(Constants.intakeConstants.frontBeamBrakePort);
+	DigitalInput backBeambrake = new DigitalInput(Constants.intakeConstants.backBeamBrakePort);
 	hasPeiceState peiceState=hasPeiceState.full;
 
 
@@ -47,22 +48,22 @@ public class realIntake extends intakeIO{
 
 		//empty
 		else if (peiceState==hasPeiceState.empty){
-			if (frontBeambrake.get()){
-				peiceState=hasPeiceState.full;
+			if (backBeambrake.get()){
+				peiceState=hasPeiceState.intaking;
 			}
 		}
 
 		//intakeing
-		//else if(peiceState==hasPeiceState.intaking){
-		// 	if (!backBeambrake.get()){
-		// 		if (frontBeambrake.get()){
-		// 			peiceState=hasPeiceState.full;
-		// 		}
-		// 		else{
-		// 			peiceState=hasPeiceState.empty;
-		// 		}
-		// 	}
-		// }
+		else if(peiceState==hasPeiceState.intaking){
+			if (!backBeambrake.get()){
+				if (frontBeambrake.get()){
+					peiceState=hasPeiceState.full;
+				}
+				else{
+					peiceState=hasPeiceState.empty;
+				}
+			}
+		}
 
 		//full
 		else if(peiceState==hasPeiceState.full){
@@ -80,7 +81,6 @@ public class realIntake extends intakeIO{
 
 	@Override
 	public void periodic(){
-		checkForPiece();
 		if (stopTrigger.getAsBoolean()){
 		    stop();					   // Stop Intake Motor
 		}
@@ -89,14 +89,8 @@ public class realIntake extends intakeIO{
 			intakeBottom.set(Constants.intakeConstants.intakeSpeed);
 		}
 		else if (state == intakeState.outtaking){
-			if (SystemManager.elevator.atLegalNonControlState()){
-				intakeTop.set(-Constants.intakeConstants.outtakeSpeed); // Start OutTake Motor
-				intakeBottom.set(Constants.intakeConstants.outtakeSpeed);
-			}
-			else{
-				intakeTop.set(Constants.intakeConstants.outtakeSpeed); // Start OutTake Motor
-				intakeBottom.set(-Constants.intakeConstants.outtakeSpeed);
-			}
+		    intakeTop.set(Constants.intakeConstants.outtakeSpeed); // Start OutTake Motor
+			intakeBottom.set(Constants.intakeConstants.outtakeSpeed);
 		}
 		else{
 			intakeTop.set(0);
