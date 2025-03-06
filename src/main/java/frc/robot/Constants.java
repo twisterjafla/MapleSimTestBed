@@ -141,8 +141,8 @@ public final class Constants
     public static final double l4EncoderVal = 1.42;
     public static final double l3EncoderVal = 0.702381;
     public static final double l2EncoderVal = 0.414528;
-    public static final double l1EncoderVal = 0;
-    public static final double encoderToMeters =71.20389365; //1/141;
+    public static final double l1EncoderVal = 0.04;
+    public static final double encoderToMeters =62.840715; //1/141;
     public static final double maxHeight = l4EncoderVal;
     public static final Rotation2d angle = Rotation2d.fromDegrees(70);
     public static final Translation3d fromRobotCenter = new Translation3d(0.0584454, 0, 0.583565 );
@@ -151,8 +151,8 @@ public final class Constants
     public static final double tolerence = 0.05;
     public static final double speedForSim =2;
     public static final double compressedLen = 0.889;
-    public static final PIDConstants elevatorPID = new PIDConstants(0.001, 0, 0);
-    public static final double g=0;
+    public static final PIDConstants elevatorPID = new PIDConstants(1.9, 0, 0);
+    public static final double g=0.03;
 
     public static final int leftMotorID=1;
     public static final int rightMotorID=2;

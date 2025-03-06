@@ -39,7 +39,7 @@ public class elevatorIO extends SubsystemBase {
      * @param setpoint the height of the elevator in meters
      */
     public void setSetpoint(double setpoint){
-        setSetpointRaw(setpoint*Constants.elevatorConstants.encoderToMeters);
+        setSetpointRaw(setpoint);
     };
 
     /**@return wether or not the elevator is within tolerence of its setpoint*/

@@ -61,7 +61,7 @@ public class realElevator  extends elevatorIO {
         elevatorPid.setSetpoint(goal);
         SmartDashboard.putNumber("elevator goal", goal);
         SmartDashboard.putNumber("elevatorPose", getHeight());
-        double speed = elevatorPid.calculate(getHeight());
+        double speed = elevatorPid.calculate(getHeight())+Constants.elevatorConstants.g;
         SmartDashboard.putNumber("elevator speed", speed);
         leftMotor.set(speed);
 
