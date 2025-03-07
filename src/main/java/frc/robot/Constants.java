@@ -112,6 +112,7 @@ public final class Constants
     public static final boolean lidarShouldBeSim=true||!RobotBase.isReal();
     public static final boolean blinkinShouldBeSim=true||!RobotBase.isReal();
     public static final boolean robotCanBeSimOnReal=true;
+    
 
   }
 
@@ -153,6 +154,9 @@ public final class Constants
     public static final double compressedLen = 0.889;
     public static final PIDConstants elevatorPID = new PIDConstants(1.9, 0, 0);
     public static final double g=0.03;
+    public static final boolean shouldUseCurrentEncoderReset=true;
+    public static final double currentResetThreashold=40;
+
 
     public static final int leftMotorID=1;
     public static final int rightMotorID=2;
@@ -170,6 +174,7 @@ public final class Constants
         .withKI(0) // no output for integrated error
         .withKD(0.1) // A velocity error of 1 rps results in 0.1 V output
     ;
+    public static final double elevatorResetTolerence = 0;
     
 
     // set Motion Magic settings
