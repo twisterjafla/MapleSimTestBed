@@ -55,8 +55,13 @@ public class photonSim extends SubsystemBase implements aprilTagInterface{
 
     }
 
+    @Override
+    public Pose3d getFrontPose(){
+        return visionSim.getRobotPose();
+    }
 
-    public Pose3d getPose(){
+    @Override
+    public Pose3d getBackPose(){
         return visionSim.getRobotPose();
     }
 
