@@ -107,7 +107,7 @@ public final class Constants
     public static final boolean intakeShouldBeSim=true||!RobotBase.isReal();
     public static final boolean aprilTagShouldBeSim=false||!RobotBase.isReal();
     public static final boolean wristShouldBeSim=true||!RobotBase.isReal();
-    public static final boolean elevatorShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean elevatorShouldBeSim=false||!RobotBase.isReal();
     public static final boolean reefIndexerShouldBeSim=true||!RobotBase.isReal();
     public static final boolean lidarShouldBeSim=true||!RobotBase.isReal();
     public static final boolean blinkinShouldBeSim=true||!RobotBase.isReal();
@@ -142,7 +142,7 @@ public final class Constants
     public static final double l3EncoderVal = 0.702381;
     public static final double l2EncoderVal = 0.414528;
     public static final double l1EncoderVal = 0.04;
-    public static final double encoderToMeters =62.840715; //1/141;
+    public static final double encoderToMeters =68.2676; //1/141;
     public static final double maxHeight = l4EncoderVal;
     public static final Rotation2d angle = Rotation2d.fromDegrees(70);
     public static final Translation3d fromRobotCenter = new Translation3d(0.0584454, 0, 0.583565 );
