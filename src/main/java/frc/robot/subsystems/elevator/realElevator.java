@@ -40,8 +40,11 @@ public class realElevator  extends elevatorIO {
     
     @Override
     public void periodic(){
+        SmartDashboard.putNumber("elevator stall torque", leftMotor.getTorqueCurrent().getValueAsDouble());
         if (elevatorConstants.shouldUseCurrentEncoderReset){
-            if (leftMotor.getSupplyCurrent().getValueAsDouble()>Constants.elevatorConstants.currentResetThreashold){
+            if (Math.abs(leftMotor.getTorqueCurrent().getValueAsDouble())>Constants.elevatorConstants.currentResetThreashold){
+                SmartDashboard.putBoolean("elevatorHasReset", true);
+
                 if (this.getHeight()<Constants.elevatorConstants.elevatorResetTolerence){
                     leftMotor.setPosition(0);
 
@@ -49,8 +52,10 @@ public class realElevator  extends elevatorIO {
                 else if (Math.abs(this.getHeight()-Constants.elevatorConstants.l4EncoderVal)<Constants.elevatorConstants.elevatorResetTolerence){
                     leftMotor.setPosition(Constants.elevatorConstants.l4EncoderVal*Constants.elevatorConstants.encoderToMeters);
                 }
-                SmartDashboard.putBoolean("elevatorHasReset", true);
-            
+                else{
+                    return;
+                }
+
             }
         }
 
