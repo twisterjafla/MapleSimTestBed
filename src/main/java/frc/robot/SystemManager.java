@@ -54,12 +54,15 @@ public class SystemManager{
     public static realSimulatedDriveTrain simButRealTrain = null;
     public static realVision realVisTemp = null;
     public static blinkinInterface blinkin;
+    public static Robot robot;
     
     // Add a Coral Array object for tracking
     public static coralGUI coralArray;
 
     /** Initializes the system manager along with all the systems on the robot */
-    public static void SystemManagerInit(){
+    public static void SystemManagerInit(Robot robotIn){
+        robot=robotIn;
+
         // creates the swerve drive. Due to the complexity of the swerve system, it handles simulation differently and does not need an if-else block
         swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),  "swerve"));
         swerve.resetOdometry(Constants.driveConstants.startingPosit);

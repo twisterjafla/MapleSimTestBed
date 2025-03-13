@@ -2,6 +2,8 @@
 package frc.robot.subsystems.swervedrive;
 
 import static edu.wpi.first.units.Units.Kilograms;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
 
 import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.config.ModuleConfig;
@@ -168,21 +170,28 @@ public class AIRobotInSimulation implements Subsystem {
     }
 
     private Command getJoystickDriveCommand() {
-        final XboxController joystick = new XboxController(id-1);
+
+        final XboxController joystick = new XboxController(id);
         final Supplier<ChassisSpeeds> joystickSpeeds = () -> new ChassisSpeeds(
-                -joystick.getLeftY() * 3.5, -joystick.getLeftX() * 3.5, -joystick.getRightX() * Math.toRadians(360));
+            -joystick.getLeftY() * driveSimulation.maxLinearVelocity().in(MetersPerSecond), // Forward/Backward
+            -joystick.getLeftX() * driveSimulation.maxLinearVelocity().in(MetersPerSecond), // Left/Right
+            -joystick.getRightX() * driveSimulation.maxAngularVelocity().in(RadiansPerSecond) // Rotation
+            );
         final Supplier<Rotation2d> opponentDriverStationFacing = () ->
-                FieldMirroringUtils.getCurrentAllianceDriverStationFacing().plus(Rotation2d.fromDegrees(180));
+            FieldMirroringUtils.getCurrentAllianceDriverStationFacing().plus(Rotation2d.fromDegrees(180));
+
         return Commands.run(
                         () -> {
+                            // Calculate field-centric speed from the driver station-centric speed
                             final ChassisSpeeds fieldCentricSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(
                                     joystickSpeeds.get(),
                                     FieldMirroringUtils.getCurrentAllianceDriverStationFacing()
                                             .plus(Rotation2d.fromDegrees(180)));
-                            driveSimulation.runChassisSpeeds(joystickSpeeds.get(), new Translation2d(), true, true);
-                            
+                            // Run the field-centric speed to control the robot's movement
+                            driveSimulation.runChassisSpeeds(fieldCentricSpeeds, new Translation2d(), true, true);
                         },
                         this)
+                // Before the command starts, reset the robot to its starting position on the field
                 .beforeStarting(() -> driveSimulation.setSimulationWorldPose(
                         FieldMirroringUtils.toCurrentAlliancePose(ROBOTS_STARTING_POSITIONS[id - 1])));
     }

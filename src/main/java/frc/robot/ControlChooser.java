@@ -54,6 +54,7 @@ public class ControlChooser {
         chooser.addOption("testControl", getTestControl());
         chooser.addOption("StandardXboxControl", standardXboxControl());
         chooser.addOption("demoControl", demoControl());
+        chooser.addOption("runAutoControl", runAutoDrive());
         
         
         chooser.onChange((EventLoop scheme)->{changeControl(scheme);});
@@ -160,6 +161,15 @@ public class ControlChooser {
         xbox1.b(loop).whileTrue(SystemManager.swerve.driveToPose(Constants.driveConstants.startingPosit));
         xbox1.y(loop).whileTrue(new smallAutoDrive(Constants.driveConstants.startingPosit));
         xbox1.x(loop).onTrue(new InstantCommand(()->SystemManager.reefIndexer.resetSIMONLY()));
+       
+        return loop;
+    }
+
+    private EventLoop runAutoDrive(){
+        EventLoop loop = new EventLoop();
+
+        new Trigger(loop, ()->SystemManager.robot.heartBeat%2==1).onTrue(new InstantCommand(()->autoManager.giveControl()));
+
        
         return loop;
     }

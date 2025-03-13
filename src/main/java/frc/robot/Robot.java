@@ -41,7 +41,7 @@ public class Robot extends TimedRobot{
 
     public Robot(){
       instance = this;
-      SystemManager.SystemManagerInit();
+      SystemManager.SystemManagerInit(instance);
     }
 
     public static Robot getInstance(){
