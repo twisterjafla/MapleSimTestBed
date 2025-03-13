@@ -455,7 +455,7 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic(){
     
-    //swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getPose().toPose2d(), Timer.getFPGATimestamp());
+    swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getPose().toPose2d(), Timer.getFPGATimestamp());
     //postTrajectory();
     
 
