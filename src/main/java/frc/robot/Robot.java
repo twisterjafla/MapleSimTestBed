@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.PubSubOption;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -37,6 +38,9 @@ public class Robot extends TimedRobot{
     ControlChooser controlChooser;
     int heartBeat=0;
     private Timer disabledTimer;
+    StructPublisher<Pose2d> posePublisher = NetworkTableInstance.getDefault().getStructTopic("robotPose", Pose2d.struct).publish(PubSubOption.periodic(0.02));
+
+    
 
 
     public Robot(){
@@ -59,6 +63,7 @@ public class Robot extends TimedRobot{
       FollowPathCommand.warmupCommand().schedule();
       this.controlChooser=new ControlChooser();
       DriverStation.silenceJoystickConnectionWarning(true);
+      
     }
 
     /**
@@ -77,8 +82,10 @@ public class Robot extends TimedRobot{
       // block in order for anything in the Command-based framework to work.
       CommandScheduler.getInstance().run();
       SystemManager.periodic();
+      posePublisher.set(SystemManager.getSwervePose());
       heartBeat++;
       SmartDashboard.putNumber("heartbeat", heartBeat);  
+
     }
 
     /**
