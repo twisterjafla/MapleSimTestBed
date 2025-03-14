@@ -204,7 +204,10 @@ public final class Constants
     public static final int CANCoderID=3;
     public static final double CANCoderOffset=-59.04;//5.4;
     public static final int motorID=8;
-    public static final PIDConstants wristPID = new PIDConstants(0.0007, 0.001, 0);
+
+    public static final PIDConstants wristPID = new PIDConstants(0.005, 0, 0);
+    public static final double maxVel = 0;
+    public static final double maxAccel = 0;
   
   }
 

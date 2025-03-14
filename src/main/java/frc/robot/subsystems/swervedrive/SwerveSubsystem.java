@@ -147,7 +147,7 @@ public class SwerveSubsystem extends SubsystemBase
 
   @Override
   public void simulationPeriodic(){
-    Pathfinding.setDynamicObstacles(SystemManager.lidar.fetchObsticles(), swerveDrive.getPose().getTranslation());
+   
   }
 
   /**
@@ -455,7 +455,14 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic(){
     
-    //swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getPose().toPose2d(), Timer.getFPGATimestamp());
+    swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getBackPose().toPose2d(), Timer.getFPGATimestamp());
+    swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getFrontPose().toPose2d(), Timer.getFPGATimestamp());
+    if (SystemManager.lidar!=null){
+      Pathfinding.setDynamicObstacles(SystemManager.lidar.fetchObsticles(), swerveDrive.getPose().getTranslation());
+    }
+
+    
+
     //postTrajectory();
     
 
