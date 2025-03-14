@@ -7,5 +7,7 @@ public interface aprilTagInterface extends Subsystem{
     /**@return the pose estimated by the vision system */
     Pose3d getFrontPose();
     Pose3d getBackPose();
+    Double getFrontTimestamp();
+    Double getBackTimestamp();
 
 }
