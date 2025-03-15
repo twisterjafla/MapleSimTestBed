@@ -104,9 +104,9 @@ public final class Constants
   /**constants to control wether or not a spesific system should be simulated */
   public static class simConfigs{
     public static final boolean driveShouldBeSim=false||!RobotBase.isReal();
-    public static final boolean intakeShouldBeSim=false||!RobotBase.isReal();
+    public static final boolean intakeShouldBeSim=true||!RobotBase.isReal();
     public static final boolean aprilTagShouldBeSim=false||!RobotBase.isReal();
-    public static final boolean wristShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean wristShouldBeSim=false||!RobotBase.isReal();
     public static final boolean elevatorShouldBeSim=true||!RobotBase.isReal();
 
     public static final boolean reefIndexerShouldBeSim=true||!RobotBase.isReal();
@@ -128,8 +128,8 @@ public final class Constants
     public static final double intakeSpeed=0.3;
     public static final double outtakeSpeed=-0.3;
     public static final double intakeLength=0.245745;
-    public static final int RightIntake = 9;
-    public static final int LeftIntake = 7;
+    public static final int topIntake = 10;
+    public static final int bottomIntake = 7;
     public static final double coralFromWristLen = 0.0715772;
     public static final double coralLenght = 0.3;
     public static final double coralWidth = 0.11;
@@ -151,7 +151,7 @@ public final class Constants
     public static final double intakePosit = 0;
     public static final double startingPosit = 0;
     public static final double tolerence = 0.05;
-    public static final double speedForSim =2;
+    public static final double speedForSim =0.02;
     public static final double compressedLen = 0.889;
     public static final PIDConstants elevatorPID = new PIDConstants(1.9, 0, 0);
     public static final double g=0.03;
@@ -203,7 +203,7 @@ public final class Constants
     public static final double tolerence = 1;
     public static final double speedForSim=5;
     public static final int CANCoderID=3;
-    public static final double CANCoderOffset=-59.04;//5.4;
+    public static final double CANCoderOffset=-136.656;//5.4;
     public static final int motorID=8;
 
     public static final PIDConstants wristPID = new PIDConstants(0.005, 0, 0);

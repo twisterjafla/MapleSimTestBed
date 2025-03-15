@@ -13,8 +13,8 @@ import frc.robot.SystemManager;
 public class realIntake extends intakeIO{ 
 
 	
-	SparkMax intakeTop = new SparkMax(Constants.intakeConstants.LeftIntake, MotorType.kBrushless);
-	SparkMax intakeBottom = new SparkMax(Constants.intakeConstants.RightIntake, MotorType.kBrushless);
+	SparkMax intakeTop = new SparkMax(Constants.intakeConstants.bottomIntake, MotorType.kBrushless);
+	SparkMax intakeBottom = new SparkMax(Constants.intakeConstants.topIntake, MotorType.kBrushless);
 	DigitalInput frontBeambrake = new DigitalInput(Constants.intakeConstants.frontBeamBrakePort);
 	DigitalInput backBeambrake = new DigitalInput(Constants.intakeConstants.backBeamBrakePort);
 	hasPeiceState peiceState=hasPeiceState.full;
