@@ -26,6 +26,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -147,7 +149,7 @@ public class SwerveSubsystem extends SubsystemBase
 
   @Override
   public void simulationPeriodic(){
-    Pathfinding.setDynamicObstacles(SystemManager.lidar.fetchObsticles(), swerveDrive.getPose().getTranslation());
+   
   }
 
   /**
@@ -455,7 +457,14 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic(){
     
-    //swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getPose().toPose2d(), Timer.getFPGATimestamp());
+    swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getBackPose().toPose2d(), Timer.getFPGATimestamp());
+    swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getFrontPose().toPose2d(), Timer.getFPGATimestamp());
+    if (SystemManager.lidar!=null){
+      Pathfinding.setDynamicObstacles(SystemManager.lidar.fetchObsticles(), swerveDrive.getPose().getTranslation());
+    }
+
+    
+
     //postTrajectory();
     
 
