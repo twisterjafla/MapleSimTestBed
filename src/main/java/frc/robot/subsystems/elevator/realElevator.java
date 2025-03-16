@@ -6,9 +6,11 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.elevatorConstants;
 import frc.robot.subsystems.wristElevatorControlManager;
 
 public class realElevator  extends elevatorIO {
@@ -33,11 +35,29 @@ public class realElevator  extends elevatorIO {
         rightMotor.getConfigurator().apply(Constants.elevatorConstants.slot0Configs);
         
         rightMotor.setControl(new Follower(Constants.elevatorConstants.leftMotorID, true));
+        SmartDashboard.putBoolean("elevatorHasReset", false);
     }
     
     @Override
     public void periodic(){
-        
+        SmartDashboard.putNumber("elevator stall torque", leftMotor.getTorqueCurrent().getValueAsDouble());
+        if (elevatorConstants.shouldUseCurrentEncoderReset){
+            if (Math.abs(leftMotor.getTorqueCurrent().getValueAsDouble())>Constants.elevatorConstants.currentResetThreashold){
+                SmartDashboard.putBoolean("elevatorHasReset", true);
+
+                if (this.getHeight()<Constants.elevatorConstants.elevatorResetTolerence){
+                    leftMotor.setPosition(0);
+
+                }
+                else if (Math.abs(this.getHeight()-Constants.elevatorConstants.l4EncoderVal)<Constants.elevatorConstants.elevatorResetTolerence){
+                    leftMotor.setPosition(Constants.elevatorConstants.l4EncoderVal*Constants.elevatorConstants.encoderToMeters);
+                }
+                else{
+                    return;
+                }
+
+            }
+        }
 
         if (wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.elevator||
             wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.resting){
