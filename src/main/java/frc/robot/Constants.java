@@ -112,6 +112,7 @@ public final class Constants
     public static final boolean reefIndexerShouldBeSim=true||!RobotBase.isReal();
     public static final boolean lidarShouldBeSim=true||!RobotBase.isReal();
     public static final boolean blinkinShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean algaeRemoverShouldBeSim=true||RobotBase.isReal();
     public static final boolean robotCanBeSimOnReal=true;
     
 
@@ -134,8 +135,12 @@ public final class Constants
     public static final double coralLenght = 0.3;
     public static final double coralWidth = 0.11;
 
+
     public static final int frontBeamBrakePort=9;
     public static final int backBeamBrakePort=8;
+
+    public static final double algeaTimerVal = 0.5;
+
   }
 
   /**constants for the elevator */
@@ -143,8 +148,18 @@ public final class Constants
     public static final double l4EncoderVal = 1.42;
     public static final double l3EncoderVal = 0.702381;
     public static final double l2EncoderVal = 0.414528;
+
     public static final double l1EncoderVal = 0.04;
     public static final double encoderToMeters =16.9718; //1/141;
+
+
+    public static final double highAlgeaPrep = 0;
+    public static final double lowAlgeaPrep = 0;
+    public static final double lowAlgeaAct = 0;
+    public static final double highAlgeaAct = 0;
+
+
+
     public static final double maxHeight = l4EncoderVal;
     public static final Rotation2d angle = Rotation2d.fromDegrees(70);
     public static final Translation3d fromRobotCenter = new Translation3d(0.0584454, 0, 0.583565 );
@@ -196,6 +211,7 @@ public final class Constants
     public static final Rotation2d l1EncoderVal = Rotation2d.fromDegrees(0);
     public static final Rotation2d restingPosit = Rotation2d.fromDegrees(0);
     public static final Rotation2d intakePosit = Rotation2d.fromDegrees(0);
+    public static final Rotation2d algeaPosit = Rotation2d.fromDegrees(0);
 
     public static final Rotation2d minDegrees = new Rotation2d();
     public static final Rotation2d maxDegrees = new Rotation2d();

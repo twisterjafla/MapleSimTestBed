@@ -131,6 +131,7 @@ public class Robot extends TimedRobot{
      
 
       controlChooser.restart();
+      //autoManager.takeControl();
       
 
     }

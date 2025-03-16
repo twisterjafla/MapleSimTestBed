@@ -10,9 +10,13 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.FieldPosits.reefLevel.algeaRemoval;
 import frc.robot.subsystems.autoManager;
 import frc.robot.subsystems.generalManager;
 import frc.robot.subsystems.wristElevatorControlManager;
+import frc.robot.subsystems.AlgaeRemover.algaeRemoverInterface;
+import frc.robot.subsystems.AlgaeRemover.realAlgaeRemover;
+import frc.robot.subsystems.AlgaeRemover.simAlgaeRemover;
 import frc.robot.subsystems.blinkin.blinkinInterface;
 import frc.robot.subsystems.blinkin.realBlinkin;
 import frc.robot.subsystems.blinkin.simBlinkin;
@@ -54,7 +58,11 @@ public class SystemManager{
     public static realSimulatedDriveTrain simButRealTrain = null;
     public static realVision realVisTemp = null;
     public static blinkinInterface blinkin;
+
     public static Robot robot;
+
+    public static algaeRemoverInterface algaeRemover;
+
     
     // Add a Coral Array object for tracking
     public static coralGUI coralArray;
@@ -138,8 +146,17 @@ public class SystemManager{
             fakeBot = AIRobotInSimulation.getRobotAtIndex(0);
             // Overrides the default simulation
         }
+        
 
-        // Initialize and distribute the managers
+        if (Constants.simConfigs.algaeRemoverShouldBeSim){
+            algaeRemover= new simAlgaeRemover();
+        }
+        else{
+            algaeRemover = new realAlgaeRemover();
+        }
+
+        //inializes and distributes the managers
+
         wristElevatorControlManager.addSystems(wrist, elevator);
         generalManager.generalManagerInit();
         autoManager.autoManagerInit();

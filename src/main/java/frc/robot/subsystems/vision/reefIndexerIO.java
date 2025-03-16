@@ -19,7 +19,7 @@ public class reefIndexerIO extends SubsystemBase{
     }
 
     /**
-     * @param row the row or reef collom to check. is 0 indexed
+     * @param row the row or reef collom to check. is 1 indexed
      * @returns the heighest available level for the row given */
     public int getHighestLevelForRow(int row){
         if (!getIsClosed(row, 3)){
@@ -62,4 +62,24 @@ public class reefIndexerIO extends SubsystemBase{
         throw new Error("This function is only allowed on simulated robots and should only be used for debugging reasons");
     }
     
+    public boolean blockedByAlgae(int row, int level){
+        return getAlgeaPosits()[row][level];
+    }
+    public boolean isOpenSmart(int row, int level){
+        return !this.getIsClosed(row, level)&&!this.blockedByAlgae(row, level);
+    }
+
+    public void freeAlgea(int row, int level){
+        throw new Error("This function is being used on the reef indexer interface but should instead be called on an implementation");
+    }
+
+    public int getAlgaeLevel(int row){
+        if(hasAlgea(row, 0)){
+            return 1;
+        }
+        else if (hasAlgea(row, 1)){
+            return 2;
+        }
+        return 0;
+    }
 }

@@ -90,4 +90,14 @@ public class realVision extends reefIndexerIO implements aprilTagInterface{
         return algeaArray;
     }
 
+
+
+    @Override
+    public void freeAlgea(int row, int level) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'freeAlgea'");
+    }
+
+
+
 }
