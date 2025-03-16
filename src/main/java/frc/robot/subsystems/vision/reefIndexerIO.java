@@ -69,6 +69,11 @@ public class reefIndexerIO extends SubsystemBase{
         return !this.getIsClosed(row, level)&&!this.blockedByAlgae(row, level);
     }
 
+    /**
+     * Sets the algae's value at a certain row and level to False once it has been removed by us
+     * @param row one of the 6 positions inbetween two reef colloms in which an algea can be placed
+     * @param level wether the algea is on the lower level(id 0 in between l2 and l3) or on the higher level (id 1 in between l3 and l4)
+     */
     public void freeAlgea(int row, int level){
         throw new Error("This function is being used on the reef indexer interface but should instead be called on an implementation");
     }
