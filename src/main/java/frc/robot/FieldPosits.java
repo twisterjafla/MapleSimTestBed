@@ -1,7 +1,12 @@
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Rotation;
+
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 
 public class FieldPosits {
@@ -12,6 +17,15 @@ public class FieldPosits {
         public static final Pose2d midStack = new Pose2d(1.2, 4, new Rotation2d());
         public static final Pose2d rightStack = new Pose2d(1.2, 2.2, new Rotation2d());
     }
+
+    public static final Pose3d[][] algaeRenderPosits = {
+        {new Pose3d(3.801, 4.025, 0.9, new Rotation3d()), new Pose3d(3.801, 4.025, 1.3, new Rotation3d())},
+        {new Pose3d(4.192, 3.439, 0.9, new Rotation3d()), new Pose3d(4.192, 3.439, 1.3, new Rotation3d())},
+        {new Pose3d(4.838, 3.409, 0.9, new Rotation3d()), new Pose3d(4.838, 3.409, 1.3, new Rotation3d())},
+        {new Pose3d(5.209, 4.025, 0.9, new Rotation3d()), new Pose3d(5.209, 4.025, 1.3, new Rotation3d())},
+        {new Pose3d(4.823, 4.611, 0.9, new Rotation3d()), new Pose3d(4.823, 4.611, 1.3, new Rotation3d())},
+        {new Pose3d(4.132, 4.626, 0.9, new Rotation3d()), new Pose3d(4.132, 4.626, 1.3, new Rotation3d())}
+     };
 
     /**The positions a robot can use to intake coral */
     public static class IntakePoints{
@@ -62,6 +76,18 @@ public class FieldPosits {
             reefPole.L
 
         };
+    }
+
+    public static class algeaStuff{
+        public static final Translation2d highTrans = new Translation2d();
+        public static final Translation2d lowTrans = new Translation2d();
+        public static final Pose2d A = new Pose2d(3.2, 4.027, Rotation2d.fromDegrees(0));
+        public static final Pose2d B = new Pose2d(3.845, 2.911, Rotation2d.fromDegrees(60));
+        public static final Pose2d C = new Pose2d(5.132, 2.911, Rotation2d.fromDegrees(120));
+        public static final Pose2d D = new Pose2d(5.764, 4.027, Rotation2d.fromDegrees(180));
+        public static final Pose2d E = new Pose2d(5.139, 5.127, Rotation2d.fromDegrees(-120));
+        public static final Pose2d F = new Pose2d(3.841, 5.123, Rotation2d.fromDegrees(-60));
+
     }
 
     /**enum to encapsulate and provide basic information about scoring on a reef pole */
@@ -236,6 +262,125 @@ public class FieldPosits {
                     throw new Error("This case is imposible to reach because all enum options are handled but needs to exist so java can be sure the function will always return a value.If you are seeing this as a user somthing has gone DEEPLY DEEPLY WRONG, maybe burn your code in mount doom");
             }
         }
+
+
+        public enum algeaRemoval {
+            AH(0,false),
+            AL(0,true),
+            BH(1,false),
+            BL(1,true),
+            CH(2,false),
+            CL(2,true),
+            DH(3,false),
+            DL(3,true),
+            EH(4,false),
+            EL(4,true),
+            FH(5,false),
+            FL(5,true),
+            high(-1, false),
+            low(-1, false);
+
+
+            private algeaRemoval(int side, boolean isLow){
+                this.isLow=isLow;
+                this.side=side;
+
+            }
+            public static algeaRemoval makeFromNumbers(int side, int level){
+                if (level==0){
+                    switch (side){
+                        case 1:
+                            return AL;
+                        case 2:
+                            return BL;
+                        case 3:
+                            return CL;
+                        case 4:
+                            return DL;
+                        case 5:
+                            return EL;
+                        case 6:
+                            return FL;
+                        default:
+                            throw new Error("You tried to create a algea removal position with an invalid side: " + side);
+                    }
+                }
+                else if (level==1){
+                    switch (side){
+                        case 1:
+                            return AH;
+                        case 2:
+                            return BH;
+                        case 3:
+                            return CH;
+                        case 4:
+                            return DH;
+                        case 5:
+                            return EH;
+                        case 6:
+                            return FH;
+                        default:
+                            throw new Error("You tried to create a algea removal position with an invalid side: " + side);
+                    }
+                }
+                throw new Error("You tried to create an algae removal at an invalid level: " + level);
+            }
+
+            int side;
+            public boolean isLow;
+
+            public double getElevatorValue(){
+                if (isLow){
+                    return Constants.elevatorConstants.lowAlgeaPrep;
+                }
+                else{
+                    return Constants.elevatorConstants.highAlgeaPrep;
+                }
+            }
+
+
+
+            public Rotation2d getWristValue(){
+                return Constants.wristConstants.algeaPosit;
+            }
+
+            public Pose2d getPose(){
+                if (side==-1){
+                    throw new Error("The user attempted to use a function reserved for 2d algea information on a 1d algea information enum");
+                }
+                switch (side){
+                    case 0:
+                        return algeaStuff.A;
+                    case 1:
+                        return algeaStuff.B;
+                    case 2:
+                        return algeaStuff.C;
+                    case 3:
+                        return algeaStuff.D;
+                    case 4:
+                        return algeaStuff.E;
+                    case 5:
+                        return algeaStuff.F;
+                    default:
+                        throw new Error("This case is imposible to reach because all enum options are handled but needs to exist so java can be sure the function will always return a value.If you are seeing this as a user somthing has gone DEEPLY DEEPLY WRONG, maybe burn your code in mount doom");
+                }
+            }
+
+            public int getRow(){
+                if (side==-1){
+                    throw new Error("The user attempted to use a function reserved for 2d algea information on a 1d algea information enum");
+                }
+                return side;
+            }
+            public int getLevel(){
+                if (isLow){
+                    return 0;
+                }
+                return 1;
+            }
+        }
+
+
     }
 
 

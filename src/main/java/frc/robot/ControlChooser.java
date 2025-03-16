@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.FieldPosits.reefLevel.algeaRemoval;
 import frc.robot.Utils.BetterTrigger;
 import frc.robot.Utils.utillFunctions;
 import frc.robot.commands.auto.smallAutoDrive;
@@ -54,6 +55,7 @@ public class ControlChooser {
         chooser.addOption("testControl", getTestControl());
         chooser.addOption("StandardXboxControl", standardXboxControl());
         chooser.addOption("demoControl", demoControl());
+        chooser.addOption("runAutoControl", runAutoDrive());
         
         
         chooser.onChange((EventLoop scheme)->{changeControl(scheme);});
@@ -118,7 +120,11 @@ public class ControlChooser {
        xbox1.b(loop).onTrue(new InstantCommand(()->generalManager.scoreL2()));
        xbox1.a(loop).onTrue(new InstantCommand(()->generalManager.scoreL1()));
 
+
        //xbox1.leftTrigger(0.4, loop).onTrue(new CreateCoral("leftMid"));
+
+       //xbox1.leftTrigger(0.4, loop).onTrue(new removeAlgae(algeaRemoval.AL));
+
        xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
        //xbox1.leftBumper(loop).onTrue(new smallAutoDrive(Constants.driveConstants.startingPosit));
        xbox1.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.outtake()));
@@ -160,6 +166,15 @@ public class ControlChooser {
         xbox1.b(loop).whileTrue(SystemManager.swerve.driveToPose(Constants.driveConstants.startingPosit));
         xbox1.y(loop).whileTrue(new smallAutoDrive(Constants.driveConstants.startingPosit));
         xbox1.x(loop).onTrue(new InstantCommand(()->SystemManager.reefIndexer.resetSIMONLY()));
+       
+        return loop;
+    }
+
+    private EventLoop runAutoDrive(){
+        EventLoop loop = new EventLoop();
+
+        new Trigger(loop, ()->SystemManager.robot.heartBeat%2==1).onTrue(new InstantCommand(()->autoManager.giveControl()));
+
        
         return loop;
     }

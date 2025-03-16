@@ -106,11 +106,13 @@ public final class Constants
     public static final boolean driveShouldBeSim=false||!RobotBase.isReal();
     public static final boolean intakeShouldBeSim=true||!RobotBase.isReal();
     public static final boolean aprilTagShouldBeSim=false||!RobotBase.isReal();
-    public static final boolean wristShouldBeSim=false||!RobotBase.isReal();
-    public static final boolean elevatorShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean wristShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean elevatorShouldBeSim=false||!RobotBase.isReal();
+
     public static final boolean reefIndexerShouldBeSim=true||!RobotBase.isReal();
     public static final boolean lidarShouldBeSim=true||!RobotBase.isReal();
     public static final boolean blinkinShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean algaeRemoverShouldBeSim=true||RobotBase.isReal();
     public static final boolean robotCanBeSimOnReal=true;
     
 
@@ -127,14 +129,18 @@ public final class Constants
     public static final double intakeSpeed=0.3;
     public static final double outtakeSpeed=-0.3;
     public static final double intakeLength=0.245745;
-    public static final int RightIntake = 9;
-    public static final int LeftIntake = 7;
+    public static final int topIntake = 10;
+    public static final int bottomIntake = 7;
     public static final double coralFromWristLen = 0.0715772;
     public static final double coralLenght = 0.3;
     public static final double coralWidth = 0.11;
 
+
     public static final int frontBeamBrakePort=9;
-    public static final int backBeamBrakePort=50;
+    public static final int backBeamBrakePort=8;
+
+    public static final double algeaTimerVal = 0.5;
+
   }
 
   /**constants for the elevator */
@@ -142,15 +148,25 @@ public final class Constants
     public static final double l4EncoderVal = 1.42;
     public static final double l3EncoderVal = 0.702381;
     public static final double l2EncoderVal = 0.414528;
+
     public static final double l1EncoderVal = 0.04;
-    public static final double encoderToMeters =68.2676; //1/141;
+    public static final double encoderToMeters =16.9718; //1/141;
+
+
+    public static final double highAlgeaPrep = 0;
+    public static final double lowAlgeaPrep = 0;
+    public static final double lowAlgeaAct = 0;
+    public static final double highAlgeaAct = 0;
+
+
+
     public static final double maxHeight = l4EncoderVal;
     public static final Rotation2d angle = Rotation2d.fromDegrees(70);
     public static final Translation3d fromRobotCenter = new Translation3d(0.0584454, 0, 0.583565 );
     public static final double intakePosit = 0;
     public static final double startingPosit = 0;
     public static final double tolerence = 0.05;
-    public static final double speedForSim =2;
+    public static final double speedForSim =0.02;
     public static final double compressedLen = 0.889;
     public static final PIDConstants elevatorPID = new PIDConstants(1.9, 0, 0);
     public static final double g=0.03;
@@ -195,6 +211,7 @@ public final class Constants
     public static final Rotation2d l1EncoderVal = Rotation2d.fromDegrees(0);
     public static final Rotation2d restingPosit = Rotation2d.fromDegrees(0);
     public static final Rotation2d intakePosit = Rotation2d.fromDegrees(0);
+    public static final Rotation2d algeaPosit = Rotation2d.fromDegrees(0);
 
     public static final Rotation2d minDegrees = new Rotation2d();
     public static final Rotation2d maxDegrees = new Rotation2d();
@@ -202,9 +219,12 @@ public final class Constants
     public static final double tolerence = 1;
     public static final double speedForSim=5;
     public static final int CANCoderID=3;
-    public static final double CANCoderOffset=-59.04;//5.4;
+    public static final double CANCoderOffset=-136.656;//5.4;
     public static final int motorID=8;
-    public static final PIDConstants wristPID = new PIDConstants(0.0007, 0.001, 0);
+    public static final double fConstant=0.01;
+    public static final PIDConstants wristPID = new PIDConstants(0.0015, 0, 0.);
+    public static final double maxVel = 0;
+    public static final double maxAccel = 0;
   
   }
 

@@ -24,6 +24,11 @@ public class simElevator  extends elevatorIO{
     }
 
     @Override
+    public double getHeight(){
+        return position;
+    }
+
+    @Override
     public void periodic(){
 
 

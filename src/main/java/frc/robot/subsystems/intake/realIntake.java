@@ -5,6 +5,7 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SystemManager;
@@ -12,8 +13,8 @@ import frc.robot.SystemManager;
 public class realIntake extends intakeIO{ 
 
 	
-	SparkMax intakeTop = new SparkMax(Constants.intakeConstants.LeftIntake, MotorType.kBrushless);
-	SparkMax intakeBottom = new SparkMax(Constants.intakeConstants.RightIntake, MotorType.kBrushless);
+	SparkMax intakeTop = new SparkMax(Constants.intakeConstants.bottomIntake, MotorType.kBrushless);
+	SparkMax intakeBottom = new SparkMax(Constants.intakeConstants.topIntake, MotorType.kBrushless);
 	DigitalInput frontBeambrake = new DigitalInput(Constants.intakeConstants.frontBeamBrakePort);
 	DigitalInput backBeambrake = new DigitalInput(Constants.intakeConstants.backBeamBrakePort);
 	hasPeiceState peiceState=hasPeiceState.full;
@@ -96,6 +97,7 @@ public class realIntake extends intakeIO{
 			intakeTop.set(0);
 			intakeBottom.set(0);
 		}
+		SmartDashboard.putString("intakeState", state.name());
 	}
 	
 	@Override

@@ -41,6 +41,7 @@ public class realWrist extends wristIO{
         SmartDashboard.putNumber("Wrist goal", goal);
         SmartDashboard.putNumber("Wrist location", getCurrentLocation());
         double speed = wristPID.calculate(getCurrentLocation());
+        speed = speed + Constants.wristConstants.fConstant*Math.signum(speed);
         SmartDashboard.putNumber("wristSpeed", speed);
         SmartDashboard.putNumber("wristError", Math.abs(goal-getCurrentLocation()));
         wristMotor.set(speed);
