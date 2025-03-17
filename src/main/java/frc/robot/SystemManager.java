@@ -171,6 +171,7 @@ public class SystemManager{
         wristElevatorControlManager.periodic();
         generalManager.periodic();
         autoManager.periodic();
+        reefIndexer.periodic();
     }
 
     /** @return the current pose of the robot */

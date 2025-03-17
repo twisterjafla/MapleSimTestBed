@@ -75,12 +75,6 @@ public class simReefIndexer extends reefIndexerIO{
     }
 
 
-    @Override
-    public boolean getIsClosed(int row, int level) {
-    
-        return getFullReefState()[row][level];
-    }
-
 
 
     @Override
@@ -88,37 +82,16 @@ public class simReefIndexer extends reefIndexerIO{
         ReefscapeReefSimulation.getInstance().get().clearReef();
     }
 
- 
-
-
-
 
     @Override 
     public boolean[][] getAlgeaPosits(){
+        
         return algae;
-    }
-
-
-
-
-    @Override
-    public boolean blockedByAlgae(int row, int level){
-        if (level==0||level==3){
-            return false;
-        }
-        else if (level==1){
-            return hasAlgea((int)Math.floor(row/2), 0);
-        }
-        else if (level==2){
-            return hasAlgea((int)Math.floor(row/2), 1)||hasAlgea((int)Math.floor(row/2), 0);
-        }
-        else{
-            throw new Error("Attempted to get algae information about a level that doesnt exist. level number: " + level);
-        }
     }
 
     @Override
     public void freeAlgea(int row, int level){
+
         algae[row][level]=false;
     }
 

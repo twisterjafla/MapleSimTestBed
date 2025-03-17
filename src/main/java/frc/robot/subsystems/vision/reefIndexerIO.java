@@ -1,8 +1,9 @@
 package frc.robot.subsystems.vision;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class reefIndexerIO extends SubsystemBase{
+public class reefIndexerIO{
 
     /**@return a 2d list of booleans where each outer list represents a pole of the reef and each inner loop represents the nodes on that pole starting in the tought with id 0 and ending at l4 with id 3*/
     public boolean[][] getFullReefState(){
@@ -40,7 +41,7 @@ public class reefIndexerIO extends SubsystemBase{
      * @return wether or not the specified posit has algea
      */
     public boolean hasAlgea(int row, int level){
-        return !getAlgeaPosits()[row][level];
+        return this.getAlgeaPosits()[row][level];
     }
 
     /**
@@ -63,7 +64,18 @@ public class reefIndexerIO extends SubsystemBase{
     }
     
     public boolean blockedByAlgae(int row, int level){
-        return getAlgeaPosits()[row][level];
+        if (level==0||level==3){
+            return false;
+        }
+        else if (level==1){
+            return hasAlgea((int)Math.floor(row/2), 0);
+        }
+        else if (level==2){
+            return hasAlgea((int)Math.floor(row/2), 1)||hasAlgea((int)Math.floor(row/2), 0);
+        }
+        else{
+            throw new Error("Attempted to get algae information about a level that doesnt exist. level number: " + level);
+        }
     }
     public boolean isOpenSmart(int row, int level){
         return !this.getIsClosed(row, level)&&!this.blockedByAlgae(row, level);
@@ -75,11 +87,16 @@ public class reefIndexerIO extends SubsystemBase{
 
     public int getAlgaeLevel(int row){
         if(hasAlgea(row, 0)){
+            
             return 1;
         }
         else if (hasAlgea(row, 1)){
+            
             return 2;
         }
+        
         return 0;
     }
+
+    public void periodic(){}
 }
