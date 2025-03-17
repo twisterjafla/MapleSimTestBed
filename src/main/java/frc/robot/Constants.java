@@ -110,11 +110,12 @@ public final class Constants
     public static final boolean wristShouldBeSim=true||!RobotBase.isReal();
     public static final boolean elevatorShouldBeSim=false||!RobotBase.isReal();
 
-    public static final boolean reefIndexerShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean reefIndexerShouldBeSim=false||!RobotBase.isReal();
     public static final boolean lidarShouldBeSim=true||!RobotBase.isReal();
     public static final boolean blinkinShouldBeSim=true||!RobotBase.isReal();
     public static final boolean algaeRemoverShouldBeSim=true||RobotBase.isReal();
     public static final boolean robotCanBeSimOnReal=true;
+
     
 
   }
@@ -127,8 +128,8 @@ public final class Constants
 
   /**constants for the intake */
   public static class intakeConstants{
-    public static final double intakeSpeed=0.3;
-    public static final double outtakeSpeed=-0.3;
+    public static final double intakeSpeed=0.30;
+    public static final double outtakeSpeed=1;
     public static final double intakeLength=0.245745;
     public static final int topIntake = 10;
     public static final int bottomIntake = 7;
@@ -146,7 +147,7 @@ public final class Constants
 
   public static final class algaeRemoverConstants{
     public static final double algeaTimerVal = 0.5;
-    public static final int motorID=50;
+    public static final int motorID=12;
     public static final double motorSpeed = 0.3;
   }
 
@@ -176,10 +177,10 @@ public final class Constants
     public static final double tolerence = 0.05;
     public static final double speedForSim =0.02;
     public static final double compressedLen = 0.889;
-    public static final PIDConstants elevatorPID = new PIDConstants(1.9, 0, 0);
+    public static final PIDConstants elevatorPID = new PIDConstants(0.5, 0, 0);
     public static final double g=0.03;
     public static final boolean shouldUseCurrentEncoderReset=true;
-    public static final double currentResetThreashold=20;
+    public static final double currentResetThreashold=100;
 
 
     public static final int leftMotorID=1;

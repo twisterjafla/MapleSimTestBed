@@ -24,7 +24,7 @@ public class intakeIO extends SubsystemBase{
         resting;
     }
 
-    protected intakeState state;
+    protected intakeState state = intakeState.resting;
     BooleanSupplier stopTrigger=()->{return false;};
 
     /**@return wether or not the intake currently contains a peice.*/
@@ -32,7 +32,7 @@ public class intakeIO extends SubsystemBase{
 
     /**sets the intake state to intaking untill a peice is intaked */
     public void intake(){
-        intakeUntil(()->this.hasPeice());
+        this.intakeUntil(()->this.hasPeice());
     }
 
     /**
@@ -46,7 +46,7 @@ public class intakeIO extends SubsystemBase{
 
     /**sets the intake state to outtake until the peice is outtaked*/
     public void outtake(){
-        outtakeUntil(()->!this.hasPeice());
+        this.outtakeUntil(()->!this.hasPeice());
     };
 
     /**

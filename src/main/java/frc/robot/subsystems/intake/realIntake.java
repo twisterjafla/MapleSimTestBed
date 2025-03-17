@@ -13,25 +13,24 @@ import frc.robot.SystemManager;
 public class realIntake extends intakeIO{ 
 
 	
-	SparkMax intakeTop = new SparkMax(Constants.intakeConstants.bottomIntake, MotorType.kBrushless);
-	SparkMax intakeBottom = new SparkMax(Constants.intakeConstants.topIntake, MotorType.kBrushless);
+	//SparkMax intakeTop = new SparkMax(Constants.intakeConstants.topIntake, MotorType.kBrushless);
+	SparkMax intakeBottom = new SparkMax(Constants.intakeConstants.bottomIntake, MotorType.kBrushless);
 	DigitalInput frontBeambrake = new DigitalInput(Constants.intakeConstants.frontBeamBrakePort);
 	DigitalInput backBeambrake = new DigitalInput(Constants.intakeConstants.backBeamBrakePort);
 	hasPeiceState peiceState=hasPeiceState.full;
 
 
-
 	
 
 	public realIntake() {
-		intakeBottom.setInverted(true);
-		intakeTop.setInverted(false);
+		
 	}
 
 	
 
 	@Override
 	public boolean hasPeice() {
+		SmartDashboard.putBoolean("HasPeiceChecked", true);
 		return peiceState==hasPeiceState.full;
 	}
 	
@@ -39,7 +38,7 @@ public class realIntake extends intakeIO{
 
 		//starting
 		if (peiceState==hasPeiceState.starting){
-			if(frontBeambrake.get()){
+			if(!frontBeambrake.get()){
 				peiceState=hasPeiceState.full;
 			}
 			else{
@@ -49,26 +48,29 @@ public class realIntake extends intakeIO{
 
 		//empty
 		else if (peiceState==hasPeiceState.empty){
-			if (backBeambrake.get()){
+			if (!backBeambrake.get()){
 				peiceState=hasPeiceState.intaking;
 			}
 		}
 
 		//intakeing
 		else if(peiceState==hasPeiceState.intaking){
-			if (!backBeambrake.get()){
-				if (frontBeambrake.get()){
+
+
+			if (backBeambrake.get()){
+				if (!frontBeambrake.get()){
 					peiceState=hasPeiceState.full;
 				}
 				else{
 					peiceState=hasPeiceState.empty;
 				}
+
 			}
 		}
 
 		//full
 		else if(peiceState==hasPeiceState.full){
-			if(!frontBeambrake.get()){
+			if(frontBeambrake.get()){
 				peiceState=hasPeiceState.empty;
 			}
 		}
@@ -82,27 +84,37 @@ public class realIntake extends intakeIO{
 
 	@Override
 	public void periodic(){
+		checkForPiece();
 		if (stopTrigger.getAsBoolean()){
+
+			SmartDashboard.putBoolean("stopSucceded", true);
+			state=intakeState.resting;
 		    stop();					   // Stop Intake Motor
 		}
+
+
 		if (state == intakeState.intaking){
-		    intakeTop.set(Constants.intakeConstants.intakeSpeed); // Start Intake Motor
+		    //intakeTop.set(Constants.intakeConstants.intakeSpeed); // Start Intake Motor
 			intakeBottom.set(Constants.intakeConstants.intakeSpeed);
 		}
 		else if (state == intakeState.outtaking){
-		    intakeTop.set(Constants.intakeConstants.outtakeSpeed); // Start OutTake Motor
+		    //intakeTop.set(Constants.intakeConstants.outtakeSpeed); // Start OutTake Motor
 			intakeBottom.set(Constants.intakeConstants.outtakeSpeed);
 		}
 		else{
-			intakeTop.set(0);
+			//intakeTop.set(0);
 			intakeBottom.set(0);
 		}
 		SmartDashboard.putString("intakeState", state.name());
+		SmartDashboard.putString("hasPeiceState", peiceState.name());
+		SmartDashboard.putBoolean("frontBeamBreak", frontBeambrake.get());
+		SmartDashboard.putBoolean("backBeamBreak", backBeambrake.get());
 	}
 	
 	@Override
 	public void stop() {
-		intakeTop.stopMotor();
+		intakeBottom.stopMotor();
+		//intakeTop.stopMotor();
 	}
 
 

@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.PubSubOption;
 import edu.wpi.first.networktables.StructArrayPublisher;
@@ -96,6 +97,9 @@ public class Robot extends TimedRobot{
       disabledTimer.reset();
       disabledTimer.start();
       generalManager.resting();
+      SystemManager.elevator.setSetpoint(0);
+      SystemManager.wrist.setSetpoint(new Rotation2d());
+      SystemManager.intake.reset();
     }
 
     @Override
