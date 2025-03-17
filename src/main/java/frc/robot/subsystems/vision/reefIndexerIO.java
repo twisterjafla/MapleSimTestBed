@@ -40,7 +40,7 @@ public class reefIndexerIO extends SubsystemBase{
      * @return wether or not the specified posit has algea
      */
     public boolean hasAlgea(int row, int level){
-        return !getAlgeaPosits()[level][row];
+        return !getAlgeaPosits()[row][level];
     }
 
     /**
