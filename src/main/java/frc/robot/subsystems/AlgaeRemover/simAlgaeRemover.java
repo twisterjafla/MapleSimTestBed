@@ -2,11 +2,12 @@ package frc.robot.subsystems.AlgaeRemover;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class simAlgaeRemover extends SubsystemBase implements algaeRemoverInterface {
     boolean isRunning=false;
     Timer runningTimer = new Timer();
-    double RemoveTime=0.5;
+
     
     @Override
     public boolean isRunning() {
@@ -27,7 +28,7 @@ public class simAlgaeRemover extends SubsystemBase implements algaeRemoverInterf
 
     @Override
     public void periodic(){
-        if (isRunning&&runningTimer.get()>RemoveTime){
+        if (isRunning&&runningTimer.get()>Constants.algaeRemoverConstants.algeaTimerVal){
             runningTimer.stop();
             isRunning=false;
         }

@@ -29,6 +29,7 @@ import swervelib.math.Matter;
  */
 public final class Constants
 {
+
     /**
      * Converts inches into meters
      * @param inches the number of inches
@@ -139,9 +140,16 @@ public final class Constants
     public static final int frontBeamBrakePort=9;
     public static final int backBeamBrakePort=8;
 
-    public static final double algeaTimerVal = 0.5;
+   
 
   }
+
+  public static final class algaeRemoverConstants{
+    public static final double algeaTimerVal = 0.5;
+    public static final int motorID=50;
+    public static final double motorSpeed = 0.3;
+  }
+
 
   /**constants for the elevator */
   public static class elevatorConstants{
