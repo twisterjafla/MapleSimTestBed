@@ -37,7 +37,7 @@ public class realVision extends reefIndexerIO implements aprilTagInterface{
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable visionTable = inst.getTable("Vision");
         NetworkTable coralPositionTable = visionTable.getSubTable("CoralPositions");
-        NetworkTable algaecoralPositionTable = visionTable.getSubTable("AlgaePositions");
+        NetworkTable algaePositionTable = visionTable.getSubTable("AlgaePositions");
         NetworkTable robotPositionTable = visionTable.getSubTable("RobotPosition");
 
         coralLevelSubscribers = new ArrayList<BooleanArraySubscriber>();
@@ -47,14 +47,14 @@ public class realVision extends reefIndexerIO implements aprilTagInterface{
 
         // Loops through and add the coral subscriber to the list
         for (int i = 1; i <= 4; i++) {
-            BooleanArrayTopic coralLevel = reefPositionTable.getBooleanArrayTopic("CoralL" + Integer.toString(i));
+            BooleanArrayTopic coralLevel = coralPositionTable.getBooleanArrayTopic("CoralL" + Integer.toString(i));
             BooleanArraySubscriber reefSubscriber = coralLevel.subscribe(reefDefaultList, PubSubOption.keepDuplicates(true));
             coralLevelSubscribers.add(reefSubscriber);
         }
 
         // Same thing as the coral one, except does this with publishers as well
         for (int i = 1; i <= 2; i++) {
-            BooleanArrayTopic algeaLevel = reefPositionTable.getBooleanArrayTopic("Algae" + Integer.toString(i));
+            BooleanArrayTopic algeaLevel = algaePositionTable.getBooleanArrayTopic("Algae" + Integer.toString(i));
             BooleanArrayPublisher algaePublisher = algeaLevel.publish(PubSubOption.keepDuplicates(true));
             BooleanArraySubscriber algeaSubscriber = algeaLevel.subscribe(algeaDefaultList, PubSubOption.keepDuplicates(true));
             algaeLevelPublishers.add(algaePublisher);
