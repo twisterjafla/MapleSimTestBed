@@ -70,4 +70,16 @@ public class photonSim extends SubsystemBase implements aprilTagInterface{
     public void periodic(){
         visionSim.update(SystemManager.getRealPoseMaple());
     }
+
+    @Override
+    public Double getFrontTimestamp() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getFrontTimestamp'");
+    }
+
+    @Override
+    public Double getBackTimestamp() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getBackTimestamp'");
+    }
 }

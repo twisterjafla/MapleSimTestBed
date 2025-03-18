@@ -127,11 +127,11 @@ public class SystemManager{
         }
 
         // Lidar
-        if (Constants.simConfigs.lidarShouldBeSim){
-            lidar = new simLidar();
-        } else {
-            // Lidar initialization if not sim
-        }
+        // if (Constants.simConfigs.lidarShouldBeSim){
+        //     lidar = new simLidar();
+        // } else {
+        //     // Lidar initialization if not sim
+        // }
 
         // Blinkin
         if(Constants.simConfigs.blinkinShouldBeSim){

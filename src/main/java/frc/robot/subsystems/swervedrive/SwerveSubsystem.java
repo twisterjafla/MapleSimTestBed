@@ -456,9 +456,13 @@ public class SwerveSubsystem extends SubsystemBase
 
   @Override
   public void periodic(){
+    if (SystemManager.aprilTag.getBackPose()!=null){
+      swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getBackPose().toPose2d(), SystemManager.aprilTag.getBackTimestamp());
+    }
+    if (SystemManager.aprilTag.getFrontPose()!=null){
+      swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getFrontPose().toPose2d(), SystemManager.aprilTag.getFrontTimestamp());
+    }
     
-    swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getBackPose().toPose2d(), Timer.getFPGATimestamp());
-    swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getFrontPose().toPose2d(), Timer.getFPGATimestamp());
     if (SystemManager.lidar!=null){
       Pathfinding.setDynamicObstacles(SystemManager.lidar.fetchObsticles(), swerveDrive.getPose().getTranslation());
     }
