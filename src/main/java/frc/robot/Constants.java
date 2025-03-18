@@ -105,7 +105,7 @@ public final class Constants
   /**constants to control wether or not a spesific system should be simulated */
   public static class simConfigs{
     public static final boolean driveShouldBeSim=false||!RobotBase.isReal();
-    public static final boolean intakeShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean intakeShouldBeSim=false||!RobotBase.isReal();
     public static final boolean aprilTagShouldBeSim=false||!RobotBase.isReal();
     public static final boolean wristShouldBeSim=false||!RobotBase.isReal();
     public static final boolean elevatorShouldBeSim=false||!RobotBase.isReal();
@@ -113,7 +113,7 @@ public final class Constants
     public static final boolean reefIndexerShouldBeSim=false||!RobotBase.isReal();
     public static final boolean lidarShouldBeSim=true||!RobotBase.isReal();
     public static final boolean blinkinShouldBeSim=true||!RobotBase.isReal();
-    public static final boolean algaeRemoverShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean algaeRemoverShouldBeSim=false||!RobotBase.isReal();
     public static final boolean robotCanBeSimOnReal=true;
 
     

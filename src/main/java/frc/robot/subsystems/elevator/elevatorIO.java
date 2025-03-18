@@ -65,6 +65,11 @@ public class elevatorIO extends SubsystemBase {
         setpoint=0;
     };
 
+    public boolean isAtTop(){
+        return Math.abs(getHeight()-Constants.elevatorConstants.maxHeight)<Constants.elevatorConstants.tolerence;
+
+    }
+
 
     /**@return true if the elevator is at a point in which the wrist can move without breaking anything */
     public boolean atLegalNonControlState(){

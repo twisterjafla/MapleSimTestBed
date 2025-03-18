@@ -26,7 +26,11 @@ public class realIntake extends intakeIO{
 		
 	}
 
-	
+	// @Override
+	// public void backRun(){
+	// 	this.state=intakeState.backRun;
+	// 	//this.stopTrigger=()->fron
+	// }
 
 	@Override
 	public boolean hasPeice() {
@@ -99,7 +103,13 @@ public class realIntake extends intakeIO{
 		}
 		else if (state == intakeState.outtaking){
 		    //intakeTop.set(Constants.intakeConstants.outtakeSpeed); // Start OutTake Motor
-			intakeBottom.set(Constants.intakeConstants.outtakeSpeed);
+			if (SystemManager.elevator.isAtTop()){
+				intakeBottom.set(-Constants.intakeConstants.outtakeSpeed);
+			}
+			
+			else{
+				intakeBottom.set(Constants.intakeConstants.outtakeSpeed);
+			}
 		}
 		else{
 			//intakeTop.set(0);
