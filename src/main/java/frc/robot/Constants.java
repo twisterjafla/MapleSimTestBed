@@ -107,13 +107,13 @@ public final class Constants
     public static final boolean driveShouldBeSim=false||!RobotBase.isReal();
     public static final boolean intakeShouldBeSim=true||!RobotBase.isReal();
     public static final boolean aprilTagShouldBeSim=false||!RobotBase.isReal();
-    public static final boolean wristShouldBeSim=true||!RobotBase.isReal();
+    public static final boolean wristShouldBeSim=false||!RobotBase.isReal();
     public static final boolean elevatorShouldBeSim=false||!RobotBase.isReal();
 
     public static final boolean reefIndexerShouldBeSim=false||!RobotBase.isReal();
     public static final boolean lidarShouldBeSim=true||!RobotBase.isReal();
     public static final boolean blinkinShouldBeSim=true||!RobotBase.isReal();
-    public static final boolean algaeRemoverShouldBeSim=true||RobotBase.isReal();
+    public static final boolean algaeRemoverShouldBeSim=true||!RobotBase.isReal();
     public static final boolean robotCanBeSimOnReal=true;
 
     
@@ -148,7 +148,8 @@ public final class Constants
   public static final class algaeRemoverConstants{
     public static final double algeaTimerVal = 0.5;
     public static final int motorID=12;
-    public static final double motorSpeed = 0.3;
+
+    public static final double motorSpeed = 0.7;
   }
 
 
@@ -158,8 +159,8 @@ public final class Constants
     public static final double l3EncoderVal = 0.702381;
     public static final double l2EncoderVal = 0.414528;
 
-    public static final double l1EncoderVal = 0.04;
-    public static final double encoderToMeters =16.9718; //1/141;
+    public static final double l1EncoderVal = 0;
+    public static final double encoderToMeters =69.1514; //1/141;
 
 
     public static final double highAlgeaPrep = 0;
@@ -177,10 +178,15 @@ public final class Constants
     public static final double tolerence = 0.05;
     public static final double speedForSim =0.02;
     public static final double compressedLen = 0.889;
-    public static final PIDConstants elevatorPID = new PIDConstants(0.5, 0, 0);
+    public static final PIDConstants elevatorPID = new PIDConstants(1.9, 0, 0);
+    //public static final PIDConstants elevatorPID = new PIDConstants(0.5, 0, 0);
+
+    //public static final double g=0.11;
     public static final double g=0.03;
+
+
     public static final boolean shouldUseCurrentEncoderReset=true;
-    public static final double currentResetThreashold=100;
+    public static final double currentResetThreashold=15;
 
 
     public static final int leftMotorID=1;
@@ -214,7 +220,7 @@ public final class Constants
 
   /**constants for the wrist */
   public static class wristConstants{
-    public static final Rotation2d l4EncoderVal = Rotation2d.fromDegrees(-15);
+    public static final Rotation2d l4EncoderVal = Rotation2d.fromDegrees(155);
     public static final Rotation2d l3EncoderVal = Rotation2d.fromDegrees(0);
     public static final Rotation2d l2EncoderVal = Rotation2d.fromDegrees(0);
     public static final Rotation2d l1EncoderVal = Rotation2d.fromDegrees(0);
@@ -225,10 +231,10 @@ public final class Constants
     public static final Rotation2d minDegrees = new Rotation2d();
     public static final Rotation2d maxDegrees = new Rotation2d();
     
-    public static final double tolerence = 1;
+    public static final double tolerence = 3;
     public static final double speedForSim=5;
     public static final int CANCoderID=3;
-    public static final double CANCoderOffset=-136.656;//5.4;
+    public static final double CANCoderOffset=-120.656;//5.4;
     public static final int motorID=8;
     public static final double fConstant=0.01;
     public static final PIDConstants wristPID = new PIDConstants(0.0015, 0, 0.);

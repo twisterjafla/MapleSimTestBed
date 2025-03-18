@@ -4,6 +4,7 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -22,6 +23,7 @@ public class realAlgaeRemover extends SubsystemBase implements algaeRemoverInter
     public void startRunning() {
         runningTimer.reset();
         runningTimer.start();
+        isRunning=true;
         
     }
 
@@ -43,6 +45,7 @@ public class realAlgaeRemover extends SubsystemBase implements algaeRemoverInter
         else{
             motor.set(0);
         }
+        SmartDashboard.putBoolean("algaeRemoverIsRunning", isRunning);
     }
     
 }

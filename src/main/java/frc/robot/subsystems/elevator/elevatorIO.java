@@ -44,7 +44,7 @@ public class elevatorIO extends SubsystemBase {
 
     /**@return wether or not the elevator is within tolerence of its setpoint*/
     public boolean isAtSetpoint(){
-        return Math.abs(setpoint-getEncoderVal())<Constants.elevatorConstants.tolerence;
+        return Math.abs(setpoint-getHeight())<Constants.elevatorConstants.tolerence;
     };
 
     /**@return the 3d translation from the botom of the elevator to the current point. all mesurments use the rotation point of the wrist for consistency*/

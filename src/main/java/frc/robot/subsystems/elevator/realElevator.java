@@ -19,8 +19,8 @@ public class realElevator  extends elevatorIO {
     public double elevatorHeartbeat=0;
     public double goal=0;
 
-    protected TalonFX leftMotor = new TalonFX(Constants.elevatorConstants.leftMotorID);
-    protected TalonFX rightMotor = new TalonFX(Constants.elevatorConstants.rightMotorID);
+    protected TalonFX mainMotor = new TalonFX(Constants.elevatorConstants.rightMotorID);
+    protected TalonFX altMotor = new TalonFX(Constants.elevatorConstants.leftMotorID);
     protected PIDController elevatorPid = new PIDController(Constants.elevatorConstants.elevatorPID.kP, Constants.elevatorConstants.elevatorPID.kI, Constants.elevatorConstants.elevatorPID.kD);
 
      // create a Motion Magic request, voltage output
@@ -31,26 +31,28 @@ public class realElevator  extends elevatorIO {
  
     public realElevator(){
         
-        leftMotor.getConfigurator().apply(Constants.elevatorConstants.slot0Configs);
-        rightMotor.getConfigurator().apply(Constants.elevatorConstants.slot0Configs);
+        mainMotor.getConfigurator().apply(Constants.elevatorConstants.slot0Configs);
+        altMotor.getConfigurator().apply(Constants.elevatorConstants.slot0Configs);
         
-        rightMotor.setControl(new Follower(Constants.elevatorConstants.leftMotorID, true));
+        altMotor.setControl(new Follower(mainMotor.getDeviceID(), true));
         SmartDashboard.putBoolean("elevatorHasReset", false);
     }
     
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("elevator stall torque", leftMotor.getTorqueCurrent().getValueAsDouble());
-        if (elevatorConstants.shouldUseCurrentEncoderReset){
-            if (Math.abs(leftMotor.getTorqueCurrent().getValueAsDouble())>Constants.elevatorConstants.currentResetThreashold){
+        boolean speedOverride = false;
+
+        SmartDashboard.putNumber("elevator stall torque", mainMotor.getTorqueCurrent().getValueAsDouble());
+        if (elevatorConstants.shouldUseCurrentEncoderReset&&Math.abs(mainMotor.getVelocity().getValueAsDouble())<0.5){
+            if (Math.abs(mainMotor.getTorqueCurrent().getValueAsDouble())>Constants.elevatorConstants.currentResetThreashold){
                 SmartDashboard.putBoolean("elevatorHasReset", true);
 
                 if (this.getHeight()<Constants.elevatorConstants.elevatorResetTolerence){
-                    leftMotor.setPosition(0);
+                    mainMotor.setPosition(0);
 
                 }
                 else if (Math.abs(this.getHeight()-Constants.elevatorConstants.l4EncoderVal)<Constants.elevatorConstants.elevatorResetTolerence){
-                    leftMotor.setPosition(Constants.elevatorConstants.l4EncoderVal*Constants.elevatorConstants.encoderToMeters);
+                    mainMotor.setPosition(Constants.elevatorConstants.l4EncoderVal*Constants.elevatorConstants.encoderToMeters);
                 }
                 else{
                     return;
@@ -64,8 +66,8 @@ public class realElevator  extends elevatorIO {
             goal=setpoint;
         }
         // quit if the wrist is having issues
-        else if(wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.fixWrist){
-            return;
+        else if(wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.fixWrist||wristElevatorControlManager.getState()==wristElevatorControlManager.wristElevatorControllState.wrist){
+            speedOverride=true;
         }
         else{
             goal=Constants.elevatorConstants.maxHeight;
@@ -81,9 +83,16 @@ public class realElevator  extends elevatorIO {
         elevatorPid.setSetpoint(goal);
         SmartDashboard.putNumber("elevator goal", goal);
         SmartDashboard.putNumber("elevatorPose", getHeight());
-        double speed = elevatorPid.calculate(getHeight())+Constants.elevatorConstants.g;
+        double speed = speedOverride? 0: elevatorPid.calculate(getHeight());
+    
+        SmartDashboard.putNumber("Pre g speed", speed);
+        if (getHeight()>0.2||!speedOverride){
+            speed += Constants.elevatorConstants.g;
+        }
         SmartDashboard.putNumber("elevator speed", speed);
-        leftMotor.set(speed);
+
+        SmartDashboard.putBoolean("isAtSetpoint", isAtSetpoint());
+        mainMotor.set(speed);
 
         //rightMotor.setControl(motionVoltage.withPosition(goal));
         
@@ -95,6 +104,6 @@ public class realElevator  extends elevatorIO {
     @Override
     public double getEncoderVal() {
         SmartDashboard.putNumber("elevator test", 110);
-        return leftMotor.getPosition().getValueAsDouble();
+        return mainMotor.getPosition().getValueAsDouble();
     }
 }

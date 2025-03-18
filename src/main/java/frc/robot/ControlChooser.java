@@ -128,6 +128,7 @@ public class ControlChooser {
        xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
        //xbox1.leftBumper(loop).onTrue(new smallAutoDrive(Constants.driveConstants.startingPosit));
        xbox1.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.outtake()));
+       xbox1.leftTrigger(0.4, loop).onTrue(new InstantCommand(()->generalManager.algaeRemove()));
 
         return loop;
     }
