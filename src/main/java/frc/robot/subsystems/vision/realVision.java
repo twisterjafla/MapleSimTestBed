@@ -29,14 +29,15 @@ public class realVision extends reefIndexerIO implements aprilTagInterface{
 
     public realVision() {
         // Default values just in case no values are grabbed
-        boolean[] reefDefaultList = {false, false, false, false};
-        boolean[] algeaDefaultList = {false, false};
+        boolean[] reefDefaultList = {false, false, false, false, false, false, false, false, false, false, false, false};
+        boolean[] algeaDefaultList = {false, false, false, false, false, false};
         double timestampDefault = 0.0;
         Pose3d robotDefaultPose = new Pose3d();
 
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         NetworkTable visionTable = inst.getTable("Vision");
-        NetworkTable reefPositionTable = visionTable.getSubTable("ReefPositions");
+        NetworkTable coralPositionTable = visionTable.getSubTable("CoralPositions");
+        NetworkTable algaecoralPositionTable = visionTable.getSubTable("AlgaePositions");
         NetworkTable robotPositionTable = visionTable.getSubTable("RobotPosition");
 
         coralLevelSubscribers = new ArrayList<BooleanArraySubscriber>();
