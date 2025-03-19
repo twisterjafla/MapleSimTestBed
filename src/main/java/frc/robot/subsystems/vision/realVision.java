@@ -13,6 +13,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.PubSubOption;
 import edu.wpi.first.networktables.StructSubscriber;
 import edu.wpi.first.networktables.StructTopic;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class realVision extends reefIndexerIO implements aprilTagInterface{
@@ -68,37 +69,42 @@ public class realVision extends reefIndexerIO implements aprilTagInterface{
         robotBackPoseSubscriber = robotBackPoseTopic.subscribe(robotDefaultPose, PubSubOption.keepDuplicates(true));
 
         // Gets the subscriber for the timestamp each position was published at
-        DoubleTopic robotFrontTimestampTopic = robotPositionTable.getDoubleTopic("FrontPoseTimestamp");
-        robotFrontTimestampSubscriber = robotFrontTimestampTopic.subscribe(timestampDefault, PubSubOption.keepDuplicates(true));
-        DoubleTopic robotBackTimestampTopic = robotPositionTable.getDoubleTopic("BackPoseTimestamp");
-        robotBackTimestampSubscriber = robotBackTimestampTopic.subscribe(timestampDefault, PubSubOption.keepDuplicates(true));
+        DoubleTopic robotFrontTimestampTopic = robotPositionTable.getDoubleTopic("RobotPoseTimestampFront");
+        robotFrontTimestampSubscriber = robotFrontTimestampTopic.subscribe(timestampDefault);
+        DoubleTopic robotBackTimestampTopic = robotPositionTable.getDoubleTopic("RobotPoseTimestampBack");
+        robotBackTimestampSubscriber = robotBackTimestampTopic.subscribe(timestampDefault);
+
 
     }
     
     @Override
     public Pose3d getFrontPose() {
         Pose3d robotFrontPose = robotFrontPoseSubscriber.get();
-        if (robotFrontPose == new Pose3d()){
+        if (robotFrontPose.equals(new Pose3d())){
             return null;
         }
+        SmartDashboard.putBoolean("poseReadCorrectly", false);
 
         return robotFrontPose;
     }
 
     @Override
     public Double getFrontTimestamp() {
+        SmartDashboard.putNumber("recived front timestamp", robotFrontTimestampSubscriber.get());
         return robotFrontTimestampSubscriber.get();
     }
 
     @Override
     public Double getBackTimestamp() {
+        SmartDashboard.putNumber("recived back timestamp", robotBackTimestampSubscriber.get());
+
         return robotBackTimestampSubscriber.get();
     }
 
     @Override
     public Pose3d getBackPose() {
         Pose3d robotBackPose = robotBackPoseSubscriber.get();
-        if (robotBackPose == new Pose3d()){
+        if (robotBackPose.equals(new Pose3d())){
             return null;
         }
 

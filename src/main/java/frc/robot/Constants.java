@@ -128,7 +128,7 @@ public final class Constants
 
   /**constants for the intake */
   public static class intakeConstants{
-    public static final double intakeSpeed=0.30;
+    public static final double intakeSpeed=0.1;
     public static final double outtakeSpeed=1;
     public static final double intakeLength=0.245745;
     public static final int topIntake = 10;
