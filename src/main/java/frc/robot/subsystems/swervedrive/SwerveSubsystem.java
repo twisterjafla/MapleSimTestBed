@@ -470,7 +470,7 @@ public class SwerveSubsystem extends SubsystemBase
     if (SystemManager.aprilTag.getFrontPose()!=null){
       SmartDashboard.putBoolean("FrontVisonAdding", true);
 
-      swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getFrontPose().toPose2d(),SystemManager.aprilTag.getFrontTimestamp());
+      swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getFrontPose().toPose2d(),Timer.getFPGATimestamp());
     }
     else{
       SmartDashboard.putBoolean("FrontVisonAdding", false);

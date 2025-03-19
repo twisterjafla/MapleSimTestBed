@@ -18,13 +18,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class realVision extends reefIndexerIO implements aprilTagInterface{
     
-    private ArrayList<BooleanArraySubscriber> coralLevelSubscribers;
-    private ArrayList<BooleanArraySubscriber> algeaLevelSubscribers;
-    private ArrayList<BooleanArrayPublisher> algaeLevelPublishers;
-    private final StructSubscriber<Pose3d> robotFrontPoseSubscriber;
-    private final StructSubscriber<Pose3d> robotBackPoseSubscriber;
-    private final DoubleSubscriber robotFrontTimestampSubscriber;
-    private final DoubleSubscriber robotBackTimestampSubscriber;    
+    public ArrayList<BooleanArraySubscriber> coralLevelSubscribers;
+    public ArrayList<BooleanArraySubscriber> algeaLevelSubscribers;
+    public ArrayList<BooleanArrayPublisher> algaeLevelPublishers;
+    public final StructSubscriber<Pose3d> robotFrontPoseSubscriber;
+    public final StructSubscriber<Pose3d> robotBackPoseSubscriber;
+    public final DoubleSubscriber robotFrontTimestampSubscriber;
+    public final DoubleSubscriber robotBackTimestampSubscriber; 
+    DoubleTopic robotFrontTimestampTopic;
+    DoubleTopic robotBackTimestampTopic;
+  
 
 
 
@@ -69,9 +72,9 @@ public class realVision extends reefIndexerIO implements aprilTagInterface{
         robotBackPoseSubscriber = robotBackPoseTopic.subscribe(robotDefaultPose, PubSubOption.keepDuplicates(true));
 
         // Gets the subscriber for the timestamp each position was published at
-        DoubleTopic robotFrontTimestampTopic = robotPositionTable.getDoubleTopic("RobotPoseTimestampFront");
+        robotFrontTimestampTopic = robotPositionTable.getDoubleTopic("RobotPoseTimestampFront");
         robotFrontTimestampSubscriber = robotFrontTimestampTopic.subscribe(timestampDefault);
-        DoubleTopic robotBackTimestampTopic = robotPositionTable.getDoubleTopic("RobotPoseTimestampBack");
+        robotBackTimestampTopic = robotPositionTable.getDoubleTopic("RobotPoseTimestampBack");
         robotBackTimestampSubscriber = robotBackTimestampTopic.subscribe(timestampDefault);
 
 
@@ -91,13 +94,15 @@ public class realVision extends reefIndexerIO implements aprilTagInterface{
     @Override
     public Double getFrontTimestamp() {
         SmartDashboard.putNumber("recived front timestamp", robotFrontTimestampSubscriber.get());
+        SmartDashboard.putBoolean("frontTimestampConnected", robotBackTimestampSubscriber.exists());
+
         return robotFrontTimestampSubscriber.get();
     }
 
     @Override
     public Double getBackTimestamp() {
         SmartDashboard.putNumber("recived back timestamp", robotBackTimestampSubscriber.get());
-
+        SmartDashboard.putBoolean("BackTimestampConnected", robotBackTimestampSubscriber.exists());
         return robotBackTimestampSubscriber.get();
     }
 
