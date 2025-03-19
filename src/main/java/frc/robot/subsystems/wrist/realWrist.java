@@ -23,6 +23,7 @@ public class realWrist extends wristIO{
 
     public realWrist(){
         wristPID.setTolerance(Constants.wristConstants.tolerence);
+        
     }
 
     @Override
@@ -41,9 +42,9 @@ public class realWrist extends wristIO{
         SmartDashboard.putNumber("Wrist goal", goal);
         SmartDashboard.putNumber("Wrist location", getCurrentLocation());
         double speed = wristPID.calculate(getCurrentLocation());
-        if (!isAtSetpoint()){
-            speed = speed + Constants.wristConstants.fConstant*Math.signum(speed);
-        }
+        // if (!isAtSetpoint()){
+        speed = speed + Constants.wristConstants.fConstant*Math.signum(speed);
+        // }
         SmartDashboard.putNumber("wristSpeed", speed);
         SmartDashboard.putNumber("wristError", Math.abs(goal-getCurrentLocation()));
         wristMotor.set(speed);
@@ -52,7 +53,7 @@ public class realWrist extends wristIO{
 
     @Override
     public double getCurrentLocation() {
-        return (-wristEncoder.getAbsolutePosition().getValue().in(edu.wpi.first.units.Units.Degrees)-Constants.wristConstants.CANCoderOffset)%360;
+        return wristEncoder.getAbsolutePosition().getValue().in(edu.wpi.first.units.Units.Degrees);
     }
 
 }

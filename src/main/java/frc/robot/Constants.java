@@ -178,7 +178,7 @@ public final class Constants
     public static final double tolerence = 0.05;
     public static final double speedForSim =0.02;
     public static final double compressedLen = 0.889;
-    public static final PIDConstants elevatorPID = new PIDConstants(1.9, 0, 0);
+    public static final PIDConstants elevatorPID = new PIDConstants(1.7, 0, 0);
     //public static final PIDConstants elevatorPID = new PIDConstants(0.5, 0, 0);
 
     //public static final double g=0.11;
@@ -234,7 +234,7 @@ public final class Constants
     public static final double tolerence = 3;
     public static final double speedForSim=5;
     public static final int CANCoderID=3;
-    public static final double CANCoderOffset=-120.656;//5.4;
+    //public static final double CANCoderOffset=-128.323;//5.4;
     public static final int motorID=8;
     public static final double fConstant=0.01;
     public static final PIDConstants wristPID = new PIDConstants(0.0015, 0, 0.);
