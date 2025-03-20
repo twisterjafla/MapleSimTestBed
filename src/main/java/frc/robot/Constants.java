@@ -156,7 +156,7 @@ public final class Constants
   /**constants for the elevator */
   public static class elevatorConstants{
     public static final double l4EncoderVal = 1.42;
-    public static final double l3EncoderVal = 0.702381;
+    public static final double l3EncoderVal = 1.02381;
     public static final double l2EncoderVal = 0.414528;
 
     public static final double l1EncoderVal = 0;
@@ -220,7 +220,7 @@ public final class Constants
 
   /**constants for the wrist */
   public static class wristConstants{
-    public static final Rotation2d l4EncoderVal = Rotation2d.fromDegrees(155);
+    public static final Rotation2d l4EncoderVal = Rotation2d.fromDegrees(165);
     public static final Rotation2d l3EncoderVal = Rotation2d.fromDegrees(0);
     public static final Rotation2d l2EncoderVal = Rotation2d.fromDegrees(0);
     public static final Rotation2d l1EncoderVal = Rotation2d.fromDegrees(0);
