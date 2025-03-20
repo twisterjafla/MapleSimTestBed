@@ -106,7 +106,7 @@ public final class Constants
   public static class simConfigs{
     public static final boolean driveShouldBeSim=false||!RobotBase.isReal();
     public static final boolean intakeShouldBeSim=false||!RobotBase.isReal();
-    public static final boolean aprilTagShouldBeSim=false||!RobotBase.isReal();
+    public static final boolean aprilTagShouldBeSim=false;//false||!RobotBase.isReal();
     public static final boolean wristShouldBeSim=false||!RobotBase.isReal();
     public static final boolean elevatorShouldBeSim=false||!RobotBase.isReal();
 

@@ -72,9 +72,9 @@ public class realVision extends reefIndexerIO implements aprilTagInterface{
         robotBackPoseSubscriber = robotBackPoseTopic.subscribe(robotDefaultPose, PubSubOption.keepDuplicates(true));
 
         // Gets the subscriber for the timestamp each position was published at
-        robotFrontTimestampTopic = robotPositionTable.getDoubleTopic("RobotPoseTimestampFront");
+        robotFrontTimestampTopic = NetworkTableInstance.getDefault().getDoubleTopic("RobotPoseTimestampFront");
         robotFrontTimestampSubscriber = robotFrontTimestampTopic.subscribe(timestampDefault);
-        robotBackTimestampTopic = robotPositionTable.getDoubleTopic("RobotPoseTimestampBack");
+        robotBackTimestampTopic = NetworkTableInstance.getDefault().getDoubleTopic("RobotPoseTimestampBack");
         robotBackTimestampSubscriber = robotBackTimestampTopic.subscribe(timestampDefault);
 
 
