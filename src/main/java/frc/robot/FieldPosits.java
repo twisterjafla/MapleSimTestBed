@@ -105,6 +105,24 @@ public class FieldPosits {
         K,
         L;
 
+        public static reefPole fromInt(int poleVal){
+            switch(poleVal){
+                case 1: return reefPole.A;
+                case 2: return reefPole.B;
+                case 3: return reefPole.C;
+                case 4: return reefPole.D;
+                case 5: return reefPole.E;
+                case 6: return reefPole.F;
+                case 7: return reefPole.G;
+                case 8: return reefPole.H;
+                case 9: return reefPole.I;
+                case 10: return reefPole.J;
+                case 11: return reefPole.K;
+                case 12: return reefPole.L;
+                default: throw new Error("Tried to create a reef pole using an invalid index");
+            }
+        }
+
         /**
          * @return the scoring posit needed to score on this level. 
          * \This value will be the position to score l1 or 2. to get the l3 and l4 scoring posits simply apply the l4 or l4 translation 

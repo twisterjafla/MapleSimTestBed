@@ -1,6 +1,11 @@
 package frc.robot;
 
 
+import java.lang.System.Logger.Level;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import javax.xml.xpath.XPathVariableResolver;
@@ -13,13 +18,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.FieldPosits.reefLevel;
 import frc.robot.FieldPosits.reefLevel.algeaRemoval;
+import frc.robot.FieldPosits.reefPole;
 import frc.robot.Utils.BetterTrigger;
+import frc.robot.Utils.scoringPosit;
 import frc.robot.Utils.utillFunctions;
+import frc.robot.commands.auto.ScorePiece;
 import frc.robot.commands.auto.smallAutoDrive;
 import frc.robot.commands.sim.CreateCoral;
 import frc.robot.commands.swervedrive.AbsoluteFieldDrive;
@@ -56,6 +66,7 @@ public class ControlChooser {
         chooser.addOption("StandardXboxControl", standardXboxControl());
         chooser.addOption("demoControl", demoControl());
         chooser.addOption("runAutoControl", runAutoDrive());
+        chooser.addOption("autoAlign", autoAlignControl());
         
         
         chooser.onChange((EventLoop scheme)->{changeControl(scheme);});
@@ -132,6 +143,34 @@ public class ControlChooser {
 
         return loop;
     }
+
+    private EventLoop autoAlignControl(){
+        EventLoop loop = new EventLoop();
+        
+        xbox1.a().onTrue(new DeferredCommand(()->new ScorePiece(new scoringPosit(fromDpad(xbox1), reefPole.fromInt(((int)Math.ceil(Math.atan2(-xbox1.getRightX(), -xbox1.getRightY())/Math.PI*12)-3)%12))), new HashSet<Subsystem>() ));
+
+
+        return loop;
+    }
+
+
+
+    private reefLevel fromDpad(CommandXboxController controller){
+        if (controller.povUp().getAsBoolean()){
+            return reefLevel.CreateFromLevel(4);
+        }
+        else if (controller.povLeft().getAsBoolean()){
+            return reefLevel.CreateFromLevel(3);
+        }
+        else if (controller.povRight().getAsBoolean()){
+            return reefLevel.CreateFromLevel(2);
+        }
+        else{
+            return reefLevel.CreateFromLevel(1);
+        }
+    }
+
+    
 
     /**@return a new standardXboxControl loop */
     private EventLoop standardXboxControl(){
