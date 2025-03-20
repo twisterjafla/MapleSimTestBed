@@ -34,6 +34,7 @@ import frc.robot.subsystems.swervedrive.realSimulatedDriveTrain;
 import frc.robot.subsystems.vision.aprilTagInterface;
 import frc.robot.subsystems.vision.photonSim;
 import frc.robot.subsystems.vision.realVision;
+import frc.robot.subsystems.CoralGUI.compassGUI;
 import frc.robot.subsystems.CoralGUI.coralGUI;
 import frc.robot.subsystems.vision.reefIndexerIO;
 import frc.robot.subsystems.vision.simReefIndexer;
@@ -58,7 +59,7 @@ public class SystemManager{
     public static realSimulatedDriveTrain simButRealTrain = null;
     public static realVision realVisTemp = null;
     public static blinkinInterface blinkin;
-
+    public static compassGUI compass;
     public static Robot robot;
 
     public static algaeRemoverInterface algaeRemover;
@@ -164,6 +165,7 @@ public class SystemManager{
 
         // Initialize Coral Array
         coralArray = new coralGUI();
+        compass = new compassGUI();
     }
 
     /** Calls periodic on all the systems that do not inherit subsystem base. This function should be called in robot periodic */

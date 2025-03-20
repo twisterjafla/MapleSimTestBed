@@ -2,6 +2,10 @@ package frc.robot.commands.auto;
 
 
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.PubSubOption;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -19,6 +23,7 @@ public class ScorePiece extends Command{
     Command mechCommand;
     boolean hasSpit;
     boolean driveIsFinished;
+    protected StructPublisher<Pose2d> goalPublisher = NetworkTableInstance.getDefault().getStructTopic("ScorePeiceGoal", Pose2d.struct).publish(PubSubOption.keepDuplicates(true));
 
 
     /**
@@ -44,6 +49,7 @@ public class ScorePiece extends Command{
         //gets the mech command and sets the proper mech callback
         mechCommand=generalManager.getStateCommand();
         generalManager.setExternalEndCallback(this::mechIsFinishedCall);
+        goalPublisher.set(posit.getScorePose());
         
 
         //reinitalizes state booleans used

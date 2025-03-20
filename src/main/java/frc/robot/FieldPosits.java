@@ -107,6 +107,7 @@ public class FieldPosits {
 
         public static reefPole fromInt(int poleVal){
             switch(poleVal){
+                case 0: return reefPole.A;
                 case 1: return reefPole.A;
                 case 2: return reefPole.B;
                 case 3: return reefPole.C;
@@ -119,7 +120,7 @@ public class FieldPosits {
                 case 10: return reefPole.J;
                 case 11: return reefPole.K;
                 case 12: return reefPole.L;
-                default: throw new Error("Tried to create a reef pole using an invalid index");
+                default: throw new Error("Tried to create a reef pole using an invalid index: " + poleVal);
             }
         }
 
@@ -210,7 +211,7 @@ public class FieldPosits {
                 case 3: return reefLevel.L3;
                 case 4: return reefLevel.L4;
                 default:
-                    throw new Error("you tried to make a pole of an invalid level DUMBASS");
+                    throw new Error("you tried to make a pole of an invalid level DUMBASS: " + level);
             }
         }
 

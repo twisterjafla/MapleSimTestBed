@@ -147,7 +147,7 @@ public class ControlChooser {
     private EventLoop autoAlignControl(){
         EventLoop loop = new EventLoop();
         
-        xbox1.a().onTrue(new DeferredCommand(()->new ScorePiece(new scoringPosit(fromDpad(xbox1), reefPole.fromInt(((int)Math.ceil(Math.atan2(-xbox1.getRightX(), -xbox1.getRightY())/Math.PI*12)-3)%12))), new HashSet<Subsystem>() ));
+        xbox1.a(loop).whileTrue(new DeferredCommand(()->new ScorePiece(new scoringPosit(reefLevel.CreateFromLevel(SystemManager.compass.getLevel()), reefPole.fromInt(SystemManager.compass.getPole()))), new HashSet<Subsystem>()));
 
 
         return loop;
@@ -155,20 +155,7 @@ public class ControlChooser {
 
 
 
-    private reefLevel fromDpad(CommandXboxController controller){
-        if (controller.povUp().getAsBoolean()){
-            return reefLevel.CreateFromLevel(4);
-        }
-        else if (controller.povLeft().getAsBoolean()){
-            return reefLevel.CreateFromLevel(3);
-        }
-        else if (controller.povRight().getAsBoolean()){
-            return reefLevel.CreateFromLevel(2);
-        }
-        else{
-            return reefLevel.CreateFromLevel(1);
-        }
-    }
+
 
     
 
