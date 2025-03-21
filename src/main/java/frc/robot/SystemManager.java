@@ -83,16 +83,15 @@ public class SystemManager{
 
         // Initializes all the systems
         // Each block should initialize one system as either real or imaginary based on the constants value 
-        
-        // Intake
-        if (Constants.simConfigs.intakeShouldBeSim){
-            if (RobotBase.isReal()){
-                simButRealTrain = new realSimulatedDriveTrain();
+    
+            // Wrist
+            if (Constants.simConfigs.wristShouldBeSim){
+                wrist = new simWrist();
+            } else {
+                wrist = new realWrist();
             }
-            intake = new simIntake();
-        } else {
-            intake = new realIntake();
-        }
+
+
 
         // April tags
         if (Constants.simConfigs.aprilTagShouldBeSim){
@@ -109,12 +108,7 @@ public class SystemManager{
             elevator = new realElevator();
         }
 
-        // Wrist
-        if (Constants.simConfigs.wristShouldBeSim){
-            wrist = new simWrist();
-        } else {
-            wrist = new realWrist();
-        }
+
 
         // Reef indexer
         if (Constants.simConfigs.reefIndexerShouldBeSim){
@@ -135,11 +129,11 @@ public class SystemManager{
         // }
 
         // Blinkin
-        if(Constants.simConfigs.blinkinShouldBeSim){
-            blinkin = new simBlinkin();
-        } else {
-            blinkin = new realBlinkin();
-        }
+        // if(Constants.simConfigs.blinkinShouldBeSim){
+        //     blinkin = new simBlinkin();
+        // } else {
+        //     blinkin = new realBlinkin();
+        // }
 
         // Create an imaginary robot
         if (!RobotBase.isReal()){
@@ -155,6 +149,17 @@ public class SystemManager{
         else{
             algaeRemover = new realAlgaeRemover();
         }
+
+        // Intake
+        if (Constants.simConfigs.intakeShouldBeSim){
+            if (RobotBase.isReal()){
+                simButRealTrain = new realSimulatedDriveTrain();
+            }
+            intake = new simIntake();
+        } else {
+            intake = new realIntake();
+        }
+        
 
         //inializes and distributes the managers
 
