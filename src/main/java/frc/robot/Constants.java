@@ -107,7 +107,7 @@ public final class Constants
     public static final boolean driveShouldBeSim=false||!RobotBase.isReal();
     public static final boolean intakeShouldBeSim=false||!RobotBase.isReal();
     public static final boolean aprilTagShouldBeSim=false;//false||!RobotBase.isReal();
-    public static final boolean wristShouldBeSim=false||!RobotBase.isReal();
+    public static final boolean wristShouldBeSim=true||!RobotBase.isReal();
     public static final boolean elevatorShouldBeSim=false||!RobotBase.isReal();
 
     public static final boolean reefIndexerShouldBeSim=false||!RobotBase.isReal();
@@ -128,7 +128,7 @@ public final class Constants
 
   /**constants for the intake */
   public static class intakeConstants{
-    public static final double intakeSpeed=0.1;
+    public static final double intakeSpeed=0.6;
     public static final double outtakeSpeed=1;
     public static final double intakeLength=0.245745;
     public static final int topIntake = 10;
@@ -163,10 +163,10 @@ public final class Constants
     public static final double encoderToMeters =69.1514; //1/141;
 
 
-    public static final double highAlgeaPrep = 0;
-    public static final double lowAlgeaPrep = 0;
-    public static final double lowAlgeaAct = 0;
-    public static final double highAlgeaAct = 0;
+    public static final double highAlgeaPrep = 0.8;
+    public static final double lowAlgeaPrep = 0.6;
+    // public static final double lowAlgeaAct = 0;
+    // public static final double highAlgeaAct = 0;
 
 
 
