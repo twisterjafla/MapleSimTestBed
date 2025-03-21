@@ -32,6 +32,7 @@ import frc.robot.Utils.utillFunctions;
 import frc.robot.commands.auto.ScorePiece;
 import frc.robot.commands.auto.smallAutoDrive;
 import frc.robot.commands.sim.CreateCoral;
+import frc.robot.commands.swervedrive.AbsoluteDriveAdv;
 import frc.robot.commands.swervedrive.AbsoluteFieldDrive;
 import frc.robot.subsystems.autoManager;
 import frc.robot.subsystems.generalManager;
@@ -67,6 +68,7 @@ public class ControlChooser {
         chooser.addOption("demoControl", demoControl());
         chooser.addOption("runAutoControl", runAutoDrive());
         chooser.addOption("autoAlign", autoAlignControl());
+        chooser.addOption("stinkyControll", stinkyControl());
         
         
         chooser.onChange((EventLoop scheme)->{changeControl(scheme);});
@@ -204,6 +206,32 @@ public class ControlChooser {
         new Trigger(loop, ()->SystemManager.robot.heartBeat%2==1).onTrue(new InstantCommand(()->autoManager.giveControl()));
 
        
+        return loop;
+    }
+
+    private EventLoop stinkyControl(){
+        EventLoop loop = new EventLoop();
+        setDefaultCommand(new AbsoluteDriveAdv(SystemManager.swerve, ()->-xbox1.getLeftY(), ()->-xbox1.getLeftX(), ()->xbox1.getLeftTriggerAxis()-xbox1.getRightTriggerAxis(), xbox1.pov(0), xbox1.pov(0), xbox1.pov(270), xbox1.pov(90))
+           ,SystemManager.swerve, loop);
+       
+
+       
+       xbox2.y(loop).onTrue(new InstantCommand(()->generalManager.scoreL4()));
+       xbox2.x(loop).onTrue(new InstantCommand(()->generalManager.scoreL3()));
+       xbox2.b(loop).onTrue(new InstantCommand(()->generalManager.scoreL2()));
+       xbox2.a(loop).onTrue(new InstantCommand(()->generalManager.scoreL1()));
+       xbox2.leftStick(loop).onTrue(new InstantCommand(()->generalManager.algaeConfig(false)));
+       xbox2.rightStick(loop).onTrue(new InstantCommand(()->generalManager.algaeConfig(true)));
+
+       //xbox1.leftTrigger(0.4, loop).onTrue(new CreateCoral("leftMid"));
+
+       //xbox1.leftTrigger(0.4, loop).onTrue(new removeAlgae(algeaRemoval.AL));
+
+       xbox2.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
+       //xbox1.leftBumper(loop).onTrue(new smallAutoDrive(Constants.driveConstants.startingPosit));
+       xbox1.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.outtake()));
+       xbox2.leftTrigger(0.4, loop).onTrue(new InstantCommand(()->generalManager.algaeRemove()));
+
         return loop;
     }
 
