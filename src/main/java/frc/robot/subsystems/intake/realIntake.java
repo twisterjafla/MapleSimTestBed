@@ -18,12 +18,11 @@ public class realIntake extends intakeIO{
 	DigitalInput frontBeambrake = new DigitalInput(Constants.intakeConstants.frontBeamBrakePort);
 	DigitalInput backBeambrake = new DigitalInput(Constants.intakeConstants.backBeamBrakePort);
 	hasPeiceState peiceState=hasPeiceState.full;
-
+	
 
 	
 
 	public realIntake() {
-		
 	}
 
 	// @Override

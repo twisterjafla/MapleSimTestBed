@@ -234,7 +234,8 @@ public final class Constants
     public static final double tolerence = 3;
     public static final double speedForSim=5;
     public static final int CANCoderID=3;
-    //public static final double CANCoderOffset=-128.323;//5.4;
+    public static final int throughBoreID = Constants.intakeConstants.topIntake;
+    public static final double CANCoderOffset=-128.323;//5.4;
     public static final int motorID=8;
     public static final double fConstant=0.01;
     public static final PIDConstants wristPID = new PIDConstants(0.0015, 0, 0.);

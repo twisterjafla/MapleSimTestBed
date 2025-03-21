@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.PubSubOption;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -64,6 +65,7 @@ public class Robot extends TimedRobot{
       FollowPathCommand.warmupCommand().schedule();
       this.controlChooser=new ControlChooser();
       DriverStation.silenceJoystickConnectionWarning(true);
+      DataLogManager.start();
       
     }
 
