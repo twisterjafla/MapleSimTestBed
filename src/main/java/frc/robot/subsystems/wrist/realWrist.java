@@ -65,7 +65,7 @@ public class realWrist extends wristIO{
 
     @Override
     public double getCurrentLocation() {
-        return (wristEncoder.getPosition() + Constants.wristConstants.CANCoderOffset)%1*360;
+        return (wristEncoder.getPosition() - Constants.wristConstants.CANCoderOffset)%1*360;
     }
 
 }
