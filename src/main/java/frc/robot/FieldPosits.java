@@ -29,30 +29,30 @@ public class FieldPosits {
 
     /**The positions a robot can use to intake coral */
     public static class IntakePoints{
-        public static final Pose2d leftLeft= new Pose2d(1.547, 7.339, Rotation2d.fromDegrees(-55));
-        public static final Pose2d leftMid= new Pose2d(1.164, 7.053, Rotation2d.fromDegrees(-55));
-        public static final Pose2d leftRight= new Pose2d(0.639, 6.69, Rotation2d.fromDegrees(-55));
-        public static final Pose2d rightLeft= new Pose2d(0.697, 1.325, Rotation2d.fromDegrees(55));
-        public static final Pose2d rightMid= new Pose2d(1.154, 0.987, Rotation2d.fromDegrees(55));
-        public static final Pose2d rightRight= new Pose2d(1.587, 0.667, Rotation2d.fromDegrees(55));
+        public static final Pose2d leftLeft= new Pose2d(1.547, 7.339, Rotation2d.fromDegrees(125));
+        public static final Pose2d leftMid= new Pose2d(1.164, 7.053, Rotation2d.fromDegrees(125));
+        public static final Pose2d leftRight= new Pose2d(0.639, 6.69, Rotation2d.fromDegrees(125));
+        public static final Pose2d rightLeft= new Pose2d(0.697, 1.325, Rotation2d.fromDegrees(-125));
+        public static final Pose2d rightMid= new Pose2d(1.154, 0.987, Rotation2d.fromDegrees(-125));
+        public static final Pose2d rightRight= new Pose2d(1.587, 0.667, Rotation2d.fromDegrees(-125));
         public static final Pose2d[] coralSpawnPoints = {leftLeft, leftMid, leftRight, rightLeft, rightMid, rightRight};
 
     }
 
     /** the possible scoring positions for a robot */
     public static class scoringPosits{
-        public static final Pose2d A = new Pose2d(3.197, 4.189, Rotation2d.fromDegrees(0));
-        public static final Pose2d B = new Pose2d(3.197, 3.861, Rotation2d.fromDegrees(0));
-        public static final Pose2d C = new Pose2d(3.7, 2.992, Rotation2d.fromDegrees(60));
-        public static final Pose2d D = new Pose2d(3.985, 2.825, Rotation2d.fromDegrees(60));
-        public static final Pose2d E = new Pose2d(4.989, 2.825, Rotation2d.fromDegrees(120));
-        public static final Pose2d F = new Pose2d(5.285, 2.992, Rotation2d.fromDegrees(120));
-        public static final Pose2d G = new Pose2d(5.774, 3.861, Rotation2d.fromDegrees(180));
-        public static final Pose2d H = new Pose2d(5.774, 4.189, Rotation2d.fromDegrees(180));
-        public static final Pose2d I = new Pose2d(5.278, 5.059, Rotation2d.fromDegrees(-120));
-        public static final Pose2d J = new Pose2d(4.989, 5.225, Rotation2d.fromDegrees(-120));
-        public static final Pose2d K = new Pose2d(3.985, 5.225, Rotation2d.fromDegrees(-60));
-        public static final Pose2d L = new Pose2d(3.7, 5.060, Rotation2d.fromDegrees(-60));
+        public static final Pose2d A = new Pose2d(3.197, 4.189, Rotation2d.fromDegrees(180));
+        public static final Pose2d B = new Pose2d(3.197, 3.861, Rotation2d.fromDegrees(180));
+        public static final Pose2d C = new Pose2d(3.7, 2.992, Rotation2d.fromDegrees(-120));
+        public static final Pose2d D = new Pose2d(3.985, 2.825, Rotation2d.fromDegrees(-120));
+        public static final Pose2d E = new Pose2d(4.989, 2.825, Rotation2d.fromDegrees(-60));
+        public static final Pose2d F = new Pose2d(5.285, 2.992, Rotation2d.fromDegrees(-60));
+        public static final Pose2d G = new Pose2d(5.774, 3.861, Rotation2d.fromDegrees(0));
+        public static final Pose2d H = new Pose2d(5.774, 4.189, Rotation2d.fromDegrees(0));
+        public static final Pose2d I = new Pose2d(5.278, 5.059, Rotation2d.fromDegrees(60));
+        public static final Pose2d J = new Pose2d(4.989, 5.225, Rotation2d.fromDegrees(60));
+        public static final Pose2d K = new Pose2d(3.985, 5.225, Rotation2d.fromDegrees(120));
+        public static final Pose2d L = new Pose2d(3.7, 5.060, Rotation2d.fromDegrees(120));
 
         public static final Pose2d resetBecausePathplannerIsDumb = new Pose2d(4.733, 1.133, new Rotation2d());
         
@@ -81,12 +81,12 @@ public class FieldPosits {
     public static class algeaStuff{
         public static final Translation2d highTrans = new Translation2d();
         public static final Translation2d lowTrans = new Translation2d();
-        public static final Pose2d A = new Pose2d(3.2, 4.027, Rotation2d.fromDegrees(0));
-        public static final Pose2d B = new Pose2d(3.845, 2.911, Rotation2d.fromDegrees(60));
-        public static final Pose2d C = new Pose2d(5.132, 2.911, Rotation2d.fromDegrees(120));
-        public static final Pose2d D = new Pose2d(5.764, 4.027, Rotation2d.fromDegrees(180));
-        public static final Pose2d E = new Pose2d(5.139, 5.127, Rotation2d.fromDegrees(-120));
-        public static final Pose2d F = new Pose2d(3.841, 5.123, Rotation2d.fromDegrees(-60));
+        public static final Pose2d A = new Pose2d(3.2, 4.027, Rotation2d.fromDegrees(180));
+        public static final Pose2d B = new Pose2d(3.845, 2.911, Rotation2d.fromDegrees(-120));
+        public static final Pose2d C = new Pose2d(5.132, 2.911, Rotation2d.fromDegrees(-60));
+        public static final Pose2d D = new Pose2d(5.764, 4.027, Rotation2d.fromDegrees(0));
+        public static final Pose2d E = new Pose2d(5.139, 5.127, Rotation2d.fromDegrees(60));
+        public static final Pose2d F = new Pose2d(3.841, 5.123, Rotation2d.fromDegrees(120));
 
     }
 

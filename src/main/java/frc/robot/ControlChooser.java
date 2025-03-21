@@ -29,6 +29,7 @@ import frc.robot.FieldPosits.reefPole;
 import frc.robot.Utils.BetterTrigger;
 import frc.robot.Utils.scoringPosit;
 import frc.robot.Utils.utillFunctions;
+import frc.robot.commands.auto.IntakePeiceCommand;
 import frc.robot.commands.auto.ScorePiece;
 import frc.robot.commands.auto.smallAutoDrive;
 import frc.robot.commands.sim.CreateCoral;
@@ -134,7 +135,7 @@ public class ControlChooser {
        xbox1.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.algaeConfig(true)));
 
        xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
- 
+       xbox1.rightStick(loop).onTrue(new InstantCommand(()->generalManager.outtake()));
        xbox1.leftTrigger(0.4, loop).onTrue(new InstantCommand(()->generalManager.algaeRemove()));
 
         return loop;
@@ -142,9 +143,13 @@ public class ControlChooser {
 
     private EventLoop autoAlignControl(){
         EventLoop loop = new EventLoop();
-        
-        xbox1.a(loop).whileTrue(new DeferredCommand(()->new ScorePiece(new scoringPosit(reefLevel.CreateFromLevel(SystemManager.compass.getLevel()), reefPole.fromInt(SystemManager.compass.getPole()))), new HashSet<Subsystem>()));
 
+        setDefaultCommand(new AbsoluteDriveAdv(SystemManager.swerve, ()->-xbox1.getLeftY(), ()->-xbox1.getLeftX(), ()->xbox1.getRightX(), xbox1.pov(180), xbox1.pov(0), xbox1.pov(90), xbox1.pov(270))
+        ,SystemManager.swerve, loop);
+        
+        xbox2.a(loop).whileTrue(new DeferredCommand(()->new ScorePiece(new scoringPosit(reefLevel.CreateFromLevel(SystemManager.compass.getLevel()), reefPole.fromInt(SystemManager.compass.getPole()))), new HashSet<Subsystem>()));
+        xbox2.rightBumper(loop).whileTrue(new DeferredCommand(()->new IntakePeiceCommand(FieldPosits.IntakePoints.coralSpawnPoints[SystemManager.compass.getSlot()+3]), new HashSet<Subsystem>()));
+        xbox2.leftBumper(loop).whileTrue(new DeferredCommand(()->new IntakePeiceCommand(FieldPosits.IntakePoints.coralSpawnPoints[SystemManager.compass.getSlot()]), new HashSet<Subsystem>()));
 
         return loop;
     }
@@ -195,6 +200,8 @@ public class ControlChooser {
 
     private EventLoop runAutoDrive(){
         EventLoop loop = new EventLoop();
+
+    
 
         new Trigger(loop, ()->SystemManager.robot.heartBeat%2==1).onTrue(new InstantCommand(()->autoManager.giveControl()));
 

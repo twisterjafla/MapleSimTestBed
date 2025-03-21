@@ -11,6 +11,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkRelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 
@@ -23,14 +24,12 @@ public class realWrist extends wristIO{
     
     protected SparkFlex wristMotor = new SparkFlex(Constants.wristConstants.motorID, MotorType.kBrushless);
     SparkMax emotionalSupportSparkMax= new SparkMax(Constants.wristConstants.throughBoreID, MotorType.kBrushless);
-    protected SparkAbsoluteEncoder wristEncoder = emotionalSupportSparkMax.getAbsoluteEncoder();;
+    protected RelativeEncoder wristEncoder = emotionalSupportSparkMax.getAlternateEncoder();
     protected PIDController wristPID = new PIDController(Constants.wristConstants.wristPID.kP, Constants.wristConstants.wristPID.kI, Constants.wristConstants.wristPID.kD);
-
+    
 
     public realWrist(){
         wristPID.setTolerance(Constants.wristConstants.tolerence);
-        
-
         
         
         
@@ -65,7 +64,7 @@ public class realWrist extends wristIO{
 
     @Override
     public double getCurrentLocation() {
-        return (wristEncoder.getPosition() - Constants.wristConstants.CANCoderOffset)%1*360;
+        return wristEncoder.getPosition()*360;
     }
 
 }

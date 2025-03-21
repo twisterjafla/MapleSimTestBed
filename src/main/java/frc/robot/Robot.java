@@ -68,21 +68,21 @@ public class Robot extends TimedRobot{
         }
 
 
-        autoChooser.addOption("middle", new ScorePiece(new scoringPosit(reefLevel.L4, reefPole.G)));
+        autoChooser.addOption("middle", new ScorePiece(new scoringPosit(reefLevel.L3, reefPole.G)));
         autoChooser.addOption("left", new SequentialCommandGroup(
-          new ScorePiece(new scoringPosit(reefLevel.L4, reefPole.I)),
+          new ScorePiece(new scoringPosit(reefLevel.L3, reefPole.I)),
           new IntakePeiceCommand(FieldPosits.IntakePoints.leftLeft),
-          new ScorePiece(new scoringPosit(reefLevel.L4, reefPole.K)),
+          new ScorePiece(new scoringPosit(reefLevel.L3, reefPole.K)),
           new IntakePeiceCommand(FieldPosits.IntakePoints.leftLeft),
-          new ScorePiece(new scoringPosit(reefLevel.L4, reefPole.L)),
+          new ScorePiece(new scoringPosit(reefLevel.L3, reefPole.L)),
           new IntakePeiceCommand(FieldPosits.IntakePoints.leftLeft)
         ));
         autoChooser.addOption("right", new SequentialCommandGroup(
-          new ScorePiece(new scoringPosit(reefLevel.L4, reefPole.F)),
+          new ScorePiece(new scoringPosit(reefLevel.L3, reefPole.F)),
           new IntakePeiceCommand(FieldPosits.IntakePoints.rightRight),
-          new ScorePiece(new scoringPosit(reefLevel.L4, reefPole.C)),
+          new ScorePiece(new scoringPosit(reefLevel.L3, reefPole.C)),
           new IntakePeiceCommand(FieldPosits.IntakePoints.rightRight),
-          new ScorePiece(new scoringPosit(reefLevel.L4, reefPole.D)),
+          new ScorePiece(new scoringPosit(reefLevel.L3, reefPole.D)),
           new IntakePeiceCommand(FieldPosits.IntakePoints.rightRight)
         ));
 
