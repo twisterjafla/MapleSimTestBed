@@ -126,8 +126,6 @@ public class ControlChooser {
             if(utillFunctions.pythagorean(xbox1.getRightX(), xbox1.getRightY())>=0.2)return Math.atan2(-xbox1.getRightX(), -xbox1.getRightY())/Math.PI; return SystemManager.swerve.getHeading().getRadians()/Math.PI;})
            ,SystemManager.swerve, loop);
        
-
-       
        xbox1.y(loop).onTrue(new InstantCommand(()->generalManager.scoreL4()));
        xbox1.x(loop).onTrue(new InstantCommand(()->generalManager.scoreL3()));
        xbox1.b(loop).onTrue(new InstantCommand(()->generalManager.scoreL2()));
@@ -135,13 +133,8 @@ public class ControlChooser {
        xbox1.leftBumper(loop).onTrue(new InstantCommand(()->generalManager.algaeConfig(false)));
        xbox1.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.algaeConfig(true)));
 
-       //xbox1.leftTrigger(0.4, loop).onTrue(new CreateCoral("leftMid"));
-
-       //xbox1.leftTrigger(0.4, loop).onTrue(new removeAlgae(algeaRemoval.AL));
-
        xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
-       //xbox1.leftBumper(loop).onTrue(new smallAutoDrive(Constants.driveConstants.startingPosit));
-       //xbox1.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.outtake()));
+ 
        xbox1.leftTrigger(0.4, loop).onTrue(new InstantCommand(()->generalManager.algaeRemove()));
 
         return loop;
@@ -211,7 +204,7 @@ public class ControlChooser {
 
     private EventLoop stinkyControl(){
         EventLoop loop = new EventLoop();
-        setDefaultCommand(new AbsoluteDriveAdv(SystemManager.swerve, ()->-xbox1.getLeftY(), ()->-xbox1.getLeftX(), ()->xbox1.getLeftTriggerAxis()-xbox1.getRightTriggerAxis(), xbox1.pov(0), xbox1.pov(0), xbox1.pov(270), xbox1.pov(90))
+        setDefaultCommand(new AbsoluteDriveAdv(SystemManager.swerve, ()->-xbox1.getLeftY(), ()->-xbox1.getLeftX(), ()->-xbox1.getLeftTriggerAxis()+xbox1.getRightTriggerAxis(), xbox1.pov(180), xbox1.pov(0), xbox1.pov(90), xbox1.pov(270))
            ,SystemManager.swerve, loop);
        
 
@@ -223,13 +216,8 @@ public class ControlChooser {
        xbox2.leftStick(loop).onTrue(new InstantCommand(()->generalManager.algaeConfig(false)));
        xbox2.rightStick(loop).onTrue(new InstantCommand(()->generalManager.algaeConfig(true)));
 
-       //xbox1.leftTrigger(0.4, loop).onTrue(new CreateCoral("leftMid"));
-
-       //xbox1.leftTrigger(0.4, loop).onTrue(new removeAlgae(algeaRemoval.AL));
-
        xbox2.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
-       //xbox1.leftBumper(loop).onTrue(new smallAutoDrive(Constants.driveConstants.startingPosit));
-       xbox1.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.outtake()));
+       xbox2.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.outtake()));
        xbox2.leftTrigger(0.4, loop).onTrue(new InstantCommand(()->generalManager.algaeRemove()));
 
         return loop;

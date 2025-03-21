@@ -14,10 +14,21 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.event.EventLoop;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.FieldPosits.reefLevel;
+import frc.robot.FieldPosits.reefPole;
+import frc.robot.Utils.scoringPosit;
+import frc.robot.commands.auto.IntakePeiceCommand;
+import frc.robot.commands.auto.ScorePiece;
 import frc.robot.subsystems.autoManager;
 import frc.robot.subsystems.generalManager;
 
@@ -41,6 +52,7 @@ public class Robot extends TimedRobot{
     int heartBeat=0;
     private Timer disabledTimer;
     StructPublisher<Pose2d> posePublisher = NetworkTableInstance.getDefault().getStructTopic("robotPose", Pose2d.struct).publish(PubSubOption.periodic(0.02));
+    SendableChooser<Command> autoChooser=new SendableChooser<>();
 
     
 
@@ -48,6 +60,34 @@ public class Robot extends TimedRobot{
     public Robot(){
       instance = this;
       SystemManager.SystemManagerInit(instance);
+
+        autoChooser.setDefaultOption("smart", new InstantCommand(()->autoManager.giveControl()));
+
+        if (!RobotBase.isReal()){
+            //for schemes too unsafe to run on the real bot
+        }
+
+
+        autoChooser.addOption("middle", new ScorePiece(new scoringPosit(reefLevel.L4, reefPole.G)));
+        autoChooser.addOption("left", new SequentialCommandGroup(
+          new ScorePiece(new scoringPosit(reefLevel.L4, reefPole.I)),
+          new IntakePeiceCommand(FieldPosits.IntakePoints.leftLeft),
+          new ScorePiece(new scoringPosit(reefLevel.L4, reefPole.K)),
+          new IntakePeiceCommand(FieldPosits.IntakePoints.leftLeft),
+          new ScorePiece(new scoringPosit(reefLevel.L4, reefPole.L)),
+          new IntakePeiceCommand(FieldPosits.IntakePoints.leftLeft)
+        ));
+        autoChooser.addOption("right", new SequentialCommandGroup(
+          new ScorePiece(new scoringPosit(reefLevel.L4, reefPole.F)),
+          new IntakePeiceCommand(FieldPosits.IntakePoints.rightRight),
+          new ScorePiece(new scoringPosit(reefLevel.L4, reefPole.C)),
+          new IntakePeiceCommand(FieldPosits.IntakePoints.rightRight),
+          new ScorePiece(new scoringPosit(reefLevel.L4, reefPole.D)),
+          new IntakePeiceCommand(FieldPosits.IntakePoints.rightRight)
+        ));
+
+        
+        SmartDashboard.putData("auto chooser", autoChooser);
     }
 
     public static Robot getInstance(){
@@ -119,8 +159,7 @@ public class Robot extends TimedRobot{
     public void autonomousInit()
     {
 
-
-      autoManager.giveControl();
+      autoChooser.getSelected().schedule();
     }
 
     /**
