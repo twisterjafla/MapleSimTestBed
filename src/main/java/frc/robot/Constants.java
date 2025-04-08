@@ -76,7 +76,7 @@ public final class Constants
     public static final double heightOfMapMeters=8.9;
     public static final double bonusScore=1;
 
-    public static final double autoDriveScoreTolerence  = 0.01;
+    public static final double autoDriveScoreTolerence  = 0.5;
     public static final double autoDriveIntakeTolerence = 0.1;
     public static final double distanceWithinPathplannerDontWork = 0.5;
 
@@ -157,9 +157,9 @@ public final class Constants
   public static class elevatorConstants{
     public static final double l4EncoderVal = 1.42;
     public static final double l3EncoderVal = 1.02381;
-    public static final double l2EncoderVal = 0.414528;
+    public static final double l2EncoderVal = 0.6514528;
 
-    public static final double l1EncoderVal = 0;
+    public static final double l1EncoderVal = 0.37;
     public static final double encoderToMeters =69.1514; //1/141;
 
 
@@ -205,7 +205,7 @@ public final class Constants
         .withKI(0) // no output for integrated error
         .withKD(0.1) // A velocity error of 1 rps results in 0.1 V output
     ;
-    public static final double elevatorResetTolerence = 0.5;
+    public static final double elevatorResetTolerence = 0.3;
     
 
     // set Motion Magic settings
@@ -220,7 +220,7 @@ public final class Constants
 
   /**constants for the wrist */
   public static class wristConstants{
-    public static final Rotation2d l4EncoderVal = Rotation2d.fromDegrees(180);
+    public static final Rotation2d l4EncoderVal = Rotation2d.fromDegrees(210);
     public static final Rotation2d l3EncoderVal = Rotation2d.fromDegrees(0);
     public static final Rotation2d l2EncoderVal = Rotation2d.fromDegrees(0);
     public static final Rotation2d l1EncoderVal = Rotation2d.fromDegrees(0);

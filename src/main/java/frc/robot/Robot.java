@@ -53,6 +53,8 @@ public class Robot extends TimedRobot{
     private Timer disabledTimer;
     StructPublisher<Pose2d> posePublisher = NetworkTableInstance.getDefault().getStructTopic("robotPose", Pose2d.struct).publish(PubSubOption.periodic(0.02));
     SendableChooser<Command> autoChooser=new SendableChooser<>();
+    SendableChooser<Pose2d> poseChooser=new SendableChooser<>();
+
 
     
 
@@ -68,26 +70,35 @@ public class Robot extends TimedRobot{
         }
 
 
-        autoChooser.addOption("middle", new ScorePiece(new scoringPosit(reefLevel.L3, reefPole.G)));
+        autoChooser.addOption("middle2", new ScorePiece(new scoringPosit(reefLevel.L2, reefPole.G)));
+        autoChooser.addOption("middle1", new ScorePiece(new scoringPosit(reefLevel.L1, reefPole.G)));
+
         autoChooser.addOption("left", new SequentialCommandGroup(
-          new ScorePiece(new scoringPosit(reefLevel.L3, reefPole.I)),
+          new ScorePiece(new scoringPosit(reefLevel.L1, reefPole.I)),
           new IntakePeiceCommand(FieldPosits.IntakePoints.leftLeft),
-          new ScorePiece(new scoringPosit(reefLevel.L3, reefPole.K)),
+          new ScorePiece(new scoringPosit(reefLevel.L1, reefPole.K)),
           new IntakePeiceCommand(FieldPosits.IntakePoints.leftLeft),
-          new ScorePiece(new scoringPosit(reefLevel.L3, reefPole.L)),
+          new ScorePiece(new scoringPosit(reefLevel.L1, reefPole.L)),
           new IntakePeiceCommand(FieldPosits.IntakePoints.leftLeft)
         ));
         autoChooser.addOption("right", new SequentialCommandGroup(
-          new ScorePiece(new scoringPosit(reefLevel.L3, reefPole.F)),
+          new ScorePiece(new scoringPosit(reefLevel.L1, reefPole.F)),
           new IntakePeiceCommand(FieldPosits.IntakePoints.rightRight),
-          new ScorePiece(new scoringPosit(reefLevel.L3, reefPole.C)),
+          new ScorePiece(new scoringPosit(reefLevel.L1, reefPole.C)),
           new IntakePeiceCommand(FieldPosits.IntakePoints.rightRight),
-          new ScorePiece(new scoringPosit(reefLevel.L3, reefPole.D)),
+          new ScorePiece(new scoringPosit(reefLevel.L1, reefPole.D)),
           new IntakePeiceCommand(FieldPosits.IntakePoints.rightRight)
         ));
 
         
         SmartDashboard.putData("auto chooser", autoChooser);
+
+        poseChooser.setDefaultOption("middle", FieldPosits.startingPoints.midStart);
+        poseChooser.addOption("right", FieldPosits.startingPoints.rightStart);
+        poseChooser.addOption("left", FieldPosits.startingPoints.leftStart);
+        poseChooser.onChange(SystemManager.swerve::resetOdometry);
+        SmartDashboard.putData("Starting chooser", poseChooser);
+
     }
 
     public static Robot getInstance(){

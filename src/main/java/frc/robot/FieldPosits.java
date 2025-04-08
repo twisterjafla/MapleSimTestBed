@@ -39,6 +39,12 @@ public class FieldPosits {
 
     }
 
+    public static class startingPoints{
+        public static final Pose2d rightStart = new Pose2d(7.257, 0.592, new Rotation2d(Math.PI));
+        public static final Pose2d midStart = new Pose2d(7.257, 4, new Rotation2d(Math.PI));
+        public static final Pose2d leftStart = new Pose2d(7.257, 7.257, new Rotation2d(Math.PI));
+    }
+
     /** the possible scoring positions for a robot */
     public static class scoringPosits{
         public static final Pose2d A = new Pose2d(3.197, 4.189, Rotation2d.fromDegrees(180));
