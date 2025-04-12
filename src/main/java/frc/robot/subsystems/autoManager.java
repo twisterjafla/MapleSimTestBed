@@ -221,9 +221,9 @@ public class autoManager{
             }
 
            
-            if (SystemManager.reefIndexer.blockedByAlgae((int)scorePose.pole.getRowAsIndex(), scorePose.level.getasInt()-1)){
+            if (SystemManager.reefIndexer.blockedByAlgae((int)scorePose.pole.getRowAsIndex(), scorePose.level.getasInt())){
                 
-                return new removeAlgae(algeaRemoval.makeFromNumbers((int)(scorePose.pole.getRowAsIndex())/2+1, (int)SystemManager.reefIndexer.getAlgaeLevel(scorePose.pole.getRowAsIndex()/2)-1));
+                return new removeAlgae(algeaRemoval.makeFromNumbers((int)(scorePose.pole.getRowAsIndex())/2, (int)SystemManager.reefIndexer.getAlgaeLevel(scorePose.pole.getRowAsIndex()/2)-1));
                 //return new removeAlgae(algeaRemoval.makeFromNumbers((int)(scorePose.pole.getRowAsIndex())/2+1, (int)SystemManager.reefIndexer.getAlgaeLevel((int)(scorePose.pole.getRowAsIndex()/2))-1));
             }
             return new ScorePiece(scorePose);

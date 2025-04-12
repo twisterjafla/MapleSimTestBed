@@ -114,18 +114,17 @@ public class FieldPosits {
         public static reefPole fromInt(int poleVal){
             switch(poleVal){
                 case 0: return reefPole.A;
-                case 1: return reefPole.A;
-                case 2: return reefPole.B;
-                case 3: return reefPole.C;
-                case 4: return reefPole.D;
-                case 5: return reefPole.E;
-                case 6: return reefPole.F;
-                case 7: return reefPole.G;
-                case 8: return reefPole.H;
-                case 9: return reefPole.I;
-                case 10: return reefPole.J;
-                case 11: return reefPole.K;
-                case 12: return reefPole.L;
+                case 1: return reefPole.B;
+                case 2: return reefPole.C;
+                case 3: return reefPole.D;
+                case 4: return reefPole.E;
+                case 5: return reefPole.F;
+                case 6: return reefPole.G;
+                case 7: return reefPole.H;
+                case 8: return reefPole.I;
+                case 9: return reefPole.J;
+                case 10: return reefPole.K;
+                case 11: return reefPole.L;
                 default: throw new Error("Tried to create a reef pole using an invalid index: " + poleVal);
             }
         }
@@ -207,34 +206,34 @@ public class FieldPosits {
         
         /**
          * creates a reefLevel from a number
-         * @param level the level to make a pole on. THIS DOES NOT USE THE INDEX VALUE, IT USES THE NAME VALUE. aka if level is set to 1 a l1 reef level will be returned
+         * @param level the level to make a pole on. This is 0 indexed so reef level 1 will use index 0
          * @return a reef level of the specified level
          */
         public static reefLevel CreateFromLevel(int level){
             switch (level){
-                case 1: return reefLevel.L1;
-                case 2: return reefLevel.L2;
-                case 3: return reefLevel.L3;
-                case 4: return reefLevel.L4;
+                case 0: return reefLevel.L1;
+                case 1: return reefLevel.L2;
+                case 2: return reefLevel.L3;
+                case 3: return reefLevel.L4;
                 default:
                     throw new Error("you tried to make a pole of an invalid level DUMBASS: " + level);
             }
         }
 
         /**
-         * get the level number of a reef level.  THIS DOES NOT USE THE INDEX VALUE, IT USES THE NAME VALUE. aka a L1 reef level will return 1 not 0.
+         * get the level number of a reef level. This returns the index value so L1 will return 0 etc
          * @return the level number of the reef
          */
         public int getasInt(){
             switch (this){
                 case L1:
-                    return 1;
+                    return 0;
                 case L2:
-                    return 2;
+                    return 1;
                 case L3:
-                    return 3;
+                    return 2;
                 case L4:
-                    return 4;
+                    return 3;
                 default:
                     throw new Error("This case is imposible to reach because all enum options are handled but needs to exist so java can be sure the function will always return a value.If you are seeing this as a user somthing has gone DEEPLY DEEPLY WRONG, maybe burn your code in mount doom");
             }
@@ -314,17 +313,17 @@ public class FieldPosits {
             public static algeaRemoval makeFromNumbers(int side, int level){
                 if (level==0){
                     switch (side){
-                        case 1:
+                        case 0:
                             return AL;
-                        case 2:
+                        case 1:
                             return BL;
-                        case 3:
+                        case 2:
                             return CL;
-                        case 4:
+                        case 3:
                             return DL;
-                        case 5:
+                        case 4:
                             return EL;
-                        case 6:
+                        case 5:
                             return FL;
                         default:
                             throw new Error("You tried to create a algea removal position with an invalid side: " + side);
@@ -332,17 +331,17 @@ public class FieldPosits {
                 }
                 else if (level==1){
                     switch (side){
-                        case 1:
+                        case 0:
                             return AH;
-                        case 2:
+                        case 1:
                             return BH;
-                        case 3:
+                        case 2:
                             return CH;
-                        case 4:
+                        case 3:
                             return DH;
-                        case 5:
+                        case 4:
                             return EH;
-                        case 6:
+                        case 5:
                             return FH;
                         default:
                             throw new Error("You tried to create a algea removal position with an invalid side: " + side);
