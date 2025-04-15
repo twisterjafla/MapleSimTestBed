@@ -189,8 +189,8 @@ public final class Constants
     public static final double currentResetThreashold=15;
 
 
-    public static final int leftMotorID=1;
-    public static final int rightMotorID=2;
+    public static final int mainMotorID=1;
+    public static final int leftMotorID=2;
 
 
     // in init function
