@@ -1,4 +1,4 @@
-package frc.robot.subsystems.intake;
+package frc.robot.subsystems.intakes;
 
 import java.util.function.BooleanSupplier;
 

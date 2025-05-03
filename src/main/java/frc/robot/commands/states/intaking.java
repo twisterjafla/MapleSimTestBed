@@ -26,6 +26,7 @@ public class intaking extends Command{
 
         SystemManager.elevator.setSetpoint(Constants.elevatorConstants.intakePosit);
         SystemManager.wrist.setSetpoint(Constants.wristConstants.intakePosit);
+        SystemManager.algaeManipulator.intake();
     }
 
 
@@ -53,5 +54,6 @@ public class intaking extends Command{
     public void end(boolean wasInterupted){
         generalManager.endCallback(wasInterupted);
         SystemManager.intake.stop();
+        SystemManager.algaeManipulator.stop();
     }
 }

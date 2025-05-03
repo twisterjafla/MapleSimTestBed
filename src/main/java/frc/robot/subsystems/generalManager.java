@@ -57,6 +57,7 @@ public class generalManager{
       subsystems.add(SystemManager.wrist);
       subsystems.add(SystemManager.intake);
       subsystems.add(SystemManager.elevator);
+      subsystems.add(SystemManager.algaeManipulator);
     }
 
 

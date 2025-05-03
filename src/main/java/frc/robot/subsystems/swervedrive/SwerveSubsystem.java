@@ -145,10 +145,7 @@ public class SwerveSubsystem extends SubsystemBase
     return new ModuleConfig(Constants.driveConstants.wheelRadusInMeters, /**Constants.driveConstants.maxSpeed*/5, 1, DCMotor.getKrakenX60(1), 60, 1);
   }
 
-  @Override
-  public void simulationPeriodic(){
-    Pathfinding.setDynamicObstacles(SystemManager.lidar.fetchObsticles(), swerveDrive.getPose().getTranslation());
-  }
+
 
   /**
    * Setup AutoBuilder for PathPlanner.
@@ -454,8 +451,9 @@ public class SwerveSubsystem extends SubsystemBase
 
   @Override
   public void periodic(){
-    
     swerveDrive.addVisionMeasurement(SystemManager.aprilTag.getPose().toPose2d(), Timer.getFPGATimestamp());
+
+
     //postTrajectory();
     
 

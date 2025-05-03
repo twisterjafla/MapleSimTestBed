@@ -20,6 +20,7 @@ public class outtaking extends Command{
         }
         
         SystemManager.intake.outtake();
+        SystemManager.algaeManipulator.outtake();
     }
 
 
@@ -37,7 +38,7 @@ public class outtaking extends Command{
      */
     @Override 
     public boolean isFinished(){
-        return !SystemManager.intake.hasPeice();
+        return !SystemManager.intake.hasPeice()&&!SystemManager.algaeManipulator.hasPeice();
     }
 
     /**

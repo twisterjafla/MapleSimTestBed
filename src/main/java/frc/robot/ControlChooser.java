@@ -17,10 +17,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Utils.BetterTrigger;
 import frc.robot.Utils.utillFunctions;
-import frc.robot.commands.auto.smallAutoDrive;
+
 import frc.robot.commands.sim.CreateCoral;
 import frc.robot.commands.swervedrive.AbsoluteFieldDrive;
-import frc.robot.subsystems.autoManager;
+
 import frc.robot.subsystems.generalManager;
 
 public class ControlChooser {
@@ -48,7 +48,7 @@ public class ControlChooser {
         }
 
 
-        chooser.addOption("autoTestControll", getAutoTestControl());
+
         chooser.addOption("testControl", getTestControl());
         chooser.addOption("StandardXboxControl", standardXboxControl());
         chooser.addOption("demoControl", demoControl());
@@ -68,7 +68,7 @@ public class ControlChooser {
      */
     public void changeControl(EventLoop scheme){
         CommandScheduler.getInstance().cancelAll();
-        autoManager.takeControl();
+
         CommandScheduler.getInstance().setActiveButtonLoop(scheme);
 
     }
@@ -118,7 +118,7 @@ public class ControlChooser {
 
        xbox1.leftTrigger(0.4, loop).onTrue(new CreateCoral("leftMid"));
        xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
-       xbox1.leftBumper(loop).onTrue(new smallAutoDrive(Constants.driveConstants.startingPosit));
+
        xbox1.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.outtake()));
 
         return loop;
@@ -133,7 +133,7 @@ public class ControlChooser {
         //setDefaultCommand(SystemManager.swerve.driveCommand(()->0, ()->0, ()->xbox1.getLeftX(), ()->xbox1.getLeftY()), SystemManager.swerve, loop);
         xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(10,10, new Rotation2d(Math.PI))));
         xbox1.a(loop).onTrue(SystemManager.swerve.driveToPose(Constants.driveConstants.startingPosit));
-        xbox1.y(loop).onTrue(new smallAutoDrive(Constants.driveConstants.startingPosit));
+
 
         return loop;
     }
@@ -146,16 +146,6 @@ public class ControlChooser {
         return loop;
     }
 
-    /**@return a new auto test control loop */
-    private EventLoop getAutoTestControl(){
-        EventLoop loop = new EventLoop();
-        new Trigger(loop, xbox1.leftTrigger(0.75)).onTrue(new InstantCommand(()->autoManager.giveControl())).onFalse(new InstantCommand(()->autoManager.takeControl()));
-        
-        xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(FieldPosits.scoringPosits.F));
-        xbox1.x(loop).onTrue(new InstantCommand(()->SystemManager.reefIndexer.resetSIMONLY()));
-       
-        return loop;
-    }
 
 
 

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.autoManager;
+
 import java.io.File;
 import java.io.IOException;
 import org.ironmaple.simulation.SimulatedArena;
@@ -77,6 +77,9 @@ public class Robot extends TimedRobot{
       SystemManager.periodic();
       heartBeat++;
       SmartDashboard.putNumber("heartbeat", heartBeat);  
+      SmartDashboard.putNumber("redScore", SimulatedArena.getInstance().getRedScore());
+      SmartDashboard.putNumber("blueScore", SimulatedArena.getInstance().getBlueScore());
+
     }
 
     /**
@@ -103,8 +106,6 @@ public class Robot extends TimedRobot{
     public void autonomousInit()
     {
 
-
-      autoManager.giveControl();
     }
 
     /**
