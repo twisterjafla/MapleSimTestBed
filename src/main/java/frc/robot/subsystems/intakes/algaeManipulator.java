@@ -95,9 +95,9 @@ public class algaeManipulator extends intakeIO{
                 // Obtain robot facing from drive simulation
                 SystemManager.getRealPoseMaple().getRotation(),
                 // The height at which the coral is ejected
-                Meters.of(3),
+                Meters.of(1),
                 // The initial speed of the coral
-                MetersPerSecond.of(5),
+                MetersPerSecond.of(7),
                 // The coral is ejected at a 35-degree slope
                 Degrees.of(90)));
             
