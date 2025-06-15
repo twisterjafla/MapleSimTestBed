@@ -120,7 +120,7 @@ public class ControlChooser {
        xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
 
        xbox1.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.outtake()));
-
+        xbox1.leftBumper(loop).onTrue(new CreateCoral("leftLeft"));
         return loop;
     }
 
