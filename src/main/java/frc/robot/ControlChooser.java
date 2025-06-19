@@ -3,6 +3,9 @@ package frc.robot;
 
 import java.util.function.Consumer;
 
+import org.ironmaple.simulation.SimulatedArena;
+import org.ironmaple.simulation.seasonspecific.crescendo2024.Arena2024Crescendo;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -20,6 +23,7 @@ import frc.robot.Utils.utillFunctions;
 
 import frc.robot.commands.sim.CreateCoral;
 import frc.robot.commands.sim.CreateNote;
+import frc.robot.commands.sim.shootAmp;
 import frc.robot.commands.sim.shootSpeaker;
 import frc.robot.commands.sim.swapToCresendo;
 import frc.robot.commands.sim.swapToReefscape;
@@ -141,8 +145,11 @@ public class ControlChooser {
         xbox1.rightBumper(loop).onTrue(new shootSpeaker());
 
 
-        xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
+        xbox1.rightTrigger(0.4, loop).onTrue(new shootAmp());
         xbox1.leftBumper(loop).onTrue(new InstantCommand(()->SystemManager.noteManipulator.addPeice()));
+
+        xbox1.a(loop).onTrue(new InstantCommand(()->((Arena2024Crescendo)SimulatedArena.getInstance()).activateAmp(true)));
+
 
         
         return loop;

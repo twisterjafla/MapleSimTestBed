@@ -21,6 +21,7 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -139,11 +140,7 @@ public class noteManipulator extends SubsystemBase {
 
 
     public void shootAmp(){
-
-    }
-
-    public void shootSpeaker(){
-            if (hasPeice()){
+        if (hasPeice()){
             intakeSim.obtainGamePieceFromIntake();
             
             SimulatedArena.getInstance()
@@ -153,15 +150,38 @@ public class noteManipulator extends SubsystemBase {
                 // The scoring mechanism is installed at (0.46, 0) (meters) on the robot
                 new Translation2d(0.4, 0),
                 // Obtain robot speed from drive simulation
-                SystemManager.swerve.getFieldVelocity(),
+                SystemManager.swerve.getFieldVelocity().plus(new ChassisSpeeds(0, 2, 0)),
                 // Obtain robot facing from drive simulation
                 SystemManager.getRealPoseMaple().getRotation(),
                 // The height at which the coral is ejected
-                Meters.of(0.4),
+                Meters.of(0.8),
                 // The initial speed of the coral
-                MetersPerSecond.of(20),
+                MetersPerSecond.of(2),
                 // The coral is ejected at a 35-degree slope
-                Degree.of(60)).enableBecomeNoteOnFieldAfterTouchGround());
+                Degree.of(90)).enableBecomeNoteOnFieldAfterTouchGround());
+            }
+    }
+
+    public void shootSpeaker(){
+            if (hasPeice()){
+                intakeSim.obtainGamePieceFromIntake();
+                
+                SimulatedArena.getInstance()
+                .addGamePieceProjectile(new NoteOnFly(
+                    // Obtain robot position from drive simulation
+                    SystemManager.getRealPoseMaple().getTranslation(),
+                    // The scoring mechanism is installed at (0.46, 0) (meters) on the robot
+                    new Translation2d(0.4, 0),
+                    // Obtain robot speed from drive simulation
+                    SystemManager.swerve.getFieldVelocity(),
+                    // Obtain robot facing from drive simulation
+                    SystemManager.getRealPoseMaple().getRotation(),
+                    // The height at which the coral is ejected
+                    Meters.of(0.4),
+                    // The initial speed of the coral
+                    MetersPerSecond.of(20),
+                    // The coral is ejected at a 35-degree slope
+                    Degree.of(60)).enableBecomeNoteOnFieldAfterTouchGround());
             }
     }
 
