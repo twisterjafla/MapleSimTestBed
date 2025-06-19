@@ -167,6 +167,9 @@ public class Robot extends TimedRobot{
   StructArrayPublisher<Pose3d> coralPublisher = NetworkTableInstance.getDefault()
     .getStructArrayTopic("coral ", Pose3d.struct).publish();
 
+    StructArrayPublisher<Pose3d> notePublisher = NetworkTableInstance.getDefault()
+    .getStructArrayTopic("notes ", Pose3d.struct).publish();
+
   StructPublisher<Pose2d> robotPublisher = NetworkTableInstance.getDefault().getStructTopic("robot", Pose2d.struct).publish();
 
 
@@ -195,6 +198,8 @@ public class Robot extends TimedRobot{
 
     algeaPublisher.set(SimulatedArena.getInstance().getGamePiecesArrayByType("Algae"));
     coralPublisher.set(SimulatedArena.getInstance().getGamePiecesArrayByType("Coral"));
+    notePublisher.set(SimulatedArena.getInstance().getGamePiecesArrayByType("Note"));
+
     robotPublisher.set(SystemManager.getSwervePose());
     
     

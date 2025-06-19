@@ -27,6 +27,7 @@ public class intaking extends Command{
         SystemManager.elevator.setSetpoint(Constants.elevatorConstants.intakePosit);
         SystemManager.wrist.setSetpoint(Constants.wristConstants.intakePosit);
         SystemManager.algaeManipulator.intake();
+        SystemManager.noteManipulator.intake();
     }
 
 
@@ -42,7 +43,7 @@ public class intaking extends Command{
     /**@return true once the robot has aquired a peice */
     @Override
     public boolean isFinished(){
-        return SystemManager.intake.hasPeice();
+        return SystemManager.intake.hasPeice()||SystemManager.noteManipulator.hasPeice();
     }
 
 
@@ -55,5 +56,6 @@ public class intaking extends Command{
         generalManager.endCallback(wasInterupted);
         SystemManager.intake.stop();
         SystemManager.algaeManipulator.stop();
+        SystemManager.noteManipulator.stop();
     }
 }

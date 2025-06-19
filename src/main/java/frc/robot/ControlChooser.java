@@ -19,6 +19,10 @@ import frc.robot.Utils.BetterTrigger;
 import frc.robot.Utils.utillFunctions;
 
 import frc.robot.commands.sim.CreateCoral;
+import frc.robot.commands.sim.CreateNote;
+import frc.robot.commands.sim.shootSpeaker;
+import frc.robot.commands.sim.swapToCresendo;
+import frc.robot.commands.sim.swapToReefscape;
 import frc.robot.commands.swervedrive.AbsoluteFieldDrive;
 
 import frc.robot.subsystems.generalManager;
@@ -32,7 +36,6 @@ public class ControlChooser {
     CommandXboxController xbox2;
     
     EventLoop controlLoop=CommandScheduler.getInstance().getDefaultButtonLoop();
-    
 
     
     /**creates a control chooser */
@@ -43,16 +46,13 @@ public class ControlChooser {
 
         chooser.setDefaultOption("default", CommandScheduler.getInstance().getDefaultButtonLoop());
 
-        if (!RobotBase.isReal()){
-            //for schemes too unsafe to run on the real bot
-        }
 
 
 
-        chooser.addOption("testControl", getTestControl());
-        chooser.addOption("StandardXboxControl", standardXboxControl());
-        chooser.addOption("demoControl", demoControl());
-        
+        chooser.addOption("reefscapeControl", reefscapeControl());
+        chooser.addOption("cresendoControl", cresendoControl());
+
+
         
         chooser.onChange((EventLoop scheme)->{changeControl(scheme);});
         changeControl(chooser.getSelected());
@@ -69,7 +69,9 @@ public class ControlChooser {
     public void changeControl(EventLoop scheme){
         CommandScheduler.getInstance().cancelAll();
 
+
         CommandScheduler.getInstance().setActiveButtonLoop(scheme);
+
 
     }
 
@@ -103,8 +105,11 @@ public class ControlChooser {
 
 
     /**@return a new test control loop*/
-    private EventLoop getTestControl(){
+    private EventLoop reefscapeControl(){
+        
         EventLoop loop = new EventLoop();
+
+
         setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->-xbox1.getLeftY(), ()->-xbox1.getLeftX(), ()->{
             if(utillFunctions.pythagorean(xbox1.getRightX(), xbox1.getRightY())>=0.2)return Math.atan2(-xbox1.getRightX(), -xbox1.getRightY())/Math.PI; return SystemManager.swerve.getHeading().getRadians()/Math.PI;})
            ,SystemManager.swerve, loop);
@@ -116,7 +121,7 @@ public class ControlChooser {
        xbox1.b(loop).onTrue(new InstantCommand(()->generalManager.scoreL2()));
        xbox1.a(loop).onTrue(new InstantCommand(()->generalManager.scoreL1()));
 
-       xbox1.leftTrigger(0.4, loop).onTrue(new CreateCoral("leftMid"));
+       xbox1.leftTrigger(0.4, loop).onTrue(new swapToReefscape());
        xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
 
        xbox1.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.outtake()));
@@ -124,25 +129,22 @@ public class ControlChooser {
         return loop;
     }
 
-    /**@return a new standardXboxControl loop */
-    private EventLoop standardXboxControl(){
-        EventLoop loop = new EventLoop();
+
+    private EventLoop cresendoControl(){
+        EventLoop loop  = new EventLoop();
         setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->-xbox1.getLeftY(), ()->-xbox1.getLeftX(), ()->{
             if(utillFunctions.pythagorean(xbox1.getRightX(), xbox1.getRightY())>=0.2)return Math.atan2(-xbox1.getRightX(), -xbox1.getRightY())/Math.PI; return SystemManager.swerve.getHeading().getRadians()/Math.PI;})
-            ,SystemManager.swerve, loop);
-        //setDefaultCommand(SystemManager.swerve.driveCommand(()->0, ()->0, ()->xbox1.getLeftX(), ()->xbox1.getLeftY()), SystemManager.swerve, loop);
-        xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(10,10, new Rotation2d(Math.PI))));
-        xbox1.a(loop).onTrue(SystemManager.swerve.driveToPose(Constants.driveConstants.startingPosit));
+           ,SystemManager.swerve, loop);        
+           
+        
+        xbox1.leftTrigger(0.4, loop).onTrue(new swapToCresendo());
+        xbox1.rightBumper(loop).onTrue(new shootSpeaker());
 
 
-        return loop;
-    }
+        xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
+        xbox1.leftBumper(loop).onTrue(new InstantCommand(()->SystemManager.noteManipulator.addPeice()));
 
-    /**@return a new demo control loop */
-    private EventLoop demoControl(){
-        EventLoop loop  = new EventLoop();
-        setDefaultCommand(new AbsoluteFieldDrive(SystemManager.swerve, ()->xbox1.getLeftX(), ()->-xbox1.getLeftY(),()-> getPOVForTest(xbox1)),SystemManager.swerve, loop);
-        ///xbox1.b(loop).onTrue(SystemManager.swerve.driveToPose(new Pose2d(15,1.2, new Rotation2d(Math.PI))));
+        
         return loop;
     }
 

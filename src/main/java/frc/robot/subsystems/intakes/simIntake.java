@@ -43,7 +43,7 @@ public class simIntake extends intakeIO{
         else{
             intakeSim= IntakeSimulation.InTheFrameIntake("Coral", SystemManager.swerve.getMapleSimDrive().get(), Meters.of(0.7), IntakeSimulation.IntakeSide.BACK, 1);
         }
-        intakeSim.addGamePieceToIntake();
+        //intakeSim.addGamePieceToIntake();
     }
 
     @Override 

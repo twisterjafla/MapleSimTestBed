@@ -17,6 +17,7 @@ import frc.robot.subsystems.elevator.realElevator;
 import frc.robot.subsystems.elevator.simElevator;
 import frc.robot.subsystems.intakes.algaeManipulator;
 import frc.robot.subsystems.intakes.intakeIO;
+import frc.robot.subsystems.intakes.noteManipulator;
 import frc.robot.subsystems.intakes.realIntake;
 import frc.robot.subsystems.intakes.simIntake;
 import frc.robot.subsystems.swervedrive.AIRobotInSimulation;
@@ -32,7 +33,7 @@ public class SystemManager{
     public static SwerveSubsystem swerve;
 
     public static Field2d feild;
-    public static SimulatedArena simFeild;
+    //public static SimulatedArena simFeild;
     public static AIRobotInSimulation fakeBot;
     public static boolean hasNote = false;
     public static intakeIO intake;
@@ -41,6 +42,7 @@ public class SystemManager{
     public static elevatorIO elevator;
     public static realSimulatedDriveTrain simButRealTrain = null;
     public static algaeManipulator algaeManipulator;
+    public static noteManipulator noteManipulator;
          
     // Add a Coral Array object for tracking
 
@@ -102,6 +104,7 @@ public class SystemManager{
         wristElevatorControlManager.addSystems(wrist, elevator);
         generalManager.generalManagerInit();
         algaeManipulator = new algaeManipulator();
+        noteManipulator = new noteManipulator();
 
 
         // Initialize Coral Array
