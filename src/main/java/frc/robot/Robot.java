@@ -77,8 +77,8 @@ public class Robot extends TimedRobot{
       SystemManager.periodic();
       heartBeat++;
       SmartDashboard.putNumber("heartbeat", heartBeat);  
-      SmartDashboard.putNumber("redScore", SimulatedArena.getInstance().getRedScore());
-      SmartDashboard.putNumber("blueScore", SimulatedArena.getInstance().getBlueScore());
+      SmartDashboard.putNumber("redScore", SimulatedArena.getInstance().getScore(false));
+      SmartDashboard.putNumber("blueScore", SimulatedArena.getInstance().getScore(true));
 
     }
 
