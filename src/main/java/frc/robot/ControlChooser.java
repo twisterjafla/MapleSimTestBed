@@ -39,7 +39,7 @@ public class ControlChooser {
     CommandXboxController xbox1;
     CommandXboxController xbox2;
     
-    EventLoop controlLoop=CommandScheduler.getInstance().getDefaultButtonLoop();
+    //EventLoop controlLoop=CommandScheduler.getInstance().getDefaultButtonLoop();
 
     
     /**creates a control chooser */
