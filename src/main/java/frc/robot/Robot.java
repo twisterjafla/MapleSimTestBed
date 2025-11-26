@@ -20,6 +20,7 @@ import frc.robot.subsystems.generalManager;
 import java.io.File;
 import java.io.IOException;
 import org.ironmaple.simulation.SimulatedArena;
+import org.ironmaple.simulation.seasonspecific.reefscape2025.Arena2025Reefscape;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import com.pathplanner.lib.commands.FollowPathCommand;
@@ -123,7 +124,7 @@ public class Robot extends TimedRobot{
     public void teleopInit()
     {
      
-
+      ((Arena2025Reefscape)SimulatedArena.getInstance()).redReefSimulation.getBranches();
       controlChooser.restart();
       
 
@@ -203,7 +204,7 @@ public class Robot extends TimedRobot{
     coralPublisher.set(SimulatedArena.getInstance().getGamePiecesArrayByType("Coral"));
     notePublisher.set(SimulatedArena.getInstance().getGamePiecesArrayByType("Note"));
 
-    robotPublisher.set(SystemManager.getSwervePose());
+    robotPublisher.set(SystemManager.getRealPoseMaple());
     
     
     if (SystemManager.fakeBot!=null){

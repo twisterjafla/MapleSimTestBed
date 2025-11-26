@@ -95,8 +95,8 @@ public class SystemManager{
 
         // Create an imaginary robot
         if (!RobotBase.isReal()){
-            AIRobotInSimulation.startOpponentRobotSimulations();
-            fakeBot = AIRobotInSimulation.getRobotAtIndex(0);
+            //AIRobotInSimulation.startOpponentRobotSimulations();
+            //fakeBot = AIRobotInSimulation.getRobotAtIndex(0);
             // Overrides the default simulation
         }
 

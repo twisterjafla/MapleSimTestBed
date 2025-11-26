@@ -126,7 +126,11 @@ public class ControlChooser {
        xbox1.a(loop).onTrue(new InstantCommand(()->generalManager.scoreL1()));
 
        xbox1.leftTrigger(0.4, loop).onTrue(new swapToReefscape());
-       xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
+       xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->SystemManager.intake.addPeice()));
+       //xbox1.rightTrigger(0.4,loop).onTrue(new InstantCommand(()->generalManager.intake()));
+        
+
+       //xbox1.rightBumper(loop).onTrue(new InstantCommand(()->SystemManager.intake.addPeice()));
 
        xbox1.rightBumper(loop).onTrue(new InstantCommand(()->generalManager.outtake()));
         xbox1.leftBumper(loop).onTrue(new CreateCoral("leftLeft"));

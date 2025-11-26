@@ -83,5 +83,9 @@ public class intakeIO extends SubsystemBase{
             
             .plus(SystemManager.elevator.getTranslation());    
     }
+
+    public void addPeice(){
+        return;
+    }
    
 } 

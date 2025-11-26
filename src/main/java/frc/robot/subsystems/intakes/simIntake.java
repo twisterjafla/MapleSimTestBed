@@ -135,4 +135,9 @@ public class simIntake extends intakeIO{
         stopTrigger=()->true;
     }
 
+    @Override
+    public void addPeice(){
+        intakeSim.addGamePieceToIntake();
+    }
+
 }
